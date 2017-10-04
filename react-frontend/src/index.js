@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
-import CodeGameApp from './CodeGameApp'
+import CodeGameApp from './components/CodeGameApp'
 
 ReactDOM.render(
   <CodeGameApp />,
