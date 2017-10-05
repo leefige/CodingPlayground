@@ -50,3 +50,20 @@ body {
   font-size: 14px;
   font-family: "Microsoft Yahei"
 }
+
+blockly_pad {
+  background-color: #fff;
+  font-family: sans-serif;
+  overflow: hidden;
+}
+
+.blocklyArea {
+  height: 99%;
+  background: #fc9;
+  text-align: center;
+}
+
+table {
+  height: 100%;
+  width: 100%;
+}

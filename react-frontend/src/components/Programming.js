@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 
 import TaskGuide from './ProgramItem/TaskGuide'
+import BlocklyPad from './ProgramItem/BlocklyPad'
 
 class Programming extends Component {
   render() {
@@ -9,7 +10,9 @@ class Programming extends Component {
         <div>
           <TaskGuide />
         </div>
-        <span>Programming</span>
+        <div>
+          <BlocklyPad />
+        </div>
       </div>
     )
   }
