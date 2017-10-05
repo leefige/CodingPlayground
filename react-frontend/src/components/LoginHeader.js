@@ -28,11 +28,11 @@ class SignupHeader extends Component {
 	}
   render() {
   	return (
-      <div>
-        <button className="button" onClick = {this.handleLogin.bind(this)}>
+      <div className="pull-right">
+        <button type="submit" className="btn btn-outline-primary" onClick = {this.handleLogin.bind(this)}>
           登录
         </button>
-        <button className="button" onClick = {this.handleSignup.bind(this)}>
+        <button type="submit" className="btn btn-outline-primary" onClick = {this.handleSignup.bind(this)}>
           注册
         </button>
       	</div>
@@ -43,7 +43,8 @@ class SignupHeader extends Component {
 class LoginHeader extends Component {
 	render() {
 		return (
-			<div className='login-header'>
+			<div className='container'>
+				<div className='text-right'>
 				{this.props.state ?
 					<LogoutHeader
 						username={this.props.username}
@@ -51,7 +52,7 @@ class LoginHeader extends Component {
 					<SignupHeader
 						onLogin={this.props.onLogin}
 						onSignup={this.props.onSignup}/>}
-						LoginHeader
+				</div>		
 			</div>
 		)
 	}

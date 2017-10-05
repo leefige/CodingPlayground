@@ -6,29 +6,17 @@
 
 body {
   font: 14px/1.5 "Helvetica Neue",Helvetica,Arial,"Microsoft Yahei","Hiragino Sans GB","Heiti SC","WenQuanYi Micro Hei",sans-serif;
-  max-width: 60%;
-  margin: 0 auto;
 }
 
 .login-header {
-  height: 50px;
   border:2px solid #008CBA;
 }
 
-.code-game-content {
-  height: 500px;
-}
 .scene {
-  height: 100%;
-  float: left;
   border:2px solid #008CBA;
-  width: 50%;
 }
 
 .programing {
-  height: 100%;
-  position: static;
-  margin-left: 50%;
   border:2px solid #008CBA;
 }
 

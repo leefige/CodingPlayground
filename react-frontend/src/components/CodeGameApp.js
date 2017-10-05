@@ -29,7 +29,7 @@ class CodeGameApp extends Component {
   }
   render() {    
     return (
-      <div>
+      <div className="container">
         <LoginHeader
           state = {this.state.isLogin}
           username = {this.state.username}
