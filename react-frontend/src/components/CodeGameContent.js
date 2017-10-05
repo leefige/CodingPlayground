@@ -5,7 +5,7 @@ import Programing from './Programing'
 class CodeGameContent extends Component {
     render() {
         return (
-            <div>
+            <div className='code-game-content'>
                 <Scene />
                 <Programing /> 
             </div>

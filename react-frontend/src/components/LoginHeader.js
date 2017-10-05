@@ -11,7 +11,7 @@ class LogoutHeader extends Component {
     return (
       <div>
         {'欢迎，' + this.props.username}
-        <button className="logout-button" onClick = {this.handleLogout.bind(this)}>
+        <button className="button" onClick = {this.handleLogout.bind(this)}>
           登出
         </button>
       </div>
@@ -29,10 +29,10 @@ class SignupHeader extends Component {
   render() {
   	return (
       <div>
-        <button className="login-button" onClick = {this.handleLogin.bind(this)}>
+        <button className="button" onClick = {this.handleLogin.bind(this)}>
           登录
         </button>
-        <button className="signup-button" onClick = {this.handleSignup.bind(this)}>
+        <button className="button" onClick = {this.handleSignup.bind(this)}>
           注册
         </button>
       	</div>
@@ -43,7 +43,7 @@ class SignupHeader extends Component {
 class LoginHeader extends Component {
 	render() {
 		return (
-			<div>
+			<div className='login-header'>
 				{this.props.state ?
 					<LogoutHeader
 						username={this.props.username}
@@ -51,6 +51,7 @@ class LoginHeader extends Component {
 					<SignupHeader
 						onLogin={this.props.onLogin}
 						onSignup={this.props.onSignup}/>}
+						LoginHeader
 			</div>
 		)
 	}
