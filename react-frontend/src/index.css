@@ -16,7 +16,7 @@ body {
   border:2px solid #008CBA;
 }
 
-.programing {
+.programming {
   border:2px solid #008CBA;
 }
 
@@ -42,4 +42,11 @@ body {
 .footer {
   height: 200px;
   border:2px solid #008CBA;
+}
+
+.task_guide {
+  padding: 6px 10px 6px 10px;
+  background-color: #F9FFC4; /* Green */
+  font-size: 14px;
+  font-family: "Microsoft Yahei"
 }

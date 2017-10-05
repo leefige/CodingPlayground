@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Scene from './Scene'
-import Programing from './Programing'
+import Programming from './Programming'
 
 class CodeGameContent extends Component {
   render() {
@@ -11,7 +11,7 @@ class CodeGameContent extends Component {
             <Scene />
           </div>
           <div className='col-xs-12 col-md-6 col-md-offset-6'>
-            <Programing />
+            <Programming />
           </div>
         </div>
     )
