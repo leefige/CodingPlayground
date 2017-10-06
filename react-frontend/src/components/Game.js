@@ -1,10 +1,18 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import charactor from './charactor.jpg';
+import charactor_up from './img/charactor-up.jpg';
+import charactor_down from './img/charactor-down.jpg';
+import charactor_left from './img/charactor-left.jpg';
+import charactor_right from './img/charactor-right.jpg';
 import './Game.css'
 
 class Charactor extends React.Component {
   render() {
+    let charactor;
+    if (this.props.value == 0) charactor = charactor_up;
+    else if (this.props.value == 1) charactor = charactor_right;
+    else if (this.props.value == 2) charactor = charactor_down;
+    else charactor = charactor_left;
     return (
       <div>
         <img src={charactor} className="charactor-pic"/>
@@ -14,7 +22,7 @@ class Charactor extends React.Component {
 }
 
 function Square(props) {
-  const square = props.value ? <Charactor /> : null;
+  const square = props.pos ? <Charactor value={props.dir}/> : null;
   return (
     <button className="square">
       { square }
@@ -26,9 +34,10 @@ class Board extends React.Component {
   renderSquare(i) {
     var rows = [];
     for (let j = 0; j < this.props.size; j++) {
-      const state = i + j == this.props.curPos ? true : false;
+      const pos = i + j == this.props.curPos ? true : false;
       rows.push(<Square
-        value={state}
+        pos={pos}
+        dir={this.props.dir}
         />);
     }
     return rows;
@@ -77,6 +86,7 @@ class Game extends React.Component {
         <div className="game-board">
           <Board
             curPos={this.state.curPos}
+            dir={this.state.dir}
             size={this.state.size}
           />
         </div>
