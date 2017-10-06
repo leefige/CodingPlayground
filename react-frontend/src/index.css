@@ -51,7 +51,7 @@ body {
   font-family: "Microsoft Yahei"
 }
 
-blockly_pad {
+.blockly_pad {
   background-color: #fff;
   font-family: sans-serif;
   overflow: hidden;
