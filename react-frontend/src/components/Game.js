@@ -25,7 +25,7 @@ function Square(props) {
 class Board extends React.Component {
   renderSquare(i) {
     var rows = [];
-    for (let j = 0; j < 9; j++) {
+    for (let j = 0; j < this.props.size; j++) {
       const state = i + j == this.props.curPos ? true : false;
       rows.push(<Square
         value={state}
@@ -36,9 +36,9 @@ class Board extends React.Component {
 
   render() {
     var cols = [];
-    for (let i = 0; i < 9; i++)
+    for (let i = 0; i < this.props.size; i++)
       cols.push(<div className="board-row">
-        {this.renderSquare(i*9)}
+        {this.renderSquare(i * this.props.size)}
         </div>);
     return (
       <div>
@@ -53,32 +53,46 @@ class Game extends React.Component {
     super();
     this.state = {
       curPos: 40,
-      dir: 0
+      dir: 0,
+      size: 9
     };
   }
 
   go() {
-    this.setState({curPos: this.state.curPos - 9})
+    if (this.state.dir == 0) 
+      this.setState({curPos: this.state.curPos - this.state.size});
+    else if (this.state.dir == 1)
+      this.setState({curPos: this.state.curPos + 1});
+    else if (this.state.dir == 2)
+      this.setState({curPos: this.state.curPos + this.state.size})
+    else if (this.state.dir == 3)
+      this.setState({curPos: this.state.curPos - 1})
   }
 
   render() {
-    let status = "current position: (" + Math.floor(this.state.curPos / 9) + ', ' + this.state.curPos % 9 + ')';
+    let pos = "current position: (" + Math.floor(this.state.curPos / 9) + ', ' + this.state.curPos % 9 + ')';
+    let dir = "current dir: " + this.state.dir;
     return (
       <div className="game">
         <div className="game-board">
           <Board
             curPos={this.state.curPos}
+            size={this.state.size}
           />
         </div>
         <div className="game-info">
-          <div>{status}</div>
+          <div>
+            {pos}
+            <br/>
+            {dir}
+          </div>
           <button onClick={() => this.go()}>
             Go
           </button>
-          <button>
+          <button onClick={() => this.setState({dir: (this.state.dir + 3) % 4})}>
             Turn Left
           </button>
-          <button>
+          <button onClick={() => this.setState({dir: (this.state.dir + 1) % 4})}>
             Turn Right
           </button>
         </div>
