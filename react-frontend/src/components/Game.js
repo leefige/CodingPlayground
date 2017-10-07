@@ -60,6 +60,7 @@ class Board extends React.Component {
 class Game extends React.Component {
   constructor() {
     super();
+    
     this.state = {
       curPos: 40,
       dir: 0,
@@ -68,6 +69,7 @@ class Game extends React.Component {
   }
 
   go() {
+    console.log(this.props.actionList)
     if (this.state.dir == 0) 
       this.setState({curPos: this.state.curPos - this.state.size});
     else if (this.state.dir == 1)
