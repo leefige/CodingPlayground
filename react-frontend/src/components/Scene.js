@@ -5,7 +5,7 @@ class Scene extends Component {
   render() {
     return (
           <div className='scene'>
-            <Game />
+            <Game actionList = {this.props.actionList}/>
           </div>
     )
   }
