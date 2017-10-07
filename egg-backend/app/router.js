@@ -2,6 +2,6 @@
 module.exports = app => {
     app.get('/', app.controller.home.index);
     app.get('/search', app.controller.search.search);
-    app.get('/user/signup/:id/:password', app.controller.user.signup);
-    app.get('/user/login/:id/:password', app.controller.user.login);
+    app.post('/user/signup', app.controller.user.signup);
+    app.post('/user/login', app.controller.user.login);
   };

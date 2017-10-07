@@ -2,18 +2,19 @@
 module.exports = app => {
     class UserController extends app.Controller {
         async signup() {
-            //await app.mysql.insert();
-
-            this.ctx.body = {
-                name: 'egg',
-                category: 'framework',
-                language: 'Node.js',
-            };
+            const result = this.ctx.service.user.signup();
+            /*this.ctx.body = result;/*{
+                    name: 'egg',
+                    category: 'framework',
+                    language: 'Node.js',
+                };*/
+           
       }
       
         async login(){
-            this.ctx.body = `user: ${this.ctx.params.id}, ${this.ctx.params.password}`;
-        }
+            const result = this.ctx.service.user.login();
+            this.ctx.body = `body: ${this.ctx.request.body}`;
+            }
         }
     return UserController;
 };
