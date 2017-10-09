@@ -9,12 +9,14 @@ class CodeGameContent extends Component {
       actionList: [1, 2, 1, 3],
     }
   }
-  handleCodeSubmit(actionList) {
+
+  handleCodeSubmit(_actionList) {
     console.log("handleCodeSubmit")
     this.setState({
-      actionList: [1, 2, 1, 2],
+      actionList: _actionList,
     })
   }
+
   render() {
     return (
       //<div className='code-game-content'>
