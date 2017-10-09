@@ -6,12 +6,13 @@ class CodeGameContent extends Component {
   constructor() {
     super()
     this.state = {
-      actionList:"actionList"
+      actionList: [1, 2, 1, 3],
     }
   }
   handleCodeSubmit(actionList) {
+    console.log("handleCodeSubmit")
     this.setState({
-      actionList: "actionList"
+      actionList: [1, 2, 1, 2],
     })
   }
   render() {

@@ -58,18 +58,45 @@ class Board extends React.Component {
 }
 
 class Game extends React.Component {
-  constructor() {
-    super();
+
+  constructor(props) {
+    console.log("constructor");
+    super(props);
+
+    this.finished = true;
     
     this.state = {
       curPos: 40,
       dir: 0,
-      size: 9
+      size: 9,
+      curTestStep: 0,
+      curStep: 0,
+      actionList: this.props.actionList
     };
   }
 
+  exec_action_list() {
+    console.log(this.state.actionList)
+    if (this.state.curStep >= this.state.actionList.length) {
+      clearInterval(this.interval);
+      this.setState({actionList: []})
+      this.finished = true;
+    }
+    else {
+      let execId = this.state.actionList[this.state.curStep];
+      if (execId == 1)
+        this.go();
+      else if (execId == 2)
+        this.turn_left();
+      else if (execId == 3)
+        this.turn_right();
+
+      this.setState({curStep: this.state.curStep + 1});
+    }
+  }
+
   go() {
-    console.log(this.props.actionList)
+    console.log(this.state.actionList)
     if (this.state.dir == 0) 
       this.setState({curPos: this.state.curPos - this.state.size});
     else if (this.state.dir == 1)
@@ -80,7 +107,35 @@ class Game extends React.Component {
       this.setState({curPos: this.state.curPos - 1})
   }
 
+  turn_left() {
+    this.setState({dir: (this.state.dir + 3) % 4})
+  }
+
+  turn_right() {
+    this.setState({dir: (this.state.dir + 1) % 4})
+  }
+
+  test() {
+    this.setState({curTestStep: (this.state.curTestStep + 1) % 8});
+    console.log(this.state.curTestStep);
+    if (this.state.curTestStep % 2 == 0)
+      this.go();
+    else
+      this.turn_left();
+  }
+
+  init() {
+    console.log(this.finished);
+    if (this.finished) {
+      this.finished = false;
+      this.setState({curStep: 0, actionList: this.props.actionList});
+      this.interval = setInterval(() => this.exec_action_list(), 1000);
+    }
+  }
+
   render() {
+    this.init();
+
     let pos = "current position: (" + Math.floor(this.state.curPos / 9) + ', ' + this.state.curPos % 9 + ')';
     let dir = "current dir: " + this.state.dir;
     return (
@@ -101,11 +156,18 @@ class Game extends React.Component {
           <button onClick={() => this.go()}>
             Go
           </button>
-          <button onClick={() => this.setState({dir: (this.state.dir + 3) % 4})}>
+          <button onClick={() => this.turn_left()}>
             Turn Left
           </button>
-          <button onClick={() => this.setState({dir: (this.state.dir + 1) % 4})}>
+          <button onClick={() => this.turn_right()}>
             Turn Right
+          </button>
+          <br/>
+          <button onClick={() => this.interval = setInterval(() => this.test(), 1000)}>
+            Test
+          </button>
+          <button onClick={() => clearInterval(this.interval)}>
+            Stop
           </button>
         </div>
       </div>
