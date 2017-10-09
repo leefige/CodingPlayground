@@ -64,8 +64,13 @@ class Game extends React.Component {
     this.state = {
       curPos: 40,
       dir: 0,
-      size: 9
+      size: 9,
+      curStep: 0
     };
+  }
+
+  tick() {
+    this.go();
   }
 
   go() {
@@ -78,6 +83,23 @@ class Game extends React.Component {
       this.setState({curPos: this.state.curPos + this.state.size})
     else if (this.state.dir == 3)
       this.setState({curPos: this.state.curPos - 1})
+  }
+
+  turn_left() {
+    this.setState({dir: (this.state.dir + 3) % 4})
+  }
+
+  turn_right() {
+    this.setState({dir: (this.state.dir + 1) % 4})
+  }
+
+  test() {
+    this.setState({curStep: (this.state.curStep + 1) % 8});
+    console.log(this.state.curStep);
+    if (this.state.curStep % 2 == 0)
+      this.go();
+    else
+      this.turn_left();
   }
 
   render() {
@@ -101,11 +123,18 @@ class Game extends React.Component {
           <button onClick={() => this.go()}>
             Go
           </button>
-          <button onClick={() => this.setState({dir: (this.state.dir + 3) % 4})}>
+          <button onClick={() => this.turn_left()}>
             Turn Left
           </button>
-          <button onClick={() => this.setState({dir: (this.state.dir + 1) % 4})}>
+          <button onClick={() => this.turn_right()}>
             Turn Right
+          </button>
+          <br/>
+          <button onClick={() => this.interval = setInterval(() => this.test(), 1000)}>
+            Test
+          </button>
+          <button onClick={() => clearInterval(this.interval)}>
+            Stop
           </button>
         </div>
       </div>
