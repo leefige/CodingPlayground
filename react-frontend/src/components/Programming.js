@@ -6,12 +6,6 @@ import Interpreter from './JSInterpreter/interpreter'
 require('./JSInterpreter/behavior.js')
 
 class Programming extends Component {
-  constructor() {
-    super()
-    // this.head = ""
-    this.code = ""//也可以设置为state，看你怎么用了
-    // this.initBehavior()
-  }
 
   // initBehavior() {
   //   var beh = 
@@ -20,16 +14,21 @@ class Programming extends Component {
   
   parseCode(code) {
     //parse code to actionlist
-    // console.log(this.head)
-    var myInterpreter = new Interpreter("function go() {return 1;} go(); go(); go();");
-    myInterpreter.run();
-    // alert(myInterpreter.value);
-    let st = myInterpreter.value
-    return [st]
+    console.log(code)
+    var header = "li = []; function go() {li.push(1);} function myFunc() {"
+    var myInterpreter = new Interpreter(header+code+" return li.join(',');} myFunc();")
+    myInterpreter.run()
+    alert(myInterpreter.value)
+    var result = myInterpreter.value  //a string
+    var list = result.split(",")
+    console.log("js result: "+list)
+    return list
+    // return [1, 1]
   }
 
-  handleCodeSubmit() {
-    const actionList = this.parseCode(this.code)
+  handleCodeSubmit(code) {
+    console.log("in handleCodeSubmit: "+code)
+    const actionList = this.parseCode(code)
     this.props.onCodeSubmit(actionList)//回调函数，由父类实现
   }
 

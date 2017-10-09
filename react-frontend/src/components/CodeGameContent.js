@@ -6,7 +6,7 @@ class CodeGameContent extends Component {
   constructor() {
     super()
     this.state = {
-      actionList: [1, 2, 1, 3],
+      actionList: [],
     }
   }
 

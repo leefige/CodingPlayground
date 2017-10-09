@@ -26,8 +26,9 @@ class BlocklyPad extends Component {
   }
 
   handleCodeSubmit() {
-    const codeGenerated = this.genCode(this.code)
+    const codeGenerated = this.genCode(this.state.code)
     this.props.onCodeSubmit(codeGenerated)//回调函数，由父类实现
+    console.log("codeGen: "+codeGenerated)
   }
 
   render() {
