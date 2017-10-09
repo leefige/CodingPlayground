@@ -36,7 +36,7 @@ class BlocklyPad extends Component {
       <div>
         <div>输入代码</div>
         <div>
-          <textarea 
+          <textarea className='code_input'
             value={this.state.code}
             onChange={this.handleCodeChange.bind(this)} />
         </div>

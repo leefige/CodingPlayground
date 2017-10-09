@@ -7,6 +7,14 @@ require('./JSInterpreter/behavior.js')
 
 class Programming extends Component {
 
+  constructor() {
+    super()
+    this.state = {
+      header: "li = []; function go() {li.push(1);} function turn_left() {li.push(2);} function turn_right() {li.push(3);} function myFunc() {",
+      footer: " return li.join(',');} myFunc();"
+    }
+  }
+
   // initBehavior() {
   //   var beh = 
   //   this.head = beh
@@ -15,10 +23,9 @@ class Programming extends Component {
   parseCode(code) {
     //parse code to actionlist
     console.log(code)
-    var header = "li = []; function go() {li.push(1);} function myFunc() {"
-    var myInterpreter = new Interpreter(header+code+" return li.join(',');} myFunc();")
+    var myInterpreter = new Interpreter(this.state.header+code+this.state.footer)
     myInterpreter.run()
-    alert(myInterpreter.value)
+    // alert(myInterpreter.value)
     var result = myInterpreter.value  //a string
     var list = result.split(",")
     console.log("js result: "+list)
@@ -34,13 +41,15 @@ class Programming extends Component {
 
   render() {
     return (
-      <div className='container'>
-        <div>
-          <TaskGuide />
-        </div>
-        <div>
-          <BlocklyPad 
-          onCodeSubmit={this.handleCodeSubmit.bind(this)}/>
+      <div className='programming'>
+        <div className='container'>
+          <div>
+            <TaskGuide />
+          </div>
+          <div>
+            <BlocklyPad 
+            onCodeSubmit={this.handleCodeSubmit.bind(this)}/>
+          </div>
         </div>
       </div>
     )
