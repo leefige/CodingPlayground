@@ -2,20 +2,20 @@
 module.exports = app => {
     class UserController extends app.Controller {
         async signup() {
-            const result = this.ctx.service.user.signup();
-            /*this.ctx.body = result;/*{
-                    name: 'egg',
-                    category: 'framework',
-                    language: 'Node.js',
-                };*/
-           
+            const body = this.ctx.request.body;
+            const result = await this.ctx.service.user.signup(body);
+            this.ctx.body = {
+                judge: result,
+            };
       }
       
         async login(){
-            const result = this.ctx.service.user.login();
-            this.ctx.body = `body: ${this.ctx.request.body}`;
-            }
+            const result = await this.ctx.service.user.login();
+            this.ctx.body = {
+                judge: result,
+            };
         }
+    }
     return UserController;
 };
 
