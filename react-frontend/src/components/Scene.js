@@ -5,7 +5,7 @@ class Scene extends Component {
   render() {
     return (
           <div className='scene'>
-            <Game actionList = {this.props.actionList}/>
+            <Game actionList={this.props.actionList} onActionFinish={this.props.onActionFinish.bind(this)}/>
           </div>
     )
   }
