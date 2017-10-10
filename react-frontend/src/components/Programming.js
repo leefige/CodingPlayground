@@ -14,29 +14,29 @@ class Programming extends Component {
       footer: " return li.join(',');} myFunc();"
     }
   }
-
-  // initBehavior() {
-  //   var beh = 
-  //   this.head = beh
-  // }
   
   parseCode(code) {
     //parse code to actionlist
     console.log(code)
-    var myInterpreter = new Interpreter(this.state.header+code+this.state.footer)
-    myInterpreter.run()
-    // alert(myInterpreter.value)
-    var result = myInterpreter.value  //a string
-    var list = result.split(",")
-    console.log("js result: "+list)
-    return list
-    // return [1, 1]
+    try{
+      var myInterpreter = new Interpreter(this.state.header+code+this.state.footer)
+      myInterpreter.run()
+      var result = myInterpreter.value  //a string
+      var list = result.split(",")
+      console.log("js result: "+list)
+      return list
+    }
+    catch (err) {
+      alert('Invalid input!')
+      console.log("err: "+err)
+      return []
+    }
   }
 
   handleCodeSubmit(code) {
     console.log("in handleCodeSubmit: "+code)
     const actionList = this.parseCode(code)
-    this.props.onCodeSubmit(actionList)//回调函数，由父类实现
+    this.props.onCodeSubmit(actionList)
   }
 
   render() {
