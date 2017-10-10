@@ -17,12 +17,18 @@ class CodeGameContent extends Component {
     })
   }
 
+  handleActionFinish() {
+    this.setState({
+      actionList: []
+    })
+  }
+
   render() {
     return (
       //<div className='code-game-content'>
         <div className='row'>
           <div className='col-xs-12 col-md-6'>
-            <Scene actionList = {this.state.actionList}/>
+            <Scene actionList={this.state.actionList} onActionFinish={this.handleActionFinish.bind(this)}/>
           </div>
           <div className='col-xs-12 col-md-6 col-md-offset-6'>
             <Programming onCodeSubmit={this.handleCodeSubmit.bind(this)}/>

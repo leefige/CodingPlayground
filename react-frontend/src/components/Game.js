@@ -31,29 +31,20 @@ function Square(props) {
 }
 
 class Board extends React.Component {
-  renderSquare(i) {
-    var rows = [];
-    for (let j = 0; j < this.props.size; j++) {
-      const pos = i + j == this.props.curPos ? true : false;
-      rows.push(<Square
-        pos={pos}
-        dir={this.props.dir}
-        />);
-    }
-    return rows;
-  }
+  renderSquare = i => Object.keys(Array.from(Array(this.props.size))).map((_, j) => (
+    <Square pos={i + j == this.props.curPos} dir={this.props.dir} />
+  ))
 
   render() {
-    var cols = [];
-    for (let i = 0; i < this.props.size; i++)
-      cols.push(<div className="board-row">
-        {this.renderSquare(i * this.props.size)}
-        </div>);
     return (
       <div>
-        {cols}
+        {Object.keys(Array.from(Array(this.props.size))).map((_, i) => (
+          <div className="board-row">
+            {this.renderSquare(i * this.props.size)}
+          </div>
+        ))}
       </div>
-    );
+    )
   }
 }
 
@@ -71,19 +62,19 @@ class Game extends React.Component {
       size: 9,
       curTestStep: 0,
       curStep: 0,
-      actionList: this.props.actionList
     };
   }
 
   exec_action_list() {
-    console.log(this.state.actionList)
-    if (this.state.curStep >= this.state.actionList.length) {
-      clearInterval(this.interval);
-      this.setState({actionList: []})
+    console.log(this.props.actionList)
+    if (this.state.curStep >= this.props.actionList.length) {
+      this.props.onActionFinish();
+      this.setState({acionList: []});
       this.finished = true;
+      clearInterval(this.interval);
     }
     else {
-      let execId = this.state.actionList[this.state.curStep];
+      let execId = this.props.actionList[this.state.curStep];
       if (execId == 1)
         this.go();
       else if (execId == 2)
@@ -96,7 +87,7 @@ class Game extends React.Component {
   }
 
   go() {
-    console.log(this.state.actionList)
+    console.log(this.props.actionList)
     if (this.state.dir == 0) 
       this.setState({curPos: this.state.curPos - this.state.size});
     else if (this.state.dir == 1)
@@ -115,20 +106,11 @@ class Game extends React.Component {
     this.setState({dir: (this.state.dir + 1) % 4})
   }
 
-  test() {
-    this.setState({curTestStep: (this.state.curTestStep + 1) % 8});
-    console.log(this.state.curTestStep);
-    if (this.state.curTestStep % 2 == 0)
-      this.go();
-    else
-      this.turn_left();
-  }
-
   init() {
     console.log(this.finished);
     if (this.finished) {
       this.finished = false;
-      this.setState({curStep: 0, actionList: this.props.actionList});
+      this.setState({curStep: 0});
       this.interval = setInterval(() => this.exec_action_list(), 1000);
     }
   }
@@ -136,8 +118,8 @@ class Game extends React.Component {
   render() {
     this.init();
 
-    let pos = "current position: (" + Math.floor(this.state.curPos / 9) + ', ' + this.state.curPos % 9 + ')';
-    let dir = "current dir: " + this.state.dir;
+    const pos = "current position: (" + Math.floor(this.state.curPos / 9) + ', ' + this.state.curPos % 9 + ')';
+    const dir = "current dir: " + this.state.dir;
     return (
       <div className="game">
         <div className="game-board">
@@ -163,12 +145,6 @@ class Game extends React.Component {
             Turn Right
           </button>
           <br/>
-          <button onClick={() => this.interval = setInterval(() => this.test(), 1000)}>
-            Test
-          </button>
-          <button onClick={() => clearInterval(this.interval)}>
-            Stop
-          </button>
         </div>
       </div>
     );
