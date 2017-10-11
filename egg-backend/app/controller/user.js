@@ -3,6 +3,7 @@ module.exports = app => {
     class UserController extends app.Controller {
         async signup() {
             const body = this.ctx.request.body;
+            console.log(body);
             const result = await this.ctx.service.user.signup(body);
             this.ctx.body = {
                 judge: result,
