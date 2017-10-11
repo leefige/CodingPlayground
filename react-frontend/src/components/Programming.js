@@ -6,20 +6,16 @@ import Interpreter from './JSInterpreter/interpreter'
 require('./JSInterpreter/behavior.js')
 
 class Programming extends Component {
-
-  constructor() {
-    super()
-    this.state = {
-      header: "li = []; function go() {li.push(1);} function turn_left() {li.push(2);} function turn_right() {li.push(3);} function myFunc() {",
-      footer: " return li.join(',');} myFunc();"
-    }
+  static defaultProps = {
+    header: "li = []; function go() {li.push(1);} function turn_left() {li.push(2);} function turn_right() {li.push(3);} function myFunc() {",
+    footer: " return li.join(',');} myFunc();"
   }
-  
+    
   parseCode(code) {
     //parse code to actionlist
     console.log(code)
     try{
-      var myInterpreter = new Interpreter(this.state.header+code+this.state.footer)
+      var myInterpreter = new Interpreter(this.props.header+code+this.props.footer)
       myInterpreter.run()
       var result = myInterpreter.value  //a string
       var list = result.split(",")
