@@ -77,3 +77,7 @@ table {
   height: 100%;
   width: 100%;
 }
+
+.pad {
+  height: 300px; 
+}
