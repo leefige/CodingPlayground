@@ -21,6 +21,96 @@
     -->
     <title>React App</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.3/react.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.3/react-dom.js"></script>
+    <script src="./Blockly/blockly_compressed.js"></script>
+    <script src="./Blockly/blocks_compressed.js"></script>
+    <script src="./Blockly/zh-hans.js"></script>
+    <script src="./react-blockly-component/dist/react-blockly-component.js"></script>
+  
+    <style type="text/css">
+    .fill-height {
+      height: 100%;
+    }
+    </style>
+  
+    <script type="text/javascript">
+      window.addEventListener('load', function() {
+        var editor = React.createElement(ReactBlocklyComponent.BlocklyEditor, {
+          workspaceConfiguration: {
+            grid: {
+              spacing: 20,
+              length: 3,
+              colour: '#ccc',
+              snap: true
+            }
+          },
+          toolboxCategories: [
+            {
+              name: "Controls",
+              blocks: [
+                { type: "controls_if" },
+                {
+                  type: "controls_repeat_ext",
+                  values: {
+                    "TIMES": {
+                      type: "math_number",
+                      shadow: true,
+                      fields: {
+                        "NUM": 10
+                      }
+                    }
+                  },
+                  statements: {
+                    "DO": {
+                      type: "text_print",
+                      shadow: true,
+                      values: {
+                        "TEXT": {
+                          type: "text",
+                          shadow: true,
+                          fields: {
+                            "TEXT": "abc"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              name: "Text",
+              blocks: [
+                { type: "text" },
+                {
+                  type: "text_print",
+                  values: {
+                    "TEXT": {
+                      type: "text",
+                      shadow: true,
+                      fields: {
+                        "TEXT": "abc"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          ],
+          initialXml: '<xml xmlns="http://www.w3.org/1999/xhtml"><block type="text" x="70" y="30"><field name="TEXT"></field></block></xml>',
+          wrapperDivClassName: 'fill-height',
+          xmlDidChange: function(newXml) {
+            // document.getElementById('generated-xml').innerText = newXml;
+          }
+        });
+        ReactDOM.render(editor, document.getElementById('blockly'));
+        console.log('element: ', document.getElementById('blockly'));
+      });
+    </script>
+  
   </head>
     <div id="root"></div>
     <!--
