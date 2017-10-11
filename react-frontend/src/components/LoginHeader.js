@@ -30,17 +30,17 @@ class SignupHeader extends Component {
     }
 	}
 	async handleLogin() {
+		let formData = new FormData();
+		formData.append('id', this.state.email);
+		formData.append('password', this.state.password);
 		fetch('http://127.0.0.1:7001/user/login', {
 			method: 'POST',
 			mode: 'cors',
 			headers: {
 				'Accept': 'application/json',
-				'Content-Type': 'application/json',
+				'Content-Type': "application/x-www-form-urlencoded; charset=utf-8",
 			},
-			body: JSON.stringify({
-				"id": this.state.email,
-				"password": this.state.password,
-			})
+			body: formData
 		})
 		.then((response) => response.json())
 		.then((responseJson) => {
@@ -57,17 +57,19 @@ class SignupHeader extends Component {
 
 	async handleSignup() {
 		console.log(this.state.email)
+		let formData = new FormData();
+		formData.append('id', this.state.email);
+		formData.append('password', this.state.password);
+
+
 		fetch('http://127.0.0.1:7001/user/signup', {
 			method: 'POST',
-			mode: 'no-cors',
+			mode: 'cors',
 			headers: {
 				'Accept': 'application/json',
-				'Content-Type': 'application/json',
+				'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
 			},
-			body: JSON.stringify({
-				"id": this.state.email,
-				"password": this.state.password,
-			})
+			body: formData
 		})
 		.then((response) => response.json())
 		.then((responseJson) => {
