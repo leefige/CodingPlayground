@@ -10,7 +10,7 @@ class Programming extends Component {
     header: "li = []; function go() {li.push(1);} function turn_left() {li.push(2);} function turn_right() {li.push(3);} function myFunc() {",
     footer: " return li.join(',');} myFunc();"
   }
-    
+
   parseCode(code) {
     //parse code to actionlist
     console.log(code)

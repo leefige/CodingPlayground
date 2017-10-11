@@ -1,7 +1,7 @@
 
 module.exports = app => {
     class UserService extends app.Service {
-        async signup(body) {
+        async signup(_id, _password) {
             const co = require('co');
             app.mysql.insert = co.wrap(app.mysql.insert);
             // 如果想要直接用 query 方法，需要绑定 this 为 app.mysql
@@ -18,9 +18,9 @@ module.exports = app => {
             ");";
     
             await query(sql);
-            const is_insert = await get('user', {id: body.id, password: body.password});
+            const is_insert = await get('user', {id: _id, password: _password});
             if(is_insert == null){
-                const result = await insert('user', {id: body.id, password: body.password});
+                const result = await insert('user', {id: _id, password: _password});
                 // 判断插入成功
                 const insertSuccess = result.affectedRows === 1;
                 return insertSuccess;
@@ -30,12 +30,12 @@ module.exports = app => {
             }
         }
 
-        async login(){
+        async login(_id, _password){
             const co = require('co');
             app.mysql.get = co.wrap(app.mysql.get);
             const get = co.wrap(app.mysql.get).bind(app.mysql);
             const body = this.ctx.request.body;
-            const result = await get('user', {id: body.id, password: body.password});
+            const result = await get('user', {id: _id, password: _password});
             if(result == null)
                 return false;
             else

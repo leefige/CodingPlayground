@@ -11,10 +11,11 @@ class CodeGameApp extends Component {
       username:'卡尔',
     }
   }
-  handleLogin() {
+  handleLogin(username) {
     console.log("login")
     this.setState({
-      isLogin:true
+      isLogin:true,
+      username:username
     })
   }
 

@@ -3,10 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "es6-promise": "^4.1.1",
+    "isomorphic-fetch": "^2.2.1",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-native-filesystem": "^0.1.0",
-    "react-scripts": "1.0.14"
+    "react-scripts": "1.0.14",
+    "react-blockly-component": "2.0.1"
   },
   "scripts": {
     "start": "react-scripts start",

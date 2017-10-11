@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+// import ReactBlocklyComponent from 'react-blockly-component'
 
 class BlocklyPad extends Component {
 
@@ -47,6 +48,9 @@ class BlocklyPad extends Component {
             onClick = {this.handleCodeSubmit.bind(this)}>
             运行
           </button>
+        </div>
+
+        <div id="blockly" className='pad'>
         </div>
       </div>
 
