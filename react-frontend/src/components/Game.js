@@ -31,41 +31,59 @@ function Square(props) {
 }
 
 class Board extends React.Component {
-  renderSquare(i) {
-    var rows = [];
-    for (let j = 0; j < this.props.size; j++) {
-      const pos = i + j == this.props.curPos ? true : false;
-      rows.push(<Square
-        pos={pos}
-        dir={this.props.dir}
-        />);
-    }
-    return rows;
-  }
+  renderSquare = i => Object.keys(Array.from(Array(this.props.size))).map((_, j) => (
+    <Square pos={i + j == this.props.curPos} dir={this.props.dir} />
+  ))
 
   render() {
-    var cols = [];
-    for (let i = 0; i < this.props.size; i++)
-      cols.push(<div className="board-row">
-        {this.renderSquare(i * this.props.size)}
-        </div>);
     return (
       <div>
-        {cols}
+        {Object.keys(Array.from(Array(this.props.size))).map((_, i) => (
+          <div className="board-row">
+            {this.renderSquare(i * this.props.size)}
+          </div>
+        ))}
       </div>
-    );
+    )
   }
 }
 
 class Game extends React.Component {
-  constructor() {
-    super();
+
+  constructor(props) {
+    console.log("constructor");
+    super(props);
+
+    this.finished = true;
     
     this.state = {
       curPos: 40,
       dir: 0,
-      size: 9
+      size: 9,
+      curTestStep: 0,
+      curStep: 0,
     };
+  }
+
+  exec_action_list() {
+    console.log(this.props.actionList)
+    if (this.state.curStep >= this.props.actionList.length) {
+      this.props.onActionFinish();
+      this.setState({acionList: []});
+      this.finished = true;
+      clearInterval(this.interval);
+    }
+    else {
+      let execId = this.props.actionList[this.state.curStep];
+      if (execId == 1)
+        this.go();
+      else if (execId == 2)
+        this.turn_left();
+      else if (execId == 3)
+        this.turn_right();
+
+      this.setState({curStep: this.state.curStep + 1});
+    }
   }
 
   go() {
@@ -80,9 +98,28 @@ class Game extends React.Component {
       this.setState({curPos: this.state.curPos - 1})
   }
 
+  turn_left() {
+    this.setState({dir: (this.state.dir + 3) % 4})
+  }
+
+  turn_right() {
+    this.setState({dir: (this.state.dir + 1) % 4})
+  }
+
+  init() {
+    console.log(this.finished);
+    if (this.finished) {
+      this.finished = false;
+      this.setState({curStep: 0});
+      this.interval = setInterval(() => this.exec_action_list(), 1000);
+    }
+  }
+
   render() {
-    let pos = "current position: (" + Math.floor(this.state.curPos / 9) + ', ' + this.state.curPos % 9 + ')';
-    let dir = "current dir: " + this.state.dir;
+    this.init();
+
+    const pos = "current position: (" + Math.floor(this.state.curPos / 9) + ', ' + this.state.curPos % 9 + ')';
+    const dir = "current dir: " + this.state.dir;
     return (
       <div className="game">
         <div className="game-board">
@@ -101,12 +138,13 @@ class Game extends React.Component {
           <button onClick={() => this.go()}>
             Go
           </button>
-          <button onClick={() => this.setState({dir: (this.state.dir + 3) % 4})}>
+          <button onClick={() => this.turn_left()}>
             Turn Left
           </button>
-          <button onClick={() => this.setState({dir: (this.state.dir + 1) % 4})}>
+          <button onClick={() => this.turn_right()}>
             Turn Right
           </button>
+          <br/>
         </div>
       </div>
     );

@@ -6,20 +6,29 @@ class CodeGameContent extends Component {
   constructor() {
     super()
     this.state = {
-      actionList:"actionList"
+      actionList: [],
     }
   }
-  handleCodeSubmit(actionList) {
+
+  handleCodeSubmit(_actionList) {
+    console.log("handleCodeSubmit")
     this.setState({
-      actionList: "actionList"
+      actionList: _actionList,
     })
   }
+
+  handleActionFinish() {
+    this.setState({
+      actionList: []
+    })
+  }
+
   render() {
     return (
       //<div className='code-game-content'>
         <div className='row'>
           <div className='col-xs-12 col-md-6'>
-            <Scene actionList = {this.state.actionList}/>
+            <Scene actionList={this.state.actionList} onActionFinish={this.handleActionFinish.bind(this)}/>
           </div>
           <div className='col-xs-12 col-md-6 col-md-offset-6'>
             <Programming onCodeSubmit={this.handleCodeSubmit.bind(this)}/>
