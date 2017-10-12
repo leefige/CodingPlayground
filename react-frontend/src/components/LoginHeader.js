@@ -44,15 +44,18 @@ class SignupHeader extends Component {
 		})
 		.then((response) => response.json())
 		.then((responseJson) => {
-			if (responseJson.signup_success)
+			if (responseJson.signup_success){
+				this.props.onLogin(this.state.email)
 				console.log("Login success!")
+			}
+				
 			else
 				console.log("Login failed!")
 		})
 		.catch((error) => {
 			console.error(error);
 		});
-		this.props.onLogin(this.state.email)
+		//this.props.onLogin(this.state.email)
 	}
 
 	async handleSignup() {
