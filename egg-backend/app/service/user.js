@@ -18,7 +18,7 @@ module.exports = app => {
             ");";
     
             await query(sql);
-            const is_insert = await get('user', {id: _id, password: _password});
+            const is_insert = await get('user', {id: _id});
             if(is_insert == null){
                 const result = await insert('user', {id: _id, password: _password});
                 // 判断插入成功
