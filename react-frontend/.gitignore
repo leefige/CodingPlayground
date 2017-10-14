@@ -3,6 +3,8 @@
 # dependencies
 /node_modules
 
+/.idea
+
 # testing
 /coverage
 
@@ -10,6 +12,8 @@
 /build
 
 # misc
+package-lock.json
+.vscode
 .DS_Store
 .env.local
 .env.development.local
