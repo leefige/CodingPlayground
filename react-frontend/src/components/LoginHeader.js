@@ -38,9 +38,13 @@ class SignupHeader extends Component {
 			mode: 'cors',
 			headers: {
 				'Accept': 'application/json',
-				'Content-Type': "application/x-www-form-urlencoded; charset=utf-8",
+				'Content-Type': "application/json; charset=utf-8",
 			},
-			body: formData
+			body: JSON.stringify({
+				id: this.state.email,
+				password: this.state.password,
+			})
+			//body: formData
 		})
 		.then((response) => response.json())
 		.then((responseJson) => {
@@ -70,9 +74,13 @@ class SignupHeader extends Component {
 			mode: 'cors',
 			headers: {
 				'Accept': 'application/json',
-				'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
+				'Content-Type': 'application/json; charset=utf-8',
 			},
-			body: formData
+			body: JSON.stringify({
+				id: this.state.email,
+				password: this.state.password,
+			})
+			//body: formData
 		})
 		.then((response) => response.json())
 		.then((responseJson) => {
