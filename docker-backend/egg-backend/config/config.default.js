@@ -5,10 +5,10 @@
      // middleware: [ 'isLogin' ],
      mysql: {
       client: {
-       host: 'localhost',
+       host: 'db',
        port: '3306',
-       user: 'test',
-       password: '123456',
+       user: 'root',
+       password: 'newpass',
        database: 'world',
       },
       app: true,
