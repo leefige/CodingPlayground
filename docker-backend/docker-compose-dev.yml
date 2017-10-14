@@ -1,0 +1,27 @@
+version: '2'
+services:
+  egg:
+    restart: always
+    build:
+      context: egg-backend
+      dockerfile: Dockerfile
+    command: npm run dev
+    depends_on:
+      - db
+    volumes:
+      - ./egg-backend:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - "7001:7001"
+  db:
+    image: mysql:5.7
+    hostname: db
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=newpass
+      - FOREIGN_KEY_CHECKS=0
+      - MYSQL_DATABASE=world
+    volumes:
+      - ./db:/var/lib/mysql
+      - ./mysql/my.cnf:/etc/mysql/my.cnf

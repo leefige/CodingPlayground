@@ -1,7 +1,16 @@
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
 # dependencies
-/node_modules
+react-frontend/node_modules
+docker-backend/egg-backend/node_modules
+
+docker-backend/egg-backend/run/*
+docker-backend/egg-backend/package-lock.json
+docker-backend/egg-backend/logs/*
+docker-backend/db
+
+react-frontend/.idea
+react-frontend/.vscode
 
 # testing
 /coverage
@@ -22,10 +31,3 @@ yarn-error.log*
 
 # vscode
 /.vs
-
-
-#egg-backend
-egg-backend/node_modules/*
-egg-backend/run/*
-egg-backend/package-lock.json
-egg-backend/logs/*
