@@ -1,0 +1,6 @@
+egg-backend/node_modules
+
+egg-backend/run/*
+egg-backend/package-lock.json
+egg-backend/logs/*
+db
