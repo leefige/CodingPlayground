@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react';
 import charactor_up from './img/charactor-up.jpg';
 import charactor_down from './img/charactor-down.jpg';
 import charactor_left from './img/charactor-left.jpg';
@@ -9,13 +8,13 @@ import './Game.css'
 class Charactor extends React.Component {
   render() {
     let charactor;
-    if (this.props.value == 0) charactor = charactor_up;
-    else if (this.props.value == 1) charactor = charactor_right;
-    else if (this.props.value == 2) charactor = charactor_down;
+    if (this.props.value === 0) charactor = charactor_up;
+    else if (this.props.value === 1) charactor = charactor_right;
+    else if (this.props.value === 2) charactor = charactor_down;
     else charactor = charactor_left;
     return (
       <div>
-        <img src={charactor} className="charactor-pic"/>
+        <img src={charactor} alt="charactor" className="charactor-pic"/>
       </div>
     )
   }
@@ -32,7 +31,7 @@ function Square(props) {
 
 class Board extends React.Component {
   renderSquare = i => Object.keys(Array.from(Array(this.props.size))).map((_, j) => (
-    <Square pos={i + j == this.props.curPos} dir={this.props.dir} />
+    <Square pos={i + j === this.props.curPos} dir={this.props.dir} />
   ))
 
   render() {
@@ -75,11 +74,11 @@ class Game extends React.Component {
     }
     else {
       let execId = this.props.actionList[this.state.curStep];
-      if (execId == 1)
+      if (execId === 1)
         this.go();
-      else if (execId == 2)
+      else if (execId === 2)
         this.turn_left();
-      else if (execId == 3)
+      else if (execId === 3)
         this.turn_right();
 
       this.setState({curStep: this.state.curStep + 1});
@@ -88,13 +87,13 @@ class Game extends React.Component {
 
   go() {
     console.log(this.props.actionList)
-    if (this.state.dir == 0) 
+    if (this.state.dir === 0) 
       this.setState({curPos: this.state.curPos - this.state.size});
-    else if (this.state.dir == 1)
+    else if (this.state.dir === 1)
       this.setState({curPos: this.state.curPos + 1});
-    else if (this.state.dir == 2)
+    else if (this.state.dir === 2)
       this.setState({curPos: this.state.curPos + this.state.size})
-    else if (this.state.dir == 3)
+    else if (this.state.dir === 3)
       this.setState({curPos: this.state.curPos - 1})
   }
 
