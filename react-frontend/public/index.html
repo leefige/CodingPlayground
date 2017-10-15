@@ -157,20 +157,6 @@
         document.getElementById('code_textarea').value=code;
       }
     </script>
-
-    <script>
-      window.addEventListener('load', function() {
-          editor,
-          ReactDOM.render(
-            <button type="submit" 
-              className="btn btn-outline-primary" 
-              onClick = {this.handleCodeSubmit.bind(this)}>
-              生成
-            </button>, 
-            document.getElementById('parse_code'));
-          console.log('element: ', document.getElementById('parse_code'));
-        });
-    </script>
   
   </head>
   <body>

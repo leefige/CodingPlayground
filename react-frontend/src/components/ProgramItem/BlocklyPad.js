@@ -31,6 +31,9 @@ class BlocklyPad extends Component {
     const codeGenerated = this.genCode()
     document.getElementById('gen_code').click()
     var mycode = document.getElementById('code_textarea').value
+    this.setState({
+      code: mycode
+    })
     this.props.onCodeSubmit(mycode)//回调函数，由父类实现
     console.log("codeGen: "+mycode)
   }
