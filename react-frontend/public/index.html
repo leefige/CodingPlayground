@@ -21,95 +21,146 @@
     -->
     <title>React App</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
-  
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.3/react.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.3/react-dom.js"></script>
-    <script src="./Blockly/blockly_compressed.js"></script>
-    <script src="./Blockly/blocks_compressed.js"></script>
-    <script src="./Blockly/zh-hans.js"></script>
-    <script src="./react-blockly-component/dist/react-blockly-component.js"></script>
-  
+    <script src="https://leefige.github.io/blockly_provider/Blockly/blockly_compressed.js"></script>
+    <script src="https://leefige.github.io/blockly_provider/Blockly/javascript_compressed.js"></script>
+    <script src="https://leefige.github.io/blockly_provider/Blockly/blocks_compressed.js"></script>
+    <script src="https://leefige.github.io/blockly_provider/Blockly/zh-hans.js"></script>
+    <script src="https://leefige.github.io/blockly_provider/react-blockly-component/dist/react-blockly-component.js"></script>
+
     <style type="text/css">
     .fill-height {
       height: 100%;
     }
     </style>
+
+<xml id="toolbox" style="display: none">
+  <category name="Logic">
+    <block type="controls_if"></block>
+    <block type="logic_compare"></block>
+    <block type="logic_operation"></block>
+    <block type="logic_negate"></block>
+    <block type="logic_boolean"></block>
+  </category>
+  <category name="Loops">
+    <block type="controls_repeat_ext">
+      <value name="TIMES">
+        <block type="math_number">
+          <field name="NUM">10</field>
+        </block>
+      </value>
+    </block>
+    <block type="controls_whileUntil"></block>
+  </category>
+  <category name="Math">
+    <block type="math_number"></block>
+    <block type="math_arithmetic"></block>
+    <block type="math_single"></block>
+  </category>
+  <category name="Text">
+    <block type="text"></block>
+    <block type="text_length"></block>
+    <block type="text_print"></block>
+  </category>
+</xml>
   
     <script type="text/javascript">
-      window.addEventListener('load', function() {
-        var editor = React.createElement(ReactBlocklyComponent.BlocklyEditor, {
-          workspaceConfiguration: {
-            grid: {
-              spacing: 20,
-              length: 3,
-              colour: '#ccc',
-              snap: true
-            }
-          },
-          toolboxCategories: [
-            {
-              name: "Controls",
-              blocks: [
-                { type: "controls_if" },
-                {
-                  type: "controls_repeat_ext",
-                  values: {
-                    "TIMES": {
-                      type: "math_number",
-                      shadow: true,
-                      fields: {
-                        "NUM": 10
+      function genEditor() {
+        var editor = React.createElement(ReactBlocklyComponent.BlocklyWorkspace, {
+            workspaceConfiguration: {
+              grid: {
+                spacing: 20,
+                length: 3,
+                colour: '#ccc',
+                snap: true
+              }
+            },
+            toolboxCategories: [
+              {
+                name: "Controls",
+                blocks: [
+                  { type: "controls_if" },
+                  {
+                    type: "controls_repeat_ext",
+                    values: {
+                      "TIMES": {
+                        type: "math_number",
+                        shadow: true,
+                        fields: {
+                          "NUM": 10
+                        }
                       }
-                    }
-                  },
-                  statements: {
-                    "DO": {
-                      type: "text_print",
-                      shadow: true,
-                      values: {
-                        "TEXT": {
-                          type: "text",
-                          shadow: true,
-                          fields: {
-                            "TEXT": "abc"
+                    },
+                    statements: {
+                      "DO": {
+                        type: "text_print",
+                        shadow: true,
+                        values: {
+                          "TEXT": {
+                            type: "text",
+                            shadow: true,
+                            fields: {
+                              "TEXT": "abc"
+                            }
                           }
                         }
                       }
                     }
                   }
-                }
-              ]
-            },
-            {
-              name: "Text",
-              blocks: [
-                { type: "text" },
-                {
-                  type: "text_print",
-                  values: {
-                    "TEXT": {
-                      type: "text",
-                      shadow: true,
-                      fields: {
-                        "TEXT": "abc"
+                ]
+              },
+              {
+                name: "Text",
+                blocks: [
+                  { type: "text" },
+                  {
+                    type: "text_print",
+                    values: {
+                      "TEXT": {
+                        type: "text",
+                        shadow: true,
+                        fields: {
+                          "TEXT": "abc"
+                        }
                       }
                     }
                   }
-                }
-              ]
+                ]
+              }
+            ],
+            initialXml: '<xml xmlns="http://www.w3.org/1999/xhtml"><block type="text" x="70" y="30"><field name="TEXT"></field></block></xml>',
+            wrapperDivClassName: 'fill-height',
+            xmlDidChange: function(newXml) {
+              // document.getElementById('generated-xml').innerText = newXml;
             }
-          ],
-          initialXml: '<xml xmlns="http://www.w3.org/1999/xhtml"><block type="text" x="70" y="30"><field name="TEXT"></field></block></xml>',
-          wrapperDivClassName: 'fill-height',
-          xmlDidChange: function(newXml) {
-            // document.getElementById('generated-xml').innerText = newXml;
-          }
+          });
+          // editor.importFromXml(document.getElementById('toolbox'));
+        window.addEventListener('load', function() {
+          editor,
+          ReactDOM.render(editor, document.getElementById('blockly'));
+          console.log('element: ', document.getElementById('blockly'));
         });
-        ReactDOM.render(editor, document.getElementById('blockly'));
-        console.log('element: ', document.getElementById('blockly'));
-      });
+        return editor.state.workspace;
+      }
+
+      var editor = genEditor();
+      function index_genCode() {
+        Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+        var code = Blockly.JavaScript.workspaceToCode(editor);
+        alert(code);
+      }
     </script>
+
+    <script type="text/javascript">
+      
+    </script>
+
   
   </head>
     <div id="root"></div>
@@ -123,8 +174,7 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+    
+    
   </body>
 </html>
