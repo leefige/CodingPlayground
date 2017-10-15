@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Scene from './Scene'
 import Programming from './Programming'
+import Canvas from './Canvas'
 
 class CodeGameContent extends Component {
   constructor() {
@@ -26,6 +27,7 @@ class CodeGameContent extends Component {
   render() {
     return (
       //<div className='code-game-content'>
+      <div>
         <div className='row'>
           <div className='col-xs-12 col-md-6'>
             <Scene actionList={this.state.actionList} onActionFinish={this.handleActionFinish.bind(this)}/>
@@ -34,6 +36,8 @@ class CodeGameContent extends Component {
             <Programming onCodeSubmit={this.handleCodeSubmit.bind(this)}/>
           </div>
         </div>
+        <Canvas zoomLevel={1.0}/>
+      </div>
     )
   }
 }
