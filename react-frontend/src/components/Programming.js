@@ -13,24 +13,20 @@ class Programming extends Component {
 
   parseCode(code) {
     //parse code to actionlist
-    console.log(code)
     try{
       var myInterpreter = new Interpreter(this.props.header+code+this.props.footer)
       myInterpreter.run()
       var result = myInterpreter.value  //a string
       var list = result.split(",")
-      console.log("js result: "+list)
       return list
     }
     catch (err) {
       alert('Invalid input!')
-      console.log("err: "+err)
       return []
     }
   }
 
   handleCodeSubmit(code) {
-    console.log("in handleCodeSubmit: "+code)
     const actionList = this.parseCode(code)
     this.props.onCodeSubmit(actionList)
   }
