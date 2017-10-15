@@ -16,6 +16,7 @@ class BlocklyPad extends Component {
     this.setState({
       code: event.target.value
     })
+    console.log("value: ", document.getElementById('code_textarea').value)
   }
 
   // following funcs can also be used in blockly version
@@ -28,7 +29,13 @@ class BlocklyPad extends Component {
 
   handleCodeSubmit() {
     const codeGenerated = this.genCode()
-    this.props.onCodeSubmit(codeGenerated)//回调函数，由父类实现
+    document.getElementById('gen_code').click()
+    var mycode = document.getElementById('code_textarea').value
+    this.setState({
+      code: mycode
+    })
+    this.props.onCodeSubmit(mycode)//回调函数，由父类实现
+    console.log("codeGen: "+mycode)
   }
 
   render() {
@@ -36,9 +43,13 @@ class BlocklyPad extends Component {
       <div>
         <div>输入代码</div>
         <div>
-          <textarea className='code_input'
+          <textarea id='code_textarea' className='code_input'
             value={this.state.code}
             onChange={this.handleCodeChange.bind(this)} />
+        </div>
+
+        <div id='parse_code' className='text-right'>
+          
         </div>
 
         <div className='text-right'>
