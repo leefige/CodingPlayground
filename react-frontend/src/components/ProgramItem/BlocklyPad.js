@@ -16,7 +16,6 @@ class BlocklyPad extends Component {
     this.setState({
       code: event.target.value
     })
-    console.log("value: ", document.getElementById('code_textarea').value)
   }
 
   // following funcs can also be used in blockly version
@@ -38,6 +37,12 @@ class BlocklyPad extends Component {
     console.log("codeGen: "+mycode)
   }
 
+  runFromTextarea() {
+    const codeGenerated = this.genCode()
+    this.props.onCodeSubmit(codeGenerated)//回调函数，由父类实现
+    console.log("codeGen: "+codeGenerated)
+  }
+
   render() {
     return (
       <div>
@@ -48,17 +53,28 @@ class BlocklyPad extends Component {
             onChange={this.handleCodeChange.bind(this)} />
         </div>
 
-        <div id='parse_code' className='text-right'>
-          
-        </div>
+          <div id='parse_code' className='text-right'>
+            
+          </div>
 
-        <div className='text-right'>
-          <button type="submit" 
-            className="btn btn-outline-primary" 
-            onClick = {this.handleCodeSubmit.bind(this)}>
-            运行
-          </button>
-        </div>
+          <div className='text-right'>
+          <span className='text-right'>
+            <button type="submit" 
+              className="btn btn-outline-primary" 
+              onClick = {this.runFromTextarea.bind(this)}>
+              运行文本
+            </button>
+          </span>
+
+          <span className='text-right'>
+            <button type="submit" 
+              className="btn btn-outline-primary" 
+              onClick = {this.handleCodeSubmit.bind(this)}>
+              生成并运行
+            </button>
+          </span>
+
+          </div>
 
         <div id="blockly" className='pad'>
         </div>
