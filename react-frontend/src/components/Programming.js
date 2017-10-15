@@ -14,8 +14,10 @@ class Programming extends Component {
   parseCode(code) {
     //parse code to actionlist
     console.log(code)
+    var finalCode = this.props.header+code+this.props.footer
+    console.log("finalCode: "+finalCode)
     try{
-      var myInterpreter = new Interpreter(this.props.header+code+this.props.footer)
+      var myInterpreter = new Interpreter(finalCode)
       myInterpreter.run()
       var result = myInterpreter.value  //a string
       var list = result.split(",")

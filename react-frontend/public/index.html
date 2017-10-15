@@ -146,7 +146,7 @@
           ReactDOM.render(editor, document.getElementById('blockly'));
           console.log('element: ', document.getElementById('blockly'));
         });
-        return editor.state.workspace;
+        // return editor.state.workspace;
       }
 
       var editor = genEditor();
@@ -154,15 +154,26 @@
         Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
         var code = Blockly.JavaScript.workspaceToCode(editor);
         alert(code);
+        document.getElementById('code_textarea').value=code;
       }
     </script>
 
-    <script type="text/javascript">
-      
+    <script>
+      window.addEventListener('load', function() {
+          editor,
+          ReactDOM.render(
+            <button type="submit" 
+              className="btn btn-outline-primary" 
+              onClick = {this.handleCodeSubmit.bind(this)}>
+              生成
+            </button>, 
+            document.getElementById('parse_code'));
+          console.log('element: ', document.getElementById('parse_code'));
+        });
     </script>
-
   
   </head>
+  <body>
     <div id="root"></div>
     <!--
       This HTML file is a template.
@@ -174,7 +185,12 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
-    
+    <button id='gen_code' type="submit" 
+      className="btn btn-outline-primary" 
+      onClick = "index_genCode()"
+      style="background-color:#666666; display:none;">
+      生成
+    </button>
     
   </body>
 </html>
