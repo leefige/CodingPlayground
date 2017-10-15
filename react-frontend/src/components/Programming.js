@@ -13,7 +13,6 @@ class Programming extends Component {
 
   parseCode(code) {
     //parse code to actionlist
-    console.log(code)
     var finalCode = this.props.header+code+this.props.footer
     console.log("finalCode: "+finalCode)
     try{
