@@ -11,3 +11,5 @@ class Unit extends Basic {
     return this._state.dir;
   }
 }
+
+export default Unit;

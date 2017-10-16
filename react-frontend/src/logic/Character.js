@@ -1,9 +1,10 @@
 import Unit from "./Unit"
-import { board } from "./Borad"
+import {board} from "./MainControl"
 // 方向: up:0, right:1, down:2, left:3 
-class Character extends Basic {
-  constructor() {
-    super();
+class Character extends Unit {
+  constructor(state) {
+    super(state);
+    //this._state = state;
   }
 
   turnLeft() {
@@ -14,10 +15,10 @@ class Character extends Basic {
   }
 
   turnRight() {
-    if (this.dir() == 0)
-      this._nextState.dir = 3;
+    if (this.dir() == 3)
+      this._nextState.dir = 0;
     else
-      this._nextState.dir = this.dir() - 1;
+      this._nextState.dir = this.dir() + 1;
   }
 
   go() {
@@ -33,3 +34,5 @@ class Character extends Basic {
       this._nextState.pos = { x : pos.x, y : pos.y - 1};
   }
 }
+
+export default Character;
