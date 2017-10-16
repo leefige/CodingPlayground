@@ -5,6 +5,7 @@ import charactor_down from './img/charactor-down.jpg';
 import charactor_left from './img/charactor-left.jpg';
 import charactor_right from './img/charactor-right.jpg';
 import './Game.css'
+import { mainControl } from '../logic/MainControl';
 
 class Charactor extends React.Component {
   render() {
@@ -51,9 +52,9 @@ class Board extends React.Component {
 class Game extends React.Component {
 
   constructor(props) {
-    console.log("constructor");
     super(props);
-
+    this.mainControl = mainControl;
+  
     this.finished = true;
     
     this.state = {
@@ -66,7 +67,6 @@ class Game extends React.Component {
   }
 
   exec_action_list() {
-    console.log(this.props.actionList)
     if (this.state.curStep >= this.props.actionList.length) {
       this.props.onActionFinish();
       this.setState({acionList: []});
@@ -81,33 +81,27 @@ class Game extends React.Component {
         this.turn_left();
       else if (execId == 3)
         this.turn_right();
-
-      this.setState({curStep: this.state.curStep + 1});
     }
   }
 
   go() {
-    console.log(this.props.actionList)
-    if (this.state.dir == 0) 
-      this.setState({curPos: this.state.curPos - this.state.size});
-    else if (this.state.dir == 1)
-      this.setState({curPos: this.state.curPos + 1});
-    else if (this.state.dir == 2)
-      this.setState({curPos: this.state.curPos + this.state.size})
-    else if (this.state.dir == 3)
-      this.setState({curPos: this.state.curPos - 1})
+    this.mainControl.character.go();
+    this.setState({curStep: this.state.curStep + 1});
   }
 
   turn_left() {
-    this.setState({dir: (this.state.dir + 3) % 4})
+    this.mainControl.character.turnLeft();
+    this.setState({curStep: this.state.curStep + 1});
+    //this.render();
   }
 
   turn_right() {
-    this.setState({dir: (this.state.dir + 1) % 4})
+    this.mainControl.character.turnRight();
+    this.setState({curStep: this.state.curStep + 1});
+    //this.render();
   }
 
   init() {
-    console.log(this.finished);
     if (this.finished) {
       this.finished = false;
       this.setState({curStep: 0});
@@ -117,15 +111,15 @@ class Game extends React.Component {
 
   render() {
     this.init();
-
+    this.mainControl.update();
     const pos = "current position: (" + Math.floor(this.state.curPos / 9) + ', ' + this.state.curPos % 9 + ')';
     const dir = "current dir: " + this.state.dir;
     return (
       <div className="game">
         <div className="game-board">
           <Board
-            curPos={this.state.curPos}
-            dir={this.state.dir}
+            curPos={this.mainControl.character.pos().x*9+this.mainControl.character.pos().y}
+            dir={this.mainControl.character.dir()}
             size={this.state.size}
           />
         </div>
