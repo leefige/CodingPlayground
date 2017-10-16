@@ -3,6 +3,7 @@
 ## To-do List for Spirnt 2:
 
 - [x] Issue board补充
+- [x] 游戏棋盘与任务的基本逻辑
 - [ ] 搭建Unit test
 - [ ] 补充文档和API定义
 - [ ] 文档中更新游戏背景（暂定：荒岛求生）
