@@ -24,7 +24,6 @@ class CodeGameContent extends Component {
 
   render() {
     return (
-      //<div className='code-game-content'>
         <div className='row'>
           <div className='col-xs-12 col-md-6'>
             <Scene actionList={this.state.actionList} onActionFinish={this.handleActionFinish.bind(this)}/>
