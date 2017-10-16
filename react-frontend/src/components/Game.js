@@ -5,7 +5,7 @@ import charactor_down from './img/charactor-down.jpg';
 import charactor_left from './img/charactor-left.jpg';
 import charactor_right from './img/charactor-right.jpg';
 import './Game.css'
-import { mainControl } from '../logic/MainControl';
+import { character, mainControl } from '../logic/MainControl';
 
 class Charactor extends React.Component {
   render() {
@@ -53,8 +53,6 @@ class Game extends React.Component {
 
   constructor(props) {
     super(props);
-    this.mainControl = mainControl;
-  
     this.finished = true;
     
     this.state = {
@@ -85,20 +83,19 @@ class Game extends React.Component {
   }
 
   go() {
-    this.mainControl.character.go();
+    character.go();
     this.setState({curStep: this.state.curStep + 1});
   }
 
   turn_left() {
-    this.mainControl.character.turnLeft();
+    character.turnLeft();
     this.setState({curStep: this.state.curStep + 1});
     //this.render();
   }
 
   turn_right() {
-    this.mainControl.character.turnRight();
+    character.turnRight();
     this.setState({curStep: this.state.curStep + 1});
-    //this.render();
   }
 
   init() {
@@ -111,15 +108,15 @@ class Game extends React.Component {
 
   render() {
     this.init();
-    this.mainControl.update();
+    mainControl.update();
     const pos = "current position: (" + Math.floor(this.state.curPos / 9) + ', ' + this.state.curPos % 9 + ')';
     const dir = "current dir: " + this.state.dir;
     return (
       <div className="game">
         <div className="game-board">
           <Board
-            curPos={this.mainControl.character.pos().x*9+this.mainControl.character.pos().y}
-            dir={this.mainControl.character.dir()}
+            curPos={character.pos.x*9+character.pos.y}
+            dir={character.dir}
             size={this.state.size}
           />
         </div>

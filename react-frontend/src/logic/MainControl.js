@@ -25,4 +25,5 @@ class MainControl{
 
 let mainControl = new MainControl();
 let board = mainControl.board;
-export {board, mainControl};
+let character = mainControl.character;
+export {board, character, mainControl};
