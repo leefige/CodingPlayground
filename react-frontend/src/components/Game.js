@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react';
 import charactor_up from './img/charactor-up.jpg';
 import charactor_down from './img/charactor-down.jpg';
 import charactor_left from './img/charactor-left.jpg';
@@ -20,7 +19,7 @@ class Charactor extends React.Component {
       charactor = charactor_left;
     return (
       <div>
-        <img src={charactor} className="charactor-pic"/>
+        <img src={charactor} alt="charactor" className="charactor-pic"/>
       </div>
     )
   }
@@ -37,7 +36,7 @@ function Square(props) {
 
 class Board extends React.Component {
   renderSquare = i => Object.keys(Array.from(Array(this.props.size))).map((_, j) => (
-    <Square pos={i + j == this.props.curPos} dir={this.props.dir} />
+    <Square pos={i + j === this.props.curPos} dir={this.props.dir} />
   ))
 
   render() {
@@ -79,9 +78,9 @@ class Game extends React.Component {
       const execId = this.props.actionList[this.state.curStep];
       if (execId == 1)
         this.go();
-      else if (execId == 2)
+      else if (execId === 2)
         this.turn_left();
-      else if (execId == 3)
+      else if (execId === 3)
         this.turn_right();
     }
   }
