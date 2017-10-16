@@ -36,7 +36,7 @@ class CodeGameContent extends Component {
             <Programming onCodeSubmit={this.handleCodeSubmit.bind(this)}/>
           </div>
         </div>
-        <Canvas zoomLevel={1.0}/>
+        {/* <Canvas zoomLevel={1.0}/> */}
       </div>
     )
   }
