@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import * as PIXI from "pixi.js"
 import PropTypes from 'prop-types';
 
-import charactor_up from './img/charactor-up.jpg';
-
 export default class Canvas extends Component {
 
   /**
@@ -22,36 +20,55 @@ export default class Canvas extends Component {
   * and hook up the PixiJS renderer
   **/
   componentDidMount() {
+    const width = 500, height = 500;
+
     //Setup PIXI Canvas in componentDidMount
-    var renderer = PIXI.autoDetectRenderer(256, 256);
+    var renderer = PIXI.autoDetectRenderer(width, height);
     this.refs.gameCanvas.appendChild(renderer.view);
 
-    //Create a container object called the `stage`
-    var stage = new PIXI.Container();
-    var cat, state;
+    var state;
+
+    var Container = PIXI.Container,
+        autoDetectRenderer = PIXI.autoDetectRenderer,
+        loader = PIXI.loader,
+        resources = PIXI.loader.resources,
+        Sprite = PIXI.Sprite;
+
+    //Create a Pixi stage and renderer 
+    var stage = new Container();
+
+    var gameScene, id, background, charactor;
+
+    const gpJson = `${process.env.PUBLIC_URL}/img/gamePic.json`
 
     //Use Pixi's built-in `loader` object to load an image
-    PIXI.loader
-      .add(charactor_up)
+    loader
+      .add(gpJson)
       .load(setup);
 
     //This `setup` function will run when the image has loaded
     function setup() {
 
-      //Create the `cat` sprite from the texture
-      cat = new PIXI.Sprite(
-        PIXI.loader.resources[charactor_up].texture
-      );
+      gameScene = new Container();
+      stage.addChild(gameScene);
 
-      cat.x = 96;
-      cat.y = 96;
+      console.log('resources: ', resources)
+      id = resources[gpJson].textures;
 
-      cat.width = 100;
-      cat.height = 100;
+      console.log('id: ', resources[gpJson]);
 
-      //Add the cat to the stage
-      stage.addChild(cat);
-      
+      background = new Sprite(id['background']);
+      background.width = width;
+      background.height = height;
+      gameScene.addChild(background);
+
+      charactor = new Sprite(id['charactor']);
+      charactor.width = width / 10;
+      charactor.height = height / 8;
+      charactor.x = 10;
+      charactor.y = 10;
+      gameScene.addChild(charactor);
+
       state = play;
 
       //Render the stage   
@@ -65,8 +82,8 @@ export default class Canvas extends Component {
     }
 
     function play() {
-      cat.x += 1;
-      if (cat.x > 196) state = end;
+      charactor.x += 1;
+      if (charactor.x > 196) state = end;
     }
 
     function end() {
