@@ -10,10 +10,14 @@ import { character, mainControl } from '../logic/MainControl';
 class Charactor extends React.Component {
   render() {
     let charactor;
-    if (this.props.value == 0) charactor = charactor_up;
-    else if (this.props.value == 1) charactor = charactor_right;
-    else if (this.props.value == 2) charactor = charactor_down;
-    else charactor = charactor_left;
+    if (this.props.value == 0)
+      charactor = charactor_up;
+    else if (this.props.value == 1)
+      charactor = charactor_right;
+    else if (this.props.value == 2)
+      charactor = charactor_down;
+    else
+      charactor = charactor_left;
     return (
       <div>
         <img src={charactor} className="charactor-pic"/>
@@ -72,7 +76,7 @@ class Game extends React.Component {
       clearInterval(this.interval);
     }
     else {
-      let execId = this.props.actionList[this.state.curStep];
+      const execId = this.props.actionList[this.state.curStep];
       if (execId == 1)
         this.go();
       else if (execId == 2)
@@ -109,8 +113,8 @@ class Game extends React.Component {
   render() {
     this.init();
     mainControl.update();
-    const pos = "current position: (" + Math.floor(this.state.curPos / 9) + ', ' + this.state.curPos % 9 + ')';
-    const dir = "current dir: " + this.state.dir;
+    const pos = "current position: (" + Math.floor(character.pos.x) + ', ' + character.pos.y + ')';
+    const dir = "current dir: " + character.dir;
     return (
       <div className="game">
         <div className="game-board">
