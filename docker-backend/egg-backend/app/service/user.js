@@ -31,7 +31,6 @@ module.exports = app => {
             const co = require('co');
             app.mysql.get = co.wrap(app.mysql.get);
             const get = co.wrap(app.mysql.get).bind(app.mysql);
-            const body = this.ctx.request.body;
             const result = await get('user', {id: _body.id, password: _body.password});
             if(result == null)
                 return false;
