@@ -1,26 +1,26 @@
-import React, { Component } from 'react'
-import Scene from './Scene'
-import Programming from './Programming'
-import Canvas from './Canvas'
+import React, { Component } from 'react';
+import Scene from './Scene';
+import Programming from './Programming';
+import Canvas from './Canvas';
 
 class CodeGameContent extends Component {
   constructor() {
-    super()
+    super();
     this.state = {
       actionList: [],
-    }
+    };
   }
 
   handleCodeSubmit(_actionList) {
     this.setState({
       actionList: _actionList,
-    })
+    });
   }
 
   handleActionFinish() {
     this.setState({
       actionList: []
-    })
+    });
   }
 
   render() {
@@ -37,8 +37,8 @@ class CodeGameContent extends Component {
         </div>
         {/* <Canvas zoomLevel={1.0}/> */}
       </div>
-    )
+    );
   }
 }
 
-export default CodeGameContent
+export default CodeGameContent;
