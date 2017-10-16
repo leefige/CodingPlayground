@@ -4,12 +4,8 @@ class Unit extends Basic {
   constructor(state) {
     super(state);
   }
-  pos() {
-    return this._state.pos;
-  }
-  dir() {
-    return this._state.dir;
-  }
+  get pos() { return this._state.pos; }
+  get dir() { return this._state.dir; }
 }
 
 export default Unit;

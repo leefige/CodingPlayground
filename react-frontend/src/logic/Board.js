@@ -7,12 +7,15 @@ const elements = {
 class Board extends Basic {
   constructor(state) {
     super(state);
-    this.size = this._state.map.length;
-    this.elements = elements;
+    this._size = this._state.map.length;
+    this._elements = elements;
   }
   map(x, y) {
     return this._state['map'][x][y];
   }
+
+  get size() { return this._size; }
+  get elements() { return this._elements; }
 }
 
 export default Board;
