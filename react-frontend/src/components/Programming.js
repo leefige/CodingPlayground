@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 
 import TaskGuide from './ProgramItem/TaskGuide'
 import BlocklyPad from './ProgramItem/BlocklyPad'
-import Interpreter from './JSInterpreter/interpreter'
-require('./JSInterpreter/behavior.js')
+import Interpreter from 'react-js-interpreter-private'
 
 class Programming extends Component {
   static defaultProps = {
