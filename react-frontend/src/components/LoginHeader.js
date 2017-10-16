@@ -3,12 +3,7 @@ require('es6-promise').polyfill();
 require('isomorphic-fetch');
 
 class LogoutHeader extends Component {
-	static defaultProps = {
-		username: '卡尔'
-	}
-	handleLogout() {
-		this.props.onLogout()
-	}
+	handleLogout() { this.props.onLogout() }
 	render() {
 		return (
 			<div>
@@ -30,7 +25,7 @@ class SignupHeader extends Component {
     }
 	}
 	async handleLogin() {
-		let formData = new FormData();
+		const formData = new FormData();
 		formData.append('id', this.state.email);
 		formData.append('password', this.state.password);
 		fetch('http://127.0.0.1:7001/user/login', {
@@ -48,27 +43,20 @@ class SignupHeader extends Component {
 		})
 		.then((response) => response.json())
 		.then((responseJson) => {
-			if (responseJson.signup_success){
+			if (responseJson.signup_success)
 				this.props.onLogin(this.state.email)
-				console.log("Login success!")
-			}
-				
 			else
-				console.log("Login failed!")
+				alert("登录失败！");
 		})
 		.catch((error) => {
 			console.error(error);
 		});
-		//this.props.onLogin(this.state.email)
 	}
 
 	async handleSignup() {
-		console.log(this.state.email)
-		let formData = new FormData();
+		const formData = new FormData();
 		formData.append('id', this.state.email);
 		formData.append('password', this.state.password);
-
-
 		fetch('http://127.0.0.1:7001/user/signup', {
 			method: 'POST',
 			mode: 'cors',
@@ -85,12 +73,11 @@ class SignupHeader extends Component {
 		.then((response) => response.json())
 		.then((responseJson) => {
 			if (responseJson.signup_success)
-				console.log("Sign up success!")
+				alert("注册成功！");
 			else
-				console.log("Sign up failed!")
+				alert("注册失败！");
 		})
 		.catch((error) => {
-			console.log("error");
 			console.error(error);
 		});
 	}

@@ -27,7 +27,18 @@ class BlocklyPad extends Component {
   }
 
   handleCodeSubmit() {
-    const codeGenerated = this.genCode(this.state.code)
+    const codeGenerated = this.genCode()
+    document.getElementById('gen_code').click()
+    var mycode = document.getElementById('code_textarea').value
+    this.setState({
+      code: mycode
+    })
+    this.props.onCodeSubmit(mycode)//回调函数，由父类实现
+    console.log("codeGen: "+mycode)
+  }
+
+  runFromTextarea() {
+    const codeGenerated = this.genCode()
     this.props.onCodeSubmit(codeGenerated)//回调函数，由父类实现
     console.log("codeGen: "+codeGenerated)
   }
@@ -37,18 +48,33 @@ class BlocklyPad extends Component {
       <div>
         <div>输入代码</div>
         <div>
-          <textarea className='code_input'
+          <textarea id='code_textarea' className='code_input'
             value={this.state.code}
             onChange={this.handleCodeChange.bind(this)} />
         </div>
 
-        <div className='text-right'>
-          <button type="submit" 
-            className="btn btn-outline-primary" 
-            onClick = {this.handleCodeSubmit.bind(this)}>
-            运行
-          </button>
-        </div>
+          <div id='parse_code' className='text-right'>
+            
+          </div>
+
+          <div className='text-right'>
+          <span className='text-right'>
+            <button type="submit" 
+              className="btn btn-outline-primary" 
+              onClick = {this.runFromTextarea.bind(this)}>
+              运行文本
+            </button>
+          </span>
+
+          <span className='text-right'>
+            <button type="submit" 
+              className="btn btn-outline-primary" 
+              onClick = {this.handleCodeSubmit.bind(this)}>
+              生成并运行
+            </button>
+          </span>
+
+          </div>
 
         <div id="blockly" className='pad'>
         </div>

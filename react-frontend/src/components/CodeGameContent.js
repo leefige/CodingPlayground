@@ -12,7 +12,6 @@ class CodeGameContent extends Component {
   }
 
   handleCodeSubmit(_actionList) {
-    console.log("handleCodeSubmit")
     this.setState({
       actionList: _actionList,
     })

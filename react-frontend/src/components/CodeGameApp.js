@@ -12,15 +12,10 @@ class CodeGameApp extends Component {
     }
   }
   handleLogin(username) {
-    console.log("login")
     this.setState({
       isLogin:true,
       username:username
     })
-  }
-
-  handleSignup() {
-
   }
 
   handleLogout() {
@@ -35,8 +30,7 @@ class CodeGameApp extends Component {
           state = {this.state.isLogin}
           username = {this.state.username}
           onLogin = {this.handleLogin.bind(this)}
-          onLogout = {this.handleLogout.bind(this)}
-          onSignup = {this.handleSignup.bind(this)} />  
+          onLogout = {this.handleLogout.bind(this)}/>  
         <CodeGameContent />
         <Footer />
       </div>
