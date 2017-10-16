@@ -44,23 +44,17 @@ body {
   border:2px solid #008CBA;
 }
 
-.task_guide {
+.task-guide {
   padding: 6px 10px 6px 10px;
   background-color: #F9FFC4; /* Green */
   font-size: 14px;
   font-family: "Microsoft Yahei"
 }
 
-.blockly_pad {
+.blockly-pad {
   background-color: #fff;
   font-family: sans-serif;
   overflow: hidden;
-}
-
-.blocklyArea {
-  height: 99%;
-  background: #fc9;
-  text-align: center;
 }
 
 table {
@@ -68,7 +62,7 @@ table {
   width: 100%;
 }
 
-.code_input {
+.code-input {
   background-color: #fff;
   border: 1px solid #f1f1f1;
   padding: 6px;
@@ -80,4 +74,8 @@ table {
 
 .pad {
   height: 300px; 
+}
+
+.fill-height {
+  height: 100%;
 }
