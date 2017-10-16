@@ -28,9 +28,7 @@ export default class Canvas extends Component {
 
     //Create a container object called the `stage`
     var stage = new PIXI.Container();
-
-    // renderer.autoResize = true;
-    // renderer.resize(window.innerWidth * 0.5, window.innerWidth * 0.5);
+    var cat, state;
 
     //Use Pixi's built-in `loader` object to load an image
     PIXI.loader
@@ -41,21 +39,39 @@ export default class Canvas extends Component {
     function setup() {
 
       //Create the `cat` sprite from the texture
-      var cat = new PIXI.Sprite(
+      cat = new PIXI.Sprite(
         PIXI.loader.resources[charactor_up].texture
       );
 
+      cat.x = 96;
+      cat.y = 96;
+
+      cat.width = 100;
+      cat.height = 100;
+
       //Add the cat to the stage
       stage.addChild(cat);
+      
+      state = play;
 
       //Render the stage   
+      gameLoop();
+    }
+
+    function gameLoop() {
+      requestAnimationFrame(gameLoop);
+      state();
       renderer.render(stage);
     }
 
-    // stage.addChild(sprite);
+    function play() {
+      cat.x += 1;
+      if (cat.x > 196) state = end;
+    }
 
-    // //Tell the `renderer` to `render` the `stage`
-    // this.renderer.render(stage);
+    function end() {
+
+    }
   }
   /**
   * Render our container that will store our PixiJS game canvas. Store the ref
