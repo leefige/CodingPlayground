@@ -12,10 +12,7 @@ class Board extends Basic {
     this._size = this._state.map.length;
     this._elements = elements;
   }
-  map(x, y) {
-    return this._state['map'][x][y];
-  }
-
+  get map() { return this._state.map; }
   get size() { return this._size; }
   get elements() { return this._elements; }
 }

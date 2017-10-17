@@ -15,7 +15,7 @@ class Basic {
     this._nextState = state;
   }
 
-  save() {
+  get state() {
     return this._state;
   }
 }

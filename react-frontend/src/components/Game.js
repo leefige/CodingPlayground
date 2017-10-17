@@ -4,7 +4,7 @@ import charactor_down from './img/charactor-down.jpg';
 import charactor_left from './img/charactor-left.jpg';
 import charactor_right from './img/charactor-right.jpg';
 import './Game.css'
-import { character, mainControl } from '../logic/MainControl';
+import MainContorl from '../logic/MainControl';
 
 class Charactor extends React.Component {
   render() {
@@ -51,13 +51,31 @@ class Board extends React.Component {
     )
   }
 }
+const state = {
+  board : {
+    map : [[0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0]],
+  },
+  character : {
+    pos : { x : 0, y : 0},
+    dir : 2,
+  },
+}
 
 class Game extends React.Component {
 
   constructor(props) {
     super(props);
     this.finished = true;
-    
+    this.mainControl = new MainContorl(state);
+    this.character = this.mainControl.character;
     this.state = {
       curPos: 40,
       dir: 0,
@@ -86,18 +104,18 @@ class Game extends React.Component {
   }
 
   go() {
-    character.go();
+    this.character.go();
     this.setState({curStep: this.state.curStep + 1});
   }
 
   turn_left() {
-    character.turnLeft();
+    this.character.turnLeft();
     this.setState({curStep: this.state.curStep + 1});
     //this.render();
   }
 
   turn_right() {
-    character.turnRight();
+    this.character.turnRight();
     this.setState({curStep: this.state.curStep + 1});
   }
 
@@ -111,15 +129,15 @@ class Game extends React.Component {
 
   render() {
     this.init();
-    mainControl.update();
-    const pos = "current position: (" + Math.floor(character.pos.x) + ', ' + character.pos.y + ')';
-    const dir = "current dir: " + character.dir;
+    this.mainControl.update();
+    const pos = "current position: (" + Math.floor(this.character.pos.x) + ', ' + this.character.pos.y + ')';
+    const dir = "current dir: " + this.character.dir;
     return (
       <div className="game">
         <div className="game-board">
           <Board
-            curPos={character.pos.x*9+character.pos.y}
-            dir={character.dir}
+            curPos={this.character.pos.x*9+this.character.pos.y}
+            dir={this.character.dir}
             size={this.state.size}
           />
         </div>
