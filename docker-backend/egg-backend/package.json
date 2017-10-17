@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "egg-bin dev",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "egg-bin test",
     "migrate:new": "egg-sequelize migration:create",
     "migrate:up": "egg-sequelize db:migrate",
     "migrate:down": "egg-sequelize db:migrate:undo"
@@ -21,6 +21,7 @@
     "mysql2": "^1.4.2"
   },
   "devDependencies": {
-    "egg-bin": "^4.3.3"
+    "egg-bin": "^4.3.3",
+    "egg-mock": "^3.13.0"
   }
 }
