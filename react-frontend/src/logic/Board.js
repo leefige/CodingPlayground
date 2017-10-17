@@ -5,6 +5,8 @@ const elements = {
   block : 2,
 }
 class Board extends Basic {
+  _size;
+  _elements;
   constructor(state) {
     super(state);
     this._size = this._state.map.length;
