@@ -2,7 +2,7 @@ class Player {
   _curStep;
   _totalStep;
   _states;
-  constructor(state) {
+  constructor() {
     this._curStep = 0;
     this._totalStep = 0;
     this._states = new Array();
