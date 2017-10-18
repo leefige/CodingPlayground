@@ -5,7 +5,11 @@
   "main": "index.js",
   "scripts": {
     "dev": "egg-bin dev",
+<<<<<<< HEAD
     "test": "npm run lint -- --fix && npm run test-local",
+=======
+    "test": "npm run test-local",
+>>>>>>> 30-unit-test
     "ci": "npm run lint && npm run cov",
     "lint": "eslint .",
     "cov": "egg-bin cov",
@@ -26,6 +30,10 @@
   },
   "devDependencies": {
     "egg-bin": "^4.3.3",
+<<<<<<< HEAD
+=======
+    "egg-mock": "^3.13.0",
+>>>>>>> 30-unit-test
     "eslint": "^4.9.0",
     "eslint-config-egg": "^5.1.1"
   }
