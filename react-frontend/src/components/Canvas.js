@@ -32,7 +32,6 @@ export default class Canvas extends Component {
     let state;
 
     const Container = PIXI.Container,
-        autoDetectRenderer = PIXI.autoDetectRenderer,
         loader = PIXI.loader,
         resources = PIXI.loader.resources,
         Sprite = PIXI.Sprite;
@@ -95,8 +94,8 @@ export default class Canvas extends Component {
     function play() {
       const player = mainControl.player;
       if (player.isPlaying()) {
-        const px = convertX(player.character.x),
-              py = convertY(player.character.y);
+        const px = convertX(player.character.pos['x']),
+              py = convertY(player.character.pos['y']);
         if (px !== charactor.x || py !== charactor.y) {
           if (px > charactor.x) charactor.x++;
           else if (px < charactor.x) charactor.x--;
@@ -107,8 +106,6 @@ export default class Canvas extends Component {
           player.nextStep();
         }
       }
-      charactor.x += 1;
-      if (charactor.x > 196) state = end;
     }
 
     function end() {
