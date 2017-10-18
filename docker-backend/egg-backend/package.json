@@ -5,7 +5,11 @@
   "main": "index.js",
   "scripts": {
     "dev": "egg-bin dev",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "npm run lint -- --fix && npm run test-local",
+    "ci": "npm run lint && npm run cov",
+    "lint": "eslint .",
+    "cov": "egg-bin cov",
+    "test-local": "egg-bin test",
     "migrate:new": "egg-sequelize migration:create",
     "migrate:up": "egg-sequelize db:migrate",
     "migrate:down": "egg-sequelize db:migrate:undo"
@@ -21,6 +25,8 @@
     "mysql2": "^1.4.2"
   },
   "devDependencies": {
-    "egg-bin": "^4.3.3"
+    "egg-bin": "^4.3.3",
+    "eslint": "^4.9.0",
+    "eslint-config-egg": "^5.1.1"
   }
 }
