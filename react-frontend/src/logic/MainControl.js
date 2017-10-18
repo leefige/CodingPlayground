@@ -30,12 +30,6 @@ class MainControl{
     this.load(state);
   }
 
-  addActionList(actionList) {
-    for (const action in actionList) {
-      this.addAction(action);
-    }
-  }
-
   load(state) {
     this._state = JSON.parse(JSON.stringify(state));
     this._board = new Board(this._state.board);
@@ -44,19 +38,25 @@ class MainControl{
     this._player.add(this._state);
   }
 
-  addAction(action) {
-    switch(action) {
-      case 1:
-        this._character.go();
-        break;
-      case 2:
-        this._character.turnLeft();
-        break;
-      case 3:
-        this._character.turnRight();
-        break;
-    }
-    this.update();
+  addActionList(actionList) {
+    actionList.forEach((action => {
+      switch(action) {
+        case 1:
+          this._character.go();
+          break;
+        case 2:
+          this._character.turnLeft();
+          break;
+        case 3:
+          this._character.turnRight();
+          break;
+      }
+      this.update();
+    }))
+    //actionList.forEach(function, this);
+    //for (const action in actionList) {
+    //  this.addAction(action);
+    //}
   }
 
   update() {
