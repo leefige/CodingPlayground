@@ -43,16 +43,11 @@ class SignupHeader extends Component {
 		})
 		.then((response) => response.json())
 		.then((responseJson) => {
-<<<<<<< HEAD
-			if (responseJson.signup_success)
-				this.props.onLogin(this.state.email)
-=======
 			if (responseJson.login_success){
 				this.props.onLogin(this.state.email);
 				console.log("Login success!")
 			}
 				
->>>>>>> 30-unit-test
 			else
 				alert("登录失败！");
 		})
