@@ -1,4 +1,4 @@
-'use strict';
+// 'use strict';
 const { app, mock, assert } = require('egg-mock/bootstrap');
 describe('test/controller/user.test.js', () => {
   afterEach(mock.restore);
@@ -9,41 +9,38 @@ describe('test/controller/user.test.js', () => {
         .post('/user/signup')
         .type('json')
         .send({
-          id: '2341',
-          password: '213',
+          id: 'byn',
+          password: '23',
         })
-        .expect(200) // 期望返回 status 200
+        .expect(200)
         .expect({
-            signup_success: true,
+          signup_success: false,
         });
     });
 
-    it('should get null when user not exists', async function () {
-      const ctx = app.mockContext();
-      const user = await ctx.service.user.signup({
-        id: 'fengmk1',
-        password: '123',
+    it('should get false when user exists', () => {
+      return app.httpRequest()
+      .post('/user/signup')
+      .type('json')
+      .send({
+        id: '2341',
+        password: '213',
+      })
+      .expect(200)
+      .expect({
+        signup_success: false,
       });
-      assert(user);
-      assert(user.signup_success === false);
     });
 
-    it('should mock fengmk1 exists', async function () {
-      const ctx = app.mockContext();
-      app.mockService('user', 'signup', async function () {
-        return {
-          signup_success: false,
-        };
-      });
-      const user = await ctx.service.user.signup({
-        id: 'fengmk1',
-        password: '123',
-      });
-      assert(user);
-      assert(user.signup_success === false);
-    });
+    it('should get error when data not correct', () =>{
+      return app.httpRequest()
+      .post('/user/signup')
+      .type('json')
+      .send('error')
+      .expect(400);
+    })
 
-    /*it('should send multi requests', async function () {
+     it('should send multi requests', async function () {
       // 使用 generator function 方式写测试用例，可以在一个用例中串行发起多次请求
       await app.httpRequest()
         .post('/user/signup')
@@ -54,23 +51,24 @@ describe('test/controller/user.test.js', () => {
         })
         .expect(200) // 期望返回 status 200
         .expect({
-          signup_success: true,
+          signup_success: false,
       }); // 期望 body 是 hello world
       // 再请求一次
-      const result = awiat app.httpRequest()
-        .get('/user/signup')
+      const result = await app.httpRequest()
+        .post('/user/signup')
         .type('json')
         .send({
-          id: '2341',
+          id: '234a1',
           password: '213',
         })
         .expect(200)
         .expect({
-          signup_success: true,
+          signup_success: false,
       });
       // 也可以这样验证
       assert(result.status === 200);
-    });*/
+      assert(result.body);
+    });
   });
 
   describe('login test', () => {
@@ -84,37 +82,30 @@ describe('test/controller/user.test.js', () => {
           password: '213',
         })
         .expect(200) // 期望返回 status 200
-        .expect({
-            login_success: true,
-        });
+        .expect({login_success: true,});
     });
 
-    it('should get null when user not exists', async function () {
-      const ctx = app.mockContext();
-      const user = await ctx.service.user.login({
-        id: 'fengmk1',
-        password: '123',
-      });
-      assert(user);
-      assert(user.login_success === false);
+    it('should get false when user not exists', async function() {
+      return app.httpRequest()
+      .post('/user/login')
+      .type('json')
+      .send({
+        id: '23jlkll4a1',
+        password: '213',
+      })
+      .expect(200) // 期望返回 status 200
+      .expect({login_success: false,});
     });
 
-    it('should mock fengmk1 exists', async function () {
-      const ctx = app.mockContext();
-      app.mockService('user', 'login', async function () {
-        return {
-          signup_success: false,
-        };
-      });
-      const user = await ctx.service.user.login({
-        id: 'fengmk1',
-        password: '123',
-      });
-      assert(user);
-      assert(user.login_success === false);
-    });
+    it('should get error when data not correct', () =>{
+      return app.httpRequest()
+      .post('/user/login')
+      .type('json')
+      .send('error')
+      .expect(400);
+    })
 
-    /*it('should send multi requests', async function () {
+     it('should send multi requests', async function () {
       // 使用 generator function 方式写测试用例，可以在一个用例中串行发起多次请求
       await app.httpRequest()
         .post('/user/login')
@@ -128,20 +119,18 @@ describe('test/controller/user.test.js', () => {
           login_success: true,
       }); // 期望 body 是 hello world
       // 再请求一次
-      const result = awiat app.httpRequest()
-        .get('/user/login')
+      await app.httpRequest()
+        .post('/user/login')
         .type('json')
         .send({
-          id: '2341',
+          id: '234c1',
           password: '213',
         })
         .expect(200)
         .expect({
-          login_success: true,
+          login_success: false,
       });
-      // 也可以这样验证
-      assert(result.status === 200);
-    });*/
+    });
   });
 
 });

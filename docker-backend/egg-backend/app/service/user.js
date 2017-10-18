@@ -2,39 +2,35 @@
 module.exports = app => {
   class UserService extends app.Service {
     async signup(_body) {
-      /*const sql = "create table if not exists user(" +
+      /* const sql = "create table if not exists user(" +
         "id VARCHAR(100)," +
         "password VARCHAR(100)," +
         "primary key (id)" +
         ");";
       await app.mysqlquery(sql);*/
-      try{
+      try {
         const is_insert = await app.mysql.get('user', { id: _body.id });
         if (is_insert === null) {
           const result = await app.mysql.insert('user', { id: _body.id, password: _body.password });
           const insertSuccess = result.affectedRows === 1;
           return insertSuccess;
         }
-        else {
-          return false;
-        }
-      } catch(err){
+        return false;
+      } catch (err) {
         console.log(err);
         return false;
       }
     }
 
     async login(_body) {
-      try{
+      try {
         const result = await app.mysql.get('user', { id: _body.id, password: _body.password });
-        if (result == null)
-          return false;
-        else
-          return true;
-      } catch(err){
+        if (result == null) { return false; }
+        return true;
+      } catch (err) {
         console.log(err);
         return false;
-      }     
+      }
     }
   }
   return UserService;

@@ -1,4 +1,4 @@
-'use strict';
+//'use strict';
 const { app, mock, assert } = require('egg-mock/bootstrap');
 describe('test/service/user.test.js', () => {
   afterEach(mock.restore);
@@ -9,21 +9,25 @@ describe('test/service/user.test.js', () => {
       const ctx = app.mockContext();
       // 通过 ctx 访问到 service.user
       const user = await ctx.service.user.signup({
-          id: 'asd',
+          id: 'azxsd',
           password: 'cxv',
       });
-      assert(user);
-      assert(user.signup_success === true);
+      assert(user === false);
     });
-    it('should get false when user exists', function* () {
+    it('should get false when user exists', async function () {
       const ctx = app.mockContext();
-      const user = await ctx.service.user.login({
+      const user = await ctx.service.user.signup({
         id: 'fengmk1',
         password: '123',
       });
-      assert(user);
-      assert(user.signup_success === false);
+      assert(user === false);
     });
+    it('should get 400 when data error', async function(){
+      const ctx = app.mockContext();
+      const user = await ctx.service.user.signup('error');
+      assert(!user);
+    });
+
   });
 
   describe('login()', () => {
@@ -33,20 +37,23 @@ describe('test/service/user.test.js', () => {
       const ctx = app.mockContext();
       // 通过 ctx 访问到 service.user
       const user = await ctx.service.user.login({
-          id: 'asd',
+          id: 'azxsd',
           password: 'cxv',
       });
-      assert(user);
-      assert(user.signup_success === true);
+      assert(user === true);
     });
-    it('should get false when id or password error', function* () {
+    it('should get false when id or password error', async function () {
       const ctx = app.mockContext();
       const user = await ctx.service.user.login({
         id: 'fengmk1',
-        password: '123',
+        password: '12',
       });
-      assert(user);
-      assert(user.login_success === false);
+      assert(user === false);
+    });
+    it('should get 400 when data error', async function(){
+      const ctx = app.mockContext();
+      const user = await ctx.service.user.login('error');
+      assert(!user);
     });
   });
 });
