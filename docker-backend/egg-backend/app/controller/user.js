@@ -11,11 +11,42 @@ module.exports = app => {
     }
 
     async login() {
+      // 获取 Session 上的内容
+      const userId = this.ctx.session.userId;
+      const userPassword = this.ctx.session.userPassword;
       const body = this.ctx.request.body;
-      const result = await this.ctx.service.user.login(body);
-      this.ctx.body = {
-        login_success: result,
-      };
+      if(body === null){
+        const result = await this.ctx.service.user.login({
+          id: userId,
+          password: userPassword,
+        });
+        this.ctx.body = {
+          login_success: result,
+        };
+      }
+      else{
+        const result = await this.ctx.service.user.login(body);
+        this.ctx.body = {
+          login_success: result,
+        };
+        this.ctx.session.userId = body.id;
+        this.ctx.session.userPassword = body.password;
+      }
+    }
+
+    async logout() {
+      try{
+        this.ctx.session.userId = null;
+        this.ctx.session.userPassword = null;
+        this.ctx.body = {
+          logout_success: true,
+        };
+      } catch(err){
+        console.log(err);
+        this.ctx.body = {
+          logout_success: false,
+        };
+      }
     }
   }
   return UserController;
