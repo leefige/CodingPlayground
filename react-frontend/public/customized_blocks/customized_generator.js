@@ -1,4 +1,4 @@
-/*-------------------------------------------------------------------------*/
+Blockly = window.Blockly;
 
 Blockly.JavaScript.actions = {};
 Blockly.JavaScript.go = function () {

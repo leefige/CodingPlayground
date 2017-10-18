@@ -1,6 +1,6 @@
-import Board from "./Board"
-import Character from "./Character"
-import Player from "./Player"
+import Board from "./Board";
+import Character from "./Character";
+import Player from "./Player";
 
 const state = {
   board : {
@@ -41,13 +41,13 @@ class MainControl{
   addActionList(actionList) {
     actionList.forEach((action => {
       switch(action) {
-        case 1:
+        case '1':
           this._character.go();
           break;
-        case 2:
+        case '2':
           this._character.turnLeft();
           break;
-        case 3:
+        case '3':
           this._character.turnRight();
           break;
       }

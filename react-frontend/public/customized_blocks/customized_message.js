@@ -1,4 +1,4 @@
-// goog.require('Blockly.Msg');
+Blockly = window.Blockly;
 
 /** @export */ Blockly.Msg.ACTIONS_GO_TITLE = "前进";
 /** @export */ Blockly.Msg.ACTIONS_TURN_LEFT_TITLE = "左转";

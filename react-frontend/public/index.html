@@ -224,14 +224,14 @@
                 ]
               }
             ],
-            initialXml: '<xml xmlns="http://www.w3.org/1999/xhtml"><block type="controls_if" x="5" y="10"><field name="分支"></field></block></xml>',
+            initialXml: '<xml xmlns="http://www.w3.org/1999/xhtml"><block type="go" x="5" y="10"></block></xml>',
             wrapperDivClassName: 'fill-height',
             xmlDidChange: function(newXml) {
               // document.getElementById('generated-xml').innerText = newXml;
             }
           }
         );
-          // editor.importFromXml(document.getElementById('toolbox'));
+        // editor.importFromXml(document.getElementById('toolbox'));
         window.addEventListener('load', function() {
           editor,
           ReactDOM.render(editor, document.getElementById('blockly'));
