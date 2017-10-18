@@ -54,7 +54,7 @@ export default class Canvas extends Component {
     }
 
     function convertY(x) {
-      return parseInt(x * width / row - width / row / 2);
+      return parseInt(x * height / col - height / col / 2);
     }
 
     //This `setup` function will run when the image has loaded
