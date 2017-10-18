@@ -1,35 +1,34 @@
-import React, { Component } from 'react'
-
-import TaskGuide from './ProgramItem/TaskGuide'
-import BlocklyPad from './ProgramItem/BlocklyPad'
-import Interpreter from 'react-js-interpreter-private'
+import React, { Component } from 'react';
+import TaskGuide from './ProgramItem/TaskGuide';
+import BlocklyPad from './ProgramItem/BlocklyPad';
+import Interpreter from 'react-js-interpreter-private';
 
 class Programming extends Component {
   static defaultProps = {
     header: "li = []; function go() {li.push(1);} function turn_left() {li.push(2);} function turn_right() {li.push(3);} function myFunc() {",
     footer: " return li.join(',');} myFunc();"
-  }
+  };
 
   parseCode(code) {
     //parse code to actionlist
-    var finalCode = this.props.header+code+this.props.footer
-    console.log("finalCode: "+finalCode)
+    const finalCode = this.props.header+code+this.props.footer;
+    console.log("finalCode: "+finalCode);
     try{
-      var myInterpreter = new Interpreter(finalCode)
-      myInterpreter.run()
-      var result = myInterpreter.value  //a string
-      var list = result.split(",")
-      return list
+      let myInterpreter = new Interpreter(finalCode);
+      myInterpreter.run();
+      const result = myInterpreter.value;  //a string
+      const list = result.split(",");
+      return list;
     }
     catch (err) {
-      alert('Invalid input!')
-      return []
+      alert('Invalid input!');
+      return [];
     }
   }
 
   handleCodeSubmit(code) {
-    const actionList = this.parseCode(code)
-    this.props.onCodeSubmit(actionList)
+    const actionList = this.parseCode(code);
+    this.props.onCodeSubmit(actionList);
   }
 
   render() {
@@ -45,8 +44,8 @@ class Programming extends Component {
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
 
-export default Programming
+export default Programming;

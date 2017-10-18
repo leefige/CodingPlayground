@@ -43,8 +43,11 @@ class SignupHeader extends Component {
 		})
 		.then((response) => response.json())
 		.then((responseJson) => {
-			if (responseJson.signup_success)
-				this.props.onLogin(this.state.email)
+			if (responseJson.login_success){
+				this.props.onLogin(this.state.email);
+				console.log("Login success!")
+			}
+				
 			else
 				alert("登录失败！");
 		})

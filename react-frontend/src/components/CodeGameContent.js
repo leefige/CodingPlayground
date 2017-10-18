@@ -4,22 +4,22 @@ import Programming from './Programming'
 
 class CodeGameContent extends Component {
   constructor() {
-    super()
+    super();
     this.state = {
       actionList: [],
-    }
+    };
   }
 
   handleCodeSubmit(_actionList) {
     this.setState({
       actionList: _actionList,
-    })
+    });
   }
 
   handleActionFinish() {
     this.setState({
       actionList: []
-    })
+    });
   }
 
   render() {
@@ -32,8 +32,8 @@ class CodeGameContent extends Component {
           <Programming onCodeSubmit={this.handleCodeSubmit.bind(this)}/>
         </div>
       </div>
-    )
+    );
   }
 }
 
-export default CodeGameContent
+export default CodeGameContent;

@@ -4,14 +4,15 @@
 
 - [x] Issue board补充
 - [x] 游戏棋盘与任务的基本逻辑
-- [ ] 搭建Unit test
 - [x] 补充文档和API定义
+- [x] Blockly实现可用
+- [x] 将第三方库转移出repository
+- [ ] check SonarQube中的bug
+- [ ] 自定义Blockly
+- [ ] 搭建Unit test
 - [ ] 文档中更新游戏背景（暂定：荒岛求生）
-- [ ] Blockly实现可用
 - [ ] 确定动画框架，实现动画
 - [ ] 后端实现token, cookie
-- [ ] check SonarQube中的bug
-
 
 ## To-do List for Spirnt 1:
 
