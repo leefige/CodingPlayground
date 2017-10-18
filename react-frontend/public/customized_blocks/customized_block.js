@@ -1,4 +1,4 @@
-/*-----------------------------------------------------------------------------------*/
+Blockly = window.Blockly;
 
 Blockly.Blocks.actions = {};
 Blockly.Constants.Actions = {};

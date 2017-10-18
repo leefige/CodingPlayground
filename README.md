@@ -7,11 +7,11 @@
 - [x] 补充文档和API定义
 - [x] Blockly实现可用
 - [x] 将第三方库转移出repository
-- [ ] check SonarQube中的bug
-- [ ] 自定义Blockly
-- [ ] 搭建Unit test
+- [x] check SonarQube中的bug
+- [x] 自定义Blockly
+- [x] 搭建Unit test
+- [x] 确定动画框架，实现动画
 - [ ] 文档中更新游戏背景（暂定：荒岛求生）
-- [ ] 确定动画框架，实现动画
 - [ ] 后端实现token, cookie
 
 ## To-do List for Spirnt 1:

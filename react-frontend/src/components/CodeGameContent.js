@@ -1,6 +1,7 @@
-import React, { Component } from 'react'
-import Scene from './Scene'
-import Programming from './Programming'
+import React, { Component } from 'react';
+import Scene from './Scene';
+import Programming from './Programming';
+import { mainControl } from '../logic/MainControl';
 
 class CodeGameContent extends Component {
   constructor() {
@@ -14,6 +15,7 @@ class CodeGameContent extends Component {
     this.setState({
       actionList: _actionList,
     });
+    mainControl.addActionList(_actionList);
   }
 
   handleActionFinish() {
