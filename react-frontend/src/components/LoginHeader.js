@@ -49,7 +49,7 @@ class SignupHeader extends Component {
 		.then((response) => response.json())
 		.then((responseJson) => {
 			if (responseJson.login_success){
-				this.props.onLogin(this.state.email)
+				this.props.onLogin(this.state.email);
 				console.log("Login success!")
 			}
 				
