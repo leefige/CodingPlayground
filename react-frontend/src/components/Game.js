@@ -4,7 +4,7 @@ import charactor_down from './img/charactor-down.jpg';
 import charactor_left from './img/charactor-left.jpg';
 import charactor_right from './img/charactor-right.jpg';
 import './Game.css'
-import MainContorl from '../logic/MainControl';
+import { mainControl } from '../logic/MainControl';
 
 class Charactor extends React.Component {
   render() {
@@ -74,7 +74,8 @@ class Game extends React.Component {
   constructor(props) {
     super(props);
     this.finished = true;
-    this.mainControl = new MainContorl(state);
+    this.mainControl = mainControl;
+    this.mainControl.load(state);
     this.character = this.mainControl.character;
     this.state = {
       curPos: 40,
