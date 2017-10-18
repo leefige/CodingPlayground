@@ -35,6 +35,11 @@
     <script src="https://leefige.github.io/blockly_provider/Blockly/zh-hans.js"></script>
     <script src="https://leefige.github.io/blockly_provider/react-blockly-component/dist/react-blockly-component.js"></script>
   
+    <script src="./customized_blocks/customized_block.js"></script>
+    <script src="./customized_blocks/customized_message.js"></script>
+    <script src="./customized_blocks/customized_generator.js"></script>
+    
+
     <style type="text/css">
     .fill-height {
       height: 100%;
@@ -84,6 +89,14 @@
             },
             toolboxMode:'CATEGORIES',
             toolboxCategories: [
+              {
+                name: "动作",
+                blocks: [
+                  { type: "go" },
+                  { type: "turn_left" },
+                  { type: "turn_right" },
+                ]
+              },
               {
                 name: "变量",
                 blocks: [
