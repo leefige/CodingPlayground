@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import * as PIXI from "pixi.js"
+import * as PIXI from "pixi.js";
 import PropTypes from 'prop-types';
+
+import { mainControl } from '../logic/MainControl';
 
 export default class Canvas extends Component {
 
@@ -16,28 +18,29 @@ export default class Canvas extends Component {
   }
 
   /**
-  * In this case, componentDidMount is used to grab the canvas container ref, and 
+  * In this case, componentDidMount is used to grab the canvas container ref, and
   * and hook up the PixiJS renderer
   **/
   componentDidMount() {
     const width = 500, height = 500;
+    const row = 8, col = 8;
 
     //Setup PIXI Canvas in componentDidMount
-    var renderer = PIXI.autoDetectRenderer(width, height);
+    const renderer = PIXI.autoDetectRenderer(width, height);
     this.refs.gameCanvas.appendChild(renderer.view);
 
-    var state;
+    let state;
 
-    var Container = PIXI.Container,
+    const Container = PIXI.Container,
         autoDetectRenderer = PIXI.autoDetectRenderer,
         loader = PIXI.loader,
         resources = PIXI.loader.resources,
         Sprite = PIXI.Sprite;
 
-    //Create a Pixi stage and renderer 
-    var stage = new Container();
+    //Create a Pixi stage and renderer
+    const stage = new Container();
 
-    var gameScene, id, background, charactor;
+    let gameScene, id, background, charactor;
 
     const gpJson = `${process.env.PUBLIC_URL}/img/gamePic.json`
 
@@ -45,6 +48,14 @@ export default class Canvas extends Component {
     loader
       .add(gpJson)
       .load(setup);
+
+    function convertX(x) {
+      return parseInt(x * width / row + 6);
+    }
+
+    function convertY(x) {
+      return parseInt(x * width / row - width / row / 2);
+    }
 
     //This `setup` function will run when the image has loaded
     function setup() {
@@ -65,13 +76,13 @@ export default class Canvas extends Component {
       charactor = new Sprite(id['charactor']);
       charactor.width = width / 10;
       charactor.height = height / 8;
-      charactor.x = 10;
-      charactor.y = 10;
+      charactor.x = convertX(4);
+      charactor.y = convertY(4);
       gameScene.addChild(charactor);
 
       state = play;
 
-      //Render the stage   
+      //Render the stage
       gameLoop();
     }
 
@@ -82,6 +93,20 @@ export default class Canvas extends Component {
     }
 
     function play() {
+      const player = mainControl.player;
+      if (player.isPlaying()) {
+        const px = convertX(player.character.x),
+              py = convertY(player.character.y);
+        if (px !== charactor.x || py !== charactor.y) {
+          if (px > charactor.x) charactor.x++;
+          else if (px < charactor.x) charactor.x--;
+          else if (py > charactor.y) charactor.y++;
+          else if (py < charactor.y) charactor.y--;
+        }
+        else {
+          player.nextStep();
+        }
+      }
       charactor.x += 1;
       if (charactor.x > 196) state = end;
     }
