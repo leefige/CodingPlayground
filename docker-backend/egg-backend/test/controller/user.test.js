@@ -2,6 +2,17 @@
 const { app, mock, assert } = require('egg-mock/bootstrap');
 describe('test/controller/user.test.js', () => {
   afterEach(mock.restore);
+  describe('logout test', () => {
+    it('should status 200 and get the body', () => {
+      return app.httpRequest()
+      .post('/user/logout')
+      .expect(200)
+      .expect({
+        logout_success: true,
+      });
+    });
+  });
+
   describe('signup test', () => {
     it('should status 200 and get the body', () => {
       // 对 app 发起 `POST /` 请求
