@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Game from './Game'
 import Canvas from './Canvas'
 
 class Scene extends Component {
