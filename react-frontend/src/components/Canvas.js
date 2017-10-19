@@ -94,8 +94,8 @@ export default class Canvas extends Component {
     function play() {
       const player = mainControl.player;
       if (player.isPlaying()) {
-        const px = convertX(player.character.pos['x']),
-              py = convertY(player.character.pos['y']);
+        const px = convertX(player.character.pos['y']),
+              py = convertY(player.character.pos['x']);
         if (px !== charactor.x || py !== charactor.y) {
           if (px > charactor.x) charactor.x++;
           else if (px < charactor.x) charactor.x--;
