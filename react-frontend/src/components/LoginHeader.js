@@ -31,6 +31,7 @@ class SignupHeader extends Component {
 		fetch('http://127.0.0.1:7001/user/login', {
 			method: 'POST',
 			mode: 'cors',
+			credentials: 'include',
 			headers: {
 				'Accept': 'application/json',
 				'Content-Type': "application/json; charset=utf-8",
@@ -45,7 +46,7 @@ class SignupHeader extends Component {
 		.then((responseJson) => {
 			if (responseJson.login_success){
 				this.props.onLogin(this.state.email);
-				console.log("Login success!")
+				console.log(responseJson);
 			}
 				
 			else
