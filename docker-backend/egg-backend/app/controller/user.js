@@ -15,7 +15,7 @@ module.exports = app => {
       const userId = this.ctx.session.userId;
       const userPassword = this.ctx.session.userPassword;
       const body = this.ctx.request.body;
-      if(body === null){
+      if(body.autoLogin === true){
         const result = await this.ctx.service.user.login({
           id: userId,
           password: userPassword,
@@ -28,6 +28,7 @@ module.exports = app => {
         const result = await this.ctx.service.user.login(body);
         this.ctx.body = {
           login_success: result,
+          id: userId,
         };
         this.ctx.session.userId = body.id;
         this.ctx.session.userPassword = body.password;
