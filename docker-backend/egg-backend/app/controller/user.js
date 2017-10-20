@@ -22,6 +22,7 @@ module.exports = app => {
         });
         this.ctx.body = {
           login_success: result,
+          id: userId,
         };
       }
       else{

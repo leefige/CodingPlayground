@@ -22,12 +22,11 @@ class SignupHeader extends Component {
     this.state = {
       email: '',
       password: ''
-    }
+		}
+		
 	}
+
 	async handleLogin() {
-		const formData = new FormData();
-		formData.append('id', this.state.email);
-		formData.append('password', this.state.password);
 		fetch('http://127.0.0.1:7001/user/login', {
 			method: 'POST',
 			mode: 'cors',
@@ -39,6 +38,7 @@ class SignupHeader extends Component {
 			body: JSON.stringify({
 				id: this.state.email,
 				password: this.state.password,
+				autoLogin: false,
 			})
 			//body: formData
 		})
@@ -58,9 +58,6 @@ class SignupHeader extends Component {
 	}
 
 	async handleSignup() {
-		const formData = new FormData();
-		formData.append('id', this.state.email);
-		formData.append('password', this.state.password);
 		fetch('http://127.0.0.1:7001/user/signup', {
 			method: 'POST',
 			mode: 'cors',
@@ -165,7 +162,51 @@ class SignupHeader extends Component {
 }
 
 class LoginHeader extends Component {
+	constructor() {
+		super();
+		this.state = {
+			autoLogin : true,
+		}
+		this.autoLogin();
+	}
+
+	handleLogout() {
+		this.autoLogin = false;
+		this.props.onLogout();
+	}
+
+	handleLogin() {
+		this.autoLogin = true;
+	}
+	async autoLogin() {
+		console.log("auto login");
+		fetch('http://127.0.0.1:7001/user/login', {
+			method: 'POST',
+			mode: 'cors',
+			credentials: 'include',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': "application/json; charset=utf-8",
+			},
+			body: JSON.stringify({
+				autoLogin: true,
+			})
+			//body: formData
+		})
+		.then((response) => response.json())
+		.then((responseJson) => {
+			if (responseJson.login_success){
+				this.props.onLogin(responseJson.id);
+				console.log(responseJson);
+			}
+		})
+		.catch((error) => {
+			console.error(error);
+		});
+	}
+
 	render() {
+		
 		return (
 			<div className='container'>
 				<div className='text-right'>
