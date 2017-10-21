@@ -1,13 +1,27 @@
 import React, { Component } from 'react'
+import { post } from "../utils/Request"
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
 
 class LogoutHeader extends Component {
-	handleLogout() { this.props.onLogout() }
+	handleLogout() {
+		post('http://127.0.0.1:7001/user/logout', {})	
+	 	.then((responseJson) => {
+			if (responseJson.logout_success){
+				console.log("logout success");	
+				this.props.onLogout();
+			}
+			else
+				alert("登录失败！");
+		})
+		.catch((error) => {
+			console.error(error);
+		});
+	}
 	render() {
 		return (
 			<div>
-				{'欢迎，' + this.props.username}
+				{'欢迎，' + this.props.id}
 				<button className="button" onClick={this.handleLogout.bind(this)}>
 					登出
         </button>
@@ -21,34 +35,24 @@ class SignupHeader extends Component {
     super()
     this.state = {
       email: '',
-      password: ''
-    }
+			password: '',
+			rememberMe: false,
+		}
+		
 	}
+
 	async handleLogin() {
-		const formData = new FormData();
-		formData.append('id', this.state.email);
-		formData.append('password', this.state.password);
-		fetch('http://127.0.0.1:7001/user/login', {
-			method: 'POST',
-			mode: 'cors',
-			credentials: 'include',
-			headers: {
-				'Accept': 'application/json',
-				'Content-Type': "application/json; charset=utf-8",
-			},
-			body: JSON.stringify({
-				id: this.state.email,
-				password: this.state.password,
-			})
-			//body: formData
+		post('http://127.0.0.1:7001/user/login', {
+			id: this.state.email,
+			password: this.state.password,
+			rememberMe: this.state.rememberMe,
 		})
-		.then((response) => response.json())
 		.then((responseJson) => {
+			console.log(responseJson);
 			if (responseJson.login_success){
 				this.props.onLogin(this.state.email);
-				console.log(responseJson);
+				console.log("Login success!")
 			}
-				
 			else
 				alert("登录失败！");
 		})
@@ -58,23 +62,10 @@ class SignupHeader extends Component {
 	}
 
 	async handleSignup() {
-		const formData = new FormData();
-		formData.append('id', this.state.email);
-		formData.append('password', this.state.password);
-		fetch('http://127.0.0.1:7001/user/signup', {
-			method: 'POST',
-			mode: 'cors',
-			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json; charset=utf-8',
-			},
-			body: JSON.stringify({
+		post('http://127.0.0.1:7001/user/signup', {
 				id: this.state.email,
 				password: this.state.password,
-			})
-			//body: formData
-		})
-		.then((response) => response.json())
+		})	
 		.then((responseJson) => {
 			if (responseJson.signup_success)
 				alert("注册成功！");
@@ -94,6 +85,13 @@ class SignupHeader extends Component {
 	handlePasswordChange(event) {
 		this.setState({	
 			password: event.target.value
+		})
+	}
+	handleRememberMeChange(event) {
+		console.log("remember me change");
+		console.log(event.target.checked);
+		this.setState({	
+			rememberMe: event.target.checked
 		})
 	}
 	render() {
@@ -120,7 +118,7 @@ class SignupHeader extends Component {
 										<input type="password" id="inputPassword" className="form-control" placeholder="密码" required value={this.state.password} onChange={this.handlePasswordChange.bind(this)}/>
 										<div className="checkbox">
 											<label>
-												<input type="checkbox" value="remember-me"/> 记住我
+												<input type="checkbox" value={"remember-me"} checked={this.state.rememberMe} onChange={this.handleRememberMeChange.bind(this)}/> 记住我
           						</label>
 										</div>
 										<button className="btn btn-lg btn-success btn-block" type="submit" data-dismiss="modal" onClick={this.handleLogin.bind(this)}>登录</button>
@@ -165,13 +163,36 @@ class SignupHeader extends Component {
 }
 
 class LoginHeader extends Component {
+	handleLogout() {
+		this.props.onLogout();
+	}
+	
+	componentWillMount() {
+		this.autoLogin();
+	}
+
+	async autoLogin() {
+		post('http://127.0.0.1:7001/user/autoLogin', {
+			autoLogin: true,
+		})
+		.then((responseJson) => {
+			if (responseJson.autoLogin_success){
+				this.props.onLogin(responseJson.id);
+				console.log(responseJson);
+			}
+		})
+		.catch((error) => {
+			console.error(error);
+		});
+	}
+
 	render() {
 		return (
 			<div className='container'>
 				<div className='text-right'>
 					{this.props.state ?
 						<LogoutHeader
-							username={this.props.username}
+							id={this.props.id}
 							onLogout={this.props.onLogout} /> :
 						<SignupHeader
 							onLogin={this.props.onLogin}

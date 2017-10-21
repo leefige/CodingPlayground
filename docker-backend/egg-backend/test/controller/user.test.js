@@ -43,6 +43,21 @@ describe('test/controller/user.test.js', () => {
       });
     });
 
+    it('should remember user when rememberMe is true', () => {
+      return app.httpRequest()
+      .post('/user/signup')
+      .type('json')
+      .send({
+        id: '2341',
+        password: '213',
+      })
+      .expect(200)
+      .expect({
+        signup_success: false,
+      });
+    });
+
+
     it('should get error when data not correct', () =>{
       return app.httpRequest()
       .post('/user/signup')
@@ -91,9 +106,12 @@ describe('test/controller/user.test.js', () => {
         .send({
           id: '2341',
           password: '213',
+          rememberMe: true,
         })
         .expect(200) // 期望返回 status 200
-        .expect({login_success: true,});
+        .expect({
+          login_success: true,
+        });
     });
 
     it('should get false when user not exists', async function() {
@@ -103,9 +121,12 @@ describe('test/controller/user.test.js', () => {
       .send({
         id: '23jlkll4a1',
         password: '213',
+        rememberMe: false,
       })
       .expect(200) // 期望返回 status 200
-      .expect({login_success: false,});
+      .expect({
+        login_success: false,
+      });
     });
 
     it('should get error when data not correct', () =>{
@@ -116,14 +137,16 @@ describe('test/controller/user.test.js', () => {
       .expect(400);
     })
 
+
      it('should send multi requests', async function () {
       // 使用 generator function 方式写测试用例，可以在一个用例中串行发起多次请求
       await app.httpRequest()
         .post('/user/login')
         .type('json')
         .send({
-          id: '2341',
-          password: '213',
+          id: '233',
+          password: '233',
+          rememberMe: true,
         })
         .expect(200) // 期望返回 status 200
         .expect({
@@ -134,14 +157,32 @@ describe('test/controller/user.test.js', () => {
         .post('/user/login')
         .type('json')
         .send({
-          id: '234c1',
-          password: '213',
+          id: '212',
+          password: '233',
+          rememberMe: true,
         })
         .expect(200)
         .expect({
           login_success: false,
       });
     });
+
+  
   });
 
+  describe('autoLogin test', () => {
+    it('should autoLogin', () => {
+      // 对 app 发起 `POST /` 请求
+      return app.httpRequest()
+        .post('/user/autoLogin')
+        .type('json')
+        .send({
+          autoLogin: true,
+        })
+        .expect(200) // 期望返回 status 200
+        .expect({
+          autoLogin_success: false,
+        });
+    });
+  });
 });
