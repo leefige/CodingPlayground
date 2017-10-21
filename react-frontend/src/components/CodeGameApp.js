@@ -3,14 +3,14 @@ import LoginHeader from './LoginHeader'
 import CodeGameContent from './CodeGameContent'
 import Footer from './Footer' 
 
-import { instanceOf } from 'prop-types';
-import { withCookies, Cookies } from 'react-cookie';
+// import { instanceOf } from 'prop-types';
+// import { withCookies, Cookies } from 'react-cookie';
 
 
 class CodeGameApp extends Component {
-  static propTypes = {
-    cookies: instanceOf(Cookies).isRequired
-  };
+  // static propTypes = {
+  //   cookies: instanceOf(Cookies).isRequired
+  // };
   constructor() {
     super()
     this.state = {
@@ -18,28 +18,28 @@ class CodeGameApp extends Component {
       id:'卡尔',
     }
     
-    console.log(sessionStorage.getItem('key'));
+    // console.log(sessionStorage.getItem('key'));
   }
 
-  componentWillMount() {
-    const { cookies } = this.props;
-    if (cookies.get('isLogin') === 'true') {
-      this.setState({
-        isLogin : true,
-        id : cookies.get('id'),
-      })
-      console.log("is login");
-      console.log(cookies.get('id'));
-      console.log(this.state);
-    }
-    console.log(document.cookie);
-    console.log(cookies);
-  }
+  // componentWillMount() {
+  //   const { cookies } = this.props;
+  //   if (cookies.get('isLogin') === 'true') {
+  //     this.setState({
+  //       isLogin : true,
+  //       id : cookies.get('id'),
+  //     })
+  //     console.log("is login");
+  //     console.log(cookies.get('id'));
+  //     console.log(this.state);
+  //   }
+  //   console.log(document.cookie);
+  //   console.log(cookies);
+  // }
 
   handleLogin(id) {
-    const { cookies } = this.props;
-    cookies.set('id', id, { path: '/' });
-    cookies.set('isLogin', 'true', { path: '/' });
+    // const { cookies } = this.props;
+    // cookies.set('id', id, { path: '/' });
+    // cookies.set('isLogin', 'true', { path: '/' });
     this.setState({
       isLogin : true,
       id : id
@@ -47,8 +47,8 @@ class CodeGameApp extends Component {
   }
 
   handleLogout() {
-    const { cookies } = this.props;
-    cookies.set('isLogin', 'false', { path: '/' });
+    // const { cookies } = this.props;
+    // cookies.set('isLogin', 'false', { path: '/' });
     this.setState({
       isLogin:false
     })
@@ -68,4 +68,4 @@ class CodeGameApp extends Component {
   }
 }
 
-export default withCookies(CodeGameApp)
+export default CodeGameApp

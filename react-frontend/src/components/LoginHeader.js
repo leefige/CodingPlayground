@@ -4,7 +4,20 @@ require('es6-promise').polyfill();
 require('isomorphic-fetch');
 
 class LogoutHeader extends Component {
-	handleLogout() { this.props.onLogout() }
+	handleLogout() {
+		post('http://127.0.0.1:7001/user/logout', {})	
+	 	.then((responseJson) => {
+			if (responseJson.logout_success){
+				console.log("logout success");	
+				this.props.onLogout();
+			}
+			else
+				alert("登录失败！");
+		})
+		.catch((error) => {
+			console.error(error);
+		});
+	}
 	render() {
 		return (
 			<div>
@@ -22,7 +35,8 @@ class SignupHeader extends Component {
     super()
     this.state = {
       email: '',
-      password: ''
+			password: '',
+			rememberMe: false,
 		}
 		
 	}
@@ -96,7 +110,7 @@ class SignupHeader extends Component {
 										<input type="password" id="inputPassword" className="form-control" placeholder="密码" required value={this.state.password} onChange={this.handlePasswordChange.bind(this)}/>
 										<div className="checkbox">
 											<label>
-												<input type="checkbox" value="remember-me"/> 记住我
+												<input type="checkbox" value={this.state.rememberMe} onChange={this.handleRememberMeChange.bind(this)}}/> 记住我
           						</label>
 										</div>
 										<button className="btn btn-lg btn-success btn-block" type="submit" data-dismiss="modal" onClick={this.handleLogin.bind(this)}>登录</button>
@@ -145,6 +159,25 @@ class LoginHeader extends Component {
 		this.props.onLogout();
 	}
 	
+	componentWillMount() {
+		this.autoLogin();
+	}
+
+	async autoLogin() {
+		post('http://127.0.0.1:7001/user/login', {
+			autoLogin: true,
+		})
+		.then((responseJson) => {
+			if (responseJson.login_success){
+				this.props.onLogin(responseJson.id);
+				console.log(responseJson);
+			}
+		})
+		.catch((error) => {
+			console.error(error);
+		});
+	}
+
 	render() {
 		console.log("cookie");
 		console.log(document.cookie);

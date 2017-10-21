@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './components/App';
+import CodeGameApp from './components/CodeGameApp';
 
 ReactDOM.render(
-  <App />,
+  <CodeGameApp />,
   document.getElementById('root')
 );
