@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { post } from "../utils/Request"
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
 
@@ -7,7 +8,7 @@ class LogoutHeader extends Component {
 	render() {
 		return (
 			<div>
-				{'欢迎，' + this.props.username}
+				{'欢迎，' + this.props.id}
 				<button className="button" onClick={this.handleLogout.bind(this)}>
 					登出
         </button>
@@ -27,28 +28,16 @@ class SignupHeader extends Component {
 	}
 
 	async handleLogin() {
-		fetch('http://127.0.0.1:7001/user/login', {
-			method: 'POST',
-			mode: 'cors',
-			credentials: 'include',
-			headers: {
-				'Accept': 'application/json',
-				'Content-Type': "application/json; charset=utf-8",
-			},
-			body: JSON.stringify({
-				id: this.state.email,
-				password: this.state.password,
-				autoLogin: false,
-			})
-			//body: formData
+		post('http://127.0.0.1:7001/user/login', {
+			id: this.state.email,
+			password: this.state.password,
+			autoLogin: false,
 		})
-		.then((response) => response.json())
 		.then((responseJson) => {
 			if (responseJson.login_success){
 				this.props.onLogin(this.state.email);
 				console.log(responseJson);
 			}
-				
 			else
 				alert("登录失败！");
 		})
@@ -58,20 +47,10 @@ class SignupHeader extends Component {
 	}
 
 	async handleSignup() {
-		fetch('http://127.0.0.1:7001/user/signup', {
-			method: 'POST',
-			mode: 'cors',
-			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json; charset=utf-8',
-			},
-			body: JSON.stringify({
+		post('http://127.0.0.1:7001/user/signup', {
 				id: this.state.email,
 				password: this.state.password,
-			})
-			//body: formData
-		})
-		.then((response) => response.json())
+		})	
 		.then((responseJson) => {
 			if (responseJson.signup_success)
 				alert("注册成功！");
@@ -174,7 +153,7 @@ class LoginHeader extends Component {
 				<div className='text-right'>
 					{this.props.state ?
 						<LogoutHeader
-							username={this.props.username}
+							id={this.props.id}
 							onLogout={this.props.onLogout} /> :
 						<SignupHeader
 							onLogin={this.props.onLogin}

@@ -29,6 +29,8 @@ class CodeGameApp extends Component {
         id : cookies.get('id'),
       })
       console.log("is login");
+      console.log(cookies.get('id'));
+      console.log(this.state);
     }
     console.log(document.cookie);
     console.log(cookies);
@@ -56,7 +58,7 @@ class CodeGameApp extends Component {
       <div className="container">
         <LoginHeader
           state = {this.state.isLogin}
-          username = {this.state.username}
+          id = {this.state.id}
           onLogin = {this.handleLogin.bind(this)}
           onLogout = {this.handleLogout.bind(this)}/>  
         <CodeGameContent />
