@@ -45,6 +45,7 @@ class SignupHeader extends Component {
 		post('http://127.0.0.1:7001/user/login', {
 			id: this.state.email,
 			password: this.state.password,
+			rememberMe: this.state.rememberMe,
 			autoLogin: false,
 		})
 		.then((responseJson) => {
@@ -86,6 +87,13 @@ class SignupHeader extends Component {
 			password: event.target.value
 		})
 	}
+	handleRememberMeChange(event) {
+		console.log("remember me change");
+		console.log(event.target.checked);
+		this.setState({	
+			rememberMe: event.target.checked
+		})
+	}
 	render() {
 		return (
 			<div className="clearfix">
@@ -110,7 +118,7 @@ class SignupHeader extends Component {
 										<input type="password" id="inputPassword" className="form-control" placeholder="密码" required value={this.state.password} onChange={this.handlePasswordChange.bind(this)}/>
 										<div className="checkbox">
 											<label>
-												<input type="checkbox" value={this.state.rememberMe} onChange={this.handleRememberMeChange.bind(this)}}/> 记住我
+												<input type="checkbox" value={"remember-me"} checked={this.state.rememberMe} onChange={this.handleRememberMeChange.bind(this)}/> 记住我
           						</label>
 										</div>
 										<button className="btn btn-lg btn-success btn-block" type="submit" data-dismiss="modal" onClick={this.handleLogin.bind(this)}>登录</button>
