@@ -8,7 +8,6 @@ class LogoutHeader extends Component {
 		post('http://127.0.0.1:7001/user/logout', {})	
 	 	.then((responseJson) => {
 			if (responseJson.logout_success){
-				console.log("logout success");	
 				this.props.onLogout();
 			}
 			else
@@ -51,7 +50,6 @@ class SignupHeader extends Component {
 			console.log(responseJson);
 			if (responseJson.login_success){
 				this.props.onLogin(this.state.email);
-				console.log("Login success!")
 			}
 			else
 				alert("登录失败！");
@@ -88,8 +86,6 @@ class SignupHeader extends Component {
 		})
 	}
 	handleRememberMeChange(event) {
-		console.log("remember me change");
-		console.log(event.target.checked);
 		this.setState({	
 			rememberMe: event.target.checked
 		})
@@ -178,7 +174,6 @@ class LoginHeader extends Component {
 		.then((responseJson) => {
 			if (responseJson.autoLogin_success){
 				this.props.onLogin(responseJson.id);
-				console.log(responseJson);
 			}
 		})
 		.catch((error) => {
