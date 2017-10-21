@@ -17,7 +17,7 @@ module.exports = app => {
         }
         return false;
       } catch (err) {
-        console.log(err);
+        console.error(err);
         return false;
       }
     }
@@ -28,7 +28,7 @@ module.exports = app => {
         if (result == null) { return false; }
         return true;
       } catch (err) {
-        console.log(err);
+        console.error(err);
         return false;
       }
     }

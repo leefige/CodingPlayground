@@ -46,7 +46,6 @@ class SignupHeader extends Component {
 			id: this.state.email,
 			password: this.state.password,
 			rememberMe: this.state.rememberMe,
-			autoLogin: false,
 		})
 		.then((responseJson) => {
 			console.log(responseJson);
@@ -173,11 +172,11 @@ class LoginHeader extends Component {
 	}
 
 	async autoLogin() {
-		post('http://127.0.0.1:7001/user/login', {
+		post('http://127.0.0.1:7001/user/autoLogin', {
 			autoLogin: true,
 		})
 		.then((responseJson) => {
-			if (responseJson.login_success){
+			if (responseJson.autoLogin_success){
 				this.props.onLogin(responseJson.id);
 				console.log(responseJson);
 			}
@@ -188,8 +187,6 @@ class LoginHeader extends Component {
 	}
 
 	render() {
-		console.log("cookie");
-		console.log(document.cookie);
 		return (
 			<div className='container'>
 				<div className='text-right'>

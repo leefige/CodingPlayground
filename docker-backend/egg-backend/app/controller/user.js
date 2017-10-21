@@ -3,6 +3,18 @@
 module.exports = app => {
   class UserController extends app.Controller {
     async signup() {
+      /*try {
+        await this.ctx.validate({
+          id: { type: 'string' },
+          password: { type: 'string' },
+        });
+      } catch (err) {
+        console.error(err);
+        this.ctx.body = { 
+          signup_success: false,
+        };
+        return;
+      }*/
       const body = this.ctx.request.body;
       const result = await this.ctx.service.user.signup(body);
       this.ctx.body = {
@@ -11,47 +23,61 @@ module.exports = app => {
     }
 
     async login() {
-      // 获取 Session 上的内容
-      const userId = this.ctx.session.userId;
-      const userPassword = this.ctx.session.userPassword;
       const body = this.ctx.request.body;
-      if(body.autoLogin === true){
-        const result = await this.ctx.service.user.login({
-          id: userId,
-          password: userPassword,
+      /*try {
+        await this.ctx.validate({
+          id: { type: 'string' },
+          password: { type: 'string' },
+          rememberMe: {type: 'boolean'},
         });
-        this.ctx.body = {
-          login_success: result,
-          id: userId,
+      } catch (err) {
+        console.error(err);
+        this.ctx.body = { 
+          login_success: false,
         };
-      }
-      else{
-        const result = await this.ctx.service.user.login(body);
-        this.ctx.body = {
-          login_success: result,
-          id: userId,
-        };
-        this.ctx.session.userId = body.id;
-        this.ctx.session.userPassword = body.password;
-        if(body.rememberMe === false){
-          this.ctx.session.maxAge = 1000 * 1800;
-        }
+        return;
+      }*/
+
+      const result = await this.ctx.service.user.login(body);
+      this.ctx.body = {
+        login_success: result,
+      };
+      this.ctx.session.userId = body.id;
+      this.ctx.session.userPassword = body.password;
+      if(body.rememberMe === false){
+        this.ctx.session.maxAge = 1000 * 1800;
       }
     }
 
+    async autoLogin() {
+      /*try {
+        await this.ctx.validate({
+          autoLogin: {type: 'boolean'},
+        });
+      } catch (err) {
+        console.error(err);
+        this.ctx.body = { 
+          autoLogin_success: false,
+        };
+        return;
+      }*/
+      const body = {
+        id: this.ctx.session.userId,
+        password: this.ctx.session.userPassword,
+      }
+      const result = await this.ctx.service.user.login(body);
+      this.ctx.body = {
+        autoLogin_success: result,
+        id: body.id,
+      };
+    }
+
     async logout() {
-      try{
         this.ctx.session.userId = null;
         this.ctx.session.userPassword = null;
         this.ctx.body = {
           logout_success: true,
         };
-      } catch(err){
-        console.log(err);
-        this.ctx.body = {
-          logout_success: false,
-        };
-      }
     }
   }
   return UserController;

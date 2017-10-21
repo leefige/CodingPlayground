@@ -19,11 +19,14 @@
   "dependencies": {
     "connect-multiparty": "^2.0.0",
     "egg": "^1.9.0",
+    "egg-cluster": "^1.12.3",
     "egg-cors": "^1.2.0",
     "egg-mysql": "^3.0.0",
     "egg-sequelize": "^3.1.0",
     "egg-session": "^2.1.1",
-    "mysql2": "^1.4.2"
+    "egg-validate": "^1.0.0",
+    "mysql2": "^1.4.2",
+    "parameter": "^2.2.0"
   },
   "devDependencies": {
     "egg-bin": "^4.3.3",
