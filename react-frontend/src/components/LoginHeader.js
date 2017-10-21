@@ -25,9 +25,6 @@ class SignupHeader extends Component {
     }
 	}
 	async handleLogin() {
-		const formData = new FormData();
-		formData.append('id', this.state.email);
-		formData.append('password', this.state.password);
 		fetch('http://127.0.0.1:7001/user/login', {
 			method: 'POST',
 			mode: 'cors',
@@ -39,14 +36,15 @@ class SignupHeader extends Component {
 			body: JSON.stringify({
 				id: this.state.email,
 				password: this.state.password,
+				autoLogin: false,
 			})
-			//body: formData
 		})
 		.then((response) => response.json())
 		.then((responseJson) => {
+			console.log(responseJson);
 			if (responseJson.login_success){
 				this.props.onLogin(this.state.email);
-				console.log(responseJson);
+				console.log("Login success!")
 			}
 				
 			else
@@ -58,9 +56,6 @@ class SignupHeader extends Component {
 	}
 
 	async handleSignup() {
-		const formData = new FormData();
-		formData.append('id', this.state.email);
-		formData.append('password', this.state.password);
 		fetch('http://127.0.0.1:7001/user/signup', {
 			method: 'POST',
 			mode: 'cors',
@@ -72,7 +67,6 @@ class SignupHeader extends Component {
 				id: this.state.email,
 				password: this.state.password,
 			})
-			//body: formData
 		})
 		.then((response) => response.json())
 		.then((responseJson) => {

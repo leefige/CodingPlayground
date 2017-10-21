@@ -22,6 +22,7 @@ module.exports = app => {
         });
         this.ctx.body = {
           login_success: result,
+          id: userId,
         };
       }
       else{
@@ -32,6 +33,9 @@ module.exports = app => {
         };
         this.ctx.session.userId = body.id;
         this.ctx.session.userPassword = body.password;
+        if(body.rememberMe === false){
+          this.ctx.session.maxAge = 1000 * 1800;
+        }
       }
     }
 
