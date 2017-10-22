@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-// import ReactBlocklyComponent from 'react-blockly-component'
+import ReactDOM from 'react-dom';
+import ReactBlocklyComponent from './react-blockly-component/dist/react-blockly-component';
+
+const Blockly = window.Blockly;
 
 class BlocklyPad extends Component {
 
