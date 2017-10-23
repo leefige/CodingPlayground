@@ -39,9 +39,9 @@ export default class Canvas extends Component {
     //Create a Pixi stage and renderer
     const stage = new Container();
 
-    let gameScene, id, background, charactor;
+    let gameScene, id, charactor1, charactor2;
 
-    const gpJson = `${process.env.PUBLIC_URL}/img/gamePic.json`
+    const gpJson = `${process.env.PUBLIC_URL}/img/sources/gamePic.json`
 
     //Use Pixi's built-in `loader` object to load an image
     loader
@@ -67,17 +67,43 @@ export default class Canvas extends Component {
 
       console.log('id: ', resources[gpJson]);
 
-      background = new Sprite(id['background']);
-      background.width = width;
-      background.height = height;
-      gameScene.addChild(background);
+      const backgroundArray = [
+        0, 1, 2, 3, 4, 7, 8, 9,
+        16, 50, 50, 50, 20, 23, 24, 25,
+        32, 50, 50, 50, 36, 23, 24, 25,
+        48, 49, 50, 51, 52, 23, 24, 25,
+        64, 65, 66, 67, 68, 39, 40, 41,
+        7, 8, 8, 8, 8, 8, 8, 9,
+        23, 24, 24, 24, 24, 24, 24, 25,
+        39, 40, 40, 40, 40, 40, 40, 41
+      ]
 
-      charactor = new Sprite(id['charactor']);
-      charactor.width = width / 10;
-      charactor.height = height / 8;
-      charactor.x = convertX(4);
-      charactor.y = convertY(4);
-      gameScene.addChild(charactor);
+      for (let i = 0; i < row; i++)
+        for (let j = 0; j < col; j++) {
+          const background = new Sprite(id[`${backgroundArray[i*row+j]}.png`])
+          background.x = j * width / row;
+          background.y = i * height / col;
+          background.width = width / row;
+          background.height = height / col;
+          gameScene.addChild(background);
+        }
+      // background = new Sprite(id['background']);
+      // background.width = width;
+      // background.height = height;
+      // gameScene.addChild(background);
+
+      charactor1 = new Sprite(id['105.png']);
+      charactor2 = new Sprite(id['89.png']);
+      charactor1.width = width / 10;
+      charactor1.height = height / 8;
+      charactor2.width = width / 10;
+      charactor2.height = height / 8;
+      charactor1.x = convertX(4);
+      charactor1.y = convertY(4);
+      charactor2.x = charactor1.x;
+      charactor2.y = charactor1.y - charactor2.height;
+      gameScene.addChild(charactor1);
+      gameScene.addChild(charactor2);
 
       state = play;
 
@@ -96,11 +122,11 @@ export default class Canvas extends Component {
       if (player.isPlaying()) {
         const px = convertX(player.character.pos['y']),
               py = convertY(player.character.pos['x']);
-        if (px !== charactor.x || py !== charactor.y) {
-          if (px > charactor.x) charactor.x++;
-          else if (px < charactor.x) charactor.x--;
-          else if (py > charactor.y) charactor.y++;
-          else if (py < charactor.y) charactor.y--;
+        if (px !== charactor1.x || py !== charactor1.y) {
+          if (px > charactor1.x) charactor1.x++;
+          else if (px < charactor1.x) charactor1.x--;
+          else if (py > charactor1.y) charactor1.y++, charactor2.y++;
+          else if (py < charactor1.y) charactor1.y--, charactor2.y--;
         }
         else {
           player.nextStep();
