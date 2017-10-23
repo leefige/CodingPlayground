@@ -1,6 +1,11 @@
 import React, { Component } from 'react'
 import LoginHeader from './LoginHeader'
 import CodeGameContent from './CodeGameContent'
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from 'react-router-dom'
 import Footer from './Footer' 
 
 class CodeGameApp extends Component {
@@ -31,8 +36,8 @@ class CodeGameApp extends Component {
           state = {this.state.isLogin}
           id = {this.state.id}
           onLogin = {this.handleLogin.bind(this)}
-          onLogout = {this.handleLogout.bind(this)}/>  
-        <CodeGameContent />
+          onLogout = {this.handleLogout.bind(this)}/>
+        <Route path="/map/:mapID/:recordID?" component={CodeGameContent}/>
         <Footer />
       </div>
     )

@@ -4,8 +4,11 @@ import Programming from './Programming';
 import { mainControl } from '../logic/MainControl';
 
 class CodeGameContent extends Component {
-  constructor() {
+  constructor(props) {
     super();
+    console.log(props.match.params)
+    console.log("map id:" + props.match.params.mapID);
+    
     this.state = {
       actionList: [],
     };
