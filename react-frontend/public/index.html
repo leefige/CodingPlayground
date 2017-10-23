@@ -26,26 +26,21 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.3/react.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.3/react-dom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.6.1/react.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/15.6.1/react-dom.js"></script>
     
     <script src="https://leefige.github.io/blockly_provider/Blockly/blockly_compressed.js"></script>
     <script src="https://leefige.github.io/blockly_provider/Blockly/javascript_compressed.js"></script>
     <script src="https://leefige.github.io/blockly_provider/Blockly/blocks_compressed.js"></script>
     <script src="https://leefige.github.io/blockly_provider/Blockly/zh-hans.js"></script>
+
     <script src="https://leefige.github.io/blockly_provider/react-blockly-component/dist/react-blockly-component.js"></script>
   
     <script src="./customized_blocks/customized_block.js"></script>
     <script src="./customized_blocks/customized_message.js"></script>
     <script src="./customized_blocks/customized_generator.js"></script>
+    <script src="./renderBlockly.js"></script>
     
-
-    <style type="text/css">
-    .fill-height {
-      height: 100%;
-    }
-    </style>
-
     <xml id="toolbox" style="display: none">
       <category name="Logic">
         <block type="controls_if"></block>
@@ -75,176 +70,11 @@
         <block type="text_print"></block>
       </category>
     </xml>
-  
-    <script type="text/javascript">
-      function genEditor() {
-        var editor = React.createElement(ReactBlocklyComponent.BlocklyEditor, {
-            workspaceConfiguration: {
-              grid: {
-                spacing: 20,
-                length: 3,
-                colour: '#ccc',
-                snap: true
-              }
-            },
-            toolboxMode:'CATEGORIES',
-            toolboxCategories: [
-              {
-                name: "动作",
-                blocks: [
-                  { type: "go" },
-                  { type: "turn_left" },
-                  { type: "turn_right" },
-                ]
-              },
-              {
-                name: "变量",
-                blocks: [
-                  { type: "variables_set" },
-                  { type: "variables_get" },
-                ]
-              },
-              {
-                name: "数学",
-                blocks: [
-                  { type: "math_number" },
-                  { type: "math_arithmetic",
-                    values: {
-                      "A": {
-                        type: "math_number",
-                        shadow: true,
-                        fields: {
-                          "NUM": 0
-                        }
-                      },
-                      "B": {
-                        type: "math_number",
-                        shadow: true,
-                        fields: {
-                          "NUM": 0
-                        }
-                      },
-                    }
-                  },
-                  { type: "math_modulo" ,
-                    values: {
-                      "DIVIDEND": {
-                        type: "math_number",
-                        shadow: true,
-                        fields: {
-                          "NUM": 3
-                        }
-                      },
-                      "DIVISOR": {
-                        type: "math_number",
-                        shadow: true,
-                        fields: {
-                          "NUM": 2
-                        }
-                      },
-                    }
-                  },
-                  { type: "math_single" },
-                  { type: "math_trig" },
-                  { type: "math_constant" },
-                  { type: "math_random_int",
-                      values: {
-                        "FROM": {
-                          type: "math_number",
-                          shadow: true,
-                          fields: {
-                            "NUM": 0
-                          }
-                        },
-                        "TO": {
-                          type: "math_number",
-                          shadow: true,
-                          fields: {
-                            "NUM": 5
-                          }
-                        },
-                    },
-                  }
-                ]
-              },
-              {
-                name: "分支",
-                blocks: [
-                  { type: "controls_if" },
-                  { type: "logic_compare" },
-                ]
-              },
-              {
-                name: "循环",
-                blocks: [
-                  { type: "controls_whileUntil" },
-                  { type: "controls_for" ,
-                    values: {
-                      "FROM": {
-                        type: "math_number",
-                        shadow: true,
-                        fields: {
-                          "NUM": 0
-                        }
-                      },
-                      "TO": {
-                        type: "math_number",
-                        shadow: true,
-                        fields: {
-                          "NUM": 5
-                        }
-                      },
-                      "BY": {
-                        type: "math_number",
-                        shadow: true,
-                        fields: {
-                          "NUM": 1
-                        }
-                      }
-                    },
-                  },
-                ]
-              },
-              {
-                name: "文本",
-                blocks: [
-                  { type: "text" },
-                  {
-                    type: "text_print",
-                    values: {
-                      "TEXT": {
-                        type: "text",
-                        shadow: true,
-                        fields: {
-                          "TEXT": "abc"
-                        }
-                      }
-                    }
-                  }
-                ]
-              }
-            ],
-            initialXml: '<xml xmlns="http://www.w3.org/1999/xhtml"><block type="go" x="5" y="10"></block></xml>',
-            wrapperDivClassName: 'fill-height',
-            xmlDidChange: function(newXml) {
-              // document.getElementById('generated-xml').innerText = newXml;
-            }
-          }
-        );
-        // editor.importFromXml(document.getElementById('toolbox'));
-        window.addEventListener('load', function() {
-          editor,
-          ReactDOM.render(editor, document.getElementById('blockly'));
-        });
-        return editor.state.workspace;
-      }
 
-      var editor = genEditor();
-
-      
+    <script>
       function index_genCode() {
         Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
-        const code = Blockly.JavaScript.workspaceToCode(editor);
+        const code = Blockly.JavaScript.workspaceToCode();
         document.getElementById('code_textarea').value=code;
       }
     </script>
