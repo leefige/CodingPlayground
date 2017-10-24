@@ -21,7 +21,7 @@ class CodeGameContent extends Component {
   componentWillMount() {
     // 获取地图信息和blockly配置
     post('http://127.0.0.1:7001/map', {
-			id: props.match.params.mapID,
+			id: this.props.match.params.mapID,
 		})	
     .then((responseJson) => {
       mainControl.load(responseJson.mapInitState);
@@ -37,7 +37,7 @@ class CodeGameContent extends Component {
     // 获取播放记录
     if (this.props.match.params.recordID) {
       post('http://127.0.0.1:7001/map', {
-        id: props.match.params.mapID,
+        id: this.props.match.params.mapID,
       })	
       .then((responseJson) => {
         const player = mainControl.player;
