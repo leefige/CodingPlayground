@@ -7,8 +7,8 @@ import { post } from '../utils/Request'
 class CodeGameContent extends Component {
   constructor(props) {
     super(props);
-    console.log(props.match.params)
-    console.log("map id:" + props.match.params.mapID);
+    // console.log(props.match.params)
+    // console.log("map id:" + props.match.params.mapID);
     
     this.state = {
       mapInitState: {},
