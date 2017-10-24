@@ -53,8 +53,7 @@ class SignupHeader extends Component {
 			}
 			else
 				alert("登录失败！");
-		})
-		.catch((error) => {
+		}).catch((error) => {
 			console.error(error);
 		});
 	}
