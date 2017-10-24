@@ -1,5 +1,9 @@
 'use strict';
 
+ReactBlocklyComponent = window.ReactBlocklyComponent;
+React = window.React;
+ReactDOM = window.ReactDOM;
+
 function configCategory(categoryConfigJSON) {
   return eval( '(' + categoryConfigJSON + ')' );
 }

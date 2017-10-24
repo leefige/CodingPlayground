@@ -8,26 +8,26 @@ class BlocklyPad extends Component {
 
   // to generate Blockly workspace
   
-  generateWorkspace() {
-    const editor = React.createElement(ReactBlocklyComponent.BlocklyEditor, 
-      {
-        workspaceConfiguration: {
-          grid: {spacing: 20,
-            length: 3,
-            colour: '#ccc',
-            snap: true
-          }
-        },
-        toolboxMode:'CATEGORIES',
-        toolboxCategories: [],
-        initialXml: '<xml xmlns="http://www.w3.org/1999/xhtml"><block type="go" x="5" y="10"></block></xml>',
-        wrapperDivClassName: 'fill-height',
-        xmlDidChange: function(newXml) {
-          // document.getElementById('generated-xml').innerText = newXml;
-        }
-      }
-    );
-  }
+  // generateWorkspace() {
+  //   const editor = React.createElement(ReactBlocklyComponent.BlocklyEditor, 
+  //     {
+  //       workspaceConfiguration: {
+  //         grid: {spacing: 20,
+  //           length: 3,
+  //           colour: '#ccc',
+  //           snap: true
+  //         }
+  //       },
+  //       toolboxMode:'CATEGORIES',
+  //       toolboxCategories: [],
+  //       initialXml: '<xml xmlns="http://www.w3.org/1999/xhtml"><block type="go" x="5" y="10"></block></xml>',
+  //       wrapperDivClassName: 'fill-height',
+  //       xmlDidChange: function(newXml) {
+  //         // document.getElementById('generated-xml').innerText = newXml;
+  //       }
+  //     }
+  //   );
+  // }
 
   // following funcs can only be used in text version
   
