@@ -25,7 +25,9 @@ module.exports = app => {
     async login(_body) {
       try {
         const result = await app.mysql.get('user', { id: _body.id, password: _body.password });
-        if (result == null) { return false; }
+        if (result == null) { 
+          return false; 
+        }
         return true;
       } catch (err) {
         console.error(err);
