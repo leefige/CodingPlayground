@@ -39,8 +39,7 @@ class Programming extends Component {
             <TaskGuide />
           </div>
           <div>
-            <BlocklyPad 
-            onCodeSubmit={this.handleCodeSubmit.bind(this)}/>
+            <BlocklyPad onCodeSubmit={this.handleCodeSubmit.bind(this)} blockconfig = {this.props.blockconfig}/>
           </div>
         </div>
       </div>
