@@ -97,8 +97,7 @@ class BlocklyPad extends Component {
             </span>
           </div>
 
-        <div id="blockly" className='pad'>
-        </div>
+        <div id="blockly" className='pad' data-blockconfig = {JSON.stringify(this.props.blockconfig)}/>
       </div>
     );
   }
