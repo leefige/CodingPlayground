@@ -1,11 +1,11 @@
-//'use strict';
+'use strict';
 const { app, mock, assert } = require('egg-mock/bootstrap');
 describe('test/service/record.test.js', () => {
   afterEach(mock.restore);
   describe('getId()', () => {
     it('should get record id', async function () {
       const ctx = app.mockContext();
-      const user = await ctx.service.record.getId({
+      const record = await ctx.service.record.getId({
           id: 'azxsd',
       });
       assert(record === null);
@@ -28,7 +28,7 @@ describe('test/service/record.test.js', () => {
   describe('getId()', () => {
     it('should get record id', async function () {
       const ctx = app.mockContext();
-      const user = await ctx.service.record.insertId();
+      const record = await ctx.service.record.insertId();
       assert(record !== null);
     });
   });
