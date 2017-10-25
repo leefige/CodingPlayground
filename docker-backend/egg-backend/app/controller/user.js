@@ -3,7 +3,7 @@
 module.exports = app => {
   class UserController extends app.Controller {
     async signup() {
-      /*try {
+      try {
         await this.ctx.validate({
           id: { type: 'string' },
           password: { type: 'string' },
@@ -14,7 +14,7 @@ module.exports = app => {
           signup_success: false,
         };
         return;
-      }*/
+      }
       const body = this.ctx.request.body;
       const result = await this.ctx.service.user.signup(body);
       this.ctx.body = {
@@ -24,7 +24,7 @@ module.exports = app => {
 
     async login() {
       const body = this.ctx.request.body;
-      /*try {
+      try {
         await this.ctx.validate({
           id: { type: 'string' },
           password: { type: 'string' },
@@ -36,7 +36,7 @@ module.exports = app => {
           login_success: false,
         };
         return;
-      }*/
+      }
 
       const result = await this.ctx.service.user.login(body);
       this.ctx.body = {
@@ -50,7 +50,7 @@ module.exports = app => {
     }
 
     async autoLogin() {
-      /*try {
+      try {
         await this.ctx.validate({
           autoLogin: {type: 'boolean'},
         });
@@ -60,7 +60,7 @@ module.exports = app => {
           autoLogin_success: false,
         };
         return;
-      }*/
+      }
       const body = {
         id: this.ctx.session.userId,
         password: this.ctx.session.userPassword,
