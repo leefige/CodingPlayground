@@ -32,10 +32,14 @@ class CodeGameContent extends Component {
 
   componentWillMount() {
     // 获取地图信息和blockly配置
-    post('http://127.0.0.1:7001/map', {
-            id: this.props.match.params.mapID,
-        })  
+    post('http://127.0.0.1:7001/map/getId', {
+			id: this.props.match.params.mapID,
+		})	
     .then((responseJson) => {
+      console.log("load map sucess");
+      console.log(responseJson.mapInitState);
+      console.log(responseJson.mapResource);
+      console.log(responseJson.blocklyConfig);
       mainControl.load(responseJson.mapInitState);
       this.setState({
         mapInitState: responseJson.mapInitState,
@@ -48,10 +52,11 @@ class CodeGameContent extends Component {
     });
     // 获取播放记录
     if (this.props.match.params.recordID) {
-      post('http://127.0.0.1:7001/map', {
+      post('http://127.0.0.1:7001/record/getId', {
         id: this.props.match.params.mapID,
       })    
       .then((responseJson) => {
+        console.log("load record sucess");
         const player = mainControl.player;
         player.load(responseJson.recordData);
       })
