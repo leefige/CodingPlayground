@@ -20,7 +20,7 @@ class CodeGameContent extends Component {
 
   componentWillMount() {
     // 获取地图信息和blockly配置
-    post('http://127.0.0.1:7001/map', {
+    post('http://127.0.0.1:7001/map/getId', {
 			id: this.props.match.params.mapID,
 		})	
     .then((responseJson) => {
@@ -30,13 +30,14 @@ class CodeGameContent extends Component {
         mapResource: responseJson.mapResource,
         blocklyConfig: responseJson.blocklyConfig,
       });
+      console.log("load map sucess");
     })
     .catch((error) => {
       console.error(error);
     });
     // 获取播放记录
     if (this.props.match.params.recordID) {
-      post('http://127.0.0.1:7001/map', {
+      post('http://127.0.0.1:7001/record/getId', {
         id: this.props.match.params.mapID,
       })	
       .then((responseJson) => {

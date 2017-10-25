@@ -2,12 +2,14 @@
 module.exports = app => {
   class UserService extends app.Service {
     async signup(_body) {
-      /* const sql = "create table if not exists user(" +
+      const sql = "create table if not exists user(" +
         "id VARCHAR(100)," +
         "password VARCHAR(100)," +
         "primary key (id)" +
         ");";
-      await app.mysqlquery(sql);*/
+      const co = require('co');
+      app.mysql.query = co.wrap(app.mysql.query);
+      await app.mysql.query(sql);
       try {
         const is_insert = await app.mysql.get('user', { id: _body.id });
         if (is_insert === null) {

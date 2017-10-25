@@ -3,13 +3,10 @@ module.exports = app => {
   class RecordService extends app.Service {
     async getId(body) {
       try {
-        /*const result = await app.mysql.get('user', { id: body.id });
+        const result = await app.mysql.get('user', { id: body.id });
         const record = querystring.parse(result.data);
         return {
           recordData: record.data,
-        };*/
-        return {
-          recordData: 1,
         };
       } catch (err) {
         console.error(err);

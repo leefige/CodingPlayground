@@ -9,12 +9,12 @@ module.exports = app => {
         return {
           mapInitState: map.state,
           mapResource: map.resource,
-          blockConfig: map.block,
+          blocklyConfig: map.block,
         };*/
         return {
           mapInitState: 1,
           mapResource: 2,
-          blockConfig: 3,
+          blocklyConfig: 3,
         };
       } catch (err) {
         console.error(err);
@@ -24,6 +24,13 @@ module.exports = app => {
 
     async insertId(body){
       try {
+        /* const sql = "create table if not exists map(" +
+        "id VARCHAR(100)," +
+        "data TEXT," +
+        "primary key (id)" +
+        ");";
+      await app.mysql.query(sql);*/
+
         const data = querystring.stringify(body.data);
         const result = await app.mysql.insert('user', { id: body.id, data: data });
         const insertSuccess = result.affectedRows === 1;
