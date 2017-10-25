@@ -36,41 +36,11 @@
 
     <script src="https://leefige.github.io/blockly_provider/react-blockly-component/dist/react-blockly-component.js"></script>
   
-    <script src="/customized_blocks/customized_block.js"></script>
-    <script src="/customized_blocks/customized_message.js"></script>
-    <script src="/customized_blocks/customized_generator.js"></script>
-    <script src="/RenderBlockly.js"></script>
+    <script src="/script/customized_blocks/customized_block.js"></script>
+    <script src="/script/customized_blocks/customized_message.js"></script>
+    <script src="/script/customized_blocks/customized_generator.js"></script>
+    <script src="/script/RenderBlockly.js"></script>
     
-    <xml id="toolbox" style="display: none">
-      <category name="Logic">
-        <block type="controls_if"></block>
-        <block type="logic_compare"></block>
-        <block type="logic_operation"></block>
-        <block type="logic_negate"></block>
-        <block type="logic_boolean"></block>
-      </category>
-      <category name="Loops">
-        <block type="controls_repeat_ext">
-          <value name="TIMES">
-            <block type="math_number">
-              <field name="NUM">10</field>
-            </block>
-          </value>
-        </block>
-        <block type="controls_whileUntil"></block>
-      </category>
-      <category name="Math">
-        <block type="math_number"></block>
-        <block type="math_arithmetic"></block>
-        <block type="math_single"></block>
-      </category>
-      <category name="Text">
-        <block type="text"></block>
-        <block type="text_length"></block>
-        <block type="text_print"></block>
-      </category>
-    </xml>
-
     <script>
       function index_genCode() {
         Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
@@ -96,7 +66,7 @@
       className="btn btn-outline-primary" 
       onClick = "index_genCode()"
       style="background-color:#666666; display:none;">
-      Parse
+      ParseCode
     </button>
     
   </body>

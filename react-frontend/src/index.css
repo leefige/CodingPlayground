@@ -76,6 +76,6 @@ table {
   height: 300px; 
 }
 
-.fill-height {
+.blockly-workspace {
   height: 100%;
 }
