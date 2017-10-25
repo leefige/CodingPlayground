@@ -89,6 +89,17 @@ export default class Canvas extends Component {
 
       const backgroundArray = mapId;
 
+      const transparentArray = [
+        183, 183, 183, 183, 183, 77, 110, 79, 
+        183, 183, 183, 183, 183, 93, 183, 95, 
+        183, 183, 115, 183, 183, 63, 183, 95, 
+        183, 183, 183, 183, 183, 183, 183, 130, 
+        183, 115, 183, 34, 183, 183, 183, 183, 
+        183, 183, 183, 183, 183, 244, 183, 183, 
+        183, 229, 230, 231, 183, 183, 114, 183, 
+        183, 245, 246, 247, 183, 183, 183, 183, 
+      ]
+
       for (let i = 0; i < row; i++)
         for (let j = 0; j < col; j++) {
           const background = new Sprite(id[`${backgroundArray[i*row+j]}.png`])
@@ -97,6 +108,12 @@ export default class Canvas extends Component {
           background.width = width / row;
           background.height = height / col;
           gameScene.addChild(background);
+          const transparent = new Sprite(id[`${transparentArray[i*row+j]}.png`])
+          transparent.x = j * width / row;
+          transparent.y = i * height / col;
+          transparent.width = width / row;
+          transparent.height = height / col;
+          gameScene.addChild(transparent);
         }
       // background = new Sprite(id['background']);
       // background.width = width;

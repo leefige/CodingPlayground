@@ -32,6 +32,7 @@ class Programming extends Component {
   }
 
   render() {
+    console.log(this.props.blockconfig)
     return (
       <div className='programming'>
         <div className='container'>

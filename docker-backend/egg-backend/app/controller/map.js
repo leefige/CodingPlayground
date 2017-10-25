@@ -7,7 +7,12 @@ module.exports = app => {
       this.ctx.body = result;
     }
 
-    
+    async insertId(){
+      const result = await this.ctx.service.map.insertId(this.ctx.request.body);
+      this.ctx.body = {
+        id: result,
+      };
+    }
   }
   return MapController;
 };

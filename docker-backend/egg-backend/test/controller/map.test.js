@@ -8,14 +8,9 @@ describe('test/controller/map.test.js', () => {
         .post('/map/getId')
         .type('json')
         .send({
-          id: '2341',
+          id: '251',
         })
-        .expect(200)
-        .expect({
-          mapInitState: 1,
-          mapResource: 2,
-          blockConfig: 3,
-        });
+        .expect(200);
     });
 
     it('should get null when map not exist', () => {
@@ -25,8 +20,8 @@ describe('test/controller/map.test.js', () => {
         .send({
           id: '23411',
         })
-        .expect(200)
-        .expect(null);
+        .expect(204)
+        .expect({});
     });
 
     it('should get 400 when body is wrong', () => {
@@ -36,6 +31,15 @@ describe('test/controller/map.test.js', () => {
       .send('error')
       .expect(400);
     })
+  });
+
+  describe('insertId test', () => {
+    it('should status 200 and get the body', () => {
+      return app.httpRequest()
+      .get('/map/insertId')
+      .expect(200);
+
+    });
   });
 
 });

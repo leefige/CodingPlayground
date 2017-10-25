@@ -10,10 +10,7 @@ describe('test/controller/record.test.js', () => {
         .send({
           id: '2341',
         })
-        .expect(200)
-        .expect({
-          recordData: 1,
-        });
+        .expect(204);
     });
 
     it('should get null when map not exist', () => {
@@ -23,8 +20,8 @@ describe('test/controller/record.test.js', () => {
         .send({
           id: '23411',
         })
-        .expect(200)
-        .expect(null);
+        .expect(204)
+        .expect({});
     });
 
     it('should get 400 when body is wrong', () => {
@@ -34,6 +31,14 @@ describe('test/controller/record.test.js', () => {
         .send('error')
         .expect(400);
     })
+  });
+
+  describe('insertId test', () => {
+    it('should status 200 and get the body', () => {
+      return app.httpRequest()
+      .get('/record/insertId')
+      .expect(200);
+    });
   });
 
 });
