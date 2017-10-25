@@ -36,10 +36,15 @@ export default class Canvas extends Component {
   * In this case, componentDidMount is used to grab the canvas container ref, and
   * and hook up the PixiJS renderer
   **/
-  componentDidMount() {
+  componentDidMount(props) {
     this.width = 500, this.height = 500;
     const width = this.width, height = this.height;
-    const row = 8, col = 8;
+    const row = this.props.mapResource['width'], col = this.props.mapResource['height'];
+
+    const mapId = this.props.mapResource['id']
+
+    console.log(row, col);
+    console.log(this.props.mapResource)
 
     //Setup PIXI Canvas in componentDidMount
     this.renderer = PIXI.autoDetectRenderer(width, height);
@@ -80,21 +85,9 @@ export default class Canvas extends Component {
       gameScene = new Container();
       stage.addChild(gameScene);
 
-      console.log('resources: ', resources)
       id = resources[gpJson].textures;
 
-      console.log('id: ', resources[gpJson]);
-
-      const backgroundArray = [
-        0, 1, 2, 3, 4, 7, 8, 9,
-        16, 50, 50, 50, 20, 23, 24, 25,
-        32, 50, 50, 50, 36, 23, 24, 25,
-        48, 49, 50, 51, 52, 23, 24, 25,
-        64, 65, 66, 67, 68, 39, 40, 41,
-        7, 8, 8, 8, 8, 8, 8, 9,
-        23, 24, 24, 24, 24, 24, 24, 25,
-        39, 40, 40, 40, 40, 40, 40, 41
-      ]
+      const backgroundArray = mapId;
 
       for (let i = 0; i < row; i++)
         for (let j = 0; j < col; j++) {
