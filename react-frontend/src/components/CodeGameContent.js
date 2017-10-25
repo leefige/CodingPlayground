@@ -24,13 +24,16 @@ class CodeGameContent extends Component {
 			id: this.props.match.params.mapID,
 		})	
     .then((responseJson) => {
+      console.log("load map sucess");
+      console.log(responseJson.mapInitState);
+      console.log(responseJson.mapResource);
+      console.log(responseJson.blocklyConfig);
       mainControl.load(responseJson.mapInitState);
       this.setState({
         mapInitState: responseJson.mapInitState,
         mapResource: responseJson.mapResource,
         blocklyConfig: responseJson.blocklyConfig,
       });
-      console.log("load map sucess");
     })
     .catch((error) => {
       console.error(error);
@@ -41,6 +44,7 @@ class CodeGameContent extends Component {
         id: this.props.match.params.mapID,
       })	
       .then((responseJson) => {
+        console.log("load record sucess");
         const player = mainControl.player;
         player.load(responseJson.recordData);
       })
