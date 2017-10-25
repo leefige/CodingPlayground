@@ -1,11 +1,11 @@
 'use strict';
 
-ReactBlocklyComponent = window.ReactBlocklyComponent;
 React = window.React;
 ReactDOM = window.ReactDOM;
+ReactBlocklyComponent = window.ReactBlocklyComponent;
 
 function configCategory(categoryConfigJSON) {
-  return eval( '(' + categoryConfigJSON + ')' );
+  return JSON.parse(categoryConfigJSON);
 }
 
 /* -------------------------------------------------------- */
@@ -25,7 +25,7 @@ window.addEventListener('load', function() {
     },
     toolboxCategories: configCategory(blockConfigJSON),
     initialXml: '<xml xmlns="http://www.w3.org/1999/xhtml"><block type="go" x="5" y="10"></block></xml>',
-    wrapperDivClassName: 'fill-height',
+    wrapperDivClassName: 'blockly-workspace',
     xmlDidChange: function(newXml) {
       // document.getElementById('generated-xml').innerText = newXml;
     }
