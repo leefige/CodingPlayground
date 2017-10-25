@@ -3,7 +3,7 @@
 module.exports = app => {
   class UserController extends app.Controller {
     async signup() {
-      try {
+      /*try {
         await this.ctx.validate({
           id: { type: 'string' },
           password: { type: 'string' },
@@ -14,7 +14,7 @@ module.exports = app => {
           signup_success: false,
         };
         return;
-      }
+      }*/
       const body = this.ctx.request.body;
       const result = await this.ctx.service.user.signup(body);
       this.ctx.body = {

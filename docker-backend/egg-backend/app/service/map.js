@@ -4,12 +4,17 @@ module.exports = app => {
   class MapService extends app.Service {
     async getId(body){
       try {
-        const result = await app.mysql.get('user', { id: body.id});
+        /*const result = await app.mysql.get('user', { id: body.id});
         const map = querystring.parse(result.data);
         return {
           mapInitState: map.state,
           mapResource: map.resource,
           blockConfig: map.block,
+        };*/
+        return {
+          mapInitState: 1,
+          mapResource: 2,
+          blockConfig: 3,
         };
       } catch (err) {
         console.error(err);
