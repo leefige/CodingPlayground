@@ -4,8 +4,8 @@
 
 - [ ] 文档中更新游戏背景（荒岛寻找宝藏）
 - [x] 实现自动登录
-- [ ] Canvas素材渲染
-- [ ] Canvas整体缩放
+- [x] Canvas素材渲染
+- [x] Canvas整体缩放
 - [ ] 游戏结束判断及结束界面
 - [ ] 封装main control和programming实现配置读取
 - [ ] 后端建立关卡数据库并确定API
