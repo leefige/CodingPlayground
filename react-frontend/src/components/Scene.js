@@ -29,7 +29,7 @@ class Scene extends Component {
   render() {
     return (
           <div className='scene'>
-            <Canvas zoomLevel={this.state.zoomLevel}/>
+            <Canvas zoomLevel={this.state.zoomLevel} mapResource={this.props.mapResource}/>
             <button onClick={this.onZoomIn}>Zoom In</button>
             <button onClick={this.onZoomOut}>Zoom Out</button>
           </div>
