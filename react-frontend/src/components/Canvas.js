@@ -15,6 +15,21 @@ export default class Canvas extends Component {
 
   constructor(props) {
     super(props);
+    this.updateZoomLevel = this.updateZoomLevel.bind(this);
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextProps.zoomLevel !== this.props.zoomLevel;
+  }
+
+  updateZoomLevel(props) {
+    this.stage.scale.x = props.zoomLevel;
+    this.stage.scale.y = props.zoomLevel;
+    this.renderer.resize(this.width * props.zoomLevel, this.height * props.zoomLevel);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.updateZoomLevel(nextProps);
   }
 
   /**
@@ -22,11 +37,13 @@ export default class Canvas extends Component {
   * and hook up the PixiJS renderer
   **/
   componentDidMount() {
-    const width = 500, height = 500;
+    this.width = 500, this.height = 500;
+    const width = this.width, height = this.height;
     const row = 8, col = 8;
 
     //Setup PIXI Canvas in componentDidMount
-    const renderer = PIXI.autoDetectRenderer(width, height);
+    this.renderer = PIXI.autoDetectRenderer(width, height);
+    const renderer = this.renderer;
     this.refs.gameCanvas.appendChild(renderer.view);
 
     let state;
@@ -37,7 +54,8 @@ export default class Canvas extends Component {
         Sprite = PIXI.Sprite;
 
     //Create a Pixi stage and renderer
-    const stage = new Container();
+    this.stage = new Container();
+    const stage = this.stage;
 
     let gameScene, id, charactor1, charactor2;
 
