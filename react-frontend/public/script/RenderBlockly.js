@@ -4,32 +4,32 @@ React = window.React;
 ReactDOM = window.ReactDOM;
 ReactBlocklyComponent = window.ReactBlocklyComponent;
 
-function configCategory(categoryConfigJSON) {
-  return JSON.parse(categoryConfigJSON);
+function genBlockly(blocklyConfig) {
+  console.log("find blockly", blocklyConfig);
+  const editor = React.createElement(ReactBlocklyComponent.BlocklyEditor, {
+      workspaceConfiguration: {
+        grid: {
+          spacing: 20,
+          length: 3,
+          colour: '#ccc',
+          snap: true
+        }
+      },
+      toolboxCategories: blocklyConfig,
+      initialXml: '<xml xmlns="http://www.w3.org/1999/xhtml"><block type="go" x="5" y="10"></block></xml>',
+      wrapperDivClassName: 'blockly-workspace',
+      xmlDidChange: function(newXml) {
+        // document.getElementById('generated-xml').innerText = newXml;
+      }
+    }
+  );
+  ReactDOM.render(editor, document.getElementById('blockly'));
 }
 
-/* -------------------------------------------------------- */
-
 window.addEventListener('load', function() {
-  // console.log("find blockly", document.getElementById('blockly').dataset.blockconfig);
   const blocklyDiv = document.getElementById('blockly');
-  const blockConfigJSON = blocklyDiv.dataset.blockconfig;
-  const editor = React.createElement(ReactBlocklyComponent.BlocklyEditor, {
-    workspaceConfiguration: {
-      grid: {
-        spacing: 20,
-        length: 3,
-        colour: '#ccc',
-        snap: true
-      }
-    },
-    toolboxCategories: configCategory(blockConfigJSON),
-    initialXml: '<xml xmlns="http://www.w3.org/1999/xhtml"><block type="go" x="5" y="10"></block></xml>',
-    wrapperDivClassName: 'blockly-workspace',
-    xmlDidChange: function(newXml) {
-      // document.getElementById('generated-xml').innerText = newXml;
-    }
-  }
-);
-  ReactDOM.render(editor, document.getElementById('blockly'));
+  const blocklyConfig = blocklyDiv.dataset.blocklyconfig;
+  console.log("find blockly", blocklyConfig);
+  genBlockly(blocklyConfig);
 });
+

@@ -32,7 +32,7 @@ class Programming extends Component {
   }
 
   render() {
-    console.log(this.props.blockconfig)
+    console.log(this.props.blocklyConfig)
     return (
       <div className='programming'>
         <div className='container'>
@@ -40,7 +40,7 @@ class Programming extends Component {
             <TaskGuide />
           </div>
           <div>
-            <BlocklyPad onCodeSubmit={this.handleCodeSubmit.bind(this)} blockconfig = {this.props.blockconfig}/>
+            <BlocklyPad onCodeSubmit={this.handleCodeSubmit.bind(this)} blocklyConfig = {this.props.blocklyConfig}/>
           </div>
         </div>
       </div>
