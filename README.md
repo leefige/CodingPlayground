@@ -1,18 +1,28 @@
 # 我们是SAOest！
 
-## To-do List for Spirnt 3:
+## To-do List for Sprint 4:
+
+- [ ] 游戏结束判断及结束界面
+- [ ] 设计若干具体的关卡任务目标&地图
+- [ ] Blockly高亮&单步调试
+- [ ] 用户Blockly解法记录&保存
+- [ ] 地图编辑器
+- [ ] 实现关卡切换
+- [ ] 美化界面
+- [ ] 优化配置信息组织和传输
+
+## To-do List for Sprint 3:
 
 - [x] 文档中更新游戏背景（荒岛寻找宝藏）
 - [x] 实现自动登录
 - [x] Canvas素材渲染
 - [x] Canvas整体缩放
-- [ ] 游戏结束判断及结束界面
 - [x] 实现配置读取
 - [x] 后端建立关卡数据库并确定API
-- ~~[ ] Blockly移植进React框架~~
+- [ ] ~~Blockly移植进React框架~~
 - [x] block种类可以使用配置文件控制
 
-## To-do List for Spirnt 2:
+## To-do List for Sprint 2:
 
 - [x] Issue board补充
 - [x] 游戏棋盘与任务的基本逻辑
@@ -25,7 +35,7 @@
 - [x] 确定动画框架，实现动画
 - [x] 后端实现token, cookie
 
-## To-do List for Spirnt 1:
+## To-do List for Sprint 1:
 
 - [x] 初步界面布局
 - [x] 初步游戏场景设计
