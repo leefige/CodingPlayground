@@ -52,6 +52,7 @@ class CodeGameContent extends Component {
                 ]
       },     
       blocklyConfig: [],
+      didFetchMap: false,
       // 待解决：recordData要不要作为state刷新子部件？
     };
   }
@@ -73,6 +74,7 @@ class CodeGameContent extends Component {
         mapInitState: responseJson.mapInitState,
         mapResource: responseJson.mapResource,
         blocklyConfig: responseJson.blocklyConfig,
+        didFetchMap: true,
       });
       
     })
@@ -107,7 +109,9 @@ class CodeGameContent extends Component {
     return (
       <div className='row'>
         <div className='col-xs-12 col-md-6'>
+          {this.state.didFetchMap?
           <Scene mapResource={this.state.mapResource}/>
+          :<div></div>}
         </div>
         <div className='col-xs-12 col-md-6 col-md-offset-6'>
           <Programming ref="prog_ref" id="programming" blocklyConfig={this.state.blocklyConfig} onCodeSubmit={this.handleCodeSubmit.bind(this)}/>
