@@ -103,6 +103,7 @@ class CodeGameContent extends Component {
   }
 
   render() {
+    console.log("code game content render");
     return (
       <div className='row'>
         <div className='col-xs-12 col-md-6'>
