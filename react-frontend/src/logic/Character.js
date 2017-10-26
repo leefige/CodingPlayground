@@ -24,17 +24,22 @@ class Character extends Unit {
   go() {
     const dir = this.dir;
     const pos = this.pos;
-    if (dir === 0 && pos.x - 1 >= 0 && this._board.map[pos.x - 1][pos.y] !== this._board.elements['block'])
-      this._nextState.pos = { x : pos.x - 1, y : pos.y};
-    else if (dir === 1 && pos.y + 1 < this._board.size && this._board.map[pos.x][pos.y + 1] !== this._board.elements['block'])
-      this._nextState.pos = { x : pos.x, y : pos.y + 1};
-    else if (dir === 2 && pos.x + 1 < this._board.size && this._board.map[pos.x + 1][pos.y] !== this._board.elements['block'])
-      this._nextState.pos = { x : pos.x + 1, y : pos.y};
-    else if (dir === 3 && pos.y - 1 >= 0 && this._board.map[pos.x][pos.y - 1] !== this._board.elements['block'])
-      this._nextState.pos = { x : pos.x, y : pos.y - 1};
-    else {
-      // bug
-    }
+    let nextPos = pos;
+    if (dir === 0)
+      nextPos = { x : pos.x - 1, y : pos.y };
+    else if (dir === 1)
+      nextPos = { x : pos.x, y : pos.y + 1};
+    else if (dir === 2)
+      nextPos = { x : pos.x + 1, y : pos.y};
+    else if (dir === 3)
+      nextPos = { x : pos.x, y : pos.y - 1};
+    
+    if (nextPos.x < 0 || nextPos.x >= this._board.size || nextPos.y < 0 || nextPos.y >= this._board.size)
+      return 3;
+    if (this._board.map[nextPos.x][nextPos.y] === this._board.elements['block'])
+      return 3;
+      this._nextState.pos = nextPos;
+    return 1;
   }
 }
 

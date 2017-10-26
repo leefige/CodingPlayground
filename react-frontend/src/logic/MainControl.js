@@ -24,6 +24,7 @@ class MainControl{
   _board;
   _character;
   _player;
+  _status;
 
   constructor(state) {
     this.load(state);
@@ -35,23 +36,28 @@ class MainControl{
     this._character = new Character(this._state.character, this._board);
     this._player = new Player();
     this._player.add(this._state);
+    this._status = 1; //游戏状态，1为正常运行，2为胜利，3为失败
   }
 
   addActionList(actionList) {
     actionList.forEach((action => {
-      switch(action) {
-        case '1':
-          this._character.go();
-          break;
-        case '2':
-          this._character.turnLeft();
-          break;
-        case '3':
-          this._character.turnRight();
-          break;
+      if (this._status == 1) {
+        switch(action) {
+          case '1':
+            this._status = this._character.go();
+            break;
+          case '2':
+            this._status = this._character.turnLeft();
+            break;
+          case '3':
+            this._status = this._character.turnRight();
+            break;
+        }
+        this.update();
       }
-      this.update();
-    }))
+      else
+        this._player.setResult(this._status); //游戏结束
+      }))
   }
 
   update() {
