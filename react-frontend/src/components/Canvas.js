@@ -136,7 +136,7 @@ export default class Canvas extends Component {
     function play() {
       const player = mainControl.player;
       const status = player.getStatus();
-      if (status === 0) {
+      if (status === 1) {
         const px = convertX(player.character.pos['y']),
               py = convertY(player.character.pos['x']);
         if (px !== charactor1.x || py !== charactor1.y) {
@@ -149,14 +149,14 @@ export default class Canvas extends Component {
           player.nextStep();
         }
       }
-      else if (status == 2) {
+      else if (status === 3) {
         state = end;
       }
     }
 
     function end() {
       const player = mainControl.player;
-      if (player.getStatus() !== 2) {
+      if (player.getStatus() !== 3) {
         state = play();
         gameover.x = width;
         gameover.y = height;
