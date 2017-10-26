@@ -2,10 +2,12 @@ class Player {
   _curStep;
   _totalStep;
   _states;
+  _result;
   constructor() {
     this._curStep = 0;
     this._totalStep = 0;
     this._states = [];
+    this._result = 0;
   }
 
   nextStep() {
@@ -34,6 +36,18 @@ class Player {
 
   isPlaying() {
     return this._curStep < this._totalStep;
+  }
+
+  getStatus() {
+    if (this._curStep < this._totalStep)
+      return 1;
+    if (this._curStep === 0)
+      return 0;
+    return this._result;
+  }
+
+  setResult(result) {
+    this._result = result;
   }
 
   get character() {
