@@ -7,6 +7,7 @@ ReactBlocklyComponent = window.ReactBlocklyComponent;
 function genBlockly(blocklyConfig) {
   console.log("find blockly", blocklyConfig);
   const editor = React.createElement(ReactBlocklyComponent.BlocklyEditor, {
+      media: '../media/',
       workspaceConfiguration: {
         grid: {
           spacing: 20,
