@@ -62,7 +62,7 @@ export default class Canvas extends Component {
     this.stage = new Container();
     const stage = this.stage;
 
-    let gameScene, id, charactor1, charactor2;
+    let gameScene, id, charactor1, charactor2, gameover;
 
     const gpJson = `${process.env.PUBLIC_URL}/img/sources/gamePic.json`
 
@@ -89,17 +89,6 @@ export default class Canvas extends Component {
 
       const backgroundArray = mapId;
 
-      const transparentArray = [
-        183, 183, 183, 183, 183, 77, 110, 79, 
-        183, 183, 183, 183, 183, 93, 183, 95, 
-        183, 183, 115, 183, 183, 63, 183, 95, 
-        183, 183, 183, 183, 183, 183, 183, 130, 
-        183, 115, 183, 34, 183, 183, 183, 183, 
-        183, 183, 183, 183, 183, 244, 183, 183, 
-        183, 229, 230, 231, 183, 183, 114, 183, 
-        183, 245, 246, 247, 183, 183, 183, 183, 
-      ]
-
       for (let i = 0; i < row; i++)
         for (let j = 0; j < col; j++) {
           const background = new Sprite(id[`${backgroundArray[i*row+j]}.png`])
@@ -108,12 +97,6 @@ export default class Canvas extends Component {
           background.width = width / row;
           background.height = height / col;
           gameScene.addChild(background);
-          const transparent = new Sprite(id[`${transparentArray[i*row+j]}.png`])
-          transparent.x = j * width / row;
-          transparent.y = i * height / col;
-          transparent.width = width / row;
-          transparent.height = height / col;
-          gameScene.addChild(transparent);
         }
       // background = new Sprite(id['background']);
       // background.width = width;
@@ -133,6 +116,11 @@ export default class Canvas extends Component {
       gameScene.addChild(charactor1);
       gameScene.addChild(charactor2);
 
+      gameover = new Sprite(id['gameover.png']);
+      gameover.x = width, gameover.y = height;
+      gameover.width = width, gameover.y = height;
+      gameScene.addChild(gameover);
+
       state = play;
 
       //Render the stage
@@ -147,7 +135,8 @@ export default class Canvas extends Component {
 
     function play() {
       const player = mainControl.player;
-      if (player.isPlaying()) {
+      const status = player.getStatus();
+      if (status === 1) {
         const px = convertX(player.character.pos['y']),
               py = convertY(player.character.pos['x']);
         if (px !== charactor1.x || py !== charactor1.y) {
@@ -160,10 +149,20 @@ export default class Canvas extends Component {
           player.nextStep();
         }
       }
+      else if (status === 3) {
+        state = end;
+      }
     }
 
     function end() {
-
+      const player = mainControl.player;
+      if (player.getStatus() !== 3) {
+        state = play();
+        gameover.x = width;
+        gameover.y = height;
+      }
+      gameover.x = 0;
+      gameover.y = 0;
     }
   }
   /**
