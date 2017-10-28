@@ -20,7 +20,18 @@ function genBlockly(blocklyConfig) {
       initialXml: '<xml xmlns="http://www.w3.org/1999/xhtml"><block type="go" x="5" y="10"></block></xml>',
       wrapperDivClassName: 'blockly-workspace',
       xmlDidChange: function(newXml) {
-        // document.getElementById('generated-xml').innerText = newXml;
+        console.log("user's blockly", newXml);
+        const patt = /<block/;
+        let tmp = newXml;
+        let num = 0;
+        let st = tmp.search(patt);
+        while (st >= 0) {
+          num++;
+          tmp = tmp.substring(st + 1, tmp.length - 1);
+          console.log("substring", tmp);
+          st = tmp.search(patt);
+        }
+        console.log("num used", num);
       }
     }
   );
