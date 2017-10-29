@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import { mainControl } from '../logic/MainControl';
 
-export default class Canvas extends Component {
+export default class GamePanel extends Component {
 
   /**
   * Define our prop types
@@ -42,9 +42,6 @@ export default class Canvas extends Component {
     const row = this.props.mapResource['width'], col = this.props.mapResource['height'];
 
     const mapId = this.props.mapResource['id']
-
-    console.log(row, col);
-    console.log(this.props.mapResource)
 
     //Setup PIXI Canvas in componentDidMount
     this.renderer = PIXI.autoDetectRenderer(width, height);
