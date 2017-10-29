@@ -30,7 +30,7 @@ class Scene extends Component {
   render() {
     return (
           <div className='scene'>
-            {/* <GamePanel zoomLevel={this.state.zoomLevel} mapResource={this.props.mapResource}/> */}
+            <GamePanel zoomLevel={this.state.zoomLevel} mapResource={this.props.mapResource}/>
             <MapEditor zoomLevel={this.state.zoomLevel}/>
             <button onClick={this.onZoomIn}>Zoom In</button>
             <button onClick={this.onZoomOut}>Zoom Out</button>
