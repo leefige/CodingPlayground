@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import Canvas from './Canvas'
+import GamePanel from './GamePanel'
+import MapEditor from './MapEditor'
 
 class Scene extends Component {
 
@@ -29,7 +30,8 @@ class Scene extends Component {
   render() {
     return (
           <div className='scene'>
-            <Canvas zoomLevel={this.state.zoomLevel} mapResource={this.props.mapResource}/>
+            <GamePanel zoomLevel={this.state.zoomLevel} mapResource={this.props.mapResource}/>
+            <MapEditor zoomLevel={this.state.zoomLevel}/>
             <button onClick={this.onZoomIn}>Zoom In</button>
             <button onClick={this.onZoomOut}>Zoom Out</button>
           </div>

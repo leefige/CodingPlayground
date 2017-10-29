@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import { mainControl } from '../logic/MainControl';
 
-export default class Canvas extends Component {
+export default class GamePanel extends Component {
 
   /**
   * Define our prop types
