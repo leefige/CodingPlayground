@@ -5,22 +5,22 @@ ReactDOM = window.ReactDOM;
 ReactBlocklyComponent = window.ReactBlocklyComponent;
 
 function genBlockly(blocklyConfig) {
-  console.log("find blockly", blocklyConfig);
+  console.log("blockly config", blocklyConfig);
   const editor = React.createElement(ReactBlocklyComponent.BlocklyEditor, {
       media: '../media/',
       workspaceConfiguration: {
         grid: {
-          spacing: 20,
+          spacing: 40,
           length: 3,
           colour: '#ccc',
-          snap: true
+          snap: false
         }
       },
       toolboxCategories: blocklyConfig.toolboxCategories,
-      initialXml: '<xml xmlns="http://www.w3.org/1999/xhtml"><block type="go" x="5" y="10"></block></xml>',
+      initialXml: blocklyConfig.initialXml,
       wrapperDivClassName: 'blockly-workspace',
       xmlDidChange: function(newXml) {
-        console.log("user's blockly", newXml);
+        document.getElementById('solution_text').value=newXml;
         const patt = /<block/;
         let tmp = newXml;
         let num = 0;
@@ -28,10 +28,10 @@ function genBlockly(blocklyConfig) {
         while (st >= 0) {
           num++;
           tmp = tmp.substring(st + 1, tmp.length - 1);
-          console.log("substring", tmp);
           st = tmp.search(patt);
         }
-        console.log("num used", num);
+        document.getElementById('show_count').innerHTML="您已使用" + num + "块";
+        document.getElementById('solution_cnt').value=num;
       }
     }
   );

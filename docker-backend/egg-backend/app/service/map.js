@@ -67,6 +67,7 @@ module.exports = app => {
                     ]
           },
           blocklyConfig: {
+            initialXml: '<xml xmlns="http://www.w3.org/1999/xhtml"><block type="go" x="10" y="40"></block></xml>',
             toolboxCategories: [{
             name: "动作",
             blocks: [{
@@ -122,6 +123,7 @@ module.exports = app => {
                     ]
           },
           blocklyConfig: {
+            initialXml: '<xml xmlns="http://www.w3.org/1999/xhtml"><block type="go" x="10" y="40"></block></xml>',
             toolboxCategories: [{
             name: "动作",
             blocks: [{
@@ -177,6 +179,7 @@ module.exports = app => {
                     ]
           },
           blocklyConfig: {
+            initialXml: '<xml xmlns="http://www.w3.org/1999/xhtml"><block type="go" x="10" y="40"></block></xml>',
             toolboxCategories: [{
               name: "动作",
               blocks: [{
@@ -368,6 +371,7 @@ module.exports = app => {
                     ]
           },
           blocklyConfig: {
+            initialXml: '<xml xmlns="http://www.w3.org/1999/xhtml"><block type="controls_if" x="10" y="40"></block></xml>',
             toolboxCategories: [{
               name: "动作",
               blocks: [{

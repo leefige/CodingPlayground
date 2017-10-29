@@ -51,9 +51,11 @@ class CodeGameContent extends Component {
                   183, 183, 183, 183, 183, 183, 183, 183
                 ]
       },     
-      blocklyConfig: [],
+      blocklyConfig: {},
       didFetchMap: false,
       // 待解决：recordData要不要作为state刷新子部件？
+      userSolution: "",
+      userBlocklyCount: 0
     };
   }
 
@@ -100,8 +102,12 @@ class CodeGameContent extends Component {
   handleCodeSubmit(_actionList) {
     this.setState({
       actionList: _actionList,
+      userSolution: document.getElementById('solution_text').value,
+      userBlocklyCount: document.getElementById('solution_cnt').value,
     });
     mainControl.addActionList(_actionList);
+    console.log("submit solution: ", this.state.userSolution);
+    console.log("submit count: ", this.state.userBlocklyCount);
   }
 
   render() {
@@ -114,7 +120,9 @@ class CodeGameContent extends Component {
           :<div></div>}
         </div>
         <div className='col-xs-12 col-md-6 col-md-offset-6'>
-          <Programming ref="prog_ref" id="programming" blocklyConfig={this.state.blocklyConfig} onCodeSubmit={this.handleCodeSubmit.bind(this)}/>
+          <Programming ref="prog_ref" id="programming" 
+            blocklyConfig={this.state.blocklyConfig} 
+            onCodeSubmit={this.handleCodeSubmit.bind(this)}/>
         </div>
       </div>
     );
