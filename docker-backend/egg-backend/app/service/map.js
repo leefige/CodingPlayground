@@ -66,7 +66,8 @@ module.exports = app => {
                       183, 245, 246, 247, 183, 183, 183, 183
                     ]
           },
-          blocklyConfig: [{
+          blocklyConfig: {
+            toolboxCategories: [{
             name: "动作",
             blocks: [{
                 type: "go"
@@ -75,7 +76,8 @@ module.exports = app => {
             }, {
                 type: "turn_right"
             }]
-        }],
+            }],
+          }
         };
 
         const _data3 = {
@@ -119,7 +121,8 @@ module.exports = app => {
                       183, 183, 183, 183, 183, 183, 183, 183 
                     ]
           },
-          blocklyConfig: [{
+          blocklyConfig: {
+            toolboxCategories: [{
             name: "动作",
             blocks: [{
                 type: "go"
@@ -128,7 +131,8 @@ module.exports = app => {
             }, {
                 type: "turn_right"
             }]
-        }],
+            }],
+          }
         };
 
         const _data4 = {
@@ -172,21 +176,49 @@ module.exports = app => {
                       183, 183, 183, 183, 183, 183, 183, 183
                     ]
           },
-          blocklyConfig: [{
-            name: "动作",
-            blocks: [{
-              type: "go"
+          blocklyConfig: {
+            toolboxCategories: [{
+              name: "动作",
+              blocks: [{
+                type: "go"
+              }, {
+                type: "turn_left"
+              }, {
+                type: "turn_right"
+              }]
             }, {
-              type: "turn_left"
+              name: "变量",
+              blocks: [{
+                  type: "variables_set",
+                  values: {
+                    VALUE: {
+                      type: "math_number",
+                      shadow: true,
+                      fields: {
+                        NUM: 0
+                      }
+                    }
+                  }
+                },
+                {
+                  type: "variables_get"
+                }
+              ]
             }, {
-              type: "turn_right"
-            }]
-          }, {
-            name: "变量",
-            blocks: [{
-                type: "variables_set",
+              name: "数学",
+              blocks: [{
+                type: "math_number"
+              }, {
+                type: "math_arithmetic",
                 values: {
-                  VALUE: {
+                  A: {
+                    type: "math_number",
+                    shadow: true,
+                    fields: {
+                      NUM: 0
+                    }
+                  },
+                  B: {
                     type: "math_number",
                     shadow: true,
                     fields: {
@@ -194,130 +226,104 @@ module.exports = app => {
                     }
                   }
                 }
-              },
-              {
-                type: "variables_get"
-              }
-            ]
-          }, {
-            name: "数学",
-            blocks: [{
-              type: "math_number"
-            }, {
-              type: "math_arithmetic",
-              values: {
-                A: {
-                  type: "math_number",
-                  shadow: true,
-                  fields: {
-                    NUM: 0
-                  }
-                },
-                B: {
-                  type: "math_number",
-                  shadow: true,
-                  fields: {
-                    NUM: 0
+              }, {
+                type: "math_modulo",
+                values: {
+                  DIVIDEND: {
+                    type: "math_number",
+                    shadow: true,
+                    fields: {
+                      NUM: 3
+                    }
+                  },
+                  DIVISOR: {
+                    type: "math_number",
+                    shadow: true,
+                    fields: {
+                      NUM: 2
+                    }
                   }
                 }
-              }
-            }, {
-              type: "math_modulo",
-              values: {
-                DIVIDEND: {
-                  type: "math_number",
-                  shadow: true,
-                  fields: {
-                    NUM: 3
-                  }
-                },
-                DIVISOR: {
-                  type: "math_number",
-                  shadow: true,
-                  fields: {
-                    NUM: 2
-                  }
-                }
-              }
-            }, {
-              type: "math_single"
-            }, {
-              type: "math_trig"
-            }, {
-              type: "math_constant"
-            }, {
-              type: "math_random_int",
-              values: {
-                FROM: {
-                  type: "math_number",
-                  shadow: true,
-                  fields: {
-                    NUM: 0
-                  }
-                },
-                TO: {
-                  type: "math_number",
-                  shadow: true,
-                  fields: {
-                    NUM: 5
+              }, {
+                type: "math_single"
+              }, {
+                type: "math_trig"
+              }, {
+                type: "math_constant"
+              }, {
+                type: "math_random_int",
+                values: {
+                  FROM: {
+                    type: "math_number",
+                    shadow: true,
+                    fields: {
+                      NUM: 0
+                    }
+                  },
+                  TO: {
+                    type: "math_number",
+                    shadow: true,
+                    fields: {
+                      NUM: 5
+                    }
                   }
                 }
-              }
+              }]
+            }, {
+              name: "分支",
+              blocks: [{
+                type: "controls_if"
+              }, {
+                type: "logic_compare"
+              }]
+            }, {
+              name: "循环",
+              blocks: [{
+                type: "controls_whileUntil"
+              }, {
+                type: "controls_for",
+                values: {
+                  FROM: {
+                    type: "math_number",
+                    shadow: true,
+                    fields: {
+                      NUM: 0
+                    }
+                  },
+                  TO: {
+                    type: "math_number",
+                    shadow: true,
+                    fields: {
+                      NUM: 5
+                    }
+                  },
+                  BY: {
+                    type: "math_number",
+                    shadow: true,
+                    fields: {
+                      NUM: 1
+                    }
+                  }
+                }
+              }]
+            }, {
+              name: "文本",
+              blocks: [{
+                type: "text"
+              }, {
+                type: "text_print",
+                values: {
+                  TEXT: {
+                    type: "text",
+                    shadow: true,
+                    fields: {
+                      "TEXT": "abc"
+                    }
+                  }
+                }
+              }]
             }]
-          }, {
-            name: "分支",
-            blocks: [{
-              type: "controls_if"
-            }, {
-              type: "logic_compare"
-            }]
-          }, {
-            name: "循环",
-            blocks: [{
-              type: "controls_whileUntil"
-            }, {
-              type: "controls_for",
-              values: {
-                FROM: {
-                  type: "math_number",
-                  shadow: true,
-                  fields: {
-                    NUM: 0
-                  }
-                },
-                TO: {
-                  type: "math_number",
-                  shadow: true,
-                  fields: {
-                    NUM: 5
-                  }
-                },
-                BY: {
-                  type: "math_number",
-                  shadow: true,
-                  fields: {
-                    NUM: 1
-                  }
-                }
-              }
-            }]
-          }, {
-            name: "文本",
-            blocks: [{
-              type: "text"
-            }, {
-              type: "text_print",
-              values: {
-                TEXT: {
-                  type: "text",
-                  shadow: true,
-                  fields: {
-                    "TEXT": "abc"
-                  }
-                }
-              }
-            }]
-          }]
+          }
         };
 
         const _data2 = {
@@ -361,46 +367,48 @@ module.exports = app => {
                       183, 183, 183, 183, 183, 183, 183, 183
                     ]
           },
-          blocklyConfig: [{
-            name: "动作",
-            blocks: [{
-              type: "go"
+          blocklyConfig: {
+            toolboxCategories: [{
+              name: "动作",
+              blocks: [{
+                type: "go"
+              }, {
+                type: "turn_left"
+              }, {
+                type: "turn_right"
+              }]
             }, {
-              type: "turn_left"
-            }, {
-              type: "turn_right"
-            }]
-          }, {
-            name: "数学",
-            blocks: [{
-              type: "math_number"
-            }, {
-              type: "math_arithmetic",
-              values: {
-                A: {
-                  type: "math_number",
-                  shadow: true,
-                  fields: {
-                    NUM: 0
-                  }
-                },
-                B: {
-                  type: "math_number",
-                  shadow: true,
-                  fields: {
-                    NUM: 0
+              name: "数学",
+              blocks: [{
+                type: "math_number"
+              }, {
+                type: "math_arithmetic",
+                values: {
+                  A: {
+                    type: "math_number",
+                    shadow: true,
+                    fields: {
+                      NUM: 0
+                    }
+                  },
+                  B: {
+                    type: "math_number",
+                    shadow: true,
+                    fields: {
+                      NUM: 0
+                    }
                   }
                 }
-              }
-            }]
-          }, {
-            name: "分支",
-            blocks: [{
-              type: "controls_if"
+              }]
             }, {
-              type: "logic_compare"
+              name: "分支",
+              blocks: [{
+                type: "controls_if"
+              }, {
+                type: "logic_compare"
+              }]
             }]
-          }]
+          }
         };
 
         const data1 = JSON.stringify(_data1);

@@ -16,7 +16,7 @@ function genBlockly(blocklyConfig) {
           snap: true
         }
       },
-      toolboxCategories: blocklyConfig,
+      toolboxCategories: blocklyConfig.toolboxCategories,
       initialXml: '<xml xmlns="http://www.w3.org/1999/xhtml"><block type="go" x="5" y="10"></block></xml>',
       wrapperDivClassName: 'blockly-workspace',
       xmlDidChange: function(newXml) {
@@ -38,10 +38,9 @@ function genBlockly(blocklyConfig) {
   ReactDOM.render(editor, document.getElementById('blockly'));
 }
 
-window.addEventListener('load', function() {
-  const blocklyDiv = document.getElementById('blockly');
-  const blocklyConfig = blocklyDiv.dataset.blocklyconfig;
-  console.log("find blockly", blocklyConfig);
-  genBlockly(blocklyConfig);
-});
-
+// window.addEventListener('load', function() {
+//   const blocklyDiv = document.getElementById('blockly');
+//   const blocklyConfig = blocklyDiv.dataset.blocklyconfig;
+//   console.log("find blockly", blocklyConfig);
+//   genBlockly(blocklyConfig);
+// });
