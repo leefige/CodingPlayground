@@ -73,6 +73,8 @@ class BlocklyPad extends Component {
               </button>
             </span>
           </div>
+          <div id="show_count">您已使用0块</div> 
+        
         <div id="blockly" className='pad' data-blocklyconfig = {JSON.stringify(this.props.blocklyConfig)}/>
       </div>
     );
