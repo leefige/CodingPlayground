@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 
 import { mainControl } from '../logic/MainControl';
 
+import character from './img/charactor-up.jpg';
+
 export default class MapEditor extends Component {
 
   /**
@@ -49,59 +51,95 @@ export default class MapEditor extends Component {
     let state;
 
     const Container = PIXI.Container,
-        loader = PIXI.loader,
-        resources = PIXI.loader.resources,
-        Sprite = PIXI.Sprite;
+      loader = PIXI.loader,
+      resources = PIXI.loader.resources,
+      Sprite = PIXI.Sprite;
 
-    //Create a Pixi stage and renderer
+    // create the root of the scene graph
     this.stage = new Container();
-    const stage = this.stage;
+    let stage = this.stage;
 
-    let gameScene, id;
+    // create a texture from an image path
+    let texture = PIXI.Texture.fromImage(character);
 
-    const gpJson = `${process.env.PUBLIC_URL}/img/sources/gamePic.json`
-
-    //Use Pixi's built-in `loader` object to load an image
-    loader
-      .add(gpJson)
-      .load(setup);
-
-    //This `setup` function will run when the image has loaded
-    function setup() {
-
-      gameScene = new Container();
-      stage.addChild(gameScene);
-
-      id = resources[gpJson].textures;
-
-      for (let i = 0; i < row; i++)
-        for (let j = 0; j < col; j++) {
-          const background = new Sprite(id[`${i*row+j}.png`])
-          background.x = j * width / row;
-          background.y = i * height / col;
-          background.width = width / row;
-          background.height = height / col;
-          gameScene.addChild(background);
-        }
-
-      state = play;
-
-      //Render the stage
-      gameLoop();
+    for (let i = 0; i < 10; i++) {
+      createBunny(Math.floor(Math.random() * width), Math.floor(Math.random() * height));
     }
 
-    function gameLoop() {
-      requestAnimationFrame(gameLoop);
-      state();
+    function createBunny(x, y) {
+      // create our little bunny friend..
+      let bunny = new Sprite(texture);
+
+      // enable the bunny to be interactive... this will allow it to respond to mouse and touch events
+      bunny.interactive = true;
+
+      // this button mode will mean the hand cursor appears when you roll over the bunny with your mouse
+      bunny.buttonMode = true;
+
+      // center the bunny's anchor point
+      bunny.anchor.set(0.5);
+
+      // make it a bit bigger, so it's easier to grab
+      bunny.scale.set(0.1);
+
+      // setup events
+      bunny
+        // events for drag start
+        .on('mousedown', onDragStart)
+        .on('touchstart', onDragStart)
+        // events for drag end
+        .on('mouseup', onDragEnd)
+        .on('mouseupoutside', onDragEnd)
+        .on('touchend', onDragEnd)
+        .on('touchendoutside', onDragEnd)
+        // events for drag move
+        .on('mousemove', onDragMove)
+        .on('touchmove', onDragMove);
+
+      // move the sprite to its designated position
+      bunny.position.x = x;
+      bunny.position.y = y;
+
+      // add it to the stage
+      stage.addChild(bunny);
+    }
+
+    requestAnimationFrame(animate);
+
+    function animate() {
+      requestAnimationFrame(animate);
+
+      // render the stage
       renderer.render(stage);
     }
 
-    function play() {
+    function onDragStart(event) {
+      // store a reference to the data
+      // the reason for this is because of multitouch
+      // we want to track the movement of this particular touch
+      this.data = event.data;
+      this.alpha = 0.5;
+      this.dragging = true;
     }
 
-    function end() {
+    function onDragEnd() {
+      this.alpha = 1;
+
+      this.dragging = false;
+
+      // set the interaction data to null
+      this.data = null;
+    }
+
+    function onDragMove() {
+      if (this.dragging) {
+        let newPosition = this.data.getLocalPosition(this.parent);
+        this.position.x = newPosition.x;
+        this.position.y = newPosition.y;
+      }
     }
   }
+
   /**
   * Render our container that will store our PixiJS game canvas. Store the ref
   **/
