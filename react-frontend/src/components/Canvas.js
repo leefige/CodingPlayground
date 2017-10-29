@@ -42,9 +42,7 @@ export default class Canvas extends Component {
     const row = this.props.mapResource['width'], col = this.props.mapResource['height'];
 
     const mapId = this.props.mapResource['id']
-
-    console.log(row, col);
-    console.log(this.props.mapResource)
+    const mapIdt = this.props.mapResource['id_t']
 
     //Setup PIXI Canvas in componentDidMount
     this.renderer = PIXI.autoDetectRenderer(width, height);
@@ -85,9 +83,10 @@ export default class Canvas extends Component {
       gameScene = new Container();
       stage.addChild(gameScene);
 
-      id = resources[gpJson].textures;
+      id = resources[gpJson].textures
 
       const backgroundArray = mapId;
+      const transparentArray = mapIdt;
 
       for (let i = 0; i < row; i++)
         for (let j = 0; j < col; j++) {
@@ -97,6 +96,12 @@ export default class Canvas extends Component {
           background.width = width / row;
           background.height = height / col;
           gameScene.addChild(background);
+          const trans = new Sprite(id[`${transparentArray[i*row+j]}.png`])
+          trans.x = j * width / row;
+          trans.y = i * height / col;
+          trans.width = width / row;
+          trans.height = height / col;
+          gameScene.addChild(trans);
         }
       // background = new Sprite(id['background']);
       // background.width = width;
@@ -109,8 +114,8 @@ export default class Canvas extends Component {
       charactor1.height = height / 8;
       charactor2.width = width / 10;
       charactor2.height = height / 8;
-      charactor1.x = convertX(4);
-      charactor1.y = convertY(4);
+      charactor1.x = convertX(mainControl.player.character.pos['y']);
+      charactor1.y = convertY(mainControl.player.character.pos['x']);
       charactor2.x = charactor1.x;
       charactor2.y = charactor1.y - charactor2.height;
       gameScene.addChild(charactor1);
