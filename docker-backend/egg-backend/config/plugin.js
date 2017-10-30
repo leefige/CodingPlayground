@@ -14,3 +14,5 @@ exports.validate = {
   enable: true,
   package: 'egg-validate',
 };
+
+exports.static = true;
