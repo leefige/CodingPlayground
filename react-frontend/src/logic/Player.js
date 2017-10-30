@@ -39,11 +39,11 @@ class Player {
   }
 
   getStatus() {
-    if (this._curStep < this._totalStep)
+    if (this._curStep < this._totalStep) // 正常运行
       return 1;
-    if (this._curStep === 0)
+    if (this._curStep === 0) // 初始状态
       return 0;
-    return this._result;
+    return this._result; // 游戏结束
   }
 
   setResult(result) {

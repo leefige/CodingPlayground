@@ -7,8 +7,6 @@ import { post } from '../utils/Request'
 class CodeGameContent extends Component {
   constructor(props) {
     super(props);
-    // console.log(props.match.params)
-    // console.log("map id:" + props.match.params.mapID);
     
     this.state = {
       mapInitState: {
@@ -105,6 +103,7 @@ class CodeGameContent extends Component {
       userSolution: document.getElementById('solution_text').value,
       userBlocklyCount: document.getElementById('solution_cnt').value,
     });
+    mainControl.load(this.state.mapInitState);
     mainControl.addActionList(_actionList);
     console.log("submit solution: ", this.state.userSolution);
     console.log("submit count: ", this.state.userBlocklyCount);

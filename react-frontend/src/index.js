@@ -9,7 +9,7 @@ import {
 } from 'react-router-dom'
 
 ReactDOM.render((
-  <Router>
+  <Router forceRefresh={true}>
     <Route path="/" component={CodeGameApp}/>
   </Router>),
   document.getElementById('root')
