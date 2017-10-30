@@ -5,7 +5,7 @@ ReactDOM = window.ReactDOM;
 ReactBlocklyComponent = window.ReactBlocklyComponent;
 
 function genBlockly(blocklyConfig) {
-  console.log("blockly config", blocklyConfig);
+  // console.log("blockly config", blocklyConfig);
   const editor = React.createElement(ReactBlocklyComponent.BlocklyEditor, {
       media: '../media/',
       workspaceConfiguration: {
