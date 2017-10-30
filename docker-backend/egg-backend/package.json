@@ -24,6 +24,7 @@
     "egg-mysql": "^3.0.0",
     "egg-sequelize": "^3.1.0",
     "egg-session": "^2.1.1",
+    "egg-static": "^1.4.1",
     "egg-validate": "^1.0.0",
     "mysql2": "^1.4.2",
     "parameter": "^2.2.0"
