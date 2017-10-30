@@ -56,7 +56,6 @@ class MainControl{
         this.update();
       }
       if (this._status !== 1) {
-        console.log("game over!!!!!!!!!!!!!!!")
         this._player.setResult(this._status);
       } //游戏结束
     }))

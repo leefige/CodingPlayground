@@ -8,7 +8,6 @@ class Character extends Unit {
     this._board = board;
   }
   turnLeft() {
-    console.log('trun left');
     if (this.dir === 0)
       this._nextState.dir = 3;
     else
@@ -17,7 +16,6 @@ class Character extends Unit {
   }
 
   turnRight() {
-    console.log('trun right');
     if (this.dir === 3)
       this._nextState.dir = 0;
     else
@@ -26,8 +24,6 @@ class Character extends Unit {
   }
 
   go() {
-    console.log('go');
-    console.log(this.pos);
     const dir = this.dir;
     const pos = this.pos;
     let nextPos = pos;
