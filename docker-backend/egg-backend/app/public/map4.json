@@ -1,0 +1,188 @@
+{
+    mapInitState: {
+      board : {
+        map : [[0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0]],
+      },
+      character : {
+        pos : { x : 4, y : 4},
+        dir : 2,
+      },
+    },
+    mapResource: {
+      "width": 8,
+      "height": 8,
+      "id": [ 
+              122, 123, 123, 124, 123, 123, 124, 125,
+              138, 140, 140, 140, 140, 156, 140, 141,
+              138, 140, 140, 140, 140, 140, 140, 157,
+              154, 140, 140, 140, 140, 140, 140, 157,
+              154, 139, 140, 140, 140, 27, 140, 141,
+              138, 155, 140, 155, 140, 126, 127, 157,
+              138, 140, 140, 140, 27, 142, 143, 141,
+              170, 171, 172, 172, 171, 171, 172, 173
+            ],
+      "id_t": [
+                183, 47, 47, 183, 183, 76, 183, 183,
+                47, 183, 183, 183, 76, 183, 76, 183,
+                183, 47, 183, 183, 76, 76, 76, 183,
+                183, 183, 47, 183, 76, 183, 76, 183,
+                47, 47, 183, 183, 183, 63, 183, 183, 
+                183, 183, 183, 183, 63, 183, 183, 183,
+                183, 183, 183, 183, 183, 183, 183, 183,
+                183, 183, 183, 183, 183, 183, 183, 183
+              ]
+    },
+    blocklyConfig: [{
+      name: "动作",
+      blocks: [{
+        type: "go"
+      }, {
+        type: "turn_left"
+      }, {
+        type: "turn_right"
+      }]
+    }, {
+      name: "变量",
+      blocks: [{
+          type: "variables_set",
+          values: {
+            VALUE: {
+              type: "math_number",
+              shadow: true,
+              fields: {
+                NUM: 0
+              }
+            }
+          }
+        },
+        {
+          type: "variables_get"
+        }
+      ]
+    }, {
+      name: "数学",
+      blocks: [{
+        type: "math_number"
+      }, {
+        type: "math_arithmetic",
+        values: {
+          A: {
+            type: "math_number",
+            shadow: true,
+            fields: {
+              NUM: 0
+            }
+          },
+          B: {
+            type: "math_number",
+            shadow: true,
+            fields: {
+              NUM: 0
+            }
+          }
+        }
+      }, {
+        type: "math_modulo",
+        values: {
+          DIVIDEND: {
+            type: "math_number",
+            shadow: true,
+            fields: {
+              NUM: 3
+            }
+          },
+          DIVISOR: {
+            type: "math_number",
+            shadow: true,
+            fields: {
+              NUM: 2
+            }
+          }
+        }
+      }, {
+        type: "math_single"
+      }, {
+        type: "math_trig"
+      }, {
+        type: "math_constant"
+      }, {
+        type: "math_random_int",
+        values: {
+          FROM: {
+            type: "math_number",
+            shadow: true,
+            fields: {
+              NUM: 0
+            }
+          },
+          TO: {
+            type: "math_number",
+            shadow: true,
+            fields: {
+              NUM: 5
+            }
+          }
+        }
+      }]
+    }, {
+      name: "分支",
+      blocks: [{
+        type: "controls_if"
+      }, {
+        type: "logic_compare"
+      }]
+    }, {
+      name: "循环",
+      blocks: [{
+        type: "controls_whileUntil"
+      }, {
+        type: "controls_for",
+        values: {
+          FROM: {
+            type: "math_number",
+            shadow: true,
+            fields: {
+              NUM: 0
+            }
+          },
+          TO: {
+            type: "math_number",
+            shadow: true,
+            fields: {
+              NUM: 5
+            }
+          },
+          BY: {
+            type: "math_number",
+            shadow: true,
+            fields: {
+              NUM: 1
+            }
+          }
+        }
+      }]
+    }, {
+      name: "文本",
+      blocks: [{
+        type: "text"
+      }, {
+        type: "text_print",
+        values: {
+          TEXT: {
+            type: "text",
+            shadow: true,
+            fields: {
+              "TEXT": "abc"
+            }
+          }
+        }
+      }]
+    }]
+  }
