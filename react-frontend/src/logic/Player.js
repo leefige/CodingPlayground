@@ -39,11 +39,16 @@ class Player {
   }
 
   getStatus() {
-    if (this._curStep < this._totalStep)
+    // console.log('round')
+    // console.log(this.character.pos)
+    // console.log(this._curStep);
+    // console.log(this._totalStep);
+    // console.log(this._result);
+    if (this._curStep < this._totalStep) // 正常运行
       return 1;
-    if (this._curStep === 0)
+    if (this._curStep === 0) // 初始状态
       return 0;
-    return this._result;
+    return this._result; // 游戏结束
   }
 
   setResult(result) {

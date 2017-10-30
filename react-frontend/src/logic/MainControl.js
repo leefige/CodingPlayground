@@ -41,7 +41,7 @@ class MainControl{
 
   addActionList(actionList) {
     actionList.forEach((action => {
-      if (this._status == 1) {
+      if (this._status === 1) {
         switch(action) {
           case '1':
             this._status = this._character.go();
@@ -55,15 +55,19 @@ class MainControl{
         }
         this.update();
       }
-      else
-        this._player.setResult(this._status); //游戏结束
-      }))
+      if (this._status !== 1) {
+        console.log("game over!!!!!!!!!!!!!!!")
+        this._player.setResult(this._status);
+      } //游戏结束
+    }))
   }
 
   update() {
-    this._character.update();
-    this._board.update();
-    this.save();
+    if (this._status === 1) { //若游戏没有结束则更新
+      this._character.update();
+      this._board.update();
+      this.save();
+    }
   }
 
   save() {
