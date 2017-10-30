@@ -20,12 +20,12 @@ module.exports = app => {
 
     async insertId(body){
       try {
-        /*const sql = "create table if not exists map(" +
+        const sql = "create table if not exists map(" +
         "id VARCHAR(100)," +
         "data TEXT," +
         "primary key (id)" +
         ");";
-        await app.mysql.query(sql);*/
+        await app.mysql.query(sql);
         const result = await this.ctx.curl('localhost:7001/public/test.json', {
           // 自动解析 JSON response
           dataType: 'json',
