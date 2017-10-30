@@ -101,6 +101,7 @@ class CodeGameContent extends Component {
     this.setState({
       actionList: _actionList,
     });
+    mainControl.load(this.state.mapInitState);
     mainControl.addActionList(_actionList);
   }
 
