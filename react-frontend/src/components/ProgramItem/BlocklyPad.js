@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import ReactBlockly, { Blockly } from '../ReactBlockly/ReactBlockly';
 
 class BlocklyPad extends Component {
@@ -26,6 +25,10 @@ class BlocklyPad extends Component {
     this.props.onCodeSubmit(mycode);  //回调函数，由父类实现
   }
 
+  highlightBlock(id) {
+    this.refs.blockly_workspace.highlightBlock(id);
+  }
+
   render() {
     return (
       <div>
@@ -49,7 +52,6 @@ class BlocklyPad extends Component {
             </button>
           </span>
         </div>
-        {/* <div id="blockly" className='pad' data-blocklyconfig = {JSON.stringify(this.props.blocklyConfig)}/> */}
 
       </div>
     );

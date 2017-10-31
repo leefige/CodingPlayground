@@ -77,6 +77,10 @@ class ReactBlockly extends Component {
     this.props.onXmlChange(this.state.xml);
   }
 
+  highlightBlock(id) {
+    this.state.workspace.highlightBlock(id);
+  }
+
   render() {
     return ( 
       <div id='blockly_div' className='blockly-div' ></div>

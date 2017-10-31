@@ -17,19 +17,29 @@ class Programming extends Component {
     footer: " return li.join(',');} myFunc();"
   };
 
+  initInterpreterApi(interpreter, scope) {
+    // Add an API function for highlighting blocks.
+    var wrapper = function(id) {
+      id = id ? id.toString() : '';
+      return interpreter.createPrimitive(this.highlightBlock(id));
+    };
+    interpreter.setProperty(scope, 'highlightBlock',
+        interpreter.createNativeFunction(wrapper));
+  }
+
   //parse code to actionlist
   parseCode(code) {
     const finalCode = this.props.header+code+this.props.footer;
     // console.log("finalCode: "+finalCode);
     try{
-      let myInterpreter = new Interpreter(finalCode);
+      let myInterpreter = new Interpreter(finalCode, this.initInterpreterApi);
       myInterpreter.run();
       const result = myInterpreter.value;  //a string
       const list = result.split(",");
       return list;
     }
     catch (err) {
-      alert('Invalid input!');
+      alert(err);
       return [];
     }
   }
@@ -54,6 +64,10 @@ class Programming extends Component {
     }
     document.getElementById('show_count').innerHTML = "您已使用" + num + "块";
     this.props.onSolutionChanged(newXml, num);
+  }
+
+  highlightBlock(id) {
+    this.refs.blockly_pad.highlightBlock(id);
   }
 
   render() {
