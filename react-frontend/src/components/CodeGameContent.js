@@ -69,7 +69,7 @@ class CodeGameContent extends Component {
       // console.log(responseJson.blocklyConfig);
       mainControl.load(responseJson.mapInitState);
       // blockly is generated here
-      window.genBlockly(responseJson.blocklyConfig);
+      // window.genBlockly(responseJson.blocklyConfig);
       this.setState({
         mapInitState: responseJson.mapInitState,
         mapResource: responseJson.mapResource,

@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import ReactBlocklyComponent from 'react-blockly-private';
-
-const Blockly = window.Blockly;
+import ReactBlockly from '../ReactBlockly/ReactBlockly';
 
 class BlocklyPad extends Component {
 
@@ -46,36 +44,34 @@ class BlocklyPad extends Component {
   render() {
     return (
       <div>
-        <div>输入代码</div>
+        <ReactBlockly/>
+        <div id="show_count">您已使用0块</div> 
+        
+        <div className='text-right'>
+          <span className='text-right'>
+            <button type="submit" 
+              className="btn btn-outline-primary">
+              单步调试
+            </button>
+          </span>
+
+          <span className='text-right'>
+            <button type="submit" 
+              className="btn btn-outline-primary" 
+              onClick = {this.handleCodeSubmit.bind(this)}>
+              生成并运行
+            </button>
+          </span>
+        </div>
         <div>
           <textarea id='code_textarea' className='code-input'
             disabled="disabled"
             value={this.state.code}
             onChange={this.handleCodeChange.bind(this)} />
         </div>
-
-          <div id='parse_code' className='text-right'>
-          </div>
-
-          <div className='text-right'>
-            <span className='text-right'>
-              <button type="submit" 
-                className="btn btn-outline-primary">
-                单步调试
-              </button>
-            </span>
-
-            <span className='text-right'>
-              <button type="submit" 
-                className="btn btn-outline-primary" 
-                onClick = {this.handleCodeSubmit.bind(this)}>
-                生成并运行
-              </button>
-            </span>
-          </div>
-          <div id="show_count">您已使用0块</div> 
         
-        <div id="blockly" className='pad' data-blocklyconfig = {JSON.stringify(this.props.blocklyConfig)}/>
+        {/* <div id="blockly" className='pad' data-blocklyconfig = {JSON.stringify(this.props.blocklyConfig)}/> */}
+
       </div>
     );
   }
