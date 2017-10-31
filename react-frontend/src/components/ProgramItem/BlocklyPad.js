@@ -1,81 +1,58 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import ReactBlocklyComponent from 'react-blockly-private';
-
-const Blockly = window.Blockly;
+import ReactBlockly, { Blockly } from '../ReactBlockly/ReactBlockly';
 
 class BlocklyPad extends Component {
 
-  // following funcs can only be used in text version
-  
-  constructor() {
-    super();
-    this.state = {
-      code: ''
-    };
+  getWorkspace() {
+    return this.refs.blockly_workspace.getWorkspace();
   }
 
-  handleCodeChange(event) {
-    this.setState({
-      code: event.target.value
-    });
-  }
+  generateCode() {
+    // infinite loop setting
+    Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
 
-  // following funcs can also be used in blockly version
+    // for highlight block
+    // Blockly.JavaScript.STATEMENT_PREFIX = 'highlightBlock(%1);\n';
+    // Blockly.JavaScript.addReservedWords('highlightBlock');
 
-  genCode() {
-    // generate code from blockly
-    // currently just use original code
-    return this.state.code;
+    // generate code
+    return Blockly.JavaScript.workspaceToCode(this.getWorkspace());
   }
 
   handleCodeSubmit() {
-    document.getElementById('gen_code').click();
-    const mycode = document.getElementById('code_textarea').value;
-    this.setState({
-      code: mycode
-    });
+    // console.log("workspace is: ", this.getWorkspace());
+    const mycode = this.generateCode();
     this.props.onCodeSubmit(mycode);  //回调函数，由父类实现
   }
 
-  runFromTextarea() {
-    const codeGenerated = this.genCode();
-    this.props.onCodeSubmit(codeGenerated); //回调函数，由父类实现
+  highlightBlock(id) {
+    this.refs.blockly_workspace.highlightBlock(id);
   }
 
   render() {
     return (
       <div>
-        <div>输入代码</div>
-        <div>
-          <textarea id='code_textarea' className='code-input'
-            disabled="disabled"
-            value={this.state.code}
-            onChange={this.handleCodeChange.bind(this)} />
+        <ReactBlockly ref="blockly_workspace"
+          blocklyConfig={this.props.blocklyConfig}
+          onXmlChange={this.props.onXmlChange.bind(this)}/>
+        
+        <div className='text-right'>
+          <span className='text-right'>
+            <button type="submit" 
+              className="btn btn-outline-primary">
+              单步调试
+            </button>
+          </span>
+
+          <span className='text-right'>
+            <button type="submit" 
+              className="btn btn-outline-primary" 
+              onClick = {this.handleCodeSubmit.bind(this)}>
+              生成并运行
+            </button>
+          </span>
         </div>
 
-          <div id='parse_code' className='text-right'>
-          </div>
-
-          <div className='text-right'>
-            <span className='text-right'>
-              <button type="submit" 
-                className="btn btn-outline-primary">
-                单步调试
-              </button>
-            </span>
-
-            <span className='text-right'>
-              <button type="submit" 
-                className="btn btn-outline-primary" 
-                onClick = {this.handleCodeSubmit.bind(this)}>
-                生成并运行
-              </button>
-            </span>
-          </div>
-          <div id="show_count">您已使用0块</div> 
-        
-        <div id="blockly" className='pad' data-blocklyconfig = {JSON.stringify(this.props.blocklyConfig)}/>
       </div>
     );
   }

@@ -68,8 +68,6 @@ class CodeGameContent extends Component {
       // console.log(responseJson.mapResource);
       // console.log(responseJson.blocklyConfig);
       mainControl.load(responseJson.mapInitState);
-      // blockly is generated here
-      window.genBlockly(responseJson.blocklyConfig);
       this.setState({
         mapInitState: responseJson.mapInitState,
         mapResource: responseJson.mapResource,
@@ -97,16 +95,19 @@ class CodeGameContent extends Component {
     }
   }
 
+  updateUserSolution(newXml, num) {
+    this.setState({
+      userSolution: newXml,
+      userBlocklyCount: num,
+    });
+  }
+
   handleCodeSubmit(_actionList) {
     this.setState({
       actionList: _actionList,
-      userSolution: document.getElementById('solution_text').value,
-      userBlocklyCount: document.getElementById('solution_cnt').value,
     });
     mainControl.load(this.state.mapInitState);
     mainControl.addActionList(_actionList);
-    // console.log("submit solution: ", this.state.userSolution);
-    // console.log("submit count: ", this.state.userBlocklyCount);
   }
 
   render() {
@@ -119,9 +120,12 @@ class CodeGameContent extends Component {
           :<div></div>}
         </div>
         <div className='col-xs-12 col-md-6 col-md-offset-6'>
+          {this.state.didFetchMap?
           <Programming ref="prog_ref" id="programming" 
             blocklyConfig={this.state.blocklyConfig} 
-            onCodeSubmit={this.handleCodeSubmit.bind(this)}/>
+            onCodeSubmit={this.handleCodeSubmit.bind(this)}
+            onSolutionChanged={this.updateUserSolution.bind(this)}/>
+          :<div></div>}
         </div>
       </div>
     );

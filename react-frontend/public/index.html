@@ -41,30 +41,88 @@
     <script src="/script/customized_blocks/customized_generator.js"></script>
     <script src="/script/RenderBlockly.js"></script>
     
-    <script>
-      function index_genCode() {
-        // infinite loop setting
-        Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
-        // for highlight block
-        // Blockly.JavaScript.STATEMENT_PREFIX = 'highlightBlock(%1);\n';
-        // Blockly.JavaScript.addReservedWords('highlightBlock');
-        // generate code
-        const code = Blockly.JavaScript.workspaceToCode(window.workspace);
-        document.getElementById('code_textarea').value=code;
-      }
-    </script>
-
     <xml id="toolbox" style="display: none">
-      <block type="controls_if"></block>
-      <block type="controls_repeat_ext"></block>
-      <block type="logic_compare"></block>
-      <block type="math_number"></block>
-      <block type="math_arithmetic"></block>
-      <block type="text"></block>
-      <block type="text_print"></block>
+      <category name="动作" colour="15">
+        <block type="go"></block>
+        <block type="turn_left"></block>
+        <block type="turn_right"></block>
+      </category>
+      <category name="逻辑" colour="210">
+        <block type="controls_if"></block>
+        <block type="logic_compare"></block>
+        <block type="logic_operation"></block>
+        <block type="logic_negate"></block>
+        <block type="logic_boolean"></block>
+      </category>
+      <category name="循环" colour="120">
+        <block type="controls_whileUntil"></block>
+        <block type="controls_for">
+          <value name="FROM">
+            <shadow type="math_number">
+              <field name="NUM">1</field>
+            </shadow>
+          </value>
+          <value name="TO">
+            <shadow type="math_number">
+              <field name="NUM">10</field>
+            </shadow>
+          </value>
+          <value name="BY">
+            <shadow type="math_number">
+              <field name="NUM">1</field>
+            </shadow>
+          </value>
+        </block>
+        <block type="controls_flow_statements"></block>
+      </category>
+      <category name="数学" colour="230">
+        <block type="math_number" gap="32"></block>
+        <block type="math_arithmetic">
+          <value name="A">
+            <shadow type="math_number">
+              <field name="NUM">1</field>
+            </shadow>
+          </value>
+          <value name="B">
+            <shadow type="math_number">
+              <field name="NUM">1</field>
+            </shadow>
+          </value>
+        </block>
+        <block type="math_single">
+          <value name="NUM">
+            <shadow type="math_number">
+              <field name="NUM">9</field>
+            </shadow>
+          </value>
+        </block>
+        <block type="math_trig">
+          <value name="NUM">
+            <shadow type="math_number">
+              <field name="NUM">45</field>
+            </shadow>
+          </value>
+        </block>
+        <block type="math_constant"></block>
+        <block type="math_modulo">
+          <value name="DIVIDEND">
+            <shadow type="math_number">
+              <field name="NUM">64</field>
+            </shadow>
+          </value>
+          <value name="DIVISOR">
+            <shadow type="math_number">
+              <field name="NUM">10</field>
+            </shadow>
+          </value>
+        </block>
+      </category>
+      <sep></sep>
+      <category name="变量" colour="330" custom="VARIABLE"></category>
+      <category name="函数" colour="290" custom="PROCEDURE"></category>
     </xml>
-  
   </head>
+
   <body>
     <div id="root"></div>
     <!--
@@ -77,13 +135,5 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
-    <button id='gen_code' type="submit" 
-      className="btn btn-outline-primary" 
-      onClick = "index_genCode()"
-      style="background-color:#666666; display:none;">
-      ParseCode
-    </button>
-    <input id="solution_text" style="background-color:#666666; display:none;"/>
-    <input id="solution_cnt" style="background-color:#666666; display:none;"/>
   </body>
 </html>
