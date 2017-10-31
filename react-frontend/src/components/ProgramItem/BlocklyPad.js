@@ -59,7 +59,8 @@ class BlocklyPad extends Component {
           <div className='text-right'>
             <span className='text-right'>
               <button type="submit" 
-                className="btn btn-outline-primary" 
+                className="btn btn-primary"
+                style={{marginRight:10}}
                 onClick = {this.runFromTextarea.bind(this)}>
                 运行文本
               </button>
@@ -67,7 +68,8 @@ class BlocklyPad extends Component {
 
             <span className='text-right'>
               <button type="submit" 
-                className="btn btn-outline-primary" 
+                className="btn btn-primary" 
+                style={{marginRight:10}}
                 onClick = {this.handleCodeSubmit.bind(this)}>
                 生成并运行
               </button>

@@ -35,14 +35,10 @@ class Programming extends Component {
     console.log(this.props.blocklyConfig)
     return (
       <div className='programming'>
-        <div className='container'>
-          <div>
-            <TaskGuide />
-          </div>
-          <div>
-            <BlocklyPad onCodeSubmit={this.handleCodeSubmit.bind(this)} blocklyConfig = {this.props.blocklyConfig}/>
-          </div>
+        <div classNme='row'>
+          <TaskGuide />
         </div>
+        <BlocklyPad onCodeSubmit={this.handleCodeSubmit.bind(this)} blocklyConfig = {this.props.blocklyConfig}/>
       </div>
     );
   }

@@ -31,14 +31,21 @@ class CodeGameApp extends Component {
   }
   render() {    
     return (
-      <div className="container">
-        <LoginHeader
-          state = {this.state.isLogin}
-          id = {this.state.id}
-          onLogin = {this.handleLogin.bind(this)}
-          onLogout = {this.handleLogout.bind(this)}/>
-        <Route path="/map/:mapID/:recordID?" component={CodeGameContent}/>
-        <Footer />
+      <div>
+        
+        <div className="container-fluid">
+        <div className='row'>
+				  <div className='pull-right'>
+            <LoginHeader
+              state = {this.state.isLogin}
+              id = {this.state.id}
+              onLogin = {this.handleLogin.bind(this)}
+              onLogout = {this.handleLogout.bind(this)}/>
+          </div>
+			  </div>
+          <Route path="/map/:mapID/:recordID?" component={CodeGameContent}/>
+          <Footer />
+        </div>
       </div>
     )
   }

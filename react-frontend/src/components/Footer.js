@@ -5,11 +5,11 @@ class Footer extends Component {
   render() {
     return (
       <div className='row'>
-        <nav>
-          <span><Link to='251' className="btn btn-outline-primary">Stage 1</Link></span>
-          <span><Link to='252' className="btn btn-outline-primary">Stage 2</Link></span>
-          <span><Link to='253' className="btn btn-outline-primary">Stage 3</Link></span>
-        </nav>
+        <div class="btn-group" role="group" aria-label="...">
+            <button type="button" class="btn btn-default"><Link to='275'>1</Link></button>
+            <button type="button" class="btn btn-default"><Link to='276'>2</Link></button>
+            <button type="button" class="btn btn-default"><Link to='274'>3</Link></button>
+        </div>
       </div>
     );
   }
