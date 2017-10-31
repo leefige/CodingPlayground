@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ReactBlockly, { Blockly } from '../ReactBlockly/ReactBlockly';
+import ReactBlockly, { Blockly } from './reactBlockly/ReactBlockly';
 
 class BlocklyPad extends Component {
 

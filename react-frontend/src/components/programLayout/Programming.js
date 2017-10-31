@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import TaskGuide from './ProgramItem/TaskGuide';
-import BlocklyPad from './ProgramItem/BlocklyPad';
+import TaskGuide from './TaskGuide';
+import BlocklyPad from './BlocklyPad';
 import Interpreter from 'react-js-interpreter-private';
 
 class Programming extends Component {
