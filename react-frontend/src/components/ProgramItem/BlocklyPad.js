@@ -49,6 +49,7 @@ class BlocklyPad extends Component {
         <div>输入代码</div>
         <div>
           <textarea id='code_textarea' className='code-input'
+            disabled="disabled"
             value={this.state.code}
             onChange={this.handleCodeChange.bind(this)} />
         </div>
@@ -59,9 +60,8 @@ class BlocklyPad extends Component {
           <div className='text-right'>
             <span className='text-right'>
               <button type="submit" 
-                className="btn btn-outline-primary" 
-                onClick = {this.runFromTextarea.bind(this)}>
-                运行文本
+                className="btn btn-outline-primary">
+                单步调试
               </button>
             </span>
 

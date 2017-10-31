@@ -12,7 +12,7 @@ class Programming extends Component {
   parseCode(code) {
     //parse code to actionlist
     const finalCode = this.props.header+code+this.props.footer;
-    console.log("finalCode: "+finalCode);
+    // console.log("finalCode: "+finalCode);
     try{
       let myInterpreter = new Interpreter(finalCode);
       myInterpreter.run();

@@ -43,11 +43,26 @@
     
     <script>
       function index_genCode() {
+        // infinite loop setting
         Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
-        const code = Blockly.JavaScript.workspaceToCode();
+        // for highlight block
+        // Blockly.JavaScript.STATEMENT_PREFIX = 'highlightBlock(%1);\n';
+        // Blockly.JavaScript.addReservedWords('highlightBlock');
+        // generate code
+        const code = Blockly.JavaScript.workspaceToCode(window.workspace);
         document.getElementById('code_textarea').value=code;
       }
     </script>
+
+    <xml id="toolbox" style="display: none">
+      <block type="controls_if"></block>
+      <block type="controls_repeat_ext"></block>
+      <block type="logic_compare"></block>
+      <block type="math_number"></block>
+      <block type="math_arithmetic"></block>
+      <block type="text"></block>
+      <block type="text_print"></block>
+    </xml>
   
   </head>
   <body>
@@ -70,6 +85,5 @@
     </button>
     <input id="solution_text" style="background-color:#666666; display:none;"/>
     <input id="solution_cnt" style="background-color:#666666; display:none;"/>
-    
   </body>
 </html>

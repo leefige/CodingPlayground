@@ -63,10 +63,10 @@ class CodeGameContent extends Component {
 			id: this.props.match.params.mapID,
 		})	
     .then((responseJson) => {
-      console.log("load map sucess");
-      console.log(responseJson.mapInitState.board);
-      console.log(responseJson.mapResource);
-      console.log(responseJson.blocklyConfig);
+      // console.log("load map sucess");
+      // console.log(responseJson.mapInitState.board);
+      // console.log(responseJson.mapResource);
+      // console.log(responseJson.blocklyConfig);
       mainControl.load(responseJson.mapInitState);
       // blockly is generated here
       window.genBlockly(responseJson.blocklyConfig);
@@ -87,7 +87,7 @@ class CodeGameContent extends Component {
         id: this.props.match.params.mapID,
       })    
       .then((responseJson) => {
-        console.log("load record sucess");
+        // console.log("load record sucess");
         const player = mainControl.player;
         player.load(responseJson.recordData);
       })
@@ -105,12 +105,12 @@ class CodeGameContent extends Component {
     });
     mainControl.load(this.state.mapInitState);
     mainControl.addActionList(_actionList);
-    console.log("submit solution: ", this.state.userSolution);
-    console.log("submit count: ", this.state.userBlocklyCount);
+    // console.log("submit solution: ", this.state.userSolution);
+    // console.log("submit count: ", this.state.userBlocklyCount);
   }
 
   render() {
-    console.log("code game content render");
+    // console.log("code game content render");
     return (
       <div className='row'>
         <div className='col-xs-12 col-md-6'>
