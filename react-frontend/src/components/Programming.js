@@ -31,6 +31,21 @@ class Programming extends Component {
     this.props.onCodeSubmit(actionList);
   }
 
+  handleXmlChange(newXml) {
+    console.log("xml change: ", newXml);
+    const patt = /<block/;
+    let tmp = newXml;
+    let num = 0;
+    let st = tmp.search(patt);
+    while (st >= 0) {
+      num++;
+      tmp = tmp.substring(st + 1, tmp.length - 1);
+      st = tmp.search(patt);
+    }
+    document.getElementById('show_count').innerHTML="您已使用" + num + "块";
+    document.getElementById('solution_cnt').value=num;
+  }
+
   render() {
     console.log(this.props.blocklyConfig)
     return (
@@ -40,7 +55,10 @@ class Programming extends Component {
             <TaskGuide />
           </div>
           <div>
-            <BlocklyPad onCodeSubmit={this.handleCodeSubmit.bind(this)} blocklyConfig = {this.props.blocklyConfig}/>
+            <BlocklyPad ref='blockly_pad' 
+              onCodeSubmit={this.handleCodeSubmit.bind(this)} 
+              blocklyConfig={this.props.blocklyConfig}
+              xmlDidChange={this.handleXmlChange.bind(this)}/>
           </div>
         </div>
       </div>

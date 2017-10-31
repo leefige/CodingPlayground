@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import ReactBlockly from '../ReactBlockly/ReactBlockly';
+import ReactBlockly, { Blockly } from '../ReactBlockly/ReactBlockly';
 
 class BlocklyPad extends Component {
 
@@ -21,24 +21,29 @@ class BlocklyPad extends Component {
 
   // following funcs can also be used in blockly version
 
-  genCode() {
-    // generate code from blockly
-    // currently just use original code
-    return this.state.code;
+  getWorkspace() {
+    return this.refs.blockly_workspace.getWorkspace();
+  }
+
+  generateCode() {
+    // infinite loop setting
+    Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+    // for highlight block
+    // Blockly.JavaScript.STATEMENT_PREFIX = 'highlightBlock(%1);\n';
+    // Blockly.JavaScript.addReservedWords('highlightBlock');
+    // generate code
+    return Blockly.JavaScript.workspaceToCode(this.getWorkspace());
   }
 
   handleCodeSubmit() {
-    document.getElementById('gen_code').click();
-    const mycode = document.getElementById('code_textarea').value;
+    console.log("workspace is: ", this.getWorkspace());
+    // document.getElementById('gen_code').click();
+    // const mycode = document.getElementById('code_textarea').value;
+    const mycode = this.generateCode();
     this.setState({
       code: mycode
     });
     this.props.onCodeSubmit(mycode);  //回调函数，由父类实现
-    console.log("workspace is: ", this.getWorkspace());
-  }
-
-  getWorkspace() {
-    return this.refs.blockly_workspace.getWorkspace();
   }
 
   runFromTextarea() {
@@ -49,7 +54,8 @@ class BlocklyPad extends Component {
   render() {
     return (
       <div>
-        <ReactBlockly ref="blockly_workspace"/>
+        <ReactBlockly ref="blockly_workspace"
+          xmlDidChange={this.props.xmlDidChange.bind(this)}/>
         <div id="show_count">您已使用0块</div> 
         
         <div className='text-right'>

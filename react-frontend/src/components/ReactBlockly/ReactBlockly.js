@@ -2,20 +2,22 @@ import React, { Component } from 'react';
 
 class ReactBlockly extends Component {
 
-  constructor() {
-    super();
-    this.state = {
-      workspace: {}
-    };
-  }
-
   static defaultProps = {
     Blockly: window.Blockly
   };
 
+  constructor() {
+    super();
+    this.state = {
+      workspace: {},
+      xml: "",
+    };
+  }
+
   // inject Blockly when did mount
   componentDidMount() {
     const myWorkspace = this.props.Blockly.inject('blockly_div', {
+      // TODO: use config to setup toolbox
       toolbox: document.getElementById('toolbox'),
       media: '/media/',
       grid: {
@@ -32,9 +34,17 @@ class ReactBlockly extends Component {
         minScale: 0.5,
         scaleSpeed: 1.2
       },
-      trashcan: true
+      trashcan: true,
     });
-    console.log("react blockly did mount");
+
+    myWorkspace.addChangeListener(this.debounce(function () {
+      const newXml = Blockly.Xml.domToText(Blockly.Xml.workspaceToDom(this.state.workspace));
+      if (newXml == this.state.xml) {
+        return;
+      }
+      this.setState({ xml: newXml }, this.xmlDidChange);
+    }.bind(this), 200));
+
     this.setState({
       workspace: myWorkspace
     });
@@ -44,11 +54,32 @@ class ReactBlockly extends Component {
     return this.state.workspace;
   }
 
+  debounce(func, wait) {
+    let timeout;
+    return function () {
+      let context = this,
+          args = arguments;
+      let later = function later() {
+        timeout = null;
+        func.apply(context, args);
+      };
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+    };
+  };
+
+  xmlDidChange() {
+    // TODO
+    this.props.xmlDidChange(this.state.xml);
+  }
+
   render() {
     return ( 
       <div id='blockly_div' className='blockly-div' ></div>
     );
   }
 }
+
+export const Blockly = window.Blockly;
 
 export default ReactBlockly;

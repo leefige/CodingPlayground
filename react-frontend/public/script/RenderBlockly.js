@@ -31,7 +31,6 @@ function genBlockly(blocklyConfig) {
           st = tmp.search(patt);
         }
         document.getElementById('show_count').innerHTML="您已使用" + num + "块";
-        document.getElementById('solution_cnt').value=num;
       }
     }
   );

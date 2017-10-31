@@ -55,7 +55,7 @@
     </script>
 
   <xml id="toolbox" style="display: none">
-    <category name="Logic" colour="210">
+    <category name="逻辑" colour="210">
       <block type="controls_if"></block>
       <block type="logic_compare"></block>
       <block type="logic_operation"></block>
@@ -64,7 +64,7 @@
       <block type="logic_null" disabled="true"></block>
       <block type="logic_ternary"></block>
     </category>
-    <category name="Loops" colour="120">
+    <category name="循环" colour="120">
       <block type="controls_repeat_ext">
         <value name="TIMES">
           <shadow type="math_number">
@@ -94,7 +94,7 @@
       <block type="controls_forEach"></block>
       <block type="controls_flow_statements"></block>
     </category>
-    <category name="Math" colour="230">
+    <category name="数学" colour="230">
       <block type="math_number" gap="32"></block>
       <block type="math_arithmetic">
         <value name="A">
@@ -152,8 +152,8 @@
       </block>
     </category>
     <sep></sep>
-    <category name="Variables" colour="330" custom="VARIABLE"></category>
-    <category name="Functions" colour="290" custom="PROCEDURE"></category>
+    <category name="变量" colour="330" custom="VARIABLE"></category>
+    <category name="函数" colour="290" custom="PROCEDURE"></category>
   </xml>
   
   </head>
@@ -169,12 +169,6 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
-    <button id='gen_code' type="submit" 
-      className="btn btn-outline-primary" 
-      onClick = "index_genCode()"
-      style="background-color:#666666; display:none;">
-      ParseCode
-    </button>
     <input id="solution_text" style="background-color:#666666; display:none;"/>
     <input id="solution_cnt" style="background-color:#666666; display:none;"/>
   </body>
