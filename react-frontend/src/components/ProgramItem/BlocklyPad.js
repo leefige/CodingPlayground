@@ -34,6 +34,11 @@ class BlocklyPad extends Component {
       code: mycode
     });
     this.props.onCodeSubmit(mycode);  //回调函数，由父类实现
+    console.log("workspace is: ", this.getWorkspace());
+  }
+
+  getWorkspace() {
+    return this.refs.blockly_workspace.getWorkspace();
   }
 
   runFromTextarea() {
@@ -44,7 +49,7 @@ class BlocklyPad extends Component {
   render() {
     return (
       <div>
-        <ReactBlockly/>
+        <ReactBlockly ref="blockly_workspace"/>
         <div id="show_count">您已使用0块</div> 
         
         <div className='text-right'>

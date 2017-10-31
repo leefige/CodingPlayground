@@ -1,15 +1,21 @@
 import React, { Component } from 'react';
 
-const Blockly = window.Blockly;
-
 class ReactBlockly extends Component {
+
+  constructor() {
+    super();
+    this.state = {
+      workspace: {}
+    };
+  }
 
   static defaultProps = {
     Blockly: window.Blockly
   };
 
+  // inject Blockly when did mount
   componentDidMount() {
-    this.workspace = this.props.Blockly.inject('blockly_div', {
+    const myWorkspace = this.props.Blockly.inject('blockly_div', {
       toolbox: document.getElementById('toolbox'),
       media: '/media/',
       grid: {
@@ -29,6 +35,13 @@ class ReactBlockly extends Component {
       trashcan: true
     });
     console.log("react blockly did mount");
+    this.setState({
+      workspace: myWorkspace
+    });
+  }
+
+  getWorkspace() {
+    return this.state.workspace;
   }
 
   render() {
