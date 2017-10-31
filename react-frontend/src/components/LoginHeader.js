@@ -92,7 +92,7 @@ class SignupHeader extends Component {
 	render() {
 		return (
 			<div className="clearfix">
-				<button type="button" className="btn btn-primary pull-right" data-toggle="modal" data-target="#loginModal">登录</button>
+				<button type="button" className="btn btn-success" style={{marginRight:15}} data-toggle="modal" data-target="#loginModal">登录</button>
 				<div className="modal fade clearfix text-left" id="loginModal" tabindex="-1" role="dialog">
 					<div className="modal-dialog modal-sm" role="document">
 						<div className="modal-content text-left">
@@ -125,7 +125,7 @@ class SignupHeader extends Component {
 					</div>
 				</div>
 
-				<button type="button" className="btn btn-primary pull-right" data-toggle="modal" data-target="#signupModal">注册</button>
+				<button type="button" className="btn btn-success" style={{marginRight:15}} data-toggle="modal" data-target="#signupModal">注册</button>
 				<div className="modal fade clearfix text-left" id="signupModal" tabindex="-1" role="dialog">
 					<div className="modal-dialog modal-sm" role="document">
 						<div className="modal-content text-left">
@@ -182,19 +182,16 @@ class LoginHeader extends Component {
 
 	render() {
 		return (
-			<div className='container'>
-				<div className='text-right'>
-					{this.props.state ?
+			<div>
+				{this.props.state ?
 						<LogoutHeader
 							id={this.props.id}
 							onLogout={this.props.onLogout} /> :
 						<SignupHeader
 							onLogin={this.props.onLogin}
 							onSignup={this.props.onSignup} />}
-				</div>
 			</div>
 		)
 	}
 }
 export default LoginHeader
-

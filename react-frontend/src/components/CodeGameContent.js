@@ -114,13 +114,12 @@ class CodeGameContent extends Component {
     // console.log("code game content render");
     return (
       <div className='row'>
-        <div className='col-xs-12 col-md-6'>
+        <div className='col-xs-12 col-md-5 col-md-offset-1'>
           {this.state.didFetchMap?
           <Scene mapResource={this.state.mapResource}/>
           :<div></div>}
         </div>
-        <div className='col-xs-12 col-md-6 col-md-offset-6'>
-          {this.state.didFetchMap?
+        <div className='col-xs-12 col-md-5'>
           <Programming ref="prog_ref" id="programming" 
             blocklyConfig={this.state.blocklyConfig} 
             onCodeSubmit={this.handleCodeSubmit.bind(this)}

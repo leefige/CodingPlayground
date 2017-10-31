@@ -37,22 +37,18 @@ class BlocklyPad extends Component {
           onXmlChange={this.props.onXmlChange.bind(this)}/>
         
         <div className='text-right'>
-          <span className='text-right'>
-            <button type="submit" 
-              className="btn btn-outline-primary">
+            <button type="submit"
+              className="btn btn-primary"
+              style={{marginRight:15}}>
               单步调试
             </button>
-          </span>
-
-          <span className='text-right'>
             <button type="submit" 
-              className="btn btn-outline-primary" 
+              className="btn btn-primary"
+              style={{marginRight:15}}
               onClick = {this.handleCodeSubmit.bind(this)}>
               生成并运行
             </button>
-          </span>
         </div>
-
       </div>
     );
   }

@@ -19,19 +19,19 @@ class Programming extends Component {
 
   initInterpreterApi(interpreter, scope) {
     // Add an API function for highlighting blocks.
-    var wrapper = function(id) {
+    var wrapper = function (id) {
       id = id ? id.toString() : '';
       return interpreter.createPrimitive(this.highlightBlock(id));
     };
     interpreter.setProperty(scope, 'highlightBlock',
-        interpreter.createNativeFunction(wrapper));
+      interpreter.createNativeFunction(wrapper));
   }
 
   //parse code to actionlist
   parseCode(code) {
-    const finalCode = this.props.header+code+this.props.footer;
+    const finalCode = this.props.header + code + this.props.footer;
     // console.log("finalCode: "+finalCode);
-    try{
+    try {
       let myInterpreter = new Interpreter(finalCode, this.initInterpreterApi);
       myInterpreter.run();
       const result = myInterpreter.value;  //a string
@@ -73,20 +73,18 @@ class Programming extends Component {
   render() {
     return (
       <div className='programming'>
-        <div className='container'>
-          <TaskGuide />
-          <div id="show_count">您已使用0块</div>
-          <BlocklyPad ref='blockly_pad' 
-            blocklyConfig={this.props.blocklyConfig}
-            onCodeSubmit={this.handleCodeSubmit.bind(this)} 
-            onXmlChange={this.handleXmlChange.bind(this)}
-          />
-          <textarea id='code_textarea' 
-            className='code-input'
-            disabled="disabled"
-            value={this.state.code}
-          />
-        </div>
+        <TaskGuide />
+        <div id="show_count">您已使用0块</div>
+        <BlocklyPad ref='blockly_pad'
+          blocklyConfig={this.props.blocklyConfig}
+          onCodeSubmit={this.handleCodeSubmit.bind(this)}
+          onXmlChange={this.handleXmlChange.bind(this)}
+        />
+        <textarea id='code_textarea'
+          className='code-input'
+          disabled="disabled"
+          value={this.state.code}
+        />
       </div>
     );
   }

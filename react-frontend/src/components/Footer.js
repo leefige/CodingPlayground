@@ -4,12 +4,12 @@ import { Link } from 'react-router-dom'
 class Footer extends Component {
   render() {
     return (
-      <div className='row'>
-        <nav>
-          <span><Link to='251' className="btn btn-outline-primary">Stage 1</Link></span>
-          <span><Link to='252' className="btn btn-outline-primary">Stage 2</Link></span>
-          <span><Link to='253' className="btn btn-outline-primary">Stage 3</Link></span>
-        </nav>
+      <div className='col-md-offset-6'>
+        <div class="btn-group" role="group" aria-label="...">
+          <Link to='275' type="button" class="btn btn-default">1</Link>
+          <Link to='276' type="button" class="btn btn-default">2</Link>
+          <Link to='274' type="button" class="btn btn-default">3</Link>
+        </div>
       </div>
     );
   }
