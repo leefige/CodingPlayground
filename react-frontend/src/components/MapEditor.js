@@ -62,28 +62,32 @@ export default class MapEditor extends Component {
     // create a texture from an image path
     let texture = PIXI.Texture.fromImage(character);
 
-    for (let i = 0; i < 10; i++) {
-      createBunny(Math.floor(Math.random() * width), Math.floor(Math.random() * height));
+    for (let i = 0; i < 5; i++) {
+      createObj(50, Math.floor(height / 5) * i + 50);
     }
 
-    function createBunny(x, y) {
-      // create our little bunny friend..
-      let bunny = new Sprite(texture);
+    for (let i = 0; i < 5; i++) {
+      createObj(Math.floor(width - width / 5 + 50), Math.floor(height / 5 * i + 50));
+    }
 
-      // enable the bunny to be interactive... this will allow it to respond to mouse and touch events
-      bunny.interactive = true;
+    function createObj(x, y) {
+      // create our little obj friend..
+      let obj = new Sprite(texture);
 
-      // this button mode will mean the hand cursor appears when you roll over the bunny with your mouse
-      bunny.buttonMode = true;
+      // enable the obj to be interactive... this will allow it to respond to mouse and touch events
+      obj.interactive = true;
 
-      // center the bunny's anchor point
-      bunny.anchor.set(0.5);
+      // this button mode will mean the hand cursor appears when you roll over the obj with your mouse
+      obj.buttonMode = true;
+
+      // center the obj's anchor point
+      obj.anchor.set(0.5);
 
       // make it a bit bigger, so it's easier to grab
-      bunny.scale.set(0.1);
+      obj.scale.set(0.1);
 
       // setup events
-      bunny
+      obj
         // events for drag start
         .on('mousedown', onDragStart)
         .on('touchstart', onDragStart)
@@ -97,11 +101,11 @@ export default class MapEditor extends Component {
         .on('touchmove', onDragMove);
 
       // move the sprite to its designated position
-      bunny.position.x = x;
-      bunny.position.y = y;
+      obj.position.x = x;
+      obj.position.y = y;
 
       // add it to the stage
-      stage.addChild(bunny);
+      stage.addChild(obj);
     }
 
     requestAnimationFrame(animate);
