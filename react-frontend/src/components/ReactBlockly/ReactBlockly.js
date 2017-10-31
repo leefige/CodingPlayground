@@ -20,6 +20,7 @@ class ReactBlockly extends Component {
       // TODO: use config to setup toolbox
       toolbox: document.getElementById('toolbox'),
       media: '/media/',
+      readOnly: false,
       grid: {
         spacing: 30,
         length: 3,
@@ -37,17 +38,20 @@ class ReactBlockly extends Component {
       trashcan: true,
     });
 
+    this.setState({
+      workspace: myWorkspace
+    });
+
+    const initialXml = Blockly.Xml.textToDom(this.props.blocklyConfig.initialXml);
+    Blockly.Xml.domToWorkspace(initialXml, myWorkspace);
+
     myWorkspace.addChangeListener(this.debounce(function () {
       const newXml = Blockly.Xml.domToText(Blockly.Xml.workspaceToDom(this.state.workspace));
       if (newXml == this.state.xml) {
         return;
       }
-      this.setState({ xml: newXml }, this.xmlDidChange);
+      this.setState({ xml: newXml }, this.onXmlChange);
     }.bind(this), 200));
-
-    this.setState({
-      workspace: myWorkspace
-    });
   }
 
   getWorkspace() {
@@ -68,9 +72,9 @@ class ReactBlockly extends Component {
     };
   };
 
-  xmlDidChange() {
+  onXmlChange() {
     // TODO
-    this.props.xmlDidChange(this.state.xml);
+    this.props.onXmlChange(this.state.xml);
   }
 
   render() {

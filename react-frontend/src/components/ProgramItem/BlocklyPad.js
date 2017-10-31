@@ -4,23 +4,6 @@ import ReactBlockly, { Blockly } from '../ReactBlockly/ReactBlockly';
 
 class BlocklyPad extends Component {
 
-  // following funcs can only be used in text version
-  
-  constructor() {
-    super();
-    this.state = {
-      code: ''
-    };
-  }
-
-  handleCodeChange(event) {
-    this.setState({
-      code: event.target.value
-    });
-  }
-
-  // following funcs can also be used in blockly version
-
   getWorkspace() {
     return this.refs.blockly_workspace.getWorkspace();
   }
@@ -28,35 +11,27 @@ class BlocklyPad extends Component {
   generateCode() {
     // infinite loop setting
     Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+
     // for highlight block
     // Blockly.JavaScript.STATEMENT_PREFIX = 'highlightBlock(%1);\n';
     // Blockly.JavaScript.addReservedWords('highlightBlock');
+
     // generate code
     return Blockly.JavaScript.workspaceToCode(this.getWorkspace());
   }
 
   handleCodeSubmit() {
-    console.log("workspace is: ", this.getWorkspace());
-    // document.getElementById('gen_code').click();
-    // const mycode = document.getElementById('code_textarea').value;
+    // console.log("workspace is: ", this.getWorkspace());
     const mycode = this.generateCode();
-    this.setState({
-      code: mycode
-    });
     this.props.onCodeSubmit(mycode);  //回调函数，由父类实现
-  }
-
-  runFromTextarea() {
-    const codeGenerated = this.genCode();
-    this.props.onCodeSubmit(codeGenerated); //回调函数，由父类实现
   }
 
   render() {
     return (
       <div>
         <ReactBlockly ref="blockly_workspace"
-          xmlDidChange={this.props.xmlDidChange.bind(this)}/>
-        <div id="show_count">您已使用0块</div> 
+          blocklyConfig={this.props.blocklyConfig}
+          onXmlChange={this.props.onXmlChange.bind(this)}/>
         
         <div className='text-right'>
           <span className='text-right'>
@@ -74,13 +49,6 @@ class BlocklyPad extends Component {
             </button>
           </span>
         </div>
-        <div>
-          <textarea id='code_textarea' className='code-input'
-            disabled="disabled"
-            value={this.state.code}
-            onChange={this.handleCodeChange.bind(this)} />
-        </div>
-        
         {/* <div id="blockly" className='pad' data-blocklyconfig = {JSON.stringify(this.props.blocklyConfig)}/> */}
 
       </div>

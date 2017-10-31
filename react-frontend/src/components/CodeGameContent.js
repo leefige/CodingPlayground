@@ -97,6 +97,13 @@ class CodeGameContent extends Component {
     }
   }
 
+  updateUserSolution(newXml, num) {
+    this.setState({
+      userSolution: newXml,
+      userBlocklyCount: num,
+    });
+  }
+
   handleCodeSubmit(_actionList) {
     this.setState({
       actionList: _actionList,
@@ -105,8 +112,6 @@ class CodeGameContent extends Component {
     });
     mainControl.load(this.state.mapInitState);
     mainControl.addActionList(_actionList);
-    // console.log("submit solution: ", this.state.userSolution);
-    // console.log("submit count: ", this.state.userBlocklyCount);
   }
 
   render() {
@@ -121,7 +126,8 @@ class CodeGameContent extends Component {
         <div className='col-xs-12 col-md-6 col-md-offset-6'>
           <Programming ref="prog_ref" id="programming" 
             blocklyConfig={this.state.blocklyConfig} 
-            onCodeSubmit={this.handleCodeSubmit.bind(this)}/>
+            onCodeSubmit={this.handleCodeSubmit.bind(this)}
+            onSolutionChanged={this.updateUserSolution.bind(this)}/>
         </div>
       </div>
     );
