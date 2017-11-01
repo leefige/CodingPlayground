@@ -18,7 +18,7 @@ class ReactBlockly extends Component {
   componentDidMount() {
     const myWorkspace = this.props.Blockly.inject('blockly_div', {
       // TODO: use config to setup toolbox
-      toolbox: document.getElementById('toolbox'),
+      toolbox: this.props.blocklyConfig.toolboxCategories,
       media: '/media/',
       readOnly: false,
       grid: {
