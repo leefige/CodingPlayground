@@ -41,6 +41,8 @@ export default class MapEditor extends Component {
   componentDidMount(props) {
     this.width = 800, this.height = 600;
     const width = this.width, height = this.height;
+    
+    const innerWidth = 500, innerHeight = 500;
     const row = 8, col = 8;
 
     //Setup PIXI Canvas in componentDidMount
@@ -74,10 +76,10 @@ export default class MapEditor extends Component {
       for (let i = 0; i < row; i++)
         for (let j = 0; j < col; j++) {
           const background = new Sprite(id[`${i*row+j}.png`])
-          background.x = j * 500 / row + 150;
-          background.y = i * 500 / col + 50;
-          background.width = 500 / row;
-          background.height = 500 / col;
+          background.x = j * innerWidth / row + (width - innerWidth) / 2;
+          background.y = i * innerHeight / col + (height - innerHeight) / 2;
+          background.width = innerWidth / row;
+          background.height = innerHeight / col;
           gameScene.addChild(background);
         }
       
@@ -100,7 +102,7 @@ export default class MapEditor extends Component {
       // center the obj's anchor point
       obj.anchor.set(0.5);
       // make it a bit bigger, so it's easier to grab
-      obj.scale.set(0.1);
+      obj.scale.set(0.05);
       // setup events
       obj
         // events for drag start
@@ -146,15 +148,31 @@ export default class MapEditor extends Component {
 
       let newPosition = this.data.getLocalPosition(this.parent);
 
-      const maxWidth = parseInt(width - this.width / 2);
-      const maxHeight = parseInt(height - this.height / 2);
-      const minWidth = parseInt(this.width / 2);
-      const minHeight = parseInt(this.height / 2);
+      const maxWidth = width - this.width / 2;
+      const maxHeight = height - this.height / 2;
+      const minWidth = this.width / 2;
+      const minHeight = this.height / 2;
 
       newPosition.x = newPosition.x > maxWidth ? maxWidth : newPosition.x;
       newPosition.x = newPosition.x < minWidth ? minWidth : newPosition.x;
       newPosition.y = newPosition.y > maxHeight ? maxHeight : newPosition.y;
       newPosition.y = newPosition.y < minHeight ? minHeight : newPosition.y;
+
+
+      const leftx = (width - innerWidth) / 2;
+      const lefty = (height - innerHeight) / 2;
+      const rightx = leftx + innerWidth;
+      const righty = rightx + innerHeight;
+
+      const szx = innerWidth / row;
+      const szy = innerHeight / col;
+
+      if (leftx < newPosition.x && newPosition.x < rightx && lefty < newPosition.y && newPosition.y < righty) {
+        const i = parseInt((newPosition.x - leftx) / szx);
+        const j = parseInt((newPosition.y - lefty) / szy);
+        newPosition.x = leftx + i * innerWidth / row + szx / 2;
+        newPosition.y = lefty + j * innerHeight / col + szy / 2;
+      }
 
       this.position.x = newPosition.x;
       this.position.y = newPosition.y;
@@ -167,10 +185,10 @@ export default class MapEditor extends Component {
       if (this.dragging) {
         let newPosition = this.data.getLocalPosition(this.parent);
 
-        const maxWidth = parseInt(width - this.width / 2);
-        const maxHeight = parseInt(height - this.height / 2);
-        const minWidth = parseInt(this.width / 2);
-        const minHeight = parseInt(this.height / 2);
+        const maxWidth = width - this.width / 2;
+        const maxHeight = height - this.height / 2;
+        const minWidth = this.width / 2;
+        const minHeight = this.height / 2;
 
         newPosition.x = newPosition.x > maxWidth ? maxWidth : newPosition.x;
         newPosition.x = newPosition.x < minWidth ? minWidth : newPosition.x;
