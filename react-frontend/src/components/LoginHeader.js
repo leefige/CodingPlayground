@@ -5,7 +5,7 @@ require('isomorphic-fetch');
 
 class LogoutHeader extends Component {
 	handleLogout() {
-		post('http://127.0.0.1:7001/user/logout', {})	
+		post('/user/logout', {})	
 	 	.then((responseJson) => {
 			if (responseJson.logout_success){
 				this.props.onLogout();
@@ -41,7 +41,7 @@ class SignupHeader extends Component {
 	}
 
 	async handleLogin() {
-		post('http://127.0.0.1:7001/user/login', {
+		post('/user/login', {
 			id: this.state.email,
 			password: this.state.password,
 			rememberMe: this.state.rememberMe,
@@ -59,7 +59,7 @@ class SignupHeader extends Component {
 	}
 
 	async handleSignup() {
-		post('http://127.0.0.1:7001/user/signup', {
+		post('/user/signup', {
 				id: this.state.email,
 				password: this.state.password,
 		})	
@@ -167,7 +167,7 @@ class LoginHeader extends Component {
 	}
 
 	async autoLogin() {
-		post('http://127.0.0.1:7001/user/autoLogin', {
+		post('/user/autoLogin', {
 			autoLogin: true,
 		})
 		.then((responseJson) => {
