@@ -40,46 +40,6 @@
               ]
     },
     "blocklyConfig": {
-      "initialXml": "<xml xmlns='http://www.w3.org/1999/xhtml'><block type='controls_if' x='10' y='40'></block></xml>",
-      "toolboxCategories": [{
-        "name": "动作",
-        "blocks": [{
-          "type": "go"
-        }, {
-          "type": "turn_left"
-        }, {
-          "type": "turn_right"
-        }]
-      }, {
-        "name": "数学",
-        "blocks": [{
-          "type": "math_number"
-        }, {
-          "type": "math_arithmetic",
-          "values": {
-            "A": {
-              "type": "math_number",
-              "shadow": true,
-              "fields": {
-                "NUM": 0
-              }
-            },
-            "B": {
-              "type": "math_number",
-              "shadow": true,
-              "fields": {
-                "NUM": 0
-              }
-            }
-          }
-        }]
-      }, {
-        "name": "分支",
-        "blocks": [{
-          "type": "controls_if"
-        }, {
-          "type": "logic_compare"
-        }]
-      }]
+      "initialXml": "<xml xmlns='http://www.w3.org/1999/xhtml'><block type='controls_if' x='10' y='40'></block></xml>"
     }
 }
