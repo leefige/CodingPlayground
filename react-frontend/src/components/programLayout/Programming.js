@@ -10,46 +10,97 @@ class Programming extends Component {
     this.state = {
       code: '',
     };
+    this.myInterpreter = null;
+    this.highlightPause = false;
   }
 
+  // a new way to parse code:
+  // wrap an emit(num) method into js interpreter
+  // then define go(){emit(1);}
+  // and outside the sandbox, emit(num) will send an action to animation (actionList)
+
   static defaultProps = {
-    header: "li = []; function go() {li.push(1);} function turn_left() {li.push(2);} function turn_right() {li.push(3);} function myFunc() {",
-    footer: " return li.join(',');} myFunc();"
+    header: "function go() {emitAction(1);} function turn_left() {emitAction(2);} function turn_right() {emitAction(3);} ",
   };
 
+  emitAction(action) {
+    this.handleNextStep(action);
+  }
+
   initInterpreterApi(interpreter, scope) {
+    // Add an API function for emit action code.
+    let wrapper = function(action) {
+      action = action ? action.toString() : '';
+      return interpreter.createPrimitive(this.emitAction(action));
+    };
+    interpreter.setProperty(scope, 'emitAction',
+        interpreter.createNativeFunction(wrapper.bind(this)));
+
     // Add an API function for highlighting blocks.
-    var wrapper = function (id) {
+    wrapper = function(id) {
       id = id ? id.toString() : '';
       return interpreter.createPrimitive(this.highlightBlock(id));
     };
     interpreter.setProperty(scope, 'highlightBlock',
-      interpreter.createNativeFunction(wrapper));
+        interpreter.createNativeFunction(wrapper.bind(this)));
   }
 
-  //parse code to actionlist
+  //parse code to run
   parseCode(code) {
-    const finalCode = this.props.header + code + this.props.footer;
+    const finalCode = this.props.header+code+this.props.footer;
     // console.log("finalCode: "+finalCode);
-    try {
-      let myInterpreter = new Interpreter(finalCode, this.initInterpreterApi);
-      myInterpreter.run();
-      const result = myInterpreter.value;  //a string
-      const list = result.split(",");
-      return list;
+    try{
+      this.myInterpreter = new Interpreter(finalCode, this.initInterpreterApi.bind(this));
+      this.myInterpreter.run();
     }
     catch (err) {
       alert(err);
-      return [];
+    }
+    finally {
+      this.myInterpreter = null;
     }
   }
+
+  //parse code to run
+  stepThrough(code) {
+    console.log("call step through");
+    if (!this.myInterpreter) {
+      const finalCode = this.props.header+code+this.props.footer;
+      this.myInterpreter = new Interpreter(finalCode, this.initInterpreterApi.bind(this));
+      console.log("new interpreter");
+    }
+    this.highlightPause = false;
+    let hasMoreCode = false;
+    do {
+      try {
+        hasMoreCode = this.myInterpreter.step();
+        console.log("try, more code=",hasMoreCode);
+      
+      } finally {
+        if (!hasMoreCode) {
+          this.myInterpreter = null;
+          this.highlightBlock(null);
+          alert("Step through finished!");
+          return;
+        }
+      }
+    } while (hasMoreCode && !this.highlightPause);
+    return;
+  }
+
 
   handleCodeSubmit(code) {
     this.setState({
       code: code,
     });
-    const actionList = this.parseCode(code);
-    this.props.onCodeSubmit(actionList);
+    this.props.onCodeSubmit();
+    this.parseCode(code);
+  }
+
+  handleNextStep(action) {
+    const actionList = [];
+    actionList.push(action);
+    this.props.onNextStep(actionList);
   }
 
   handleXmlChange(newXml) {
@@ -68,6 +119,7 @@ class Programming extends Component {
 
   highlightBlock(id) {
     this.refs.blockly_pad.highlightBlock(id);
+    this.highlightPause = true;
   }
 
   render() {
@@ -77,8 +129,9 @@ class Programming extends Component {
         <div id="show_count">您已使用0块</div>
         <BlocklyPad ref='blockly_pad'
           blocklyConfig={this.props.blocklyConfig}
-          onCodeSubmit={this.handleCodeSubmit.bind(this)}
+          onCodeSubmit={this.handleCodeSubmit.bind(this)} 
           onXmlChange={this.handleXmlChange.bind(this)}
+          onStepThrough={this.stepThrough.bind(this)}
         />
         <textarea id='code_textarea'
           className='code-input'
