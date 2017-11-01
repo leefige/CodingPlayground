@@ -39,7 +39,7 @@ export default class MapEditor extends Component {
   * and hook up the PixiJS renderer
   **/
   componentDidMount(props) {
-    this.width = 500, this.height = 500;
+    this.width = 800, this.height = 600;
     const width = this.width, height = this.height;
     const row = 8, col = 8;
 
@@ -59,33 +59,48 @@ export default class MapEditor extends Component {
     this.stage = new Container();
     let stage = this.stage;
 
-    // create a texture from an image path
+    const gpJson = `${process.env.PUBLIC_URL}/img/sources/gamePic.json`
     let texture = PIXI.Texture.fromImage(character);
 
-    for (let i = 0; i < 5; i++) {
-      createObj(50, Math.floor(height / 5) * i + 50);
-    }
-
-    for (let i = 0; i < 5; i++) {
-      createObj(Math.floor(width - width / 5 + 50), Math.floor(height / 5 * i + 50));
+    //Use Pixi's built-in `loader` object to load an image
+    loader
+      // .add(gpJson)
+      .load(setup);
+    
+    function setup() {
+      const gameScene = new Container();
+      stage.addChild(gameScene);
+      const id = resources[gpJson].textures
+      for (let i = 0; i < row; i++)
+        for (let j = 0; j < col; j++) {
+          const background = new Sprite(id[`${i*row+j}.png`])
+          background.x = j * 500 / row + 150;
+          background.y = i * 500 / col + 50;
+          background.width = 500 / row;
+          background.height = 500 / col;
+          gameScene.addChild(background);
+        }
+      
+      // create a texture from an image path
+      for (let i = 0; i < 5; i++) {
+        createObj(50, Math.floor(height / 5) * i + 50);
+      }
+      for (let i = 0; i < 5; i++) {
+        createObj(Math.floor(width - 50), Math.floor(height / 5 * i + 50));
+      }
     }
 
     function createObj(x, y) {
       // create our little obj friend..
       let obj = new Sprite(texture);
-
       // enable the obj to be interactive... this will allow it to respond to mouse and touch events
       obj.interactive = true;
-
       // this button mode will mean the hand cursor appears when you roll over the obj with your mouse
       obj.buttonMode = true;
-
       // center the obj's anchor point
       obj.anchor.set(0.5);
-
       // make it a bit bigger, so it's easier to grab
       obj.scale.set(0.1);
-
       // setup events
       obj
         // events for drag start
@@ -99,11 +114,9 @@ export default class MapEditor extends Component {
         // events for drag move
         .on('mousemove', onDragMove)
         .on('touchmove', onDragMove);
-
       // move the sprite to its designated position
       obj.position.x = x;
       obj.position.y = y;
-
       // add it to the stage
       stage.addChild(obj);
     }
