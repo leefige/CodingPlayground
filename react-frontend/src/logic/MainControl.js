@@ -25,7 +25,6 @@ class MainControl{
   _character;
   _player;
   _status;
-
   constructor(state) {
     this.load(state);
   }
@@ -41,6 +40,7 @@ class MainControl{
   restart(state) {
     this.load(state);
     this._player.setNextStatus(playerStatus.running);
+    this._player.setMode('normal');
   }
 
   reset(state) {
@@ -51,6 +51,7 @@ class MainControl{
   // init for step-through mode
   stepThrough(state) {
     this.load(state);
+    this._player.setNextStatus(playerStatus.running);
     this._player.setMode('step');
   }
 
@@ -74,11 +75,8 @@ class MainControl{
         this._player.setResult(this._status);
       } //游戏结束
     }))
-  }
-
-  addStepActionList(actionList) {
-    this.addActionList(actionList);
-    this._player.run();
+    if (this._player.getMode() === 'step')
+      this._player.run();
   }
 
   update() {

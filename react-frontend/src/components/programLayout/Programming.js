@@ -14,10 +14,6 @@ class Programming extends Component {
     this.highlightPause = false;    
   }
 
-  componentDidMount() {
-    this.props.setCallback(this.handleFinishAnimation.bind(this));
-  }
-
   // a new way to parse code:
   // wrap an emit(num) method into js interpreter
   // then define go(){emit(1);}
@@ -80,6 +76,7 @@ class Programming extends Component {
       const finalCode = this.props.header + code;
       this.myInterpreter = new Interpreter(finalCode, this.initInterpreterApi.bind(this));
       this.props.startStepThrough();  // call back function
+      this.props.setCallback(this.handleFinishAnimation.bind(this));
     }
 
     this.highlightPause = false;
@@ -97,7 +94,6 @@ class Programming extends Component {
           this.myInterpreter = null;
           this.highlightBlock(null);
           document.getElementById("step_btn").disabled = false;
-          alert("Step through finished!");
           return;
         }
       }
