@@ -12,6 +12,9 @@ class Player {
   _result;
   _status;//0 初始，1运行，2胜利，3失败，4暂停
   _nextStatus;
+  _callback;
+  _mode;
+
   constructor(initState) {
     this._curStep = 0;
     this._totalStep = 0;
@@ -19,18 +22,34 @@ class Player {
     this._result = playerStatus.failed;
     this._status = playerStatus.init;
     this._nextStatus = playerStatus.pause;
+    this._callback = undefined;
+    this._mode = 'normal';
   }
 
+  // set callback function for step through mode
+  setCallback(callback) {
+    this._callback = callback;
+  }
+
+  // set status after init: directly run or pause
   setNextStatus(nextStatus) {
     this._nextStatus = nextStatus;
+  }
+
+  // Set Step through mode or Normal mode
+  setMode(mode) {
+    this._mode = mode;
   }
 
   nextStep() {
     if (this._status === playerStatus.init)
       this._status = this._nextStatus;
+    
     if (this._status === playerStatus.running) {
       if (this._curStep < this._totalStep)
         this._curStep = this._curStep + 1;
+      else if (this._mode == 'step')
+        this.status = playerStatus.pause;
       else
         this._status = this._result;
     }
@@ -39,8 +58,6 @@ class Player {
   reset() {
     this._curStep = 0;
   }
-
-
 
   add(state) {
     this._totalStep = this._totalStep + 1;    
@@ -78,17 +95,9 @@ class Player {
   }
 
   get character() {
-    //console.log("current step");
-    //console.log(this._curStep);
-    //console.log(this._totalStep);
-    //console.log(this._result)
-    if (this.getStatus() > 1) // 防止数组越界
-      return this._states[this._totalStep - 1].character;
     return this._states[this._curStep].character; }
 
   get board() {
-    if (this.isPlaying() === false) // 防止数组越界
-      return this._states[this._totalStep - 1].board;
     return this._states[this._curStep].board;
   }
 }

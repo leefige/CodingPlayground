@@ -68,7 +68,6 @@ class BlocklyPad extends Component {
           </button>
           <button type="button" 
             className="btn btn-success blockly-btn"
-            style={{marginRight:15}}
             onClick = {this.handleCodeSubmit.bind(this)}>
             <span className="glyphicon glyphicon-play"></span>
             &nbsp;&nbsp;生成并运行

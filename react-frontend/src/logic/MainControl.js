@@ -48,6 +48,12 @@ class MainControl{
     this._player.setNextStatus(playerStatus.pause);
   }
 
+  // init for step-through mode
+  stepThrough(state) {
+    this.load(state);
+    this._player.setMode('step');
+  }
+
   addActionList(actionList) {
     actionList.forEach((action => {
       if (this._status === 1) {
@@ -68,6 +74,11 @@ class MainControl{
         this._player.setResult(this._status);
       } //游戏结束
     }))
+  }
+
+  addStepActionList(actionList) {
+    this.addActionList(actionList);
+    this._player.run();
   }
 
   update() {
