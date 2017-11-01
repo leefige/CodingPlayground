@@ -29,7 +29,7 @@ module.exports = app => {
         const result = fs.readFileSync('app/public/test.json');
         var _data = JSON.parse(result);
         const blockly = fs.readFileSync('app/public/test.xml').toString();
-        _data.blocklyConfig = blockly;
+        _data.blocklyConfig.toolboxCategories = blockly;
         const data = JSON.stringify(_data);
         const is_insert1 = await app.mysql.get('map', { id: 274 });
         if(is_insert1 === null)
