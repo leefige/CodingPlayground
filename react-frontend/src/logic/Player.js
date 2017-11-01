@@ -35,6 +35,7 @@ class Player {
   setNextStatus(nextStatus) {
     this._nextStatus = nextStatus;
   }
+
   // Set Step through mode or Normal mode
   setMode(mode) {
     this._mode = mode;
@@ -80,12 +81,12 @@ class Player {
   }
 
   getStatus() {
-    console.log("current step");
-    console.log(this._curStep);
-    console.log(this._totalStep);
-    console.log(this._result)
-    console.log("status");
-    console.log(this._status);
+    // console.log("current step");
+    // console.log(this._curStep);
+    // console.log(this._totalStep);
+    // console.log(this._result)
+    // console.log("status");
+    // console.log(this._status);
     return this._status;
   }
 
@@ -94,17 +95,9 @@ class Player {
   }
 
   get character() {
-    //console.log("current step");
-    //console.log(this._curStep);
-    //console.log(this._totalStep);
-    //console.log(this._result)
-    if (this.getStatus() > 1) // 防止数组越界
-      return this._states[this._totalStep - 1].character;
     return this._states[this._curStep].character; }
 
   get board() {
-    if (this.isPlaying() === false) // 防止数组越界
-      return this._states[this._totalStep - 1].board;
     return this._states[this._curStep].board;
   }
 }

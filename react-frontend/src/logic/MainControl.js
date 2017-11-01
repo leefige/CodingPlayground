@@ -48,6 +48,7 @@ class MainControl{
     this._player.setNextStatus(playerStatus.pause);
   }
 
+  // init for step-through mode
   stepThrough(state) {
     this.load(state);
     this._player.setMode('step');
