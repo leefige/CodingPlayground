@@ -54,11 +54,12 @@ table {
 .code-input {
   background-color: #fff;
   border: 1px solid #f1f1f1;
-  padding: 6px;
-  margin-bottom: 10px;
-  min-height: 100px;
+  padding-left: 20px;
+  padding-top: 10px;
+  min-height: 150px;
   height: 100%;
   width: 100%;
+  resize: none;
 }
 
 .pad {

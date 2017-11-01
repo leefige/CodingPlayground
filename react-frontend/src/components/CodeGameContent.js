@@ -107,11 +107,10 @@ class CodeGameContent extends Component {
   }
 
   nextStep(_actionList) {
-    // console.log("action list: ", _actionList);
     this.setState({
       actionList: _actionList,
     });
-    mainControl.addActionList(_actionList);
+    maincontrol.addStepActionList(_actionList);
   }
   
   handleReset() {
@@ -126,9 +125,7 @@ class CodeGameContent extends Component {
     mainControl.stepThrough(this.state.mapInitState);
   }
 
-
   render() {
-    // console.log("code game content render");
     return (
       <div className='row'>
         <div className='col-xs-12 col-md-5 col-md-offset-1'>
@@ -140,13 +137,13 @@ class CodeGameContent extends Component {
         <div className='col-xs-12 col-md-5'>
           {this.state.didFetchMap?
             <Programming ref="prog_ref" id="programming" 
-            blocklyConfig={this.state.blocklyConfig} 
-            onCodeSubmit={this.handleCodeSubmit.bind(this)}
-            onReset={this.handleReset.bind(this)}
-            onSolutionChanged={this.updateUserSolution.bind(this)}
-            onNextStep={this.nextStep.bind(this)}
-            setCallback={this.setPlayerCallback}
-            startStepThrough={this.StepThroughInit.bind(this)}
+              blocklyConfig={this.state.blocklyConfig} 
+              onCodeSubmit={this.handleCodeSubmit.bind(this)}
+              onReset={this.handleReset.bind(this)}
+              onSolutionChanged={this.updateUserSolution.bind(this)}
+              onNextStep={this.nextStep.bind(this)}
+              setCallback={this.setPlayerCallback}
+              startStepThrough={this.StepThroughInit.bind(this)}
             />
             :<div></div>
           }
