@@ -103,7 +103,7 @@ class CodeGameContent extends Component {
   }
 
   handleCodeSubmit() {
-    mainControl.load(this.state.mapInitState);
+    mainControl.restart(this.state.mapInitState);
   }
 
   nextStep(_actionList) {
@@ -112,6 +112,10 @@ class CodeGameContent extends Component {
       actionList: _actionList,
     });
     mainControl.addActionList(_actionList);
+  }
+  
+  handleReset() {
+    mainControl.reset(this.state.mapInitState);
   }
 
   render() {
@@ -129,6 +133,7 @@ class CodeGameContent extends Component {
             <Programming ref="prog_ref" id="programming" 
             blocklyConfig={this.state.blocklyConfig} 
             onCodeSubmit={this.handleCodeSubmit.bind(this)}
+            onReset={this.handleReset.bind(this)}
             onSolutionChanged={this.updateUserSolution.bind(this)}
             onNextStep={this.nextStep.bind(this)}/>
             :<div></div>

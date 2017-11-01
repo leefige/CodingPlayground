@@ -129,7 +129,8 @@ class Programming extends Component {
         <div id="show_count">您已使用0块</div>
         <BlocklyPad ref='blockly_pad'
           blocklyConfig={this.props.blocklyConfig}
-          onCodeSubmit={this.handleCodeSubmit.bind(this)} 
+          onCodeSubmit={this.handleCodeSubmit.bind(this)}
+          onReset={this.props.onReset}
           onXmlChange={this.handleXmlChange.bind(this)}
           onStepThrough={this.stepThrough.bind(this)}
         />

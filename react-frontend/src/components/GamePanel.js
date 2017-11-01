@@ -170,9 +170,10 @@ export default class GamePanel extends Component {
     function end() {
       const player = mainControl.player;
       if (player.getStatus() !== 3) {
-        state = play();
+        state = play;
         gameover.x = width;
         gameover.y = height;
+        return;
       }
       gameover.x = 0;
       gameover.y = 0;

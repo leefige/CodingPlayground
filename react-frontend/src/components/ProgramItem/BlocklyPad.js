@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ReactBlockly, { Blockly } from './reactBlockly/ReactBlockly';
+import ReactBlockly, { Blockly } from '../ReactBlockly/ReactBlockly';
 
 class BlocklyPad extends Component {
 
@@ -12,34 +12,17 @@ class BlocklyPad extends Component {
     Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
 
     // for highlight block
-    Blockly.JavaScript.STATEMENT_PREFIX = null;
-    Blockly.JavaScript.addReservedWords('highlightBlock');
+    // Blockly.JavaScript.STATEMENT_PREFIX = 'highlightBlock(%1);\n';
+    // Blockly.JavaScript.addReservedWords('highlightBlock');
 
     // generate code
     return Blockly.JavaScript.workspaceToCode(this.getWorkspace());
   }
-
-  generateCodeWithHighlight() {
-    // infinite loop setting
-    Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
-
-    // for highlight block
-    Blockly.JavaScript.STATEMENT_PREFIX = 'highlightBlock(%1);\n';
-    Blockly.JavaScript.addReservedWords('highlightBlock');
-
-    // generate code
-    return Blockly.JavaScript.workspaceToCode(this.getWorkspace());
-  }
-
 
   handleCodeSubmit() {
+    // console.log("workspace is: ", this.getWorkspace());
     const mycode = this.generateCode();
-    this.props.onCodeSubmit(mycode);
-  }
-
-  handleStepThrough() {
-    const mycode = this.generateCodeWithHighlight();
-    this.props.onStepThrough(mycode);
+    this.props.onCodeSubmit(mycode);  //回调函数，由父类实现
   }
 
   highlightBlock(id) {
@@ -51,27 +34,25 @@ class BlocklyPad extends Component {
       <div>
         <ReactBlockly ref="blockly_workspace"
           blocklyConfig={this.props.blocklyConfig}
-          onXmlChange={this.props.onXmlChange.bind(this)}/>
-        
+          onXmlChange={this.props.onXmlChange.bind(this)} />
+
         <div className='text-right blockly-btn-group'>
           <button type="button"
             className="btn btn-danger blockly-btn"
             onClick={this.props.onReset}>
             <span className="glyphicon glyphicon-stop"></span>
-            &nbsp;&nbsp;终止
+            &nbsp;终止
             </button>
-          <button type="button" 
-            className="btn btn-warning blockly-btn"
-            onClick = {this.handleStepThrough.bind(this)}>
+          <button type="button"
+            className="btn btn-warning blockly-btn">
             <span className="glyphicon glyphicon-step-forward"></span>
-            &nbsp;&nbsp;单步调试
-          </button>
-          <button type="button" 
+            &nbsp;单步调试
+            </button>
+          <button type="button"
             className="btn btn-success blockly-btn"
-            style={{marginRight:15}}
-            onClick = {this.handleCodeSubmit.bind(this)}>
+            onClick={this.handleCodeSubmit.bind(this)}>
             <span className="glyphicon glyphicon-play"></span>
-            &nbsp;&nbsp;生成并运行
+            &nbsp;生成并运行
           </button>
         </div>
       </div>

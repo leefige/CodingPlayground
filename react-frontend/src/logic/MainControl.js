@@ -1,7 +1,7 @@
 import Board from "./Board";
 import Character from "./Character";
 import Player from "./Player";
-
+import { playerStatus } from "./Player"
 const state = {
   board : {
     map : [[0, 0, 0, 0, 0, 0, 0, 0],
@@ -15,7 +15,7 @@ const state = {
   },
   character : {
     pos : { x : 4, y : 4},
-    dir : 2,
+    dir : 2
   },
 }
 
@@ -34,9 +34,18 @@ class MainControl{
     this._state = JSON.parse(JSON.stringify(state));
     this._board = new Board(this._state.board);
     this._character = new Character(this._state.character, this._board);
-    this._player = new Player();
-    this._player.add(this._state);
-    this._status = 1; //游戏状态，1为正常运行，2为胜利，3为失败
+    this._player = new Player(state);
+    this._status = 1; //游戏状态，0为初始状态，1为正常运行，2为胜利，3为失败, 4为暂停
+  }
+
+  restart(state) {
+    this.load(state);
+    this._player.setNextStatus(playerStatus.running);
+  }
+
+  reset(state) {
+    this.load(state);
+    this._player.setNextStatus(playerStatus.pause);
   }
 
   addActionList(actionList) {

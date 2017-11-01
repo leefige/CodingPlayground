@@ -29,6 +29,7 @@ class CodeGameApp extends Component {
       isLogin: false
     })
   }
+  
   render() {
     return (
       <div>
