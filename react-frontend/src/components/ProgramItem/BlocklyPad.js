@@ -34,20 +34,35 @@ class BlocklyPad extends Component {
       <div>
         <ReactBlockly ref="blockly_workspace"
           blocklyConfig={this.props.blocklyConfig}
-          onXmlChange={this.props.onXmlChange.bind(this)}/>
-        
-        <div className='text-right'>
-            <button type="submit"
-              className="btn btn-primary"
-              style={{marginRight:15}}>
-              单步调试
+          onXmlChange={this.props.onXmlChange.bind(this)} />
+
+        <div className='text-right' style={{ margin: 15 }}>
+          <button type="button"
+            className="btn btn-danger"
+            style={{ marginRight: 15 }}
+            onClick={this.props.onReset}>
+            <span className="glyphicon glyphicon-stop"></span>
+            &nbsp;终止
             </button>
-            <button type="submit" 
-              className="btn btn-primary"
-              style={{marginRight:15}}
-              onClick = {this.handleCodeSubmit.bind(this)}>
-              生成并运行
+          <button type="button"
+            className="btn btn-info"
+            style={{ marginRight: 15 }}>
+            <span className="glyphicon glyphicon-pause"></span>
+            &nbsp;暂停
             </button>
+          <button type="button"
+            className="btn btn-warning"
+            style={{ marginRight: 15 }}>
+            <span className="glyphicon glyphicon-step-forward"></span>
+            &nbsp;单步调试
+            </button>
+          <button type="button"
+            className="btn btn-success"
+            style={{ marginRight: 15 }}
+            onClick={this.handleCodeSubmit.bind(this)}>
+            <span className="glyphicon glyphicon-play"></span>
+            &nbsp;生成并运行
+          </button>
         </div>
       </div>
     );

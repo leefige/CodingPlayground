@@ -78,6 +78,7 @@ class Programming extends Component {
         <BlocklyPad ref='blockly_pad'
           blocklyConfig={this.props.blocklyConfig}
           onCodeSubmit={this.handleCodeSubmit.bind(this)}
+          onReset={this.props.onReset}
           onXmlChange={this.handleXmlChange.bind(this)}
         />
         <textarea id='code_textarea'

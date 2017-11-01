@@ -106,8 +106,12 @@ class CodeGameContent extends Component {
     this.setState({
       actionList: _actionList,
     });
-    mainControl.load(this.state.mapInitState);
+    mainControl.restart(this.state.mapInitState);
     mainControl.addActionList(_actionList);
+  }
+  
+  handleReset() {
+    mainControl.reset(this.state.mapInitState);
   }
 
   render() {
@@ -118,11 +122,13 @@ class CodeGameContent extends Component {
           {this.state.didFetchMap?
           <Scene mapResource={this.state.mapResource}/>
           :<div></div>}
-        </div>
+          </div>
         <div className='col-xs-12 col-md-5'>
+          {this.state.didFetchMap?
           <Programming ref="prog_ref" id="programming" 
             blocklyConfig={this.state.blocklyConfig} 
             onCodeSubmit={this.handleCodeSubmit.bind(this)}
+            onReset={this.handleReset.bind(this)}
             onSolutionChanged={this.updateUserSolution.bind(this)}/>
           :<div></div>}
         </div>

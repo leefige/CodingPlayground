@@ -141,6 +141,8 @@ export default class GamePanel extends Component {
     function play() {
       const player = mainControl.player;
       const status = player.getStatus();
+      console.log("game status");
+      console.log(status);
       if (status === 0) {
         const px = convertX(player.character.pos['y']),
               py = convertY(player.character.pos['x']);
@@ -170,9 +172,10 @@ export default class GamePanel extends Component {
     function end() {
       const player = mainControl.player;
       if (player.getStatus() !== 3) {
-        state = play();
+        state = play;
         gameover.x = width;
         gameover.y = height;
+        return;
       }
       gameover.x = 0;
       gameover.y = 0;
