@@ -57,6 +57,20 @@ describe('test/controller/user.test.js', () => {
       });
     });
 
+    it('should get error when data struction not correct', () => {
+      return app.httpRequest()
+      .post('/user/signup')
+      .type('json')
+      .send({
+        id: true,
+        password: '213',
+      })
+      .expect(200)
+      .expect({
+        signup_success: false,
+      });
+    });
+
 
     it('should get error when data not correct', () =>{
       return app.httpRequest()
@@ -137,6 +151,20 @@ describe('test/controller/user.test.js', () => {
       .expect(400);
     })
 
+    it('should get error when data struction not correct', () => {
+      return app.httpRequest()
+      .post('/user/login')
+      .type('json')
+      .send({
+        id: true,
+        password: '213',
+      })
+      .expect(200)
+      .expect({
+        login_success: false,
+      });
+    });
+
 
      it('should send multi requests', async function () {
       // 使用 generator function 方式写测试用例，可以在一个用例中串行发起多次请求
@@ -184,5 +212,19 @@ describe('test/controller/user.test.js', () => {
           autoLogin_success: false,
         });
     });
+
+    it('should get error when data struction not correct', () => {
+      return app.httpRequest()
+      .post('/user/autoLogin')
+      .type('json')
+      .send({
+        autoLogin: 'error',
+      })
+      .expect(200)
+      .expect({
+        autoLogin_success: false,
+      });
+    });
+
   });
 });
