@@ -36,7 +36,7 @@ module.exports = app => {
           await app.mysql.insert('map', { id: 274, data: data });
         else
           await app.mysql.update('map', { id: 274, data: data });
-        return _data;
+        return _data.blocklyConfig;
       } catch (err) {
         console.error(err);
         return false;
