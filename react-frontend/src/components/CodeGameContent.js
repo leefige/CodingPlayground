@@ -140,6 +140,7 @@ class CodeGameContent extends Component {
         <div className='col-xs-12 col-md-5'>
           {this.state.didFetchMap?
             <Programming ref="prog_ref" id="programming" 
+<<<<<<< HEAD
             blocklyConfig={this.state.blocklyConfig} 
             onCodeSubmit={this.handleCodeSubmit.bind(this)}
             onReset={this.handleReset.bind(this)}
@@ -148,9 +149,19 @@ class CodeGameContent extends Component {
             setCallback={this.setPlayerCallback}
             startStepThrough={this.StepThroughInit.bind(this)}
             />
+=======
+              blocklyConfig={this.state.blocklyConfig} 
+              onCodeSubmit={this.handleCodeSubmit.bind(this)}
+              onReset={this.handleReset.bind(this)}
+              onSolutionChanged={this.updateUserSolution.bind(this)}
+              onNextStep={this.nextStep.bind(this)}
+              setCallback={this.setCallback.bind(this)}
+              startStepThrough={this.startStepThrough.bind(this)}/>
+>>>>>>> #96 Disable step button when stepping code and enable it after animation finished.
             :<div></div>
           }
         </div>
+        <button onClick={this.mockFinish.bind(this)} >点这里！！</button>
       </div>
     );
   }

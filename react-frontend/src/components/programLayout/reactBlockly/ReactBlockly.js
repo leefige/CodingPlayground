@@ -17,7 +17,6 @@ class ReactBlockly extends Component {
   // inject Blockly when did mount
   componentDidMount() {
     const myWorkspace = this.props.Blockly.inject('blockly_div', {
-      // TODO: use config to setup toolbox
       toolbox: this.props.blocklyConfig.toolboxCategories,
       media: '/media/',
       readOnly: false,
@@ -73,7 +72,6 @@ class ReactBlockly extends Component {
   };
 
   onXmlChange() {
-    // TODO
     this.props.onXmlChange(this.state.xml);
   }
 

@@ -11,7 +11,12 @@ class Programming extends Component {
       code: '',
     };
     this.myInterpreter = null;
-    this.highlightPause = false;
+    this.highlightPause = false;    
+  }
+
+  componentDidMount() {
+    // this.props.setCallback(this.handleFinishAnimation.bind(this));
+    this.props.setCallback(this.handleFinishAnimation.bind(this));
   }
 
   // a new way to parse code:
@@ -27,6 +32,7 @@ class Programming extends Component {
     this.handleNextStep(action);
   }
 
+  // init interpreter
   initInterpreterApi(interpreter, scope) {
     // Add an API function for emit action code.
     let wrapper = function(action) {
@@ -47,39 +53,40 @@ class Programming extends Component {
 
   //parse code to run
   parseCode(code) {
-    const finalCode = this.props.header+code+this.props.footer;
+    const finalCode = this.props.header + code;
     // console.log("finalCode: "+finalCode);
     try{
       this.myInterpreter = new Interpreter(finalCode, this.initInterpreterApi.bind(this));
       this.myInterpreter.run();
-    }
-    catch (err) {
+    } catch (err) {
       alert(err);
-    }
-    finally {
+    } finally {
       this.myInterpreter = null;
     }
   }
 
-  //parse code to run
-  stepThrough(code) {
-    console.log("call step through");
+  handleStepThrough(code) {
+    // disable step button
+    document.getElementById("step_btn").disabled = true;
+
     if (!this.myInterpreter) {
       const finalCode = this.props.header+code+this.props.footer;
       this.myInterpreter = new Interpreter(finalCode, this.initInterpreterApi.bind(this));
-      console.log("new interpreter");
+      this.props.startStepThrough();  // call back function
     }
+
     this.highlightPause = false;
     let hasMoreCode = false;
     do {
       try {
         hasMoreCode = this.myInterpreter.step();
-        console.log("try, more code=",hasMoreCode);
-      
+      } catch (err) {
+        alert(err);
       } finally {
         if (!hasMoreCode) {
           this.myInterpreter = null;
           this.highlightBlock(null);
+          document.getElementById("step_btn").disabled = false;
           alert("Step through finished!");
           return;
         }
@@ -88,6 +95,9 @@ class Programming extends Component {
     return;
   }
 
+  handleFinishAnimation() {
+    document.getElementById("step_btn").disabled = false;
+  }
 
   handleCodeSubmit(code) {
     this.setState({
@@ -132,7 +142,7 @@ class Programming extends Component {
           onCodeSubmit={this.handleCodeSubmit.bind(this)}
           onReset={this.props.onReset}
           onXmlChange={this.handleXmlChange.bind(this)}
-          onStepThrough={this.stepThrough.bind(this)}
+          onStepThrough={this.handleStepThrough.bind(this)}
         />
         <textarea id='code_textarea'
           className='code-input'
