@@ -3,6 +3,10 @@ import ReactBlockly, { Blockly } from './reactBlockly/ReactBlockly';
 
 class BlocklyPad extends Component {
 
+  componentDidMount() {
+    document.getElementById("abort_btn").disabled = true;
+  }
+
   getWorkspace() {
     return this.refs.blockly_workspace.getWorkspace();
   }
@@ -33,13 +37,20 @@ class BlocklyPad extends Component {
 
 
   handleCodeSubmit() {
+    document.getElementById("abort_btn").disabled = false;
     const mycode = this.generateCode();
     this.props.onCodeSubmit(mycode);
   }
 
   handleStepThrough() {
+    document.getElementById("abort_btn").disabled = false;
     const mycode = this.generateCodeWithHighlight();
     this.props.onStepThrough(mycode);
+  }
+
+  handleReset() {
+    this.props.onReset();
+    document.getElementById("abort_btn").disabled = true;
   }
 
   highlightBlock(id) {
@@ -56,7 +67,7 @@ class BlocklyPad extends Component {
         <div className='text-right blockly-btn-group'>
           <button type="button" id="abort_btn"
             className="btn btn-danger blockly-btn"
-            onClick={this.props.onReset}>
+            onClick={this.handleReset.bind(this)}>
             <span className="glyphicon glyphicon-stop"></span>
               &nbsp;&nbsp;终止
             </button>

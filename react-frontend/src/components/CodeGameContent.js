@@ -107,11 +107,10 @@ class CodeGameContent extends Component {
   }
 
   nextStep(_actionList) {
-    // console.log("action list: ", _actionList);
     this.setState({
       actionList: _actionList,
     });
-    mainControl.addActionList(_actionList);
+    maincontrol.addStepActionList(_actionList);
   }
   
   handleReset() {
@@ -154,14 +153,17 @@ class CodeGameContent extends Component {
               onCodeSubmit={this.handleCodeSubmit.bind(this)}
               onReset={this.handleReset.bind(this)}
               onSolutionChanged={this.updateUserSolution.bind(this)}
+<<<<<<< HEAD
               onNextStep={this.nextStep.bind(this)}
               setCallback={this.setCallback.bind(this)}
               startStepThrough={this.startStepThrough.bind(this)}/>
 >>>>>>> #96 Disable step button when stepping code and enable it after animation finished.
+=======
+              onNextStep={this.nextStep.bind(this)}/>
+>>>>>>> #96 Finish control of buttons; step through connected to main control via method passed in props.
             :<div></div>
           }
         </div>
-        <button onClick={this.mockFinish.bind(this)} >点这里！！</button>
       </div>
     );
   }

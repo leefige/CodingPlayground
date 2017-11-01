@@ -46,7 +46,7 @@ class ReactBlockly extends Component {
 
     myWorkspace.addChangeListener(this.debounce(function () {
       const newXml = Blockly.Xml.domToText(Blockly.Xml.workspaceToDom(this.state.workspace));
-      if (newXml == this.state.xml) {
+      if (newXml === this.state.xml) {
         return;
       }
       this.setState({ xml: newXml }, this.onXmlChange);

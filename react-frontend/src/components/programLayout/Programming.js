@@ -15,7 +15,6 @@ class Programming extends Component {
   }
 
   componentDidMount() {
-    // this.props.setCallback(this.handleFinishAnimation.bind(this));
     this.props.setCallback(this.handleFinishAnimation.bind(this));
   }
 
@@ -52,7 +51,7 @@ class Programming extends Component {
   }
 
   //parse code to run
-  parseCode(code) {
+  runCode(code) {
     const finalCode = this.props.header + code;
     // console.log("finalCode: "+finalCode);
     try{
@@ -65,12 +64,20 @@ class Programming extends Component {
     }
   }
 
+  handleFinishAnimation() {
+    document.getElementById("step_btn").disabled = false;
+  }
+
   handleStepThrough(code) {
     // disable step button
     document.getElementById("step_btn").disabled = true;
 
+    this.setState({
+      code: '单步调试中...',
+    });
+
     if (!this.myInterpreter) {
-      const finalCode = this.props.header+code+this.props.footer;
+      const finalCode = this.props.header + code;
       this.myInterpreter = new Interpreter(finalCode, this.initInterpreterApi.bind(this));
       this.props.startStepThrough();  // call back function
     }
@@ -84,6 +91,9 @@ class Programming extends Component {
         alert(err);
       } finally {
         if (!hasMoreCode) {
+          this.setState({
+            code: '',
+          });
           this.myInterpreter = null;
           this.highlightBlock(null);
           document.getElementById("step_btn").disabled = false;
@@ -95,22 +105,29 @@ class Programming extends Component {
     return;
   }
 
-  handleFinishAnimation() {
-    document.getElementById("step_btn").disabled = false;
-  }
-
   handleCodeSubmit(code) {
     this.setState({
       code: code,
     });
     this.props.onCodeSubmit();
-    this.parseCode(code);
+    this.runCode(code);
   }
 
   handleNextStep(action) {
     const actionList = [];
     actionList.push(action);
     this.props.onNextStep(actionList);
+  }
+
+  handleReset() {
+    this.props.onReset();
+    this.myInterpreter = null;
+    this.highlightBlock(null);
+    this.setState({
+      code: '',
+    });
+    document.getElementById("step_btn").disabled = false;
+    // alert("Abort!");
   }
 
   handleXmlChange(newXml) {
@@ -140,7 +157,7 @@ class Programming extends Component {
         <BlocklyPad ref='blockly_pad'
           blocklyConfig={this.props.blocklyConfig}
           onCodeSubmit={this.handleCodeSubmit.bind(this)}
-          onReset={this.props.onReset}
+          onReset={this.handleReset.bind(this)}
           onXmlChange={this.handleXmlChange.bind(this)}
           onStepThrough={this.handleStepThrough.bind(this)}
         />
