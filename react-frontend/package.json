@@ -24,5 +24,6 @@
   },
   "devDependencies": {
     "webpack": "^3.6.0"
-  }
+  },
+  "proxy": "http://game.saepa.org"
 }
