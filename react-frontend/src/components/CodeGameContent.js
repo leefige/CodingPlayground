@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Scene from './Scene';
-import Programming from './Programming';
+import Programming from './programLayout/Programming';
 import { mainControl } from '../logic/MainControl';
 import { post } from '../utils/Request'
 
@@ -102,11 +102,15 @@ class CodeGameContent extends Component {
     });
   }
 
-  handleCodeSubmit(_actionList) {
+  handleCodeSubmit() {
+    mainControl.load(this.state.mapInitState);
+  }
+
+  nextStep(_actionList) {
+    // console.log("action list: ", _actionList);
     this.setState({
       actionList: _actionList,
     });
-    mainControl.load(this.state.mapInitState);
     mainControl.addActionList(_actionList);
   }
 
@@ -116,15 +120,19 @@ class CodeGameContent extends Component {
       <div className='row'>
         <div className='col-xs-12 col-md-5 col-md-offset-1'>
           {this.state.didFetchMap?
-          <Scene mapResource={this.state.mapResource}/>
-          :<div></div>}
+            <Scene mapResource={this.state.mapResource}/>
+            :<div></div>
+          }
         </div>
         <div className='col-xs-12 col-md-5'>
-          <Programming ref="prog_ref" id="programming" 
+          {this.state.didFetchMap?
+            <Programming ref="prog_ref" id="programming" 
             blocklyConfig={this.state.blocklyConfig} 
             onCodeSubmit={this.handleCodeSubmit.bind(this)}
-            onSolutionChanged={this.updateUserSolution.bind(this)}/>
-          :<div></div>}
+            onSolutionChanged={this.updateUserSolution.bind(this)}
+            onNextStep={this.nextStep.bind(this)}/>
+            :<div></div>
+          }
         </div>
       </div>
     );
