@@ -131,6 +131,21 @@ export default class MapEditor extends Component {
 
       this.dragging = false;
 
+      let newPosition = this.data.getLocalPosition(this.parent);
+
+      const maxWidth = parseInt(width - this.width / 2);
+      const maxHeight = parseInt(height - this.height / 2);
+      const minWidth = parseInt(this.width / 2);
+      const minHeight = parseInt(this.height / 2);
+
+      newPosition.x = newPosition.x > maxWidth ? maxWidth : newPosition.x;
+      newPosition.x = newPosition.x < minWidth ? minWidth : newPosition.x;
+      newPosition.y = newPosition.y > maxHeight ? maxHeight : newPosition.y;
+      newPosition.y = newPosition.y < minHeight ? minHeight : newPosition.y;
+
+      this.position.x = newPosition.x;
+      this.position.y = newPosition.y;
+
       // set the interaction data to null
       this.data = null;
     }
@@ -138,6 +153,17 @@ export default class MapEditor extends Component {
     function onDragMove() {
       if (this.dragging) {
         let newPosition = this.data.getLocalPosition(this.parent);
+
+        const maxWidth = parseInt(width - this.width / 2);
+        const maxHeight = parseInt(height - this.height / 2);
+        const minWidth = parseInt(this.width / 2);
+        const minHeight = parseInt(this.height / 2);
+
+        newPosition.x = newPosition.x > maxWidth ? maxWidth : newPosition.x;
+        newPosition.x = newPosition.x < minWidth ? minWidth : newPosition.x;
+        newPosition.y = newPosition.y > maxHeight ? maxHeight : newPosition.y;
+        newPosition.y = newPosition.y < minHeight ? minHeight : newPosition.y;
+  
         this.position.x = newPosition.x;
         this.position.y = newPosition.y;
       }
