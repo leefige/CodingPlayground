@@ -141,6 +141,14 @@ export default class GamePanel extends Component {
     function play() {
       const player = mainControl.player;
       const status = player.getStatus();
+      if (status === 0) {
+        const px = convertX(player.character.pos['y']),
+              py = convertY(player.character.pos['x']);
+        charactor1.x = px, charactor1.y = py;
+        charactor2.x = charactor1.x;
+        charactor2.y = charactor1.y - charactor2.height;
+        player.nextStep();
+      }
       if (status === 1) {
         const px = convertX(player.character.pos['y']),
               py = convertY(player.character.pos['x']);
