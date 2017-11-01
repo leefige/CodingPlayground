@@ -118,6 +118,15 @@ class CodeGameContent extends Component {
     mainControl.reset(this.state.mapInitState);
   }
 
+  setPlayerCallback(callback) {
+    mainControl.player.setCallback(callback);
+  }
+
+  StepThroughInit() {
+    mainControl.stepThrough(this.state.mapInitState);
+  }
+
+
   render() {
     // console.log("code game content render");
     return (
@@ -135,7 +144,10 @@ class CodeGameContent extends Component {
             onCodeSubmit={this.handleCodeSubmit.bind(this)}
             onReset={this.handleReset.bind(this)}
             onSolutionChanged={this.updateUserSolution.bind(this)}
-            onNextStep={this.nextStep.bind(this)}/>
+            onNextStep={this.nextStep.bind(this)}
+            setCallback={this.setPlayerCallback}
+            startStepThrough={this.StepThroughInit.bind(this)}
+            />
             :<div></div>
           }
         </div>
