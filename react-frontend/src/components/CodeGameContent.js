@@ -125,9 +125,7 @@ class CodeGameContent extends Component {
     mainControl.stepThrough(this.state.mapInitState);
   }
 
-
   render() {
-    // console.log("code game content render");
     return (
       <div className='row'>
         <div className='col-xs-12 col-md-5 col-md-offset-1'>
@@ -139,28 +137,14 @@ class CodeGameContent extends Component {
         <div className='col-xs-12 col-md-5'>
           {this.state.didFetchMap?
             <Programming ref="prog_ref" id="programming" 
-<<<<<<< HEAD
-            blocklyConfig={this.state.blocklyConfig} 
-            onCodeSubmit={this.handleCodeSubmit.bind(this)}
-            onReset={this.handleReset.bind(this)}
-            onSolutionChanged={this.updateUserSolution.bind(this)}
-            onNextStep={this.nextStep.bind(this)}
-            setCallback={this.setPlayerCallback}
-            startStepThrough={this.StepThroughInit.bind(this)}
-            />
-=======
               blocklyConfig={this.state.blocklyConfig} 
               onCodeSubmit={this.handleCodeSubmit.bind(this)}
               onReset={this.handleReset.bind(this)}
               onSolutionChanged={this.updateUserSolution.bind(this)}
-<<<<<<< HEAD
               onNextStep={this.nextStep.bind(this)}
-              setCallback={this.setCallback.bind(this)}
-              startStepThrough={this.startStepThrough.bind(this)}/>
->>>>>>> #96 Disable step button when stepping code and enable it after animation finished.
-=======
-              onNextStep={this.nextStep.bind(this)}/>
->>>>>>> #96 Finish control of buttons; step through connected to main control via method passed in props.
+              setCallback={this.setPlayerCallback}
+              startStepThrough={this.StepThroughInit.bind(this)}
+            />
             :<div></div>
           }
         </div>
