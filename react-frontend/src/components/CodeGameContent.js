@@ -110,7 +110,7 @@ class CodeGameContent extends Component {
     this.setState({
       actionList: _actionList,
     });
-    maincontrol.addStepActionList(_actionList);
+    mainControl.addStepActionList(_actionList);
   }
   
   handleReset() {
