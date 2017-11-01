@@ -41,15 +41,29 @@ class Player {
     this._mode = mode;
   }
 
+  getMode() {
+    return this._mode;
+  }
+
   nextStep() {
+    // console.log("next step");
+    
+    // console.log(this._mode);
+    // console.log("status")
+    // console.log(this._status);
+    // console.log("curStep")
+    // console.log(this._curStep);
+    // console.log(this._totalStep);
     if (this._status === playerStatus.init)
       this._status = this._nextStatus;
     
     if (this._status === playerStatus.running) {
       if (this._curStep < this._totalStep)
         this._curStep = this._curStep + 1;
-      else if (this._mode == 'step')
+      else if (this._mode == 'step') {
+        this._callback();
         this.status = playerStatus.pause;
+      }
       else
         this._status = this._result;
     }
