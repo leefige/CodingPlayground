@@ -49,7 +49,6 @@ class MainControl{
   }
 
   addActionList(actionList) {
-    console.log("add action list")
     actionList.forEach((action => {
       if (this._status === 1) {
         switch(action) {
