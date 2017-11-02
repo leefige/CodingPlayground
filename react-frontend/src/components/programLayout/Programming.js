@@ -5,6 +5,12 @@ import Interpreter from 'react-js-interpreter-private';
 
 class Programming extends Component {
 
+  static defaultProps = {
+    HEADER: "initLoop(); function go() {emitAction(1);} function turn_left() {emitAction(2);} function turn_right() {emitAction(3);} ",
+    INFINITE_LOOP_ERROR: "Infinite loop!",
+    MAX_LOOP: 100000,
+  };
+
   constructor() {
     super();
     this.state = {
@@ -13,6 +19,7 @@ class Programming extends Component {
     };
     this.myInterpreter = null;
     this.highlightPause = false;    
+    this.loopTrap = 0;
   }
 
   /** a new way to parse code:
@@ -20,12 +27,23 @@ class Programming extends Component {
       then define go(){emit(1);}
       and outside the sandbox, emit(num) will send an action to animation (actionList) */
 
-  static defaultProps = {
-    header: "function go() {emitAction(1);} function turn_left() {emitAction(2);} function turn_right() {emitAction(3);} ",
-  };
-
   emitAction(action) {
     this.handleNextStep(action);
+  }
+  
+  highlightBlock(id) {
+    this.refs.blockly_pad.highlightBlock(id);
+    this.highlightPause = true;
+  }
+
+  initLoop() {
+    this.loopTrap = this.props.MAX_LOOP;
+  }
+
+  countLoop() {
+    if (--this.loopTrap === 0) {
+      throw this.props.INFINITE_LOOP_ERROR;
+    }
   }
 
   // init interpreter
@@ -45,19 +63,41 @@ class Programming extends Component {
     };
     interpreter.setProperty(scope, 'highlightBlock',
         interpreter.createNativeFunction(wrapper.bind(this)));
+
+    // Add an API function for initialize loopTrap.
+    wrapper = function() {
+      return interpreter.createPrimitive(this.initLoop());
+    };
+    interpreter.setProperty(scope, 'initLoop',
+        interpreter.createNativeFunction(wrapper.bind(this)));
+
+    // Add an API function for infinite loop.
+    wrapper = function() {
+      return interpreter.createPrimitive(this.countLoop());
+    };
+    interpreter.setProperty(scope, 'countLoop',
+        interpreter.createNativeFunction(wrapper.bind(this)));
   }
 
   //parse code to run
   runCode(code) {
-    const finalCode = this.props.header + code;
+    const finalCode = this.props.HEADER + code;
     try{
       this.myInterpreter = new Interpreter(finalCode, this.initInterpreterApi.bind(this));
       this.myInterpreter.run();
     } catch (err) {
-      console.error(err);
+      if (err === this.props.INFINITE_LOOP_ERROR) {
+        this.handleInfiniteLoop();
+      } else {
+        console.error(err);
+      }
     } finally {
       this.myInterpreter = null;
     }
+  }
+
+  handleInfiniteLoop() {
+    alert("您的代码包含循环次数过多，或产生了无限循环！");
   }
 
   handleFinishAnimation() {
@@ -73,7 +113,7 @@ class Programming extends Component {
     });
 
     if (!this.myInterpreter) {
-      const finalCode = this.props.header + code;
+      const finalCode = this.props.HEADER + code;
       this.myInterpreter = new Interpreter(finalCode, this.initInterpreterApi.bind(this));
       this.props.startStepThrough();  // call back function
       this.props.setCallback(this.handleFinishAnimation.bind(this));
@@ -101,13 +141,13 @@ class Programming extends Component {
     return;
   }
 
-  handleCodeSubmit(code) {
+  handleCodeSubmit(pureCode, runableCode) {
     this.setState({
-      code: code,
-      text: code,
+      code: runableCode,
+      text: pureCode,
     });
     this.props.onCodeSubmit();
-    this.runCode(code);
+    this.runCode(runableCode);
   }
 
   handleNextStep(action) {
@@ -139,11 +179,6 @@ class Programming extends Component {
     }
     document.getElementById('show_count').innerHTML = "您已使用" + num + "块";
     this.props.onSolutionChanged(newXml, num);
-  }
-
-  highlightBlock(id) {
-    this.refs.blockly_pad.highlightBlock(id);
-    this.highlightPause = true;
   }
 
   render() {
