@@ -66,7 +66,7 @@ export default class MapEditor extends Component {
 
     //Use Pixi's built-in `loader` object to load an image
     loader
-      // .add(gpJson)
+      .add(gpJson)
       .load(setup);
     
     function setup() {
