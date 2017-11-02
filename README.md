@@ -3,11 +3,11 @@
 ## To-do List for Sprint 4:
 
 - [x] 游戏结束判断及结束界面
-- [ ] 设计若干具体的关卡任务目标&地图
+- [x] 设计若干具体的关卡任务目标&地图
 - [x] Blockly移植进React框架
 - [x] Blockly高亮&单步调试
 - [x] 用户Blockly解法记录&保存
-- [ ] 地图编辑器
+- [x] 地图编辑器
 - [x] 实现关卡切换
 - [x] 美化界面
 - [x] 优化配置信息组织和传输
@@ -20,7 +20,7 @@
 - [x] Canvas整体缩放
 - [x] 实现配置读取
 - [x] 后端建立关卡数据库并确定API
-- [ ] ~~Blockly移植进React框架~~
+- [x] ~~Blockly移植进React框架~~
 - [x] block种类可以使用配置文件控制
 
 ## To-do List for Sprint 2:
