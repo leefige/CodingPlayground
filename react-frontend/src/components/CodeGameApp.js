@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import LoginHeader from './LoginHeader'
 import CodeGameContent from './CodeGameContent'
+import MapEditor from './MapEditor'
+
 import {
   BrowserRouter as Router,
   Route,
@@ -44,6 +46,7 @@ class CodeGameApp extends Component {
             </div>
           </div>
           <Route path="/map/:mapID/:recordID?" component={CodeGameContent} />
+          <Route path="/mapEditor" component={MapEditor} />
           <Footer />
         </div>
       </div>
