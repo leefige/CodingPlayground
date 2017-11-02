@@ -11,22 +11,27 @@ class BlocklyPad extends Component {
     return this.refs.blockly_workspace.getWorkspace();
   }
 
-  generateCode() {
-    // infinite loop setting
+  generatePureCode() {
+    Blockly.JavaScript.STATEMENT_PREFIX = null;
     Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+    Blockly.JavaScript.addReservedWords('highlightBlock');
+    
+    return Blockly.JavaScript.workspaceToCode(this.getWorkspace());
+  }
 
+  generateCode() {
     // for highlight block
     Blockly.JavaScript.STATEMENT_PREFIX = null;
     Blockly.JavaScript.addReservedWords('highlightBlock');
+
+    // infinite loop setting
+    Blockly.JavaScript.INFINITE_LOOP_TRAP = 'countLoop();\n';
 
     // generate code
     return Blockly.JavaScript.workspaceToCode(this.getWorkspace());
   }
 
   generateCodeWithHighlight() {
-    // infinite loop setting
-    Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
-
     // for highlight block
     Blockly.JavaScript.STATEMENT_PREFIX = 'highlightBlock(%1);\n';
     Blockly.JavaScript.addReservedWords('highlightBlock');
@@ -38,8 +43,9 @@ class BlocklyPad extends Component {
 
   handleCodeSubmit() {
     document.getElementById("abort_btn").disabled = false;
-    const mycode = this.generateCode();
-    this.props.onCodeSubmit(mycode);
+    const runableCode = this.generateCode();
+    const pureCode = this.generatePureCode();
+    this.props.onCodeSubmit(pureCode, runableCode);
   }
 
   handleStepThrough() {
