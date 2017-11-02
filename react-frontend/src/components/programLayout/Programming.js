@@ -54,7 +54,7 @@ class Programming extends Component {
       this.myInterpreter = new Interpreter(finalCode, this.initInterpreterApi.bind(this));
       this.myInterpreter.run();
     } catch (err) {
-      console.log(err);
+      console.error(err);
     } finally {
       this.myInterpreter = null;
     }
@@ -85,7 +85,7 @@ class Programming extends Component {
       try {
         hasMoreCode = this.myInterpreter.step();
       } catch (err) {
-        console.log(err);
+        console.error(err);
       } finally {
         if (!hasMoreCode) {
           this.setState({
