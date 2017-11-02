@@ -47,7 +47,7 @@ class SignupHeader extends Component {
       rememberMe: this.state.rememberMe,
     })
       .then((responseJson) => {
-        console.log(responseJson);
+        //console.log(responseJson);
         if (responseJson.login_success) {
           this.props.onLogin(this.state.email);
         }

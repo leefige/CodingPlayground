@@ -6,9 +6,9 @@ class Footer extends Component {
     return (
       <div className='col-md-offset-6'>
         <div class="btn-group" role="group" aria-label="...">
-          <Link to='275' type="button" class="btn btn-default">1</Link>
-          <Link to='276' type="button" class="btn btn-default">2</Link>
-          <Link to='274' type="button" class="btn btn-default">3</Link>
+          <Link to='/map/275' type="button" class="btn btn-default">1</Link>
+          <Link to='/map/276' type="button" class="btn btn-default">2</Link>
+          <Link to='/map/274' type="button" class="btn btn-default">3</Link>
         </div>
       </div>
     );
