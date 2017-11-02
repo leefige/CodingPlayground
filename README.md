@@ -3,7 +3,7 @@
 ## To-do List for Sprint 4:
 
 - [x] 游戏结束判断及结束界面
-- [ ] 设计若干具体的关卡任务目标&地图
+- [x] 设计若干具体的关卡任务目标&地图
 - [x] Blockly移植进React框架
 - [x] Blockly高亮&单步调试
 - [x] 用户Blockly解法记录&保存
