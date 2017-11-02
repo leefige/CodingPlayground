@@ -9,15 +9,16 @@ class Programming extends Component {
     super();
     this.state = {
       code: '',
+      text: '',
     };
     this.myInterpreter = null;
     this.highlightPause = false;    
   }
 
-  // a new way to parse code:
-  // wrap an emit(num) method into js interpreter
-  // then define go(){emit(1);}
-  // and outside the sandbox, emit(num) will send an action to animation (actionList)
+  /** a new way to parse code:
+      wrap an emit(num) method into js interpreter
+      then define go(){emit(1);}
+      and outside the sandbox, emit(num) will send an action to animation (actionList) */
 
   static defaultProps = {
     header: "function go() {emitAction(1);} function turn_left() {emitAction(2);} function turn_right() {emitAction(3);} ",
@@ -49,12 +50,11 @@ class Programming extends Component {
   //parse code to run
   runCode(code) {
     const finalCode = this.props.header + code;
-    // console.log("finalCode: "+finalCode);
     try{
       this.myInterpreter = new Interpreter(finalCode, this.initInterpreterApi.bind(this));
       this.myInterpreter.run();
     } catch (err) {
-      alert(err);
+      console.error(err);
     } finally {
       this.myInterpreter = null;
     }
@@ -69,7 +69,7 @@ class Programming extends Component {
     document.getElementById("step_btn").disabled = true;
 
     this.setState({
-      code: '单步调试中...',
+      text: '单步调试中...',
     });
 
     if (!this.myInterpreter) {
@@ -85,16 +85,16 @@ class Programming extends Component {
       try {
         hasMoreCode = this.myInterpreter.step();
       } catch (err) {
-        alert(err);
+        console.error(err);
       } finally {
         if (!hasMoreCode) {
           this.setState({
-            code: '',
+            text: '单步调试结束',
           });
           this.myInterpreter = null;
           this.highlightBlock(null);
           document.getElementById("step_btn").disabled = false;
-          return;
+          document.getElementById("abort_btn").disabled = true;
         }
       }
     } while (hasMoreCode && !this.highlightPause);
@@ -104,6 +104,7 @@ class Programming extends Component {
   handleCodeSubmit(code) {
     this.setState({
       code: code,
+      text: code,
     });
     this.props.onCodeSubmit();
     this.runCode(code);
@@ -121,9 +122,9 @@ class Programming extends Component {
     this.highlightBlock(null);
     this.setState({
       code: '',
+      text: '已终止',
     });
     document.getElementById("step_btn").disabled = false;
-    // alert("Abort!");
   }
 
   handleXmlChange(newXml) {
@@ -148,7 +149,7 @@ class Programming extends Component {
   render() {
     return (
       <div className='programming'>
-        <TaskGuide />
+        <TaskGuide task="任务：用Blockly生成代码并运行，将主角移动至目标地点" />
         <div id="show_count">您已使用0块</div>
         <BlocklyPad ref='blockly_pad'
           blocklyConfig={this.props.blocklyConfig}
@@ -160,7 +161,7 @@ class Programming extends Component {
         <textarea id='code_textarea'
           className='code-input'
           disabled="disabled"
-          value={this.state.code}
+          value={this.state.text}
         />
       </div>
     );

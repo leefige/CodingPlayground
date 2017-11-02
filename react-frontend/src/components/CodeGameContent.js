@@ -63,10 +63,6 @@ class CodeGameContent extends Component {
 			id: this.props.match.params.mapID,
 		})	
     .then((responseJson) => {
-      // console.log("load map sucess");
-      // console.log(responseJson.mapInitState.board);
-      // console.log(responseJson.mapResource);
-      // console.log(responseJson.blocklyConfig);
       mainControl.load(responseJson.mapInitState);
       this.setState({
         mapInitState: responseJson.mapInitState,
@@ -85,7 +81,6 @@ class CodeGameContent extends Component {
         id: this.props.match.params.mapID,
       })    
       .then((responseJson) => {
-        // console.log("load record sucess");
         const player = mainControl.player;
         player.load(responseJson.recordData);
       })
