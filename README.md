@@ -20,7 +20,7 @@
 - [x] Canvas整体缩放
 - [x] 实现配置读取
 - [x] 后端建立关卡数据库并确定API
-- [x] ~~Blockly移植进React框架~~
+- [ ] ~~Blockly移植进React框架~~
 - [x] block种类可以使用配置文件控制
 
 ## To-do List for Sprint 2:
