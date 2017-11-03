@@ -25,5 +25,5 @@
   "devDependencies": {
     "webpack": "^3.6.0"
   },
-  "proxy": "http://52.229.162.133:7001"
+  "proxy": "http://localhost:7001"
 }
