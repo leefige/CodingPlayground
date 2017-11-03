@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Scene from './Scene';
 import Programming from './programLayout/Programming';
-import { mainControl } from '../logic/MainControl';
-import { post } from '../utils/Request'
+import { mainControl } from '../../logic/MainControl';
+import { post } from '../../utils/Request'
 
 class CodeGameContent extends Component {
   constructor(props) {
