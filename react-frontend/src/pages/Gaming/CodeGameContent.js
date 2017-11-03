@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Scene from './GamePanel/Scene';
-import Programming from './ProgramLayout/Programming';
+import Programming from './ProgramPanel/Programming';
 import { mainControl } from '../../logic/MainControl';
 import { post } from '../../utils/Request'
 
