@@ -47,7 +47,7 @@ class CodeGameApp extends Component {
           </div>
           <Route path="/map/:mapID/:recordID?" component={CodeGameContent} />
           <Route path="/mapEditor" component={MapEditor} />
-          <Footer />
+          <Footer className='footer-style' />
         </div>
       </div>
     )

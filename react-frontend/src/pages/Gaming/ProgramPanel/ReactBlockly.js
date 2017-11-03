@@ -21,10 +21,10 @@ class ReactBlockly extends Component {
       media: '/media/',
       readOnly: false,
       grid: {
-        spacing: 30,
+        spacing: 35,
         length: 3,
-        colour: '#ccc',
-        snap: true
+        colour: '#ddd',
+        snap: false
       },
       zoom: {
         controls: true,

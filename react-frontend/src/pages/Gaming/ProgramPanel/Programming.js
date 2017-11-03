@@ -9,6 +9,8 @@ class Programming extends Component {
     HEADER: "initLoop(); function go() {emitAction(1);} function turn_left() {emitAction(2);} function turn_right() {emitAction(3);}\n",
     INFINITE_LOOP_ERROR: "Infinite loop!",
     MAX_LOOP: 100000,
+    task: "任务目标：用Blockly生成代码并运行，将主角移动至目标地点",
+    std_blockly_num: 10,
   };
 
   constructor() {
@@ -177,15 +179,16 @@ class Programming extends Component {
       tmp = tmp.substring(st + 1, tmp.length - 1);
       st = tmp.search(patt);
     }
-    document.getElementById('show_count').innerHTML = "您已使用" + num + "块";
+    document.getElementById('show_count').innerHTML = 
+      "您已使用" + num + "个程序块，标准程序需要" + this.props.std_blockly_num + "块 ~";
     this.props.onSolutionChanged(newXml, num);
   }
 
   render() {
     return (
       <div className='programming'>
-        <TaskGuide task="任务：用Blockly生成代码并运行，将主角移动至目标地点" />
-        <div id="show_count">您已使用0块</div>
+        <TaskGuide task={this.props.task} />
+        <div id="show_count" className="show-count">您已使用0个程序块，标准程序需要{this.props.std_blockly_num}块 ~</div>
         <BlocklyPad ref='blockly_pad'
           blocklyConfig={this.props.blocklyConfig}
           onCodeSubmit={this.handleCodeSubmit.bind(this)}
