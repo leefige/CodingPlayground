@@ -6,7 +6,7 @@ import Interpreter from 'react-js-interpreter-private';
 class Programming extends Component {
 
   static defaultProps = {
-    HEADER: "initLoop(); function go() {emitAction(1);} function turn_left() {emitAction(2);} function turn_right() {emitAction(3);} ",
+    HEADER: "initLoop(); function go() {emitAction(1);} function turn_left() {emitAction(2);} function turn_right() {emitAction(3);}\n",
     INFINITE_LOOP_ERROR: "Infinite loop!",
     MAX_LOOP: 100000,
   };
