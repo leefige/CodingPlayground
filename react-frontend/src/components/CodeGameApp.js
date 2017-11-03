@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import LoginHeader from '../pages/LoginHeader'
+import LoginHeader from './LoginHeader'
 import CodeGameContent from '../pages/Gaming/CodeGameContent'
 import MapEditor from '../pages/MapEditor/MapEditor'
 
