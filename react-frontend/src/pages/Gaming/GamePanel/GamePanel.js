@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import * as PIXI from "pixi.js";
 import PropTypes from 'prop-types';
 
-import { mainControl } from '../logic/MainControl';
+import { mainControl } from '../../../logic/MainControl';
 
 export default class GamePanel extends Component {
 

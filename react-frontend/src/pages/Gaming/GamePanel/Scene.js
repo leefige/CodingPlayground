@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import GamePanel from './GamePanel'
-import MapEditor from './MapEditor'
 
 class Scene extends Component {
 

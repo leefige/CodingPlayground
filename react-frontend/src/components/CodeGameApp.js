@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import LoginHeader from './LoginHeader'
-import CodeGameContent from './CodeGameContent'
-import MapEditor from './MapEditor'
+import CodeGameContent from '../pages/Gaming/CodeGameContent'
+import MapEditor from '../pages/MapEditor/MapEditor'
 
 import {
   BrowserRouter as Router,
