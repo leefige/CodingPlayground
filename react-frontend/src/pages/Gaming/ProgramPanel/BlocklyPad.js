@@ -66,9 +66,12 @@ class BlocklyPad extends Component {
   render() {
     return (
       <div>
-        <ReactBlockly ref="blockly_workspace"
-          blocklyConfig={this.props.blocklyConfig}
-          onXmlChange={this.props.onXmlChange.bind(this)}/>
+        <div id="blockly_area" className='blockly-area'>
+          <ReactBlockly ref="blockly_workspace"
+            wrapperClassname='blockly-div'
+            blocklyConfig={this.props.blocklyConfig}
+            onXmlChange={this.props.onXmlChange.bind(this)}/>
+        </div>
         
         <div className='text-right blockly-btn-group'>
           <button type="button" id="abort_btn"

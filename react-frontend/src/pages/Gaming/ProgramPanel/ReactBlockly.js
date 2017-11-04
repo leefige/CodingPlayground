@@ -21,10 +21,10 @@ class ReactBlockly extends Component {
       media: '/media/',
       readOnly: false,
       grid: {
-        spacing: 30,
+        spacing: 40,
         length: 3,
-        colour: '#ccc',
-        snap: true
+        colour: '#ddd',
+        snap: false
       },
       zoom: {
         controls: true,
@@ -81,7 +81,7 @@ class ReactBlockly extends Component {
 
   render() {
     return ( 
-      <div id='blockly_div' className='blockly-div' ></div>
+      <div id='blockly_div' className={this.props.wrapperClassname} ></div>
     );
   }
 }

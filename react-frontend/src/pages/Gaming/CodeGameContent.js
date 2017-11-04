@@ -128,7 +128,7 @@ class CodeGameContent extends Component {
         </div>
         <div className='col-xs-12 col-md-5'>
           {this.state.didFetchMap?
-            <Programming ref="prog_ref" id="programming" 
+            <Programming ref="program_area" id="programming" 
               blocklyConfig={this.state.blocklyConfig} 
               onCodeSubmit={this.handleCodeSubmit.bind(this)}
               onReset={this.handleReset.bind(this)}
