@@ -3,6 +3,7 @@ import * as PIXI from "pixi.js";
 import PropTypes from 'prop-types';
 
 import { mainControl } from '../../logic/MainControl';
+import { post } from '../../utils/Request'
 
 import character from './img/pic.jpg';
 import map1 from './img/map1.png';
@@ -75,7 +76,6 @@ export default class MapEditor extends Component {
     function setup() {
       gameScene = new Container();
       stage.addChild(gameScene);
-      
 
       let map1 = new Sprite(map);
       map1.position.x = 0;
@@ -139,17 +139,27 @@ export default class MapEditor extends Component {
     }
 
     function loadmap() {
-      const id = resources[gpJson].textures;
-      for (let i = 0; i < row; i++)
-        for (let j = 0; j < col; j++) {
-          const background = new Sprite(id[`${i*row+j}.png`])
-          background.x = j * innerWidth / row + (width - innerWidth) / 2;
-          background.y = i * innerHeight / col + (height - innerHeight) / 2;
-          background.width = innerWidth / row;
-          background.height = innerHeight / col;
-          gameScene.addChild(background);
-        }
-      requestAnimationFrame(animate);
+        // 获取地图信息和blockly配置
+      post('/map/getId', {
+        id: 275,
+      })	
+      .then((responseJson) => {
+        const mapResource = responseJson.mapResource;
+        const mapId = mapResource['id'];
+        
+        gameScene.removeChildren();
+        const id = resources[gpJson].textures;
+        for (let i = 0; i < row; i++)
+          for (let j = 0; j < col; j++) {
+            const background = new Sprite(id[`${mapId[i*row+j]}.png`])
+            background.x = j * innerWidth / row + (width - innerWidth) / 2;
+            background.y = i * innerHeight / col + (height - innerHeight) / 2;
+            background.width = innerWidth / row;
+            background.height = innerHeight / col;
+            gameScene.addChild(background);
+          }
+        requestAnimationFrame(animate);
+      });
     }
 
     function onDragStart(event) {
