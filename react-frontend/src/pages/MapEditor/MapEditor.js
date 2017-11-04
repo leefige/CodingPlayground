@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 
 import { mainControl } from '../../logic/MainControl';
 
-import character from './img/charactor-up.jpg';
+import character from './img/pic.jpg';
+import map1 from './img/map1.png';
 
 export default class MapEditor extends Component {
 
@@ -63,6 +64,8 @@ export default class MapEditor extends Component {
 
     const gpJson = `${process.env.PUBLIC_URL}/img/sources/gamePic.json`
     let texture = PIXI.Texture.fromImage(character);
+    let map = PIXI.Texture.fromImage(map1);
+    let gameScene;
 
     //Use Pixi's built-in `loader` object to load an image
     loader
@@ -70,18 +73,21 @@ export default class MapEditor extends Component {
       .load(setup);
     
     function setup() {
-      const gameScene = new Container();
+      gameScene = new Container();
       stage.addChild(gameScene);
-      const id = resources[gpJson].textures
-      for (let i = 0; i < row; i++)
-        for (let j = 0; j < col; j++) {
-          const background = new Sprite(id[`${i*row+j}.png`])
-          background.x = j * innerWidth / row + (width - innerWidth) / 2;
-          background.y = i * innerHeight / col + (height - innerHeight) / 2;
-          background.width = innerWidth / row;
-          background.height = innerHeight / col;
-          gameScene.addChild(background);
-        }
+      
+
+      let map1 = new Sprite(map);
+      map1.position.x = 0;
+      map1.position.y = 0;
+      map1.width = width / 10;
+      map1.height = map1.width;
+      map1.on('click', loadmap);
+      map1.interactive = true;
+      map1.buttonMode = true;
+      stage.addChild(map1);
+
+      
       
       // create a texture from an image path
       for (let i = 0; i < 5; i++) {
@@ -102,7 +108,7 @@ export default class MapEditor extends Component {
       // center the obj's anchor point
       obj.anchor.set(0.5);
       // make it a bit bigger, so it's easier to grab
-      obj.scale.set(0.05);
+      obj.scale.set(0.08);
       // setup events
       obj
         // events for drag start
@@ -130,6 +136,20 @@ export default class MapEditor extends Component {
 
       // render the stage
       renderer.render(stage);
+    }
+
+    function loadmap() {
+      const id = resources[gpJson].textures;
+      for (let i = 0; i < row; i++)
+        for (let j = 0; j < col; j++) {
+          const background = new Sprite(id[`${i*row+j}.png`])
+          background.x = j * innerWidth / row + (width - innerWidth) / 2;
+          background.y = i * innerHeight / col + (height - innerHeight) / 2;
+          background.width = innerWidth / row;
+          background.height = innerHeight / col;
+          gameScene.addChild(background);
+        }
+      requestAnimationFrame(animate);
     }
 
     function onDragStart(event) {
