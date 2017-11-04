@@ -6,7 +6,7 @@ import Interpreter from 'react-js-interpreter-private';
 class Programming extends Component {
 
   static defaultProps = {
-    HEADER: "initLoop(); function go() {emitAction(1);} function turn_left() {emitAction(2);} function turn_right() {emitAction(3);}\n",
+    HEADER: "initLoop(); function goForward() {emitAction(1);} function turnLeft() {emitAction(2);} function turnRight() {emitAction(3);}\n",
     INFINITE_LOOP_ERROR: "Infinite loop!",
     MAX_LOOP: 100000,
     task: "任务目标：用Blockly生成代码并运行，将主角移动至目标地点",

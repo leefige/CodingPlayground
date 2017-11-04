@@ -1,12 +1,17 @@
 Blockly = window.Blockly;
 
 Blockly.JavaScript.actions = {};
-Blockly.JavaScript.go = function () {
-    return "go();\n"
+
+Blockly.JavaScript.actions_go = function () {
+    return "goForward();\n"
 };
-Blockly.JavaScript.turn_left = function () {
-    return "turn_left();\n"
-};
-Blockly.JavaScript.turn_right = function () {
-    return "turn_right();\n"
+
+Blockly.JavaScript.actions_turn = function (a) {
+    switch (a.getFieldValue("DIRECTION")) {
+        case "LEFT":
+            return "turnLeft();\n";
+        case "RIGHT":
+            return "turnRight();\n"
+    }
+    throw "Undefined direction.";
 };
