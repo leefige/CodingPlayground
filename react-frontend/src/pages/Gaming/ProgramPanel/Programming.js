@@ -10,7 +10,7 @@ class Programming extends Component {
     INFINITE_LOOP_ERROR: "Infinite loop!",
     MAX_LOOP: 100000,
     task: "任务目标：用Blockly生成代码并运行，将主角移动至目标地点",
-    std_blockly_num: 10,
+    std_blockly_num: 5,
   };
 
   constructor() {
@@ -179,8 +179,10 @@ class Programming extends Component {
       tmp = tmp.substring(st + 1, tmp.length - 1);
       st = tmp.search(patt);
     }
-    document.getElementById('show_count').innerHTML = 
-      "您已使用" + num + "个程序块，标准程序需要" + this.props.std_blockly_num + "块 ~";
+    document.getElementById("user_count").innerHTML = num;
+    document.getElementById("user_count").className = 
+    num <= this.props.std_blockly_num ? 'cnt-color-norm' :
+      num <= 2 * this.props.std_blockly_num ? 'cnt-color-large' : 'cnt-color-huge';
     this.props.onSolutionChanged(newXml, num);
   }
 
@@ -188,7 +190,11 @@ class Programming extends Component {
     return (
       <div className='programming'>
         <TaskGuide task={this.props.task} />
-        <div id="show_count" className="show-count">您已使用0个程序块，标准程序需要{this.props.std_blockly_num}块 ~</div>
+        <div id="show_count" className='show-count'>
+          <span>您已使用 </span>
+          <span id='user_count' className='cnt-color-norm'>0</span>
+          <span> 个程序块，标准程序需要{this.props.std_blockly_num}块 ~</span>
+        </div>
         <BlocklyPad ref='blockly_pad'
           blocklyConfig={this.props.blocklyConfig}
           onCodeSubmit={this.handleCodeSubmit.bind(this)}
@@ -196,9 +202,9 @@ class Programming extends Component {
           onXmlChange={this.handleXmlChange.bind(this)}
           onStepThrough={this.handleStepThrough.bind(this)}
         />
-        <textarea id='code_textarea'
-          className='code-input'
-          disabled="disabled"
+        <textarea id="code_textarea"
+          className='code-text'
+          disabled='disabled'
           value={this.state.text}
         />
       </div>

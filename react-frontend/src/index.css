@@ -31,13 +31,12 @@ body {
   border-top-right-radius: 5px;
   box-sizing: border-box;
   /* border:2px solid #008CBA; */
-  /* background-color: rgb(250, 255, 230); */
 }
 
 .task-guide {
   width: 95%;
-  background-color: #f5f2e8;
-  line-height: 35px;
+  background-color: #f5f5ea;
+  line-height: 33px;
   border-radius: 20px;
   margin-left: 15px;
   margin-right: 20px;
@@ -46,6 +45,17 @@ body {
   box-sizing: border-box;
   font-size: 11pt;
   color: #666666;
+  box-shadow: 0px 3px 5px rgba(65, 65, 65, 0.2);
+}
+
+.task-point {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  background-color: #f88db1;
+  /* border-radius: 3px; */
+  margin-right: 5px;
+  margin-bottom: 1px;
 }
 
 .show-count {
@@ -54,12 +64,23 @@ body {
   text-align: right;
   margin-left: 10px;
   margin-right: 5px;
-  margin-top: 3px;
   padding-left: 40px;
   padding-right: 10px;
   box-sizing: border-box;
   font-size: 10pt;
   color: #949494;
+}
+
+.cnt-color-norm {
+  color: #2bcf02;
+}
+
+.cnt-color-large {
+  color: #ff9900;
+}
+
+.cnt-color-huge {
+  color: #ff2323;
 }
 
 .blockly-btn {
@@ -71,35 +92,30 @@ body {
   margin-bottom: 5px;
 }
 
-.code-input {
+.blockly-div {
+  height: 100%;
+  width: 100%;
+}
+
+.blockly-area {  
+  height: 480px;
+  margin-right: 10px;
+  margin-left: 5px;
+  border: none;
+  box-shadow: 2px 2px 5px rgba(65, 65, 65, 0.2);
+}
+
+.code-text {
   background-color: #fff;
   border: 0px solid #f1f1f1;
   margin-right: 5px;
   margin-left: 5px;
   padding-left: 10px;
-  min-height: 135px;
+  min-height: 120px;
   height: 100%;
   width: 100%;
   font-size: 11pt;
   resize: none;
-}
-
-.blockly-div {
-  height: 480px;
-  margin-right: 5px;
-  margin-left: 5px;
-  border: none;
-  /* width: 100%; */
-}
-
-.task-point {
-  display: inline-block;
-  width: 7px;
-  height: 7px;
-  background-color: #f88db1;
-  /* border-radius: 3px; */
-  margin-right: 5px;
-  margin-bottom: 1px;
 }
 
 .footer-style {
