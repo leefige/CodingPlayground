@@ -1,7 +1,12 @@
 <xml id="toolbox" style="display: none">
   <category name="动作" colour="15">
-    <block type="go"></block>
-    <block type="turn_left"></block>
-    <block type="turn_right"></block>
+    <block type="actions_go"></block>
+    <block type="actions_turn"></block>
+    <block type="actions_attack"></block>
+    <block type="actions_use"></block>
+  </category>
+  <category name="物品" colour="45">
+    <block type="objects_torch"></block>
+    <block type="objects_bomb"></block>
   </category>
 </xml>
