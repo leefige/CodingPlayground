@@ -27,4 +27,49 @@ Blockly.defineBlocksWithJsonArray([{
   nextStatement: null,
   colour: "%{BKY_ACTIONS_HUE}",
   helpUrl: ""
-}, ]);
+}, {
+  type: "actions_attack",
+  message0: "%1 %{BKY_ACTIONS_ATTACK_TITLE}",
+  previousStatement: null,
+  nextStatement: null,
+  colour: "%{BKY_ACTIONS_HUE}",
+  tooltip: "",
+  helpUrl: ""
+}, {
+  type: "actions_use",
+  message0: "%{BKY_ACTIONS_USE_TITLE} %1",
+  args0: [
+    {
+      "type": "input_value",
+      "name": "OBJECT",
+      "check": "Object"
+    }
+  ],
+  inputsInline: true,
+  previousStatement: null,
+  nextStatement: null,
+  colour: "%{BKY_ACTIONS_HUE}",
+  tooltip: "",
+  helpUrl: ""
+},
+]);
+
+Blockly.Blocks.objects = {};
+Blockly.Constants.Objects = {};
+Blockly.Constants.Objects.HUE = 65;
+Blockly.Blocks.objects.HUE = Blockly.Constants.Objects.HUE;
+Blockly.defineBlocksWithJsonArray([{
+  type: "objects_torch",
+  message0: "%{BKY_OBJECTS_TORCH_TITLE}",
+  output: "Object",
+  colour: "%{BKY_OBJECTS_HUE}",
+  tooltip: "",
+  helpUrl: ""
+}, {
+  type: "objects_bomb",
+  message0: "OBJECTS_BOMB_TITLE",
+  output: "Object",
+  colour: "%{BKY_OBJECTS_HUE}",
+  tooltip: "",
+  helpUrl: ""
+}]);

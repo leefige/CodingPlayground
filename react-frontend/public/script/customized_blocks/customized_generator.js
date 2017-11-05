@@ -15,3 +15,19 @@ Blockly.JavaScript.actions_turn = function (a) {
     }
     throw "Undefined direction.";
 };
+
+Blockly.JavaScript.actions_attack = function () {
+    return "attack();\n"
+};
+
+Blockly.JavaScript.actions_use = function (a) {
+    return "use(" + a + ");\n";
+};
+
+Blockly.JavaScript.objects_torch = function () {
+    return "torch";
+};
+
+Blockly.JavaScript.objects_bomb = function () {
+    return "bomb";
+};
