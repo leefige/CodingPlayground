@@ -11,4 +11,4 @@ Blockly = window.Blockly;
 /** @export */ Blockly.Msg.OBJECTS_BOMB_TITLE = "炸弹";
 
 /** @export */ Blockly.Msg.ACTIONS_HUE = "15";
-/** @export */ Blockly.Msg.OBJECTS_HUE = "65";
+/** @export */ Blockly.Msg.OBJECTS_HUE = "45";

@@ -21,13 +21,13 @@ Blockly.JavaScript.actions_attack = function () {
 };
 
 Blockly.JavaScript.actions_use = function (a) {
-    return "use(" + a + ");\n";
+    return "use(" + Blockly.JavaScript.valueToCode(a, 'OBJECT', Blockly.JavaScript.ORDER_NONE) + ");\n";
 };
 
 Blockly.JavaScript.objects_torch = function () {
-    return "torch";
+    return ["'torch'", Blockly.JavaScript.ORDER_NONE];
 };
 
 Blockly.JavaScript.objects_bomb = function () {
-    return "bomb";
+    return ["'bomb'", Blockly.JavaScript.ORDER_NONE];
 };

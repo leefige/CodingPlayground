@@ -29,7 +29,7 @@ Blockly.defineBlocksWithJsonArray([{
   helpUrl: ""
 }, {
   type: "actions_attack",
-  message0: "%1 %{BKY_ACTIONS_ATTACK_TITLE}",
+  message0: "%{BKY_ACTIONS_ATTACK_TITLE}",
   previousStatement: null,
   nextStatement: null,
   colour: "%{BKY_ACTIONS_HUE}",
@@ -56,7 +56,7 @@ Blockly.defineBlocksWithJsonArray([{
 
 Blockly.Blocks.objects = {};
 Blockly.Constants.Objects = {};
-Blockly.Constants.Objects.HUE = 65;
+Blockly.Constants.Objects.HUE = 45;
 Blockly.Blocks.objects.HUE = Blockly.Constants.Objects.HUE;
 Blockly.defineBlocksWithJsonArray([{
   type: "objects_torch",
@@ -67,7 +67,7 @@ Blockly.defineBlocksWithJsonArray([{
   helpUrl: ""
 }, {
   type: "objects_bomb",
-  message0: "OBJECTS_BOMB_TITLE",
+  message0: "%{BKY_OBJECTS_BOMB_TITLE}",
   output: "Object",
   colour: "%{BKY_OBJECTS_HUE}",
   tooltip: "",
