@@ -82,7 +82,7 @@ export default class MapEditor extends Component {
       map1.position.y = 0;
       map1.width = width / 10;
       map1.height = map1.width;
-      map1.on('click', loadmap);
+      map1.on('click', () => {loadmap(276)});
       map1.interactive = true;
       map1.buttonMode = true;
       stage.addChild(map1);
@@ -138,10 +138,10 @@ export default class MapEditor extends Component {
       renderer.render(stage);
     }
 
-    function loadmap() {
+    function loadmap(mapId) {
         // 获取地图信息和blockly配置
       post('/map/getId', {
-        id: 275,
+        id: mapId,
       })	
       .then((responseJson) => {
         const mapResource = responseJson.mapResource;
