@@ -64,7 +64,6 @@ export default class MapEditor extends Component {
 
     const gpJson = `${process.env.PUBLIC_URL}/img/sources/gamePic.json`
     const mapJson = `${process.env.PUBLIC_URL}/img/map/map.json`
-    console.log(gpJson, mapJson)
     let texture = PIXI.Texture.fromImage(character);
     let gameScene;
 
@@ -80,7 +79,6 @@ export default class MapEditor extends Component {
 
       for (let i = 0; i < 2; i++) {
         const id = resources[mapJson].textures;
-        console.log(id);
         let map = new Sprite(id[`${1000+i}.png`]);
         map.position.x = i * 200 + 250;
         map.position.y = 0;
