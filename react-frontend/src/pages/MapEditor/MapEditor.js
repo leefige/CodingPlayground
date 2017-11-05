@@ -6,7 +6,6 @@ import { mainControl } from '../../logic/MainControl';
 import { post } from '../../utils/Request'
 
 import character from './img/pic.jpg';
-import map1 from './img/map1.png';
 
 export default class MapEditor extends Component {
 
@@ -64,12 +63,14 @@ export default class MapEditor extends Component {
     let stage = this.stage;
 
     const gpJson = `${process.env.PUBLIC_URL}/img/sources/gamePic.json`
+    const mapJson = `${process.env.PUBLIC_URL}/img/map/map.json`
+    console.log(gpJson, mapJson)
     let texture = PIXI.Texture.fromImage(character);
-    let map = PIXI.Texture.fromImage(map1);
     let gameScene;
 
     //Use Pixi's built-in `loader` object to load an image
     loader
+      .add(mapJson)
       .add(gpJson)
       .load(setup);
     
@@ -77,16 +78,19 @@ export default class MapEditor extends Component {
       gameScene = new Container();
       stage.addChild(gameScene);
 
-      let map1 = new Sprite(map);
-      map1.position.x = 0;
-      map1.position.y = 0;
-      map1.width = width / 10;
-      map1.height = map1.width;
-      map1.on('click', () => {loadmap(276)});
-      map1.interactive = true;
-      map1.buttonMode = true;
-      stage.addChild(map1);
-
+      for (let i = 0; i < 2; i++) {
+        const id = resources[mapJson].textures;
+        console.log(id);
+        let map = new Sprite(id[`${1000+i}.png`]);
+        map.position.x = i * 200 + 250;
+        map.position.y = 0;
+        map.width = width / 10;
+        map.height = map.width;
+        map.on('click', () => {loadmap(275+i)});
+        map.interactive = true;
+        map.buttonMode = true;
+        stage.addChild(map);
+      }
       
       
       // create a texture from an image path
