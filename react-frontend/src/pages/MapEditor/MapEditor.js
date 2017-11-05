@@ -3,8 +3,9 @@ import * as PIXI from "pixi.js";
 import PropTypes from 'prop-types';
 
 import { mainControl } from '../../logic/MainControl';
+import { post } from '../../utils/Request'
 
-import character from './img/charactor-up.jpg';
+import character from './img/pic.jpg';
 
 export default class MapEditor extends Component {
 
@@ -62,26 +63,33 @@ export default class MapEditor extends Component {
     let stage = this.stage;
 
     const gpJson = `${process.env.PUBLIC_URL}/img/sources/gamePic.json`
+    const mapJson = `${process.env.PUBLIC_URL}/img/map/map.json`
     let texture = PIXI.Texture.fromImage(character);
+    let gameScene;
 
     //Use Pixi's built-in `loader` object to load an image
     loader
+      .add(mapJson)
       .add(gpJson)
       .load(setup);
     
     function setup() {
-      const gameScene = new Container();
+      gameScene = new Container();
       stage.addChild(gameScene);
-      const id = resources[gpJson].textures
-      for (let i = 0; i < row; i++)
-        for (let j = 0; j < col; j++) {
-          const background = new Sprite(id[`${i*row+j}.png`])
-          background.x = j * innerWidth / row + (width - innerWidth) / 2;
-          background.y = i * innerHeight / col + (height - innerHeight) / 2;
-          background.width = innerWidth / row;
-          background.height = innerHeight / col;
-          gameScene.addChild(background);
-        }
+
+      for (let i = 0; i < 2; i++) {
+        const id = resources[mapJson].textures;
+        let map = new Sprite(id[`${1000+i}.png`]);
+        map.position.x = i * 200 + 250;
+        map.position.y = 0;
+        map.width = width / 10;
+        map.height = map.width;
+        map.on('click', () => {loadmap(275+i)});
+        map.interactive = true;
+        map.buttonMode = true;
+        stage.addChild(map);
+      }
+      
       
       // create a texture from an image path
       for (let i = 0; i < 5; i++) {
@@ -102,7 +110,7 @@ export default class MapEditor extends Component {
       // center the obj's anchor point
       obj.anchor.set(0.5);
       // make it a bit bigger, so it's easier to grab
-      obj.scale.set(0.05);
+      obj.scale.set(0.08);
       // setup events
       obj
         // events for drag start
@@ -130,6 +138,30 @@ export default class MapEditor extends Component {
 
       // render the stage
       renderer.render(stage);
+    }
+
+    function loadmap(mapId) {
+        // 获取地图信息和blockly配置
+      post('/map/getId', {
+        id: mapId,
+      })	
+      .then((responseJson) => {
+        const mapResource = responseJson.mapResource;
+        const mapId = mapResource['id'];
+        
+        gameScene.removeChildren();
+        const id = resources[gpJson].textures;
+        for (let i = 0; i < row; i++)
+          for (let j = 0; j < col; j++) {
+            const background = new Sprite(id[`${mapId[i*row+j]}.png`])
+            background.x = j * innerWidth / row + (width - innerWidth) / 2;
+            background.y = i * innerHeight / col + (height - innerHeight) / 2;
+            background.width = innerWidth / row;
+            background.height = innerHeight / col;
+            gameScene.addChild(background);
+          }
+        requestAnimationFrame(animate);
+      });
     }
 
     function onDragStart(event) {
