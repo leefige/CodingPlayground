@@ -109,9 +109,9 @@ export default class GamePanel extends Component {
       // gameScene.addChild(background);
 
       charactor1 = new Sprite(id['105.png']);
-      charactor1.visible = false;
+      // charactor1.visible = false;
       charactor2 = new Sprite(id['89.png']);
-      charactor2.visible = false;
+      // charactor2.visible = false;
       charactor1.width = width / 10;
       charactor1.height = height / 8;
       charactor2.width = width / 10;
