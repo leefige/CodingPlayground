@@ -23,8 +23,7 @@ class Login extends Component {
       .then((responseJson) => {
         //console.log(responseJson);
         if (responseJson.login_success) {
-          this.props.onLogin(this.state.email);
-          console.log("login success")
+          this.props.onLogin(this.state.email);          
         }
         else
           alert("登录失败！");
@@ -90,9 +89,7 @@ class Login extends Component {
                   />
               </div>
               <div className="form-group form-checkbox">
-                <label>
                   <input type="checkbox" value={"remember-me"} checked={this.state.rememberMe} onChange={this.handleRememberMeChange.bind(this)} /> 记住我
-          						</label>
               </div>
               <button type="button" className="btn btn-success btn-form" onClick={this.handleLogin.bind(this)}>进入游戏！</button>
             </form>

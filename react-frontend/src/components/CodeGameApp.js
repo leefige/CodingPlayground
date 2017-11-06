@@ -48,7 +48,8 @@ class CodeGameApp extends Component {
           </div>
           <Route path="/map/:mapID/:recordID?" component={CodeGameContent} />
           <Route path="/mapEditor" component={MapEditor} />
-          <Route path="/login" component={Login} />
+          <Route path="/login" component={props => <Login {...props} onLogin={this.handleLogin.bind(this)} />} />
+          
           <Route path="/signup" component={Signup} />
           <Footer className='footer-style' />
         </div>

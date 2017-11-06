@@ -224,6 +224,13 @@ textarea:-ms-input-placeholder, textarea.form-control:-ms-input-placeholder { co
 input[type="text"]::-webkit-input-placeholder, input[type="password"]::-webkit-input-placeholder, 
 textarea::-webkit-input-placeholder, textarea.form-control::-webkit-input-placeholder { color: #888; }
 
+.form-checkbox {
+  opacity: 0.8;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 400;
+}
+
 .btn {
   margin:0 7.5px;
 }
