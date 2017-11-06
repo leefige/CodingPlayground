@@ -31,65 +31,7 @@ class LogoutHeader extends Component {
 }
 
 class SignupHeader extends Component {
-  constructor() {
-    super()
-    this.state = {
-      email: '',
-      password: '',
-      rememberMe: false,
-    }
-
-  }
-
-  async handleLogin() {
-    post('/user/login', {
-      id: this.state.email,
-      password: this.state.password,
-      rememberMe: this.state.rememberMe,
-    })
-      .then((responseJson) => {
-        //console.log(responseJson);
-        if (responseJson.login_success) {
-          this.props.onLogin(this.state.email);
-        }
-        else
-          alert("登录失败！");
-      }).catch((error) => {
-        console.error(error);
-      });
-  }
-
-  async handleSignup() {
-    post('/user/signup', {
-      id: this.state.email,
-      password: this.state.password,
-    })
-      .then((responseJson) => {
-        if (responseJson.signup_success)
-          alert("注册成功！");
-        else
-          alert("注册失败！");
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }
-
-  handleEmailChange(event) {
-    this.setState({
-      email: event.target.value
-    })
-  }
-  handlePasswordChange(event) {
-    this.setState({
-      password: event.target.value
-    })
-  }
-  handleRememberMeChange(event) {
-    this.setState({
-      rememberMe: event.target.checked
-    })
-  }
+  
   render() {
     return (
       <div className="clearfix">
@@ -158,13 +100,13 @@ class SignupHeader extends Component {
   }
 }
 
-class LoginHeader extends Component {
+class Header extends Component {
   handleLogout() {
     this.props.onLogout();
   }
 
   componentWillMount() {
-    this.autoLogin();
+    //this.autoLogin();
   }
 
   async autoLogin() {
@@ -185,16 +127,18 @@ class LoginHeader extends Component {
     return (
       <div>
         {this.props.state ?
-          <LogoutHeader
-            id={this.props.id}
-            onLogout={this.props.onLogout} /> :
+          <div className="logout-header">
+            <span>{this.props.id}</span>
+            <button type="button" class="btn btn-default">登出</button>
+          </div>
+          :
           <div className="login-header">
-            <Link to='/login' type="button" class="btn btn-success">登录</Link>
-            <Link to='/signup' type="button" class="btn btn-default">注册</Link>
+            <Link to='/login' type="button" className="btn btn-success">登录</Link>
+            <Link to='/signup' type="button" className="btn btn-default">注册</Link>
           </div>
         }
       </div>
     )
   }
 }
-export default LoginHeader
+export default Header

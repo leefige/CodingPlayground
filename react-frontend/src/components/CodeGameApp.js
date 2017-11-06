@@ -1,17 +1,15 @@
-import React, { Component } from 'react'
-import LoginHeader from './LoginHeader'
-import Login from './Login'
-import Signup from './Signup'
-
 import CodeGameContent from '../pages/Gaming/CodeGameContent'
 import MapEditor from '../pages/MapEditor/MapEditor'
-
+import React, { Component } from 'react'
+import Header from './Header'
+import Footer from './Footer'
+import Signup from './Signup'
+import Login from './Login'
 import {
   BrowserRouter as Router,
   Route,
   Link
 } from 'react-router-dom'
-import Footer from './Footer'
 
 class CodeGameApp extends Component {
   constructor() {
@@ -41,7 +39,7 @@ class CodeGameApp extends Component {
         <div className="container">
           <div className='game-header row'>
             <div className='pull-right'>
-              <LoginHeader
+              <Header
                 state={this.state.isLogin}
                 id={this.state.id}
                 onLogin={this.handleLogin.bind(this)}

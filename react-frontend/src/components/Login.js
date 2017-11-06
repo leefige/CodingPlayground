@@ -1,7 +1,56 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import { post } from "../utils/Request"
 
 class Login extends Component {
+  constructor() {
+    super()
+    this.state = {
+      email: '',
+      password: '',
+      rememberMe: false,
+    }
+
+  }
+
+  async handleLogin() {
+    console.log("login")
+    post('/user/login', {
+      id: this.state.email,
+      password: this.state.password,
+      rememberMe: this.state.rememberMe,
+    })
+      .then((responseJson) => {
+        //console.log(responseJson);
+        if (responseJson.login_success) {
+          this.props.onLogin(this.state.email);
+          console.log("login success")
+        }
+        else
+          alert("登录失败！");
+      }).catch((error) => {
+        console.error(error);
+      });
+  }
+
+  handleEmailChange(event) {
+    this.setState({
+      email: event.target.value
+    })
+  }
+
+  handlePasswordChange(event) {
+    this.setState({
+      password: event.target.value
+    })
+  }
+
+  handleRememberMeChange(event) {
+    this.setState({
+      rememberMe: event.target.checked
+    })
+  }
+
   render() {
     return (
       <div className='col-md-4 col-md-offset-4'>
@@ -11,24 +60,44 @@ class Login extends Component {
               <h3>欢迎来到CodingPlayground！</h3>
               <h4>进入游戏前请登录：</h4>
             </div>
-            <div className="form-top-right">
-              <i className="fa fa-lock"></i>
-            </div>
           </div>
           <div className="form-bottom">
-            <form role="form" action="" method="post" className="login-form">
+            <form role="form" className="login-form">
               <div className="form-group">
-                <label className="sr-only" for="form-username">Username</label>
-                <input type="text" name="form-username" placeholder="邮箱" className="form-username form-control" id="form-username" />
-				      </div>
-                <div className="form-group">
-                  <label className="sr-only" for="form-password">Password</label>
-                  <input type="password" name="form-password" placeholder="密码" className="form-password form-control" id="form-password" />
-				        </div>
-                  <button type="submit" className="btn btn-success btn-form">进入游戏！</button>
-				    </form>
+                <label className="sr-only" for="form-email">Email</label>
+                <input
+                  type="text"
+                  name="form-email"
+                  placeholder="邮箱"
+                  className="form-email form-control"
+                  id="form-email"
+                  required
+                  autofocus
+                  value={this.state.email}
+                  onChange={this.handleEmailChange.bind(this)}
+                  />
+              </div>
+              <div className="form-group">
+                <label className="sr-only" for="form-password">Password</label>
+                <input
+                  type="password"
+                  name="form-password"
+                  placeholder="密码"
+                  className="form-password form-control" id="form-password"
+                  required
+                  value={this.state.password}
+                  onChange={this.handlePasswordChange.bind(this)}
+                  />
+              </div>
+              <div className="form-group form-checkbox">
+                <label>
+                  <input type="checkbox" value={"remember-me"} checked={this.state.rememberMe} onChange={this.handleRememberMeChange.bind(this)} /> 记住我
+          						</label>
+              </div>
+              <button type="button" className="btn btn-success btn-form" onClick={this.handleLogin.bind(this)}>进入游戏！</button>
+            </form>
           </div>
-		    </div>
+        </div>
       </div>
     );
   }
