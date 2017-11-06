@@ -42,21 +42,34 @@ class BlocklyPad extends Component {
 
 
   handleCodeSubmit() {
+    if(document.getElementById("run_btn").disabled === true) {
+      return;
+    }
     document.getElementById("abort_btn").disabled = false;
+    document.getElementById("step_btn").disabled = false;
+    document.getElementById("step_btn_text").innerHTML = "&nbsp;&nbsp;单步调试";
     const runableCode = this.generateCode();
     const pureCode = this.generatePureCode();
     this.props.onCodeSubmit(pureCode, runableCode);
   }
 
   handleStepThrough() {
+    if(document.getElementById("step_btn").disabled === true) {
+      return;
+    }
     document.getElementById("abort_btn").disabled = false;
+    document.getElementById("step_btn_text").innerHTML = "&nbsp;&nbsp;执行这一步";
     const mycode = this.generateCodeWithHighlight();
     this.props.onStepThrough(mycode);
   }
 
   handleReset() {
-    this.props.onReset();
+    if(document.getElementById("abort_btn").disabled === true) {
+      return;
+    }
     document.getElementById("abort_btn").disabled = true;
+    document.getElementById("step_btn_text").innerHTML = "&nbsp;&nbsp;单步调试";
+    this.props.onReset();
   }
 
   highlightBlock(id) {
@@ -84,7 +97,7 @@ class BlocklyPad extends Component {
             className="btn btn-warning blockly-btn"
             onClick = {this.handleStepThrough.bind(this)}>
             <span className="glyphicon glyphicon-step-forward"></span>
-              &nbsp;&nbsp;单步调试
+            <span id="step_btn_text">&nbsp;&nbsp;单步调试</span>
           </button>
           <button type="button" id="run_btn"
             className="btn btn-success blockly-btn"

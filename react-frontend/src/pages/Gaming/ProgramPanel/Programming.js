@@ -138,6 +138,7 @@ class Programming extends Component {
           this.highlightBlock(null);
           document.getElementById("step_btn").disabled = false;
           document.getElementById("abort_btn").disabled = true;
+          document.getElementById("step_btn_text").innerHTML = "&nbsp;&nbsp;单步调试";
         }
       }
     } while (hasMoreCode && !this.highlightPause);
@@ -149,6 +150,7 @@ class Programming extends Component {
       code: runableCode,
       text: pureCode,
     });
+    this.highlightBlock(null);
     this.props.onCodeSubmit();
     this.runCode(runableCode);
   }
