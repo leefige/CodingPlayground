@@ -44,15 +44,20 @@ export default class MapEditor extends Component {
   * and hook up the PixiJS renderer
   **/
   componentDidMount(props) {
-    this.width = window.innerWidth, this.height = 600;
+    this.aspectRatio = 0.75;
+    this.width = window.innerWidth;
+    this.height = this.width * this.aspectRatio;
     const width = this.width, height = this.height;
     window.addEventListener('resize', () => {
-      this.width = window.innerWidth;
-      this.renderer.resize(window.innerWidth, 600);
+      const zoomLevel = window.innerWidth / this.width;
+      this.stage.scale.x = zoomLevel;
+      this.stage.scale.y = zoomLevel;
+      this.renderer.resize(window.innerWidth, window.innerWidth * this.aspectRatio);
       requestAnimationFrame(animate);
     })
     
-    const innerWidth = 500, innerHeight = 500;
+    const innerWidth = 0.5 * width;
+    const innerHeight = innerWidth;
     const row = 8, col = 8;
 
     //Setup PIXI Canvas in componentDidMount
@@ -89,7 +94,7 @@ export default class MapEditor extends Component {
       for (let i = 0; i < 2; i++) {
         const id = resources[mapJson].textures;
         let map = new Sprite(id[`${1000+i}.png`]);
-        map.position.x = i * 200 + 250;
+        map.position.x = i * 0.25 * width + 0.3 * width;
         map.position.y = 0;
         map.width = width / 10;
         map.height = map.width;
@@ -102,10 +107,10 @@ export default class MapEditor extends Component {
       
       // create a texture from an image path
       for (let i = 0; i < 5; i++) {
-        createObj(50, Math.floor(height / 5) * i + 50);
+        createObj(0.06 * width, Math.floor(height / 5) * i + 0.06 * width);
       }
       for (let i = 0; i < 5; i++) {
-        createObj(Math.floor(width - 50), Math.floor(height / 5 * i + 50));
+        createObj(Math.floor(width - 0.06 * width), Math.floor(height / 5 * i + 0.06 * width));
       }
     }
 
@@ -119,7 +124,7 @@ export default class MapEditor extends Component {
       // center the obj's anchor point
       obj.anchor.set(0.5);
       // make it a bit bigger, so it's easier to grab
-      obj.scale.set(0.08);
+      obj.scale.set(0.05 * (width / obj.width));
       // setup events
       obj
         // events for drag start
