@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { post } from "../utils/Request"
+import { Link } from 'react-router-dom'
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
 
@@ -187,9 +188,11 @@ class LoginHeader extends Component {
           <LogoutHeader
             id={this.props.id}
             onLogout={this.props.onLogout} /> :
-          <SignupHeader
-            onLogin={this.props.onLogin}
-            onSignup={this.props.onSignup} />}
+          <div className="login-header">
+            <Link to='/login' type="button" class="btn btn-success">登录</Link>
+            <Link to='/signup' type="button" class="btn btn-default">注册</Link>
+          </div>
+        }
       </div>
     )
   }

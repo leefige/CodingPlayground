@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 import LoginHeader from './LoginHeader'
+import Login from './Login'
+import Signup from './Signup'
+
 import CodeGameContent from '../pages/Gaming/CodeGameContent'
 import MapEditor from '../pages/MapEditor/MapEditor'
 
@@ -35,8 +38,8 @@ class CodeGameApp extends Component {
   render() {
     return (
       <div>
-        <div className="container-fluid">
-          <div className='row'>
+        <div className="container">
+          <div className='game-header row'>
             <div className='pull-right'>
               <LoginHeader
                 state={this.state.isLogin}
@@ -47,6 +50,8 @@ class CodeGameApp extends Component {
           </div>
           <Route path="/map/:mapID/:recordID?" component={CodeGameContent} />
           <Route path="/mapEditor" component={MapEditor} />
+          <Route path="/login" component={Login} />
+          <Route path="/signup" component={Signup} />
           <Footer className='footer-style' />
         </div>
       </div>
