@@ -35,13 +35,22 @@ export default class MapEditor extends Component {
     this.updateZoomLevel(nextProps);
   }
 
+  componentWillUnmount() {
+    window.removeEventListener('resize');
+  }
+
   /**
   * In this case, componentDidMount is used to grab the canvas container ref, and
   * and hook up the PixiJS renderer
   **/
   componentDidMount(props) {
-    this.width = 800, this.height = 600;
+    this.width = window.innerWidth, this.height = 600;
     const width = this.width, height = this.height;
+    window.addEventListener('resize', () => {
+      this.width = window.innerWidth;
+      this.renderer.resize(window.innerWidth, 600);
+      requestAnimationFrame(animate);
+    })
     
     const innerWidth = 500, innerHeight = 500;
     const row = 8, col = 8;
