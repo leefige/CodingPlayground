@@ -19,6 +19,16 @@ const state = {
   },
 }
 
+const actionTable = {
+  go : '1',
+  turnLeft : '2',
+  turnRight : '3',
+  attack : '4',
+  torch : '5',
+  bomb : '6',
+  open : '7',
+}
+
 class MainControl{
   _state;
   _board;
@@ -59,15 +69,28 @@ class MainControl{
     actionList.forEach((action => {
       if (this._status === 1) {
         switch(action) {
-          case '1':
+          case actionTable.go:
             this._status = this._character.go();
             break;
-          case '2':
+          case actionTable.turnLeft:
             this._status = this._character.turnLeft();
             break;
-          case '3':
+          case actionTable.turnRight:
             this._status = this._character.turnRight();
             break;
+          case actionTable.attack:
+            this._status = this._character.attack();
+            break;
+          case actionTable.torch:
+            this._status = this._character.turnRight();
+            break;
+          case actionTable.bomb:
+            this._status = this._character.turnRight();
+            break;
+          case actionTable.open:
+            this._status = this._character.open();
+            break;
+          
         }
         this.update();
       }

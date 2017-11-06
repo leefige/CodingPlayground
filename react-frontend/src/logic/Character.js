@@ -23,7 +23,7 @@ class Character extends Unit {
     return 1;
   }
 
-  go() {
+  getNextPos() {
     const dir = this.dir;
     const pos = this.pos;
     let nextPos = pos;
@@ -35,12 +35,27 @@ class Character extends Unit {
       nextPos = { x : pos.x + 1, y : pos.y};
     else if (dir === 3)
       nextPos = { x : pos.x, y : pos.y - 1};
+    return nextPos;
+  }
+
+  go() {
+    let nextPos = this.getNextPos();
     if (nextPos.x < 0 || nextPos.x >= this._board.size || nextPos.y < 0 || nextPos.y >= this._board.size)
       return 3;
     if (this._board.map[nextPos.x][nextPos.y] === this._board.elements.block)
       return 3;
     this._nextState.pos = nextPos;
     return 1;
+  }
+
+  // open the treasure in front of character
+  open() {
+    let nextPos = this.getNextPos();
+    if (nextPos.x < 0 || nextPos.x >= this._board.size || nextPos.y < 0 || nextPos.y >= this._board.size)
+      return 1;//打开错宝箱了算失败吗？？？？
+    if (this._board.map[nextPos.x][nextPos.y] === this._board.elements.treasure)
+      return 2;
+    return 1;//打开错宝箱了算失败吗？？？？
   }
 }
 
