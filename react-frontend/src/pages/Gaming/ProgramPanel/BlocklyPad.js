@@ -82,6 +82,7 @@ class BlocklyPad extends Component {
         <div id="blockly_area" className='blockly-area'>
           <ReactBlockly ref="blockly_workspace"
             wrapperClassname='blockly-div'
+            userType={this.props.userType}
             blocklyConfig={this.props.blocklyConfig}
             onXmlChange={this.props.onXmlChange.bind(this)}/>
         </div>

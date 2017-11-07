@@ -199,6 +199,7 @@ class Programming extends Component {
           <span> 个程序块，标准程序需要{this.props.std_blockly_num}块 ~</span>
         </div>
         <BlocklyPad ref='blockly_pad'
+          userType={this.props.userType}
           blocklyConfig={this.props.blocklyConfig}
           onCodeSubmit={this.handleCodeSubmit.bind(this)}
           onReset={this.handleReset.bind(this)}

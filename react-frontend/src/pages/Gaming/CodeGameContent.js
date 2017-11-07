@@ -129,6 +129,7 @@ class CodeGameContent extends Component {
         <div className='col-xs-12 col-md-5'>
           {this.state.didFetchMap?
             <Programming ref="program_area" id="programming" 
+              userType={this.props.userType}
               blocklyConfig={this.state.blocklyConfig} 
               onCodeSubmit={this.handleCodeSubmit.bind(this)}
               onReset={this.handleReset.bind(this)}

@@ -46,10 +46,10 @@ class CodeGameApp extends Component {
                 onLogout={this.handleLogout.bind(this)} />
             </div>
           </div>
-          <Route path="/map/:mapID/:recordID?" component={CodeGameContent} />
+          <Route path="/map/:mapID/:recordID?" component={props => <CodeGameContent {...props} userType="game" />} />
+          <Route path="/share/:mapID/:recordID?" component={props => <CodeGameContent {...props} userType="share" />} />
           <Route path="/mapEditor" component={MapEditor} />
           <Route path="/login" component={props => <Login {...props} onLogin={this.handleLogin.bind(this)} />} />
-          
           <Route path="/signup" component={Signup} />
           <Footer className='footer-style' />
         </div>
