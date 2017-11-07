@@ -204,6 +204,7 @@ class Programming extends Component {
         <BlocklyPad ref='blockly_pad'
           userType={this.props.userType}
           blocklyConfig={this.props.blocklyConfig}
+          initSolution={this.props.initSolution}
           onCodeSubmit={this.handleCodeSubmit.bind(this)}
           onReset={this.handleReset.bind(this)}
           onXmlChange={this.handleXmlChange.bind(this)}

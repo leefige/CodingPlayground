@@ -88,6 +88,7 @@ class BlocklyPad extends Component {
             wrapperClassname='blockly-div'
             userType={this.props.userType}
             blocklyConfig={this.props.blocklyConfig}
+            initialXml={this.props.initSolution}
             onXmlChange={this.props.onXmlChange.bind(this)}/>
         </div>
         

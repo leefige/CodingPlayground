@@ -63,9 +63,10 @@ class CodeGameContent extends Component {
   componentWillMount() {
     // TODO: 用一个请求同时获取地图和用户解法，避免异步问题
 
-    // 获取地图信息和blockly配置
+    // 获取地图信息和blockly配置和用户解法
     post('/map/getId', {
-			id: this.props.match.params.mapID,
+      id: this.props.match.params.mapID,
+      userId: this.props.userType === "game" ? this.props.getLoginUserId : this.props.match.params.shareUserID,
 		})	
     .then((responseJson) => {
       mainControl.load(responseJson.mapInitState);
@@ -73,7 +74,9 @@ class CodeGameContent extends Component {
         mapInitState: responseJson.mapInitState,
         mapResource: responseJson.mapResource,
         blocklyConfig: responseJson.blocklyConfig,
-        // TODO: 获取标程使用block数量stdBlockNum
+        // TODO: 
+        stdBlockNum: responseJson.stdBlockNum || 5,
+        savedSolution: responseJson.savedSolution || '<xml xmlns="http://www.w3.org/1999/xhtml"><variables><variable type="" id="08RrVFGh7Vd6kRq}mp$]">i</variable></variables><block type="controls_for" id="H7oSz,,1hk]3/OS!=4h^" x="16" y="124"><field name="VAR" id="08RrVFGh7Vd6kRq}mp$]" variabletype="">i</field><value name="FROM"><shadow type="math_number" id="(;*U0)NkbjzX8NVD2g:?"><field name="NUM">1</field></shadow></value><value name="TO"><shadow type="math_number" id="X.JaW(ygNj@x%hOssFbn"><field name="NUM">3</field></shadow></value><value name="BY"><shadow type="math_number" id="6Lw*,xc9jW%PKZJ3qJ0!"><field name="NUM">1</field></shadow></value><statement name="DO"><block type="actions_go" id="1Nap5j;e.L47Gqd5gfjg"><next><block type="actions_turn" id="77^+iQnejgOKgz`z4DMA"><field name="DIRECTION">LEFT</field><next><block type="actions_use" id="@/Ls+sqZIqy)Q)s.qS}G"><value name="OBJECT"><block type="objects_bomb" id="9NcR_]TVWvZ?1+9_O}Z-"></block></value></block></next></block></next></block></statement></block></xml>',
         didFetchMap: true,
       });
     })
@@ -96,22 +99,6 @@ class CodeGameContent extends Component {
   //       console.error(error);
   //     });
   //   }
-
-    // 获取用户解法
-    post('/user/getId', {
-      id: this.props.userType === "game" ? this.props.getLoginUserId : this.props.match.params.shareUserID,
-    })	
-    .then((responseJson) => {
-      this.setState({
-        savedSolution: responseJson.savedSolution,
-      });
-      if (this.refs.program_area) {    // if has saved solution, then update
-        this.refs.program_area.updateBlocklyXml(responseJson.savedSolution);
-      }
-    })
-    .catch((error) => {
-      console.error(error);
-    });
   }
 
   updateUserSolution(newXml, num) {
@@ -146,7 +133,7 @@ class CodeGameContent extends Component {
   }
 
   render() {
-    if ((this.props.getIsLogin() && this.props.userType === "game") || this.props.userType === "share") {
+    // if ((this.props.getIsLogin() && this.props.userType === "game") || this.props.userType === "share") {
       return (
         <div className='row'>
             <div className='col-xs-12 col-md-5 col-md-offset-1'>
@@ -174,12 +161,12 @@ class CodeGameContent extends Component {
             </div>
         </div>
       );
-    }
-    else {
-      return (
-        <Redirect push to="/login" />
-      );
-    }
+    // }
+    // else {
+    //   return (
+    //     <Redirect push to="/login" />
+    //   );
+    // }
   }
 }
 
