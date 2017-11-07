@@ -37,7 +37,19 @@ export default class GamePanel extends Component {
   * and hook up the PixiJS renderer
   **/
   componentDidMount(props) {
-    this.width = 500, this.height = 500;
+    // this.width = window.innerWidth / 2.5;
+    this.width = this.self.parentNode.clientWidth;
+    this.aspectRatio = 1;
+    this.height = this.width * this.aspectRatio;
+
+    window.addEventListener('resize', () => {
+      const zoomLevel = this.self.parentNode.clientWidth / this.width;
+      this.stage.scale.x = zoomLevel;
+      this.stage.scale.y = zoomLevel;
+      this.renderer.resize(this.self.parentNode.clientWidth, this.self.parentNode.clientWidth * this.aspectRatio);
+      this.renderer.render(stage);
+    })
+
     const width = this.width, height = this.height;
     const row = this.props.mapResource['width'], col = this.props.mapResource['height'];
 
@@ -47,7 +59,7 @@ export default class GamePanel extends Component {
     //Setup PIXI Canvas in componentDidMount
     this.renderer = PIXI.autoDetectRenderer(width, height);
     const renderer = this.renderer;
-    this.refs.gameCanvas.appendChild(renderer.view);
+    this.self.appendChild(renderer.view);
 
     let state;
 
@@ -186,7 +198,9 @@ export default class GamePanel extends Component {
   **/
   render() {
     return (
-      <div className="game-canvas-container" ref="gameCanvas">
+      <div className="game-canvas-container"
+        ref={val => { this.self = val; }}
+      >
       </div>
     );
   }

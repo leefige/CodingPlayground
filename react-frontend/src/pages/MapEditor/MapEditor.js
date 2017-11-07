@@ -35,21 +35,37 @@ export default class MapEditor extends Component {
     this.updateZoomLevel(nextProps);
   }
 
+  componentWillUnmount() {
+    window.removeEventListener('resize');
+  }
+
   /**
   * In this case, componentDidMount is used to grab the canvas container ref, and
   * and hook up the PixiJS renderer
   **/
   componentDidMount(props) {
-    this.width = 800, this.height = 600;
+    this.aspectRatio = 0.75;
+    const accWidth = this.self.parentNode.clientWidth - 30;
+    this.width = accWidth;
+    this.height = this.width * this.aspectRatio;
     const width = this.width, height = this.height;
+    window.addEventListener('resize', () => {
+      const accWidth = this.self.parentNode.clientWidth - 30; 
+      const zoomLevel = accWidth / this.width;
+      this.stage.scale.x = zoomLevel;
+      this.stage.scale.y = zoomLevel;
+      this.renderer.resize(accWidth, accWidth * this.aspectRatio);
+      requestAnimationFrame(animate);
+    })
     
-    const innerWidth = 500, innerHeight = 500;
+    const innerWidth = 0.5 * width;
+    const innerHeight = innerWidth;
     const row = 8, col = 8;
 
     //Setup PIXI Canvas in componentDidMount
     this.renderer = PIXI.autoDetectRenderer(width, height);
     const renderer = this.renderer;
-    this.refs.gameCanvas.appendChild(renderer.view);
+    this.self.appendChild(renderer.view);
 
     let state;
 
@@ -80,11 +96,11 @@ export default class MapEditor extends Component {
       for (let i = 0; i < 2; i++) {
         const id = resources[mapJson].textures;
         let map = new Sprite(id[`${1000+i}.png`]);
-        map.position.x = i * 200 + 250;
+        map.position.x = i * 0.25 * width + 0.3 * width;
         map.position.y = 0;
         map.width = width / 10;
         map.height = map.width;
-        map.on('click', () => {loadmap(275+i)});
+        map.on('click', () => {loadmap(301+i)});
         map.interactive = true;
         map.buttonMode = true;
         stage.addChild(map);
@@ -93,10 +109,10 @@ export default class MapEditor extends Component {
       
       // create a texture from an image path
       for (let i = 0; i < 5; i++) {
-        createObj(50, Math.floor(height / 5) * i + 50);
+        createObj(0.06 * width, Math.floor(height / 5) * i + 0.06 * width);
       }
       for (let i = 0; i < 5; i++) {
-        createObj(Math.floor(width - 50), Math.floor(height / 5 * i + 50));
+        createObj(Math.floor(width - 0.06 * width), Math.floor(height / 5 * i + 0.06 * width));
       }
     }
 
@@ -110,7 +126,7 @@ export default class MapEditor extends Component {
       // center the obj's anchor point
       obj.anchor.set(0.5);
       // make it a bit bigger, so it's easier to grab
-      obj.scale.set(0.08);
+      obj.scale.set(0.05 * (width / obj.width));
       // setup events
       obj
         // events for drag start
@@ -238,7 +254,10 @@ export default class MapEditor extends Component {
   **/
   render() {
     return (
-      <div className="game-canvas-container" ref="gameCanvas">
+      <div
+        className="game-canvas-container"
+        ref={val => { this.self = val; }}
+      >
       </div>
     );
   }
