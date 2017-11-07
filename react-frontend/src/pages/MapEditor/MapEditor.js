@@ -44,17 +44,17 @@ export default class MapEditor extends Component {
   * and hook up the PixiJS renderer
   **/
   componentDidMount(props) {
-    console.log('parent: ', this.self.parentNode.clientWidth);
     this.aspectRatio = 0.75;
-    // this.width = window.innerWidth;
-    this.width = this.self.parentNode.clientWidth;
+    const accWidth = this.self.parentNode.clientWidth - 30;
+    this.width = accWidth;
     this.height = this.width * this.aspectRatio;
     const width = this.width, height = this.height;
     window.addEventListener('resize', () => {
-      const zoomLevel = window.innerWidth / this.width;
+      const accWidth = this.self.parentNode.clientWidth - 30; 
+      const zoomLevel = accWidth / this.width;
       this.stage.scale.x = zoomLevel;
       this.stage.scale.y = zoomLevel;
-      this.renderer.resize(window.innerWidth, window.innerWidth * this.aspectRatio);
+      this.renderer.resize(accWidth, accWidth * this.aspectRatio);
       requestAnimationFrame(animate);
     })
     
@@ -100,7 +100,7 @@ export default class MapEditor extends Component {
         map.position.y = 0;
         map.width = width / 10;
         map.height = map.width;
-        map.on('click', () => {loadmap(275+i)});
+        map.on('click', () => {loadmap(301+i)});
         map.interactive = true;
         map.buttonMode = true;
         stage.addChild(map);
