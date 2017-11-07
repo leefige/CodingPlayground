@@ -18,7 +18,7 @@
 		"enemy1" : {
 			"pos" : { "x" : 7, "y" : 4},
 			"dir" : 3,
-			"isAlive" : true,
+			"status" : "alive",
 			"turningPoint" : [
 				{
 					"pos" : { "x" : 7, "y" : 1},
