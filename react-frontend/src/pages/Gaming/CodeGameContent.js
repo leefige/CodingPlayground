@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import Scene from './GamePanel/Scene';
 import Programming from './ProgramPanel/Programming';
 import { mainControl } from '../../logic/MainControl';
-import { post } from '../../utils/Request'
+import { post } from '../../utils/Request';
+import { Redirect } from 'react-router-dom';
 
 class CodeGameContent extends Component {
   constructor(props) {
@@ -52,15 +53,20 @@ class CodeGameContent extends Component {
       blocklyConfig: {},
       didFetchMap: false,
       // 待解决：recordData要不要作为state刷新子部件？
-      userSolution: "",
+      stdBlockNum: 5,       // fetch from backend
+      savedSolution: "",    // fetch from backend
+      userSolution: "",     // upload to backend when succeed
       userBlocklyCount: 0
     };
   }
 
   componentWillMount() {
-    // 获取地图信息和blockly配置
+    // TODO: 用一个请求同时获取地图和用户解法，避免异步问题
+
+    // 获取地图信息和blockly配置和用户解法
     post('/map/getId', {
-			id: this.props.match.params.mapID,
+      id: this.props.match.params.mapID,
+      userId: this.props.userType === "game" ? this.props.getLoginUserId() : this.props.match.params.shareUserID,
 		})	
     .then((responseJson) => {
       mainControl.load(responseJson.mapInitState);
@@ -68,26 +74,31 @@ class CodeGameContent extends Component {
         mapInitState: responseJson.mapInitState,
         mapResource: responseJson.mapResource,
         blocklyConfig: responseJson.blocklyConfig,
+        // TODO: 
+        stdBlockNum: responseJson.stdBlockNum || 5,
+        savedSolution: responseJson.savedSolution || '<xml xmlns="http://www.w3.org/1999/xhtml"><variables><variable type="" id="08RrVFGh7Vd6kRq}mp$]">i</variable></variables><block type="controls_for" id="H7oSz,,1hk]3/OS!=4h^" x="16" y="124"><field name="VAR" id="08RrVFGh7Vd6kRq}mp$]" variabletype="">i</field><value name="FROM"><shadow type="math_number" id="(;*U0)NkbjzX8NVD2g:?"><field name="NUM">1</field></shadow></value><value name="TO"><shadow type="math_number" id="X.JaW(ygNj@x%hOssFbn"><field name="NUM">3</field></shadow></value><value name="BY"><shadow type="math_number" id="6Lw*,xc9jW%PKZJ3qJ0!"><field name="NUM">1</field></shadow></value><statement name="DO"><block type="actions_go" id="1Nap5j;e.L47Gqd5gfjg"><next><block type="actions_turn" id="77^+iQnejgOKgz`z4DMA"><field name="DIRECTION">LEFT</field><next><block type="actions_use" id="@/Ls+sqZIqy)Q)s.qS}G"><value name="OBJECT"><block type="objects_bomb" id="9NcR_]TVWvZ?1+9_O}Z-"></block></value></block></next></block></next></block></statement></block></xml>',
         didFetchMap: true,
       });
-      
     })
     .catch((error) => {
       console.error(error);
     });
-    // 获取播放记录
-    if (this.props.match.params.recordID) {
-      post('/record/getId', {
-        id: this.props.match.params.mapID,
-      })    
-      .then((responseJson) => {
-        const player = mainControl.player;
-        player.load(responseJson.recordData);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-    }
+
+    /** 原有的保存播放记录已经deprecated了，取而代之的是保存用户blockly解法 */
+
+  //   // 获取播放记录
+  //   if (this.props.match.params.recordID) {
+  //     post('/record/getId', {
+  //       id: this.props.match.params.mapID,
+  //     })    
+  //     .then((responseJson) => {
+  //       const player = mainControl.player;
+  //       player.load(responseJson.recordData);
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+  //   }
   }
 
   updateUserSolution(newXml, num) {
@@ -95,6 +106,10 @@ class CodeGameContent extends Component {
       userSolution: newXml,
       userBlocklyCount: num,
     });
+  }
+
+  updateBlocklyXml(newXml) {
+    this.refs.program_area.updateBlocklyXml(newXml);
   }
 
   handleCodeSubmit() {
@@ -118,30 +133,40 @@ class CodeGameContent extends Component {
   }
 
   render() {
-    return (
-      <div className='row'>
-        <div className='col-xs-12 col-md-5 col-md-offset-1'>
-          {this.state.didFetchMap?
-            <Scene mapResource={this.state.mapResource}/>
-            :<div></div>
-          }
+    // if ((this.props.getIsLogin() && this.props.userType === "game") || this.props.userType === "share") {
+      return (
+        <div className='row'>
+            <div className='col-xs-12 col-md-5 col-md-offset-1'>
+              {this.state.didFetchMap?
+                <Scene mapResource={this.state.mapResource}/>
+                :<div></div>
+              }
+            </div>
+            <div className='col-xs-12 col-md-5'>
+              {this.state.didFetchMap?
+                <Programming ref="program_area" id="programming" 
+                  userType={this.props.userType}
+                  blocklyConfig={this.state.blocklyConfig} 
+                  initSolution={this.state.savedSolution}
+                  stdBlockNum={this.state.stdBlockNum}
+                  onCodeSubmit={this.handleCodeSubmit.bind(this)}
+                  onReset={this.handleReset.bind(this)}
+                  onSolutionChanged={this.updateUserSolution.bind(this)}
+                  onNextStep={this.nextStep.bind(this)}
+                  setCallback={this.setPlayerCallback}
+                  startStepThrough={this.StepThroughInit.bind(this)}
+                />
+                :<div></div>
+              }
+            </div>
         </div>
-        <div className='col-xs-12 col-md-5'>
-          {this.state.didFetchMap?
-            <Programming ref="program_area" id="programming" 
-              blocklyConfig={this.state.blocklyConfig} 
-              onCodeSubmit={this.handleCodeSubmit.bind(this)}
-              onReset={this.handleReset.bind(this)}
-              onSolutionChanged={this.updateUserSolution.bind(this)}
-              onNextStep={this.nextStep.bind(this)}
-              setCallback={this.setPlayerCallback}
-              startStepThrough={this.StepThroughInit.bind(this)}
-            />
-            :<div></div>
-          }
-        </div>
-      </div>
-    );
+      );
+    // }
+    // else {
+    //   return (
+    //     <Redirect push to="/login" />
+    //   );
+    // }
   }
 }
 

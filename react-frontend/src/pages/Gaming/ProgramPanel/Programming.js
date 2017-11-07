@@ -10,8 +10,7 @@ class Programming extends Component {
             "function use(obj) {switch (obj) {case 'torch':emitAction(5);break;case 'bomb':emitAction(6);break;default:break;}}\n",
     INFINITE_LOOP_ERROR: "Infinite loop!",
     MAX_LOOP: 100000,
-    task: "任务目标：用Blockly生成代码并运行，将主角移动至目标地点",
-    std_blockly_num: 5,
+    task: "任务目标：用Blockly生成代码并运行，将主角移动至目标地点"
   };
 
   constructor() {
@@ -37,6 +36,10 @@ class Programming extends Component {
   highlightBlock(id) {
     this.refs.blockly_pad.highlightBlock(id);
     this.highlightPause = true;
+  }
+
+  updateBlocklyXml(newXml) {
+    this.refs.blockly_pad.updateBlocklyXml(newXml);
   }
 
   initLoop() {
@@ -184,8 +187,8 @@ class Programming extends Component {
     }
     document.getElementById("user_count").innerHTML = num;
     document.getElementById("user_count").className = 
-    num <= this.props.std_blockly_num ? 'cnt-color-norm' :
-      num <= 2 * this.props.std_blockly_num ? 'cnt-color-large' : 'cnt-color-huge';
+    num <= this.props.stdBlockNum ? 'cnt-color-norm' :
+      num <= 2 * this.props.stdBlockNum ? 'cnt-color-large' : 'cnt-color-huge';
     this.props.onSolutionChanged(newXml, num);
   }
 
@@ -196,10 +199,12 @@ class Programming extends Component {
         <div id="show_count" className='show-count'>
           <span>您已使用 </span>
           <span id='user_count' className='cnt-color-norm'>0</span>
-          <span> 个程序块，标准程序需要{this.props.std_blockly_num}块 ~</span>
+          <span> 个程序块，标准程序需要{this.props.stdBlockNum}块 ~</span>
         </div>
         <BlocklyPad ref='blockly_pad'
+          userType={this.props.userType}
           blocklyConfig={this.props.blocklyConfig}
+          initSolution={this.props.initSolution}
           onCodeSubmit={this.handleCodeSubmit.bind(this)}
           onReset={this.handleReset.bind(this)}
           onXmlChange={this.handleXmlChange.bind(this)}

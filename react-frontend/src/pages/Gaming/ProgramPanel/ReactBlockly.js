@@ -18,8 +18,9 @@ class ReactBlockly extends Component {
   componentDidMount() {
     const myWorkspace = this.props.Blockly.inject('blockly_div', {
       toolbox: this.props.blocklyConfig.toolboxCategories,
+      // toolbox: document.getElementById('toolbox'),
       media: '/media/',
-      readOnly: false,
+      readOnly: this.props.userType === "share",
       grid: {
         spacing: 40,
         length: 3,
@@ -41,7 +42,7 @@ class ReactBlockly extends Component {
       workspace: myWorkspace
     });
 
-    const initialXml = Blockly.Xml.textToDom(this.props.blocklyConfig.initialXml);
+    const initialXml = Blockly.Xml.textToDom(this.props.initialXml);
     Blockly.Xml.domToWorkspace(initialXml, myWorkspace);
 
     myWorkspace.addChangeListener(this.debounce(function () {
@@ -51,6 +52,11 @@ class ReactBlockly extends Component {
       }
       this.setState({ xml: newXml }, this.onXmlChange);
     }.bind(this), 200));
+  }
+
+  updateBlocklyXml(newXml) {
+    const newXmlDom = Blockly.Xml.textToDom(newXml);
+    Blockly.Xml.domToWorkspace(newXmlDom, this.getWorkspace());
   }
 
   getWorkspace() {

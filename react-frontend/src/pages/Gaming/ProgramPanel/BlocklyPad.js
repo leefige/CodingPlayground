@@ -11,6 +11,10 @@ class BlocklyPad extends Component {
     return this.refs.blockly_workspace.getWorkspace();
   }
 
+  updateBlocklyXml(newXml) {
+    this.refs.blockly_workspace.updateBlocklyXml(newXml);
+  }
+
   generatePureCode() {
     Blockly.JavaScript.STATEMENT_PREFIX = null;
     Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
@@ -82,7 +86,9 @@ class BlocklyPad extends Component {
         <div id="blockly_area" className='blockly-area'>
           <ReactBlockly ref="blockly_workspace"
             wrapperClassname='blockly-div'
+            userType={this.props.userType}
             blocklyConfig={this.props.blocklyConfig}
+            initialXml={this.props.initSolution}
             onXmlChange={this.props.onXmlChange.bind(this)}/>
         </div>
         

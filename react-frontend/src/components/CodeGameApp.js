@@ -32,6 +32,14 @@ class CodeGameApp extends Component {
       isLogin: false
     })
   }
+
+  getIsLogin() {
+    return this.state.isLogin;
+  }
+
+  getLoginUserId() {
+    return this.state.id;
+  }
   
   render() {
     return (
@@ -46,10 +54,16 @@ class CodeGameApp extends Component {
                 onLogout={this.handleLogout.bind(this)} />
             </div>
           </div>
-          <Route path="/map/:mapID/:recordID?" component={CodeGameContent} />
+          <Route path="/map/:mapID" 
+            component={props => 
+              <CodeGameContent {...props} userType="game" getIsLogin={this.getIsLogin.bind(this)} getLoginUserId={this.getLoginUserId.bind(this)} />
+            } />
+          <Route path="/share/:mapID/:shareUserID?" 
+            component={props => 
+              <CodeGameContent {...props} userType="share" getIsLogin={this.getIsLogin.bind(this)} getLoginUserId={this.getLoginUserId.bind(this)} />
+            } />
           <Route path="/mapEditor" component={MapEditor} />
           <Route path="/login" component={props => <Login {...props} onLogin={this.handleLogin.bind(this)} />} />
-          
           <Route path="/signup" component={Signup} />
           <Footer className='footer-style' />
         </div>
