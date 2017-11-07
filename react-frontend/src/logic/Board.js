@@ -1,7 +1,7 @@
 import Basic from "./Basic"
 const elements = {
   empty : 0,
-  character : 1,
+  treasure : 1,
   block : 2,
 }
 class Board extends Basic {
