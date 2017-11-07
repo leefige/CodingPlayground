@@ -66,7 +66,7 @@ class CodeGameContent extends Component {
     // 获取地图信息和blockly配置和用户解法
     post('/map/getId', {
       id: this.props.match.params.mapID,
-      userId: this.props.userType === "game" ? this.props.getLoginUserId : this.props.match.params.shareUserID,
+      userId: this.props.userType === "game" ? this.props.getLoginUserId() : this.props.match.params.shareUserID,
 		})	
     .then((responseJson) => {
       mainControl.load(responseJson.mapInitState);

@@ -42,10 +42,7 @@ class ReactBlockly extends Component {
       workspace: myWorkspace
     });
 
-    /** To avoid updating conflict caused by unsync receiption of json */
-
     const initialXml = Blockly.Xml.textToDom(this.props.initialXml);
-    // // const initialXml = Blockly.Xml.textToDom('<xml xmlns="http://www.w3.org/1999/xhtml"><variables><variable type="" id="08RrVFGh7Vd6kRq}mp$]">i</variable></variables><block type="controls_for" id="H7oSz,,1hk]3/OS!=4h^" x="16" y="124"><field name="VAR" id="08RrVFGh7Vd6kRq}mp$]" variabletype="">i</field><value name="FROM"><shadow type="math_number" id="(;*U0)NkbjzX8NVD2g:?"><field name="NUM">1</field></shadow></value><value name="TO"><shadow type="math_number" id="X.JaW(ygNj@x%hOssFbn"><field name="NUM">10</field></shadow></value><value name="BY"><shadow type="math_number" id="6Lw*,xc9jW%PKZJ3qJ0!"><field name="NUM">1</field></shadow></value><statement name="DO"><block type="actions_go" id="1Nap5j;e.L47Gqd5gfjg"><next><block type="actions_turn" id="77^+iQnejgOKgz`z4DMA"><field name="DIRECTION">LEFT</field><next><block type="actions_use" id="@/Ls+sqZIqy)Q)s.qS}G"><value name="OBJECT"><block type="objects_bomb" id="9NcR_]TVWvZ?1+9_O}Z-"></block></value></block></next></block></next></block></statement></block></xml>');
     Blockly.Xml.domToWorkspace(initialXml, myWorkspace);
 
     myWorkspace.addChangeListener(this.debounce(function () {
@@ -59,7 +56,6 @@ class ReactBlockly extends Component {
 
   updateBlocklyXml(newXml) {
     const newXmlDom = Blockly.Xml.textToDom(newXml);
-    // const initialXml = Blockly.Xml.textToDom('<xml xmlns="http://www.w3.org/1999/xhtml"><variables><variable type="" id="08RrVFGh7Vd6kRq}mp$]">i</variable></variables><block type="controls_for" id="H7oSz,,1hk]3/OS!=4h^" x="16" y="124"><field name="VAR" id="08RrVFGh7Vd6kRq}mp$]" variabletype="">i</field><value name="FROM"><shadow type="math_number" id="(;*U0)NkbjzX8NVD2g:?"><field name="NUM">1</field></shadow></value><value name="TO"><shadow type="math_number" id="X.JaW(ygNj@x%hOssFbn"><field name="NUM">10</field></shadow></value><value name="BY"><shadow type="math_number" id="6Lw*,xc9jW%PKZJ3qJ0!"><field name="NUM">1</field></shadow></value><statement name="DO"><block type="actions_go" id="1Nap5j;e.L47Gqd5gfjg"><next><block type="actions_turn" id="77^+iQnejgOKgz`z4DMA"><field name="DIRECTION">LEFT</field><next><block type="actions_use" id="@/Ls+sqZIqy)Q)s.qS}G"><value name="OBJECT"><block type="objects_bomb" id="9NcR_]TVWvZ?1+9_O}Z-"></block></value></block></next></block></next></block></statement></block></xml>');
     Blockly.Xml.domToWorkspace(newXmlDom, this.getWorkspace());
   }
 
