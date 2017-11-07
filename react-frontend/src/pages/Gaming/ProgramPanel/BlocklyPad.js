@@ -11,6 +11,10 @@ class BlocklyPad extends Component {
     return this.refs.blockly_workspace.getWorkspace();
   }
 
+  updateBlocklyXml(newXml) {
+    this.refs.blockly_workspace.updateBlocklyXml(newXml);
+  }
+
   generatePureCode() {
     Blockly.JavaScript.STATEMENT_PREFIX = null;
     Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
