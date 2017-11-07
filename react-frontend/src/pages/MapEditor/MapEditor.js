@@ -44,8 +44,10 @@ export default class MapEditor extends Component {
   * and hook up the PixiJS renderer
   **/
   componentDidMount(props) {
+    console.log('parent: ', this.self.parentNode.clientWidth);
     this.aspectRatio = 0.75;
-    this.width = window.innerWidth;
+    // this.width = window.innerWidth;
+    this.width = this.self.parentNode.clientWidth;
     this.height = this.width * this.aspectRatio;
     const width = this.width, height = this.height;
     window.addEventListener('resize', () => {
@@ -63,7 +65,7 @@ export default class MapEditor extends Component {
     //Setup PIXI Canvas in componentDidMount
     this.renderer = PIXI.autoDetectRenderer(width, height);
     const renderer = this.renderer;
-    this.refs.gameCanvas.appendChild(renderer.view);
+    this.self.appendChild(renderer.view);
 
     let state;
 
@@ -252,7 +254,10 @@ export default class MapEditor extends Component {
   **/
   render() {
     return (
-      <div className="game-canvas-container" ref="gameCanvas">
+      <div
+        className="game-canvas-container"
+        ref={val => { this.self = val; }}
+      >
       </div>
     );
   }

@@ -37,7 +37,8 @@ export default class GamePanel extends Component {
   * and hook up the PixiJS renderer
   **/
   componentDidMount(props) {
-    this.width = 500, this.height = 500;
+    this.width = window.innerWidth / 2.5;
+    this.height = this.width;
     const width = this.width, height = this.height;
     const row = this.props.mapResource['width'], col = this.props.mapResource['height'];
 
