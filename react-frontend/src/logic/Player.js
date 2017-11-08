@@ -46,7 +46,7 @@ class Player {
   }
 
   nextStep() {
-    // console.log("next step");
+    //console.log(this.enemy);
     
     // console.log(this._mode);
     // console.log("status")
@@ -108,8 +108,12 @@ class Player {
     this._result = result;
   }
 
+  get enemy() {
+    return this._states[this._curStep].enemy;
+  }
   get character() {
-    return this._states[this._curStep].character; }
+    return this._states[this._curStep].character;
+  }
 
   get board() {
     return this._states[this._curStep].board;
