@@ -14,7 +14,7 @@ class Login extends Component {
   }
 
   async handleLogin() {
-    console.log("login")
+    //console.log("login")
     post('/user/login', {
       id: this.state.email,
       password: this.state.password,

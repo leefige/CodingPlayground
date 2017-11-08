@@ -13,6 +13,7 @@ class Player {
   _status;//0 初始，1运行，2胜利，3失败，4暂停
   _nextStatus;
   _callback;
+  _gameOverCallback;
   _mode;
 
   constructor(initState) {
@@ -23,12 +24,18 @@ class Player {
     this._status = playerStatus.init;
     this._nextStatus = playerStatus.pause;
     this._callback = undefined;
+    this._gameOverCallback = undefined;
     this._mode = 'normal';
   }
 
   // set callback function for step through mode
   setCallback(callback) {
     this._callback = callback;
+  }
+
+  // set callback function for game over
+  setGameOverCallback (callback) {
+    this._gameOverCallback = callback;
   }
 
   // set status after init: directly run or pause
@@ -46,7 +53,7 @@ class Player {
   }
 
   nextStep() {
-    // console.log("next step");
+    //console.log(this.enemy);
     
     // console.log(this._mode);
     // console.log("status")
@@ -64,8 +71,13 @@ class Player {
         this._callback();
         this.status = playerStatus.pause;
       }
-      else
+      else { // player end
+        if (this._result === playerStatus.success)
+          this._gameOverCallback(true);
+        else
+          this._gameOverCallback(false);
         this._status = this._result;
+      }
     }
   }
 
@@ -106,10 +118,15 @@ class Player {
 
   setResult(result) {
     this._result = result;
+    this._mode = 'end'; // force end for step-mode
   }
 
+  get enemy() {
+    return this._states[this._curStep].enemy;
+  }
   get character() {
-    return this._states[this._curStep].character; }
+    return this._states[this._curStep].character;
+  }
 
   get board() {
     return this._states[this._curStep].board;

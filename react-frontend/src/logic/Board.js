@@ -2,7 +2,9 @@ import Basic from "./Basic"
 const elements = {
   empty : 0,
   treasure : 1,
-  block : 2,
+  barrier : 2,
+  grass : 4,
+  stone : 5,
 }
 class Board extends Basic {
   _size;
