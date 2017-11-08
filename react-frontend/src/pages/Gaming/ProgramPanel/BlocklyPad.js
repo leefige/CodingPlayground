@@ -50,8 +50,10 @@ class BlocklyPad extends Component {
       return;
     }
     document.getElementById("abort_btn").disabled = false;
-    document.getElementById("step_btn").disabled = false;
+    document.getElementById("run_btn").disabled = true;
+    document.getElementById("step_btn").disabled = true;
     document.getElementById("step_btn_text").innerHTML = "&nbsp;&nbsp;单步调试";
+    document.getElementById("blockly_layer").style.display = 'block';
     const runableCode = this.generateCode();
     const pureCode = this.generatePureCode();
     this.props.onCodeSubmit(pureCode, runableCode);
@@ -62,7 +64,9 @@ class BlocklyPad extends Component {
       return;
     }
     document.getElementById("abort_btn").disabled = false;
+    document.getElementById("run_btn").disabled = true;
     document.getElementById("step_btn_text").innerHTML = "&nbsp;&nbsp;执行这一步";
+    document.getElementById("blockly_layer").style.display = 'block';
     const mycode = this.generateCodeWithHighlight();
     this.props.onStepThrough(mycode);
   }
@@ -72,7 +76,10 @@ class BlocklyPad extends Component {
       return;
     }
     document.getElementById("abort_btn").disabled = true;
+    document.getElementById("run_btn").disabled = false;
+    document.getElementById("step_btn").disabled = false;
     document.getElementById("step_btn_text").innerHTML = "&nbsp;&nbsp;单步调试";
+    document.getElementById("blockly_layer").style.display = 'none';
     this.props.onReset();
   }
 
@@ -83,13 +90,16 @@ class BlocklyPad extends Component {
   render() {
     return (
       <div>
-        <div id="blockly_area" className='blockly-area'>
-          <ReactBlockly ref="blockly_workspace"
-            wrapperClassname='blockly-div'
-            userType={this.props.userType}
-            blocklyConfig={this.props.blocklyConfig}
-            initialXml={this.props.initSolution}
-            onXmlChange={this.props.onXmlChange.bind(this)}/>
+        <div id="blockly_container">
+          <div id="blockly_layer" className='blockly-layer'/>
+          <div id="blockly_area" className='blockly-area'>
+            <ReactBlockly ref="blockly_workspace"
+              wrapperClassname='blockly-div'
+              userType={this.props.userType}
+              blocklyConfig={this.props.blocklyConfig}
+              initialXml={this.props.initSolution}
+              onXmlChange={this.props.onXmlChange.bind(this)}/>
+          </div>
         </div>
         
         <div className='text-right blockly-btn-group'>

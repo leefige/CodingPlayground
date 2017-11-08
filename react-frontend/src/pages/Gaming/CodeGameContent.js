@@ -83,22 +83,6 @@ class CodeGameContent extends Component {
     .catch((error) => {
       console.error(error);
     });
-
-    /** 原有的保存播放记录已经deprecated了，取而代之的是保存用户blockly解法 */
-
-  //   // 获取播放记录
-  //   if (this.props.match.params.recordID) {
-  //     post('/record/getId', {
-  //       id: this.props.match.params.mapID,
-  //     })    
-  //     .then((responseJson) => {
-  //       const player = mainControl.player;
-  //       player.load(responseJson.recordData);
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //     });
-  //   }
   }
 
   updateUserSolution(newXml, num) {
@@ -116,6 +100,11 @@ class CodeGameContent extends Component {
     mainControl.restart(this.state.mapInitState);
   }
 
+  handleSuccess() {
+    // TODO: send solution to backend
+    // console.log("success, send solution to backend");
+  }
+
   nextStep(_actionList) {
     mainControl.addActionList(_actionList);
   }
@@ -126,6 +115,10 @@ class CodeGameContent extends Component {
 
   setPlayerCallback(callback) {
     mainControl.player.setCallback(callback);
+  }
+
+  setPlayerGameOverCallback(callback) {
+    mainControl.player.setGameOverCallback(callback);
   }
 
   StepThroughInit() {
@@ -154,7 +147,9 @@ class CodeGameContent extends Component {
                   onSolutionChanged={this.updateUserSolution.bind(this)}
                   onNextStep={this.nextStep.bind(this)}
                   setCallback={this.setPlayerCallback}
+                  setGameOverCallback={this.setPlayerGameOverCallback}
                   startStepThrough={this.StepThroughInit.bind(this)}
+                  onSuccess={this.handleSuccess.bind(this)}
                 />
                 :<div></div>
               }
