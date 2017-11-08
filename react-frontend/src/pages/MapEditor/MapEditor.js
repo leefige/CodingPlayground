@@ -5,8 +5,6 @@ import PropTypes from 'prop-types';
 import { mainControl } from '../../logic/MainControl';
 import { post } from '../../utils/Request'
 
-import character from './img/pic.jpg';
-
 export default class MapEditor extends Component {
 
   /**
@@ -50,7 +48,6 @@ export default class MapEditor extends Component {
     this.height = this.width * this.aspectRatio;
     const width = this.width, height = this.height;
     
-
     window.addEventListener('resize', () => {
       const accWidth = this.self.parentNode.clientWidth - 30; 
       const zoomLevel = accWidth / this.width;
@@ -63,6 +60,9 @@ export default class MapEditor extends Component {
     const innerWidth = 0.45 * width;
     const innerHeight = innerWidth;
     const row = 8, col = 8;
+
+    let mapRecord = {};
+    mapRecord.id_tool = new Array(row * col);
 
     //Setup PIXI Canvas in componentDidMount
     this.renderer = PIXI.autoDetectRenderer(width, height);
@@ -84,8 +84,8 @@ export default class MapEditor extends Component {
 
     const gpJson = `${process.env.PUBLIC_URL}/img/sources/gamePic.json`;
     const mapJson = `${process.env.PUBLIC_URL}/img/map/map.json`;
-    const objJson = `${process.env.PUBLIC_URL}/img/obj/obj.json`
-    let texture = PIXI.Texture.fromImage(character);
+    const objJson = `${process.env.PUBLIC_URL}/img/obj/obj.json`;
+    const utilJson = `${process.env.PUBLIC_URL}/img/util/util.json`;
     let gameScene;
 
     //Use Pixi's built-in `loader` object to load an image
@@ -93,6 +93,7 @@ export default class MapEditor extends Component {
       .add(mapJson)
       .add(gpJson)
       .add(objJson)
+      .add(utilJson)
       .load(setup);
     
     function setup() {
@@ -102,7 +103,6 @@ export default class MapEditor extends Component {
       const id = resources[mapJson].textures;
       let i = 0;
       for (let key in id) {
-        console.log(key);
         let map = new Sprite(id[key]);
         map.width = width / 10;
         map.height = map.width;
@@ -114,6 +114,17 @@ export default class MapEditor extends Component {
         stage.addChild(map);
         i++;
       }
+
+      const util = resources[utilJson].textures;
+      let okButton = new Sprite(util['ok.png']);
+      okButton.position.x = width * 0.9;
+      okButton.position.y = height * 0.9;
+      okButton.height = height * 0.1;
+      okButton.width = okButton.height;
+      okButton.interactive = true;
+      okButton.buttonMode = true;
+      okButton.on('click', report);
+      stage.addChild(okButton);
       
       createObj('cha.png', 0.06 * width, 0.06 * height);
       createObj('1.png', 0.06 * width, Math.floor(height / 5) * 1 + 0.06 * width)
@@ -122,7 +133,7 @@ export default class MapEditor extends Component {
       for (let i = 2; i < 5; i++) {
         createObj('5.png', 0.06 * width, Math.floor(height / 5) * i + 0.06 * width);
       }
-      for (let i = 0; i < 5; i++) {
+      for (let i = 0; i < 4; i++) {
         createObj('3.png', Math.floor(width - 0.06 * width), Math.floor(height / 5 * i + 0.06 * width));
       }
     }
@@ -145,10 +156,10 @@ export default class MapEditor extends Component {
         .on('mousedown', onDragStart)
         .on('touchstart', onDragStart)
         // events for drag end
-        .on('mouseup', onDragEnd)
-        .on('mouseupoutside', onDragEnd)
-        .on('touchend', onDragEnd)
-        .on('touchendoutside', onDragEnd)
+        .on('mouseup', function(){onDragEnd.call(this, str.split('.')[0]);})
+        .on('mouseupoutside', function(){onDragEnd.call(this, str.split('.')[0]);})
+        .on('touchend', function(){onDragEnd.call(this, str.split('.')[0]);})
+        .on('touchendoutside', function(){onDragEnd.call(this, str.split('.')[0]);})
         // events for drag move
         .on('mousemove', onDragMove)
         .on('touchmove', onDragMove);
@@ -201,7 +212,7 @@ export default class MapEditor extends Component {
       this.dragging = true;
     }
 
-    function onDragEnd() {
+    function onDragEnd(str) {
       this.alpha = 1;
 
       this.dragging = false;
@@ -232,6 +243,13 @@ export default class MapEditor extends Component {
         const j = parseInt((newPosition.y - lefty) / szy);
         newPosition.x = leftx + i * innerWidth / row + szx / 2;
         newPosition.y = lefty + j * innerHeight / col + szy / 2;
+        console.log(str);
+        if (str == "cha") {
+          mapRecord.pos = i * row + j;
+        }
+        else {
+          mapRecord.id_tool[i * row + j] = parseInt(str);
+        }
       }
 
       this.position.x = newPosition.x;
@@ -258,6 +276,14 @@ export default class MapEditor extends Component {
         this.position.x = newPosition.x;
         this.position.y = newPosition.y;
       }
+    }
+
+    function report() { 
+      post('/mapEdit/insert', {
+        mapRecord: JSON.stringify(mapRecord),
+        userId: "TEST"
+      })	
+      alert("编辑成功！");
     }
   }
 
