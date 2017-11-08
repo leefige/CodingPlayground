@@ -72,13 +72,17 @@ export default class GamePanel extends Component {
     this.stage = new Container();
     const stage = this.stage;
 
-    let gameScene, id, charactor1, charactor2, gameover;
+    let gameScene, id, chaId, gameover;
+
+    let mCharacter;
 
     const gpJson = `${process.env.PUBLIC_URL}/img/sources/gamePic.json`
+    const chaJson = `${process.env.PUBLIC_URL}/img/character/character.json`
 
     //Use Pixi's built-in `loader` object to load an image
     loader
       .add(gpJson)
+      .add(chaJson)
       .load(setup);
 
     function convertX(x) {
@@ -95,7 +99,7 @@ export default class GamePanel extends Component {
       gameScene = new Container();
       stage.addChild(gameScene);
 
-      id = resources[gpJson].textures
+      id = resources[gpJson].textures;
 
       const backgroundArray = mapId;
       const transparentArray = mapIdt;
@@ -120,20 +124,15 @@ export default class GamePanel extends Component {
       // background.height = height;
       // gameScene.addChild(background);
 
-      charactor1 = new Sprite(id['105.png']);
-      // charactor1.visible = false;
-      charactor2 = new Sprite(id['89.png']);
-      // charactor2.visible = false;
-      charactor1.width = width / 10;
-      charactor1.height = height / 8;
-      charactor2.width = width / 10;
-      charactor2.height = height / 8;
-      charactor1.x = convertX(mainControl.player.character.pos['y']);
-      charactor1.y = convertY(mainControl.player.character.pos['x']);
-      charactor2.x = charactor1.x;
-      charactor2.y = charactor1.y - charactor2.height;
-      gameScene.addChild(charactor1);
-      gameScene.addChild(charactor2);
+      chaId = resources[chaJson].textures;
+
+      mCharacter = new Sprite(chaId['22.png']);
+
+      mCharacter.width = width / 10;
+      mCharacter.height = height / 8;
+      mCharacter.x = convertX(mainControl.player.character.pos['y']);
+      mCharacter.y = convertY(mainControl.player.character.pos['x']);
+      gameScene.addChild(mCharacter);
 
       gameover = new Sprite(id['gameover.png']);
       gameover.x = width, gameover.y = height;
@@ -158,19 +157,17 @@ export default class GamePanel extends Component {
       if (status === 0) {
         const px = convertX(player.character.pos['y']),
               py = convertY(player.character.pos['x']);
-        charactor1.x = px, charactor1.y = py;
-        charactor2.x = charactor1.x;
-        charactor2.y = charactor1.y - charactor2.height;
+        mCharacter.x = px, mCharacter.y = py;
         player.nextStep();
       }
       if (status === 1) {
         const px = convertX(player.character.pos['y']),
               py = convertY(player.character.pos['x']);
-        if (px !== charactor1.x || py !== charactor1.y) {
-          if (px > charactor1.x) charactor1.x++, charactor2.x++;
-          else if (px < charactor1.x) charactor1.x--, charactor2.x--;
-          else if (py > charactor1.y) charactor1.y++, charactor2.y++;
-          else if (py < charactor1.y) charactor1.y--, charactor2.y--;
+        if (px !== mCharacter.x || py !== mCharacter.y) {
+          if (px > mCharacter.x) mCharacter.x++;
+          else if (px < mCharacter.x) mCharacter.x--;
+          else if (py > mCharacter.y) mCharacter.y++;
+          else if (py < mCharacter.y) mCharacter.y--;
         }
         else {
           player.nextStep();
