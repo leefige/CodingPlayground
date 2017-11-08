@@ -93,17 +93,20 @@ export default class MapEditor extends Component {
       gameScene = new Container();
       stage.addChild(gameScene);
 
-      for (let i = 0; i < 2; i++) {
-        const id = resources[mapJson].textures;
-        let map = new Sprite(id[`${1000+i}.png`]);
-        map.position.x = i * 0.25 * width + 0.3 * width;
-        map.position.y = 0;
+      const id = resources[mapJson].textures;
+      let i = 0;
+      for (let key in id) {
+        console.log(key);
+        let map = new Sprite(id[key]);
         map.width = width / 10;
         map.height = map.width;
-        map.on('click', () => {loadmap(301+i)});
+        map.position.x = i * 0.13 * width + 0.25 * width;
+        map.position.y = 10;
+        map.on('click', () => {loadmap(parseInt(key.split('.')[0]))});
         map.interactive = true;
         map.buttonMode = true;
         stage.addChild(map);
+        i++;
       }
       
       
