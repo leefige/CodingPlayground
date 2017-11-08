@@ -41,6 +41,7 @@ export default class GamePanel extends Component {
     this.width = this.self.parentNode.clientWidth;
     this.aspectRatio = 1;
     this.height = this.width * this.aspectRatio;
+    const FPS = 7;
 
     window.addEventListener('resize', () => {
       const zoomLevel = this.self.parentNode.clientWidth / this.width;
@@ -53,8 +54,8 @@ export default class GamePanel extends Component {
     const width = this.width, height = this.height;
     const row = this.props.mapResource['width'], col = this.props.mapResource['height'];
 
-    const mapId = this.props.mapResource['id']
-    const mapIdt = this.props.mapResource['id_t']
+    const mapId = this.props.mapResource['id'];
+    const mapIdt = this.props.mapResource['id_t'];
 
     //Setup PIXI Canvas in componentDidMount
     this.renderer = PIXI.autoDetectRenderer(width, height);
@@ -74,7 +75,7 @@ export default class GamePanel extends Component {
 
     let gameScene, id, chaId, gameover;
 
-    let mCharacter;
+    let mCharacter, mPhase;
 
     const gpJson = `${process.env.PUBLIC_URL}/img/sources/gamePic.json`
     const chaJson = `${process.env.PUBLIC_URL}/img/character/character.json`
@@ -91,6 +92,12 @@ export default class GamePanel extends Component {
 
     function convertY(x) {
       return parseInt(x * height / col - height / col / 2);
+    }
+
+    function updatePhase(x) {
+      x = parseInt(x);
+      if (x === 3) return 1;
+      return x;
     }
 
     //This `setup` function will run when the image has loaded
@@ -126,7 +133,9 @@ export default class GamePanel extends Component {
 
       chaId = resources[chaJson].textures;
 
-      mCharacter = new Sprite(chaId['22.png']);
+      const baseDir = mainControl.player.character.dir;
+      mPhase = 1 * FPS; 
+      mCharacter = new Sprite(chaId[`${10 + baseDir * 10 + updatePhase(mPhase / FPS)}.png`]);
 
       mCharacter.width = width / 10;
       mCharacter.height = height / 8;
@@ -154,6 +163,8 @@ export default class GamePanel extends Component {
     function play() {
       const player = mainControl.player;
       const status = player.getStatus();
+      const baseDir = player.character.dir;
+
       if (status === 0) {
         const px = convertX(player.character.pos['y']),
               py = convertY(player.character.pos['x']);
@@ -168,6 +179,9 @@ export default class GamePanel extends Component {
           else if (px < mCharacter.x) mCharacter.x--;
           else if (py > mCharacter.y) mCharacter.y++;
           else if (py < mCharacter.y) mCharacter.y--;
+          mCharacter.texture = chaId[`${10 + baseDir * 10 + updatePhase(mPhase / FPS)}.png`];
+          mPhase = (mPhase + 1) % (4 * FPS);
+          console.log(mPhase);
         }
         else {
           player.nextStep();
