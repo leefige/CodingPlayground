@@ -72,7 +72,10 @@ class Player {
         this.status = playerStatus.pause;
       }
       else { // player end
-        this._gameOverCallback();
+        if (this._result === playerStatus.success)
+          this._gameOverCallback(true);
+        else
+          this._gameOverCallback(false);
         this._status = this._result;
       }
     }
