@@ -44,11 +44,13 @@ export default class MapEditor extends Component {
   * and hook up the PixiJS renderer
   **/
   componentDidMount(props) {
-    this.aspectRatio = 0.75;
+    this.aspectRatio = 0.7;
     const accWidth = this.self.parentNode.clientWidth - 30;
     this.width = accWidth;
     this.height = this.width * this.aspectRatio;
     const width = this.width, height = this.height;
+    
+
     window.addEventListener('resize', () => {
       const accWidth = this.self.parentNode.clientWidth - 30; 
       const zoomLevel = accWidth / this.width;
@@ -58,7 +60,7 @@ export default class MapEditor extends Component {
       requestAnimationFrame(animate);
     })
     
-    const innerWidth = 0.5 * width;
+    const innerWidth = 0.45 * width;
     const innerHeight = innerWidth;
     const row = 8, col = 8;
 
@@ -77,9 +79,12 @@ export default class MapEditor extends Component {
     // create the root of the scene graph
     this.stage = new Container();
     let stage = this.stage;
+    this.stage.scale.x = 1;
+    this.stage.scale.y = 1;
 
-    const gpJson = `${process.env.PUBLIC_URL}/img/sources/gamePic.json`
-    const mapJson = `${process.env.PUBLIC_URL}/img/map/map.json`
+    const gpJson = `${process.env.PUBLIC_URL}/img/sources/gamePic.json`;
+    const mapJson = `${process.env.PUBLIC_URL}/img/map/map.json`;
+    const objJson = `${process.env.PUBLIC_URL}/img/obj/obj.json`
     let texture = PIXI.Texture.fromImage(character);
     let gameScene;
 
@@ -87,6 +92,7 @@ export default class MapEditor extends Component {
     loader
       .add(mapJson)
       .add(gpJson)
+      .add(objJson)
       .load(setup);
     
     function setup() {
@@ -109,19 +115,22 @@ export default class MapEditor extends Component {
         i++;
       }
       
-      
+      createObj('cha.png', 0.06 * width, 0.06 * height);
+      createObj('1.png', 0.06 * width, Math.floor(height / 5) * 1 + 0.06 * width)
+
       // create a texture from an image path
-      for (let i = 0; i < 5; i++) {
-        createObj(0.06 * width, Math.floor(height / 5) * i + 0.06 * width);
+      for (let i = 2; i < 5; i++) {
+        createObj('5.png', 0.06 * width, Math.floor(height / 5) * i + 0.06 * width);
       }
       for (let i = 0; i < 5; i++) {
-        createObj(Math.floor(width - 0.06 * width), Math.floor(height / 5 * i + 0.06 * width));
+        createObj('3.png', Math.floor(width - 0.06 * width), Math.floor(height / 5 * i + 0.06 * width));
       }
     }
 
-    function createObj(x, y) {
+    function createObj(str, x, y) {
+      const id = resources[objJson].textures; 
       // create our little obj friend..
-      let obj = new Sprite(texture);
+      let obj = new Sprite(id[str]);
       // enable the obj to be interactive... this will allow it to respond to mouse and touch events
       obj.interactive = true;
       // this button mode will mean the hand cursor appears when you roll over the obj with your mouse
