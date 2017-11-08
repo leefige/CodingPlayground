@@ -13,6 +13,7 @@ class Player {
   _status;//0 初始，1运行，2胜利，3失败，4暂停
   _nextStatus;
   _callback;
+  _gameOverCallback;
   _mode;
 
   constructor(initState) {
@@ -23,12 +24,18 @@ class Player {
     this._status = playerStatus.init;
     this._nextStatus = playerStatus.pause;
     this._callback = undefined;
+    this._gameOverCallback = undefined;
     this._mode = 'normal';
   }
 
   // set callback function for step through mode
   setCallback(callback) {
     this._callback = callback;
+  }
+
+  // set callback function for game over
+  setGameOverCallback (callback) {
+    this._gameOverCallback = callback;
   }
 
   // set status after init: directly run or pause
@@ -64,8 +71,10 @@ class Player {
         this._callback();
         this.status = playerStatus.pause;
       }
-      else
+      else { // player end
+        this._gameOverCallback();
         this._status = this._result;
+      }
     }
   }
 
