@@ -5,8 +5,6 @@ class Unit extends Basic {
     const dir = this.dir;
     const pos = this.pos;
     let nextPos = pos;
-    console.log("unit dir")
-    console.log(this.dir)
     if (dir === 0)
       nextPos = { x : pos.x - 1, y : pos.y };
     else if (dir === 1)

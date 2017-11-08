@@ -9,7 +9,6 @@ class Enemy extends Unit {
   go() {
     if (this._state.status == 'alive') {
       let nextPos = this.getNextPos();
-      console.log(nextPos)
       this._nextState.pos = nextPos;
       for (let i = 0; i < this._state.turningPoint.length; i++) {
         if (nextPos.x == this._state.turningPoint[i].pos.x && nextPos.y == this._state.turningPoint[i].pos.y) {

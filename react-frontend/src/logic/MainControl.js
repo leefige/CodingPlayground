@@ -68,7 +68,6 @@ class MainControl{
   
   load(state) {
     this._state = JSON.parse(JSON.stringify(state));
-    console.log(this._state);
     this._board = new Board(this._state.board);
     this._enemy = [];
     for (let i = 0; i < this._state.enemy.length; i++)
@@ -124,14 +123,11 @@ class MainControl{
           
         }
         // calcutale enemy's next pos and dir
-        console.log(this._enemy)
         for (let i = 0; i < this._enemy.length; i++) {
-          console.log(this._enemy[i])
           this._enemy[i].go();
         }
         // update all units
         this.update();
-        console.log(this._state);
       }
       if (this._status !== 1) {
         this._player.setResult(this._status);
