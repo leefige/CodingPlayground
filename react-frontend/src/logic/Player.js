@@ -106,6 +106,7 @@ class Player {
 
   setResult(result) {
     this._result = result;
+    this._mode = 'end'; // force end for step-mode
   }
 
   get enemy() {

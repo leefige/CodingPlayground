@@ -128,6 +128,9 @@ class MainControl{
         }
         // update all units
         this.update();
+        if (this.isOver()) {
+          this._status = 3;
+        }
       }
       if (this._status !== 1) {
         this._player.setResult(this._status);
@@ -135,6 +138,14 @@ class MainControl{
     }))
     if (this._player.getMode() === 'step')
       this._player.run();
+  }
+  
+  isOver() {
+    for (let i = 0; i < this._enemy.length; i++) {
+      if (this._enemy[i].pos.x === this._character.pos.x && this._enemy[i].pos.y === this._character.pos.y && this._enemy[i].status === "alive")
+        return true;
+    }
+    return false;
   }
 
   update() {

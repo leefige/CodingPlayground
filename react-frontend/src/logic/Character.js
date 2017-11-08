@@ -29,7 +29,7 @@ class Character extends Unit {
     let nextPos = this.getNextPos();
     if (nextPos.x < 0 || nextPos.x >= this._board.size || nextPos.y < 0 || nextPos.y >= this._board.size)
       return 3;
-    if (this._board.map[nextPos.x][nextPos.y] === this._board.elements.block)
+    if (this._board.map[nextPos.x][nextPos.y] === this._board.elements.barrier)
       return 3;
     this._nextState.pos = nextPos;
     return 1;
@@ -39,7 +39,7 @@ class Character extends Unit {
   attack() {
     let attackPos = this.getNextPos();
     for (let i = 0; i < this._enemy.length; i++) {
-      if (attackPos.x == this._enemy[i].pos.x && attackPos.y == this._enemy[i].pos.y && this._enemy[i].status == 'alive')
+      if (attackPos.x === this._enemy[i].pos.x && attackPos.y === this._enemy[i].pos.y && this._enemy[i].status == 'alive')
         this._enemy[i].killed();
     }
     return 1;

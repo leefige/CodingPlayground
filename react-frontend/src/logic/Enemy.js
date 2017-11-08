@@ -11,7 +11,7 @@ class Enemy extends Unit {
       let nextPos = this.getNextPos();
       this._nextState.pos = nextPos;
       for (let i = 0; i < this._state.turningPoint.length; i++) {
-        if (nextPos.x == this._state.turningPoint[i].pos.x && nextPos.y == this._state.turningPoint[i].pos.y) {
+        if (nextPos.x === this._state.turningPoint[i].pos.x && nextPos.y === this._state.turningPoint[i].pos.y) {
           this._nextState.dir = this._state.turningPoint[i].dir;
           break;
         }
