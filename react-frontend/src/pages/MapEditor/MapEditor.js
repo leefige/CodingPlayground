@@ -5,8 +5,6 @@ import PropTypes from 'prop-types';
 import { mainControl } from '../../logic/MainControl';
 import { post } from '../../utils/Request'
 
-import character from './img/pic.jpg';
-
 export default class MapEditor extends Component {
 
   /**
@@ -44,11 +42,12 @@ export default class MapEditor extends Component {
   * and hook up the PixiJS renderer
   **/
   componentDidMount(props) {
-    this.aspectRatio = 0.75;
+    this.aspectRatio = 0.7;
     const accWidth = this.self.parentNode.clientWidth - 30;
     this.width = accWidth;
     this.height = this.width * this.aspectRatio;
     const width = this.width, height = this.height;
+    
     window.addEventListener('resize', () => {
       const accWidth = this.self.parentNode.clientWidth - 30; 
       const zoomLevel = accWidth / this.width;
@@ -58,9 +57,12 @@ export default class MapEditor extends Component {
       requestAnimationFrame(animate);
     })
     
-    const innerWidth = 0.5 * width;
+    const innerWidth = 0.45 * width;
     const innerHeight = innerWidth;
     const row = 8, col = 8;
+
+    let mapRecord = {};
+    mapRecord.id_tool = new Array(row * col);
 
     //Setup PIXI Canvas in componentDidMount
     this.renderer = PIXI.autoDetectRenderer(width, height);
@@ -77,48 +79,69 @@ export default class MapEditor extends Component {
     // create the root of the scene graph
     this.stage = new Container();
     let stage = this.stage;
+    this.stage.scale.x = 1;
+    this.stage.scale.y = 1;
 
-    const gpJson = `${process.env.PUBLIC_URL}/img/sources/gamePic.json`
-    const mapJson = `${process.env.PUBLIC_URL}/img/map/map.json`
-    let texture = PIXI.Texture.fromImage(character);
+    const gpJson = `${process.env.PUBLIC_URL}/img/sources/gamePic.json`;
+    const mapJson = `${process.env.PUBLIC_URL}/img/map/map.json`;
+    const objJson = `${process.env.PUBLIC_URL}/img/obj/obj.json`;
+    const utilJson = `${process.env.PUBLIC_URL}/img/util/util.json`;
     let gameScene;
 
     //Use Pixi's built-in `loader` object to load an image
     loader
       .add(mapJson)
       .add(gpJson)
+      .add(objJson)
+      .add(utilJson)
       .load(setup);
     
     function setup() {
       gameScene = new Container();
       stage.addChild(gameScene);
 
-      for (let i = 0; i < 2; i++) {
-        const id = resources[mapJson].textures;
-        let map = new Sprite(id[`${1000+i}.png`]);
-        map.position.x = i * 0.25 * width + 0.3 * width;
-        map.position.y = 0;
+      const id = resources[mapJson].textures;
+      let i = 0;
+      for (let key in id) {
+        let map = new Sprite(id[key]);
         map.width = width / 10;
         map.height = map.width;
-        map.on('click', () => {loadmap(301+i)});
+        map.position.x = i * 0.13 * width + 0.25 * width;
+        map.position.y = 10;
+        map.on('click', () => {loadmap(parseInt(key.split('.')[0]))});
         map.interactive = true;
         map.buttonMode = true;
         stage.addChild(map);
+        i++;
       }
+
+      const util = resources[utilJson].textures;
+      let okButton = new Sprite(util['ok.png']);
+      okButton.position.x = width * 0.9;
+      okButton.position.y = height * 0.9;
+      okButton.height = height * 0.1;
+      okButton.width = okButton.height;
+      okButton.interactive = true;
+      okButton.buttonMode = true;
+      okButton.on('click', report);
+      stage.addChild(okButton);
       
-      
+      createObj('cha.png', 0.06 * width, 0.06 * height);
+      createObj('1.png', 0.06 * width, Math.floor(height / 5) * 1 + 0.06 * width)
+
       // create a texture from an image path
-      for (let i = 0; i < 5; i++) {
-        createObj(0.06 * width, Math.floor(height / 5) * i + 0.06 * width);
+      for (let i = 2; i < 5; i++) {
+        createObj('5.png', 0.06 * width, Math.floor(height / 5) * i + 0.06 * width);
       }
-      for (let i = 0; i < 5; i++) {
-        createObj(Math.floor(width - 0.06 * width), Math.floor(height / 5 * i + 0.06 * width));
+      for (let i = 0; i < 4; i++) {
+        createObj('3.png', Math.floor(width - 0.06 * width), Math.floor(height / 5 * i + 0.06 * width));
       }
     }
 
-    function createObj(x, y) {
+    function createObj(str, x, y) {
+      const id = resources[objJson].textures; 
       // create our little obj friend..
-      let obj = new Sprite(texture);
+      let obj = new Sprite(id[str]);
       // enable the obj to be interactive... this will allow it to respond to mouse and touch events
       obj.interactive = true;
       // this button mode will mean the hand cursor appears when you roll over the obj with your mouse
@@ -133,10 +156,10 @@ export default class MapEditor extends Component {
         .on('mousedown', onDragStart)
         .on('touchstart', onDragStart)
         // events for drag end
-        .on('mouseup', onDragEnd)
-        .on('mouseupoutside', onDragEnd)
-        .on('touchend', onDragEnd)
-        .on('touchendoutside', onDragEnd)
+        .on('mouseup', function(){onDragEnd.call(this, str.split('.')[0]);})
+        .on('mouseupoutside', function(){onDragEnd.call(this, str.split('.')[0]);})
+        .on('touchend', function(){onDragEnd.call(this, str.split('.')[0]);})
+        .on('touchendoutside', function(){onDragEnd.call(this, str.split('.')[0]);})
         // events for drag move
         .on('mousemove', onDragMove)
         .on('touchmove', onDragMove);
@@ -189,7 +212,7 @@ export default class MapEditor extends Component {
       this.dragging = true;
     }
 
-    function onDragEnd() {
+    function onDragEnd(str) {
       this.alpha = 1;
 
       this.dragging = false;
@@ -220,6 +243,13 @@ export default class MapEditor extends Component {
         const j = parseInt((newPosition.y - lefty) / szy);
         newPosition.x = leftx + i * innerWidth / row + szx / 2;
         newPosition.y = lefty + j * innerHeight / col + szy / 2;
+        console.log(str);
+        if (str == "cha") {
+          mapRecord.pos = i * row + j;
+        }
+        else {
+          mapRecord.id_tool[i * row + j] = parseInt(str);
+        }
       }
 
       this.position.x = newPosition.x;
@@ -246,6 +276,14 @@ export default class MapEditor extends Component {
         this.position.x = newPosition.x;
         this.position.y = newPosition.y;
       }
+    }
+
+    function report() { 
+      post('/mapEdit/insert', {
+        mapRecord: JSON.stringify(mapRecord),
+        userId: "TEST"
+      })	
+      alert("编辑成功！");
     }
   }
 

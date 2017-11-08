@@ -6,7 +6,7 @@
         <key>texturePackerVersion</key>
         <string>4.5.0</string>
         <key>fileName</key>
-        <string>/Users/Yifan/Desktop/Software Engineering/CodingPlayground/react-frontend/public/img/map/map.tps</string>
+        <string>/Users/Yifan/Desktop/Software Engineering/CodingPlayground/react-frontend/public/img/obj/obj.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -90,9 +90,9 @@
         <key>maxTextureSize</key>
         <QSize>
             <key>width</key>
-            <int>8192</int>
+            <int>2048</int>
             <key>height</key>
-            <int>8192</int>
+            <int>2048</int>
         </QSize>
         <key>fixedTextureSize</key>
         <QSize>
@@ -150,7 +150,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>map.json</filename>
+                <filename>obj.json</filename>
             </struct>
         </map>
         <key>multiPack</key>
@@ -199,53 +199,41 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">301.png</key>
+            <key type="filename">1.png</key>
+            <key type="filename">3.png</key>
+            <key type="filename">5.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>142,142,284,283</rect>
+                <rect>32,32,64,64</rect>
                 <key>scale9Paddings</key>
-                <rect>142,142,284,283</rect>
+                <rect>32,32,64,64</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">303.png</key>
+            <key type="filename">cha.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>273,273,545,546</rect>
+                <rect>100,100,200,200</rect>
                 <key>scale9Paddings</key>
-                <rect>273,273,545,546</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">305.png</key>
-            <key type="filename">309.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>273,273,546,545</rect>
-                <key>scale9Paddings</key>
-                <rect>273,273,546,545</rect>
+                <rect>100,100,200,200</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
         </map>
         <key>fileList</key>
         <array>
-            <filename>301.png</filename>
-            <filename>303.png</filename>
-            <filename>305.png</filename>
-            <filename>309.png</filename>
+            <filename>1.png</filename>
+            <filename>3.png</filename>
+            <filename>5.png</filename>
+            <filename>cha.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
