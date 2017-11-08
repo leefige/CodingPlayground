@@ -6,8 +6,16 @@ import Interpreter from 'react-js-interpreter-private';
 class Programming extends Component {
 
   static defaultProps = {
-    HEADER: "initLoop(); function goForward() {emitAction(1);} function turnLeft() {emitAction(2);} function turnRight() {emitAction(3);} function attack() {emitAction(4);}" + 
-            "function use(obj) {switch (obj) {case 'torch':emitAction(5);break;case 'bomb':emitAction(6);break;default:break;}}\n",
+    HEADER: [
+      "initLoop(); ",
+      "function goForward() {emitAction(1);} ",
+      "function turnLeft() {emitAction(2);} ",
+      "function turnRight() {emitAction(3);} ",
+      "function attack() {emitAction(4);} ",
+      "function use(obj) {switch (obj) {case 'TORCH':emitAction(5);break;case 'BOMB':emitAction(6);break;default:break;}} ",
+      "function openChest() {emitAction(7);}",
+      "function inFrontOf(obj) {queryMapInfo(obj);} ",
+    ],
     INFINITE_LOOP_ERROR: "Infinite loop!",
     MAX_LOOP: 100000,
     task: "任务目标：用Blockly生成代码并运行，将主角移动至目标地点"
@@ -29,9 +37,23 @@ class Programming extends Component {
       then define go(){emit(1);}
       and outside the sandbox, emit(num) will send an action to animation (actionList) */
 
+/*-------connect to mainControl-------*/
+
   emitAction(action) {
-    this.handleNextStep(action);
+    this.callNextStep(action);
   }
+
+  queryMapInfo(object) {
+    // TODO: 调用maincontrol的回调函数
+  }
+
+  callNextStep(action) {
+    const actionList = [];
+    actionList.push(action);
+    this.props.onNextStep(actionList);
+  }
+
+/*-------connect to blockly workspace-------*/
   
   highlightBlock(id) {
     this.refs.blockly_pad.highlightBlock(id);
@@ -40,6 +62,16 @@ class Programming extends Component {
 
   updateBlocklyXml(newXml) {
     this.refs.blockly_pad.updateBlocklyXml(newXml);
+  }
+
+/*-----------set up interpreter------------*/
+
+  completeCode(code) {
+    let finalCode = code;
+    this.props.HEADER.forEach(function(element) {
+      finalCode = element + finalCode;
+    }, this);
+    return finalCode;
   }
 
   initLoop() {
@@ -52,6 +84,10 @@ class Programming extends Component {
     }
   }
 
+  handleInfiniteLoop() {
+    alert("您的代码包含循环次数过多，或产生了无限循环！");
+  }
+
   // init interpreter
   initInterpreterApi(interpreter, scope) {
     // Add an API function for emit action code.
@@ -62,7 +98,15 @@ class Programming extends Component {
     interpreter.setProperty(scope, 'emitAction',
         interpreter.createNativeFunction(wrapper.bind(this)));
 
-    // Add an API function for highlighting blocks.
+    // for query map info.
+    wrapper = function(object) {
+      object = object ? object.toString() : '';
+      return interpreter.createPrimitive(this.queryMapInfo(object));
+    };
+    interpreter.setProperty(scope, 'queryMapInfo',
+        interpreter.createNativeFunction(wrapper.bind(this)));
+
+    // for highlighting blocks.
     wrapper = function(id) {
       id = id ? id.toString() : '';
       return interpreter.createPrimitive(this.highlightBlock(id));
@@ -70,14 +114,14 @@ class Programming extends Component {
     interpreter.setProperty(scope, 'highlightBlock',
         interpreter.createNativeFunction(wrapper.bind(this)));
 
-    // Add an API function for initialize loopTrap.
+    // for initialize loopTrap.
     wrapper = function() {
       return interpreter.createPrimitive(this.initLoop());
     };
     interpreter.setProperty(scope, 'initLoop',
         interpreter.createNativeFunction(wrapper.bind(this)));
 
-    // Add an API function for infinite loop.
+    // for infinite loop.
     wrapper = function() {
       return interpreter.createPrimitive(this.countLoop());
     };
@@ -85,9 +129,11 @@ class Programming extends Component {
         interpreter.createNativeFunction(wrapper.bind(this)));
   }
 
+/*-----------execute user's code------------*/
+
   //parse code to run
   runCode(code) {
-    const finalCode = this.props.HEADER + code;
+    const finalCode = this.completeCode(code);
     try{
       this.myInterpreter = new Interpreter(finalCode, this.initInterpreterApi.bind(this));
       this.myInterpreter.run();
@@ -102,14 +148,6 @@ class Programming extends Component {
     }
   }
 
-  handleInfiniteLoop() {
-    alert("您的代码包含循环次数过多，或产生了无限循环！");
-  }
-
-  handleFinishAnimation() {
-    document.getElementById("step_btn").disabled = false;
-  }
-
   handleStepThrough(code) {
     // disable step button
     document.getElementById("step_btn").disabled = true;
@@ -119,7 +157,7 @@ class Programming extends Component {
     });
 
     if (!this.myInterpreter) {
-      const finalCode = this.props.HEADER + code;
+      const finalCode = this.completeCode(code);
       this.myInterpreter = new Interpreter(finalCode, this.initInterpreterApi.bind(this));
       this.props.startStepThrough();  // call back function
       this.props.setCallback(this.handleFinishAnimation.bind(this));
@@ -148,6 +186,12 @@ class Programming extends Component {
     return;
   }
 
+/*-----------interact with UI------------*/
+  
+  handleFinishAnimation() {
+    document.getElementById("step_btn").disabled = false;
+  }
+
   handleCodeSubmit(pureCode, runableCode) {
     this.setState({
       code: runableCode,
@@ -156,12 +200,6 @@ class Programming extends Component {
     this.highlightBlock(null);
     this.props.onCodeSubmit();
     this.runCode(runableCode);
-  }
-
-  handleNextStep(action) {
-    const actionList = [];
-    actionList.push(action);
-    this.props.onNextStep(actionList);
   }
 
   handleReset() {
@@ -191,6 +229,8 @@ class Programming extends Component {
       num <= 2 * this.props.stdBlockNum ? 'cnt-color-large' : 'cnt-color-huge';
     this.props.onSolutionChanged(newXml, num);
   }
+
+/*-----------render()------------*/
 
   render() {
     return (

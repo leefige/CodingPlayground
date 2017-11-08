@@ -3,6 +3,7 @@
     <block type="actions_go"></block>
     <block type="actions_turn"></block>
     <block type="actions_attack"></block>
+    <block type="actions_open_chest"></block>
     <block type="actions_use"></block>
   </category>
   <category name="物品" colour="45">
@@ -11,6 +12,7 @@
   </category>
   <category name="逻辑" colour="210">
     <block type="controls_if"></block>
+    <block type="logic_in_front_of"></block>
     <block type="logic_compare"></block>
     <block type="logic_operation"></block>
     <block type="logic_negate"></block>

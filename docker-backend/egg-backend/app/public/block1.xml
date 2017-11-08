@@ -3,6 +3,7 @@
     <block type="actions_go"></block>
     <block type="actions_turn"></block>
     <block type="actions_attack"></block>
+    <block type="actions_open_chest"></block>
     <block type="actions_use"></block>
   </category>
   <category name="物品" colour="45">
