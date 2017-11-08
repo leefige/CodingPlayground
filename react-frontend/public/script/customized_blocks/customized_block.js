@@ -36,6 +36,14 @@ Blockly.defineBlocksWithJsonArray([{
   tooltip: "",
   helpUrl: ""
 }, {
+  type: "actions_open_chest",
+  message0: "%{BKY_ACTIONS_OPEN_CHEST_TITLE}",
+  previousStatement: null,
+  nextStatement: null,
+  colour: "%{BKY_ACTIONS_HUE}",
+  tooltip: "",
+  helpUrl: ""
+}, {
   type: "actions_use",
   message0: "%{BKY_ACTIONS_USE_TITLE} %1",
   args0: [
@@ -70,6 +78,29 @@ Blockly.defineBlocksWithJsonArray([{
   message0: "%{BKY_OBJECTS_BOMB_TITLE}",
   output: "Object",
   colour: "%{BKY_OBJECTS_HUE}",
+  tooltip: "",
+  helpUrl: ""
+}]);
+
+Blockly.defineBlocksWithJsonArray([{
+  type: "logic_in_front_of",
+  message0: "%{BKY_LOGIC_IN_FRONT_OF_TITLE} %1",
+  args0: [{
+    type: "field_dropdown",
+    name: "OBJECT",
+    options: [
+      ["%{BKY_LOGIC_IN_FRONT_OF_CHEST}", "CHEST"],
+      ["%{BKY_LOGIC_IN_FRONT_OF_ENEMY}", "ENEMY"],
+      ["%{BKY_LOGIC_IN_FRONT_OF_GRASS}", "GRASS"],
+      ["%{BKY_LOGIC_IN_FRONT_OF_TREE}", "TREE"],
+      ["%{BKY_LOGIC_IN_FRONT_OF_FENCE}", "FENCE"],
+      ["%{BKY_LOGIC_IN_FRONT_OF_STONE}", "STONE"],
+      ["%{BKY_LOGIC_IN_FRONT_OF_CLIFF}", "CLIFF"],
+      ["%{BKY_LOGIC_IN_FRONT_OF_POND}", "POND"],
+    ]
+  }],
+  output: "Boolean",
+  colour: "%{BKY_LOGIC_HUE}",
   tooltip: "",
   helpUrl: ""
 }]);

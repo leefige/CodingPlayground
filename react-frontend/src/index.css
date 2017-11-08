@@ -11,7 +11,7 @@ body {
   -moz-background-size: cover;
   background-size: cover;
   -o-background-size: cover;
-  zoom: 1.2;
+  /* zoom: 1.2; */
 }
 
 .game-header {
@@ -71,7 +71,7 @@ body {
   padding-left: 40px;
   padding-right: 10px;
   box-sizing: border-box;
-  font-size: 9pt;
+  font-size: 10pt;
   color: #949494;
 }
 
@@ -118,7 +118,7 @@ body {
   min-height: 120px;
   height: 100%;
   width: 100%;
-  font-size: 11pt;
+  font-size: 9pt;
   resize: none;
 }
 
