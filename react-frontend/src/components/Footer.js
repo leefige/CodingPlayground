@@ -5,11 +5,7 @@ class Footer extends Component {
   render() {
     return (
       <div className='col-md-offset-6'>
-        <div class="btn-group" role="group" aria-label="...">
-          <Link to='/map/275' type="button" class="btn btn-default">1</Link>
-          <Link to='/map/276' type="button" class="btn btn-default">2</Link>
-          <Link to='/map/274' type="button" class="btn btn-default">3</Link>
-        </div>
+        
       </div>
     );
   }
