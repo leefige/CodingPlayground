@@ -24,6 +24,8 @@ class Enemy extends Unit {
     this._nextState.status = 'dead';
   }
 
+  get status() { return this._state.status; }
+
 }
 
 export default Enemy;

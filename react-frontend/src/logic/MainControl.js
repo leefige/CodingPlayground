@@ -73,7 +73,7 @@ class MainControl{
     this._enemy = [];
     for (let i = 0; i < this._state.enemy.length; i++)
       this._enemy[i] = new Enemy(this._state.enemy[i])
-    this._character = new Character(this._state.character, this._board);
+    this._character = new Character(this._state.character, this._board, this._enemy);
     this._player = new Player(state);
     this._status = 1; //游戏状态，0为初始状态，1为正常运行，2为胜利，3为失败, 4为暂停
   }
@@ -142,13 +142,11 @@ class MainControl{
   }
 
   update() {
-    //if (this._status === 1) { //若游戏没有结束则更新
-      this._character.update();
-      for (let i = 0; i < this._enemy.length; i++)
-        this._enemy[i].update();
-      this._board.update();
-      this.save();
-    //}
+    this._character.update();
+    for (let i = 0; i < this._enemy.length; i++)
+      this._enemy[i].update();
+    this._board.update();
+    this.save();
   }
 
   save() {
