@@ -29,11 +29,11 @@ Blockly.JavaScript.actions_use = function (a) {
 };
 
 Blockly.JavaScript.objects_torch = function () {
-    return ["'torch'", Blockly.JavaScript.ORDER_NONE];
+    return ["'TORCH'", Blockly.JavaScript.ORDER_NONE];
 };
 
 Blockly.JavaScript.objects_bomb = function () {
-    return ["'bomb'", Blockly.JavaScript.ORDER_NONE];
+    return ["'BOMB'", Blockly.JavaScript.ORDER_NONE];
 };
 
 Blockly.JavaScript.logic_in_front_of = function (a) {
