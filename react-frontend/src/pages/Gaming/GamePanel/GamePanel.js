@@ -203,6 +203,17 @@ export default class GamePanel extends Component {
       const baseDir = player.character.dir;
 
       if (status === 0) {
+        const numEnemy = mainControl.player.enemy.length;
+        for (let i = 0; i < numEnemy; i++) {
+          const px = convertX(player.enemy[i].pos['y']),
+                py = convertY(player.enemy[i].pos['x']);
+          const baseEnmDir = player.enemy[i].dir;
+          mEnemy[i].x = px;
+          mEnemy[i].y = py;
+          mEnmPhase[i] = 1 * FPS;
+          mEnemy[i].texture = enmId[`${10 + baseEnmDir * 10 + updatePhase(mEnmPhase[i] / FPS)}.png`];
+        }
+
         const px = convertX(player.character.pos['y']),
               py = convertY(player.character.pos['x']);
         mCharacter.x = px, mCharacter.y = py;
