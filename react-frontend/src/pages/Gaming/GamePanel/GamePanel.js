@@ -73,12 +73,13 @@ export default class GamePanel extends Component {
     this.stage = new Container();
     const stage = this.stage;
 
-    let gameScene, id, chaId, enmId, gameover;
+    let gameScene, id, chaId, enmId, gameover, gamewin;
 
     let mCharacter, mPhase, mEnemy, mEnmPhase;
 
     const gpJson = `${process.env.PUBLIC_URL}/img/sources/gamePic.json`;
     const chaJson = `${process.env.PUBLIC_URL}/img/character/character.json`;
+    const utilJson = `${process.env.PUBLIC_URL}/img/util/util.json`;
     const enmJson = `${process.env.PUBLIC_URL}/img/enemy/enemy.json`;
 
     //Use Pixi's built-in `loader` object to load an image
@@ -86,6 +87,7 @@ export default class GamePanel extends Component {
       .add(gpJson)
       .add(chaJson)
       .add(enmJson)
+      .add(utilJson)
       .load(setup);
 
     function convertX(x) {
@@ -160,10 +162,18 @@ export default class GamePanel extends Component {
         gameScene.addChild(mEnemy[i]);
       }
 
-      gameover = new Sprite(id['gameover.png']);
-      gameover.x = width, gameover.y = height;
-      gameover.width = width, gameover.y = height;
+      const utilId = resources[utilJson].textures; 
+      gameover = new Sprite(utilId['gameover.png']);
+      gameover.x = 0, gameover.y = 0;
+      gameover.width = width, gameover.height = height;
+      gameover.visible = false;
       gameScene.addChild(gameover);
+
+      gamewin = new Sprite(utilId['gamewin.png']);
+      gamewin.x = 0, gamewin.y = 0;
+      gamewin.width = width, gamewin.height = height;
+      gamewin.visible = false;
+      gameScene.addChild(gamewin);  
 
       state = play;
 
@@ -188,7 +198,7 @@ export default class GamePanel extends Component {
         mCharacter.x = px, mCharacter.y = py;
         player.nextStep();
       }
-      if (status === 1) {
+      else if (status === 1) {
         
         const numEnemy = mainControl.player.enemy.length;
         for (let i = 0; i < numEnemy; i++) {
@@ -219,6 +229,9 @@ export default class GamePanel extends Component {
           player.nextStep();
         }
       }
+      else if (status === 2) {
+        state = end;
+      }
       else if (status === 3) {
         state = end;
       }
@@ -226,14 +239,19 @@ export default class GamePanel extends Component {
 
     function end() {
       const player = mainControl.player;
-      if (player.getStatus() !== 3) {
+      const status = mainControl.player.getStatus();
+      if (status < 2) {
         state = play;
-        gameover.x = width;
-        gameover.y = height;
+        gameover.visible = false;
+        gamewin.visible = false;
         return;
       }
-      gameover.x = 0;
-      gameover.y = 0;
+      else if (status === 2) {
+        gamewin.visible = true;
+      }
+      else if (status === 3) {
+        gameover.visible = true;
+      }
     }
   }
   /**
