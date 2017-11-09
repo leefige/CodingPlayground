@@ -6,7 +6,7 @@
         <key>texturePackerVersion</key>
         <string>4.5.0</string>
         <key>fileName</key>
-        <string>/Users/Yifan/Desktop/Software Engineering/CodingPlayground/react-frontend/public/img/util/util.tps</string>
+        <string>/Users/Yifan/Desktop/Software Engineering/CodingPlayground/react-frontend/public/img/util/enemy.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -150,7 +150,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>util.json</filename>
+                <filename>../enemy/enemy.json</filename>
             </struct>
         </map>
         <key>multiPack</key>
@@ -199,51 +199,45 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">gameover.png</key>
+            <key type="filename">../enemy/10.png</key>
+            <key type="filename">../enemy/11.png</key>
+            <key type="filename">../enemy/12.png</key>
+            <key type="filename">../enemy/20.png</key>
+            <key type="filename">../enemy/21.png</key>
+            <key type="filename">../enemy/22.png</key>
+            <key type="filename">../enemy/30.png</key>
+            <key type="filename">../enemy/31.png</key>
+            <key type="filename">../enemy/32.png</key>
+            <key type="filename">../enemy/40.png</key>
+            <key type="filename">../enemy/41.png</key>
+            <key type="filename">../enemy/42.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>71,50,142,101</rect>
+                <rect>100,100,200,200</rect>
                 <key>scale9Paddings</key>
-                <rect>71,50,142,101</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">gamewin.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>71,53,142,107</rect>
-                <key>scale9Paddings</key>
-                <rect>71,53,142,107</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">ok.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>400,400,800,800</rect>
-                <key>scale9Paddings</key>
-                <rect>400,400,800,800</rect>
+                <rect>100,100,200,200</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
         </map>
         <key>fileList</key>
         <array>
-            <filename>ok.png</filename>
-            <filename>gameover.png</filename>
-            <filename>gamewin.png</filename>
+            <filename>../enemy/30.png</filename>
+            <filename>../enemy/31.png</filename>
+            <filename>../enemy/32.png</filename>
+            <filename>../enemy/40.png</filename>
+            <filename>../enemy/41.png</filename>
+            <filename>../enemy/42.png</filename>
+            <filename>../enemy/20.png</filename>
+            <filename>../enemy/21.png</filename>
+            <filename>../enemy/22.png</filename>
+            <filename>../enemy/10.png</filename>
+            <filename>../enemy/11.png</filename>
+            <filename>../enemy/12.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

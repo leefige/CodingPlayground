@@ -73,17 +73,23 @@ export default class GamePanel extends Component {
     this.stage = new Container();
     const stage = this.stage;
 
-    let gameScene, id, chaId, gameover;
+    let gameScene, id, chaId, enmId, gameover, gamewin;
 
-    let mCharacter, mPhase;
+    let mCharacter, mPhase, mEnemy, mEnmPhase;
 
-    const gpJson = `${process.env.PUBLIC_URL}/img/sources/gamePic.json`
-    const chaJson = `${process.env.PUBLIC_URL}/img/character/character.json`
+    const gpJson = `${process.env.PUBLIC_URL}/img/sources/gamePic.json`;
+    const chaJson = `${process.env.PUBLIC_URL}/img/character/character.json`;
+    const utilJson = `${process.env.PUBLIC_URL}/img/util/util.json`;
+    const objJson = `${process.env.PUBLIC_URL}/img/obj/obj.json`
+    const enmJson = `${process.env.PUBLIC_URL}/img/enemy/enemy.json`;
 
     //Use Pixi's built-in `loader` object to load an image
     loader
       .add(gpJson)
       .add(chaJson)
+      .add(enmJson)
+      .add(utilJson)
+      .add(objJson)
       .load(setup);
 
     function convertX(x) {
@@ -131,6 +137,14 @@ export default class GamePanel extends Component {
       // background.height = height;
       // gameScene.addChild(background);
 
+      const objId = resources[objJson].textures;
+      let chest = new Sprite(objId['1.png']);
+      chest.width = width / row;
+      chest.height = height / col;
+      chest.x = convertX(mainControl.board.chestPos['y']);
+      chest.y = convertY(mainControl.board.chestPos['x']);
+      gameScene.addChild(chest);
+
       chaId = resources[chaJson].textures;
 
       const baseDir = mainControl.player.character.dir;
@@ -143,10 +157,33 @@ export default class GamePanel extends Component {
       mCharacter.y = convertY(mainControl.player.character.pos['x']);
       gameScene.addChild(mCharacter);
 
-      gameover = new Sprite(id['gameover.png']);
-      gameover.x = width, gameover.y = height;
-      gameover.width = width, gameover.y = height;
+      const numEnemy = mainControl.player.enemy.length;
+      mEnemy = new Array(numEnemy);
+      mEnmPhase = new Array(numEnemy);
+      enmId = resources[enmJson].textures;
+      for (let i = 0; i < numEnemy; i++) {
+        mEnmPhase[i] = 1 * FPS;
+        const baseDir = mainControl.player.enemy[i].dir;
+        mEnemy[i] = new Sprite(enmId[`${10 + baseDir * 10 + updatePhase(mEnmPhase[i] / FPS)}.png`]);
+        mEnemy[i].width = width / 10;
+        mEnemy[i].height = height / 8;
+        mEnemy[i].x = convertX(mainControl.player.enemy[i].pos['y']);
+        mEnemy[i].y = convertY(mainControl.player.enemy[i].pos['x']);
+        gameScene.addChild(mEnemy[i]);
+      }
+
+      const utilId = resources[utilJson].textures; 
+      gameover = new Sprite(utilId['gameover.png']);
+      gameover.x = 0, gameover.y = 0;
+      gameover.width = width, gameover.height = height;
+      gameover.visible = false;
       gameScene.addChild(gameover);
+
+      gamewin = new Sprite(utilId['gamewin.png']);
+      gamewin.x = 0, gamewin.y = 0;
+      gamewin.width = width, gamewin.height = height;
+      gamewin.visible = false;
+      gameScene.addChild(gamewin);  
 
       state = play;
 
@@ -171,7 +208,23 @@ export default class GamePanel extends Component {
         mCharacter.x = px, mCharacter.y = py;
         player.nextStep();
       }
-      if (status === 1) {
+      else if (status === 1) {
+        
+        const numEnemy = mainControl.player.enemy.length;
+        for (let i = 0; i < numEnemy; i++) {
+          const px = convertX(player.enemy[i].pos['y']),
+                py = convertY(player.enemy[i].pos['x']);
+          const baseEnmDir = player.enemy[i].dir;
+          if (px !== mEnemy[i].x || py !== mEnemy[i].y) {
+            if (px > mEnemy[i].x) mEnemy[i].x++;
+            else if (px < mEnemy[i].x) mEnemy[i].x--;
+            else if (py > mEnemy[i].y) mEnemy[i].y++;
+            else if (py < mEnemy[i].y) mEnemy[i].y--;
+            mEnemy[i].texture = enmId[`${10 + baseEnmDir * 10 + updatePhase(mEnmPhase[i] / FPS)}.png`];
+            mEnmPhase[i] = (mEnmPhase[i] + 1) % (4 * FPS); 
+          }
+        }
+
         const px = convertX(player.character.pos['y']),
               py = convertY(player.character.pos['x']);
         if (px !== mCharacter.x || py !== mCharacter.y) {
@@ -181,11 +234,13 @@ export default class GamePanel extends Component {
           else if (py < mCharacter.y) mCharacter.y--;
           mCharacter.texture = chaId[`${10 + baseDir * 10 + updatePhase(mPhase / FPS)}.png`];
           mPhase = (mPhase + 1) % (4 * FPS);
-          console.log(mPhase);
         }
         else {
           player.nextStep();
         }
+      }
+      else if (status === 2) {
+        state = end;
       }
       else if (status === 3) {
         state = end;
@@ -194,14 +249,19 @@ export default class GamePanel extends Component {
 
     function end() {
       const player = mainControl.player;
-      if (player.getStatus() !== 3) {
+      const status = mainControl.player.getStatus();
+      if (status < 2) {
         state = play;
-        gameover.x = width;
-        gameover.y = height;
+        gameover.visible = false;
+        gamewin.visible = false;
         return;
       }
-      gameover.x = 0;
-      gameover.y = 0;
+      else if (status === 2) {
+        gamewin.visible = true;
+      }
+      else if (status === 3) {
+        gameover.visible = true;
+      }
     }
   }
   /**
