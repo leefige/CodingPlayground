@@ -80,6 +80,7 @@ export default class GamePanel extends Component {
     const gpJson = `${process.env.PUBLIC_URL}/img/sources/gamePic.json`;
     const chaJson = `${process.env.PUBLIC_URL}/img/character/character.json`;
     const utilJson = `${process.env.PUBLIC_URL}/img/util/util.json`;
+    const objJson = `${process.env.PUBLIC_URL}/img/obj/obj.json`
     const enmJson = `${process.env.PUBLIC_URL}/img/enemy/enemy.json`;
 
     //Use Pixi's built-in `loader` object to load an image
@@ -88,6 +89,7 @@ export default class GamePanel extends Component {
       .add(chaJson)
       .add(enmJson)
       .add(utilJson)
+      .add(objJson)
       .load(setup);
 
     function convertX(x) {
@@ -134,6 +136,14 @@ export default class GamePanel extends Component {
       // background.width = width;
       // background.height = height;
       // gameScene.addChild(background);
+
+      const objId = resources[objJson].textures;
+      let chest = new Sprite(objId['1.png']);
+      chest.width = width / row;
+      chest.height = height / col;
+      chest.x = convertX(mainControl.board.chestPos['y']);
+      chest.y = convertY(mainControl.board.chestPos['x']);
+      gameScene.addChild(chest);
 
       chaId = resources[chaJson].textures;
 
