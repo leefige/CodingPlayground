@@ -203,6 +203,17 @@ export default class GamePanel extends Component {
       const baseDir = player.character.dir;
 
       if (status === 0) {
+        const numEnemy = mainControl.player.enemy.length;
+        for (let i = 0; i < numEnemy; i++) {
+          const px = convertX(player.enemy[i].pos['y']),
+                py = convertY(player.enemy[i].pos['x']);
+          const baseEnmDir = player.enemy[i].dir;
+          mEnemy[i].x = px;
+          mEnemy[i].y = py;
+          mEnmPhase[i] = 1 * FPS;
+          mEnemy[i].texture = enmId[`${10 + baseEnmDir * 10 + updatePhase(mEnmPhase[i] / FPS)}.png`];
+        }
+
         const px = convertX(player.character.pos['y']),
               py = convertY(player.character.pos['x']);
         mCharacter.x = px, mCharacter.y = py;
@@ -216,10 +227,18 @@ export default class GamePanel extends Component {
                 py = convertY(player.enemy[i].pos['x']);
           const baseEnmDir = player.enemy[i].dir;
           if (px !== mEnemy[i].x || py !== mEnemy[i].y) {
-            if (px > mEnemy[i].x) mEnemy[i].x++;
-            else if (px < mEnemy[i].x) mEnemy[i].x--;
-            else if (py > mEnemy[i].y) mEnemy[i].y++;
-            else if (py < mEnemy[i].y) mEnemy[i].y--;
+            if (px > mEnemy[i].x) {
+              mEnemy[i].x++;
+            }
+            else if (px < mEnemy[i].x) {
+              mEnemy[i].x--;
+            }
+            else if (py > mEnemy[i].y) {
+              mEnemy[i].y++;
+            }
+            else if (py < mEnemy[i].y) {
+              mEnemy[i].y--;
+            }
             mEnemy[i].texture = enmId[`${10 + baseEnmDir * 10 + updatePhase(mEnmPhase[i] / FPS)}.png`];
             mEnmPhase[i] = (mEnmPhase[i] + 1) % (4 * FPS); 
           }
@@ -229,9 +248,15 @@ export default class GamePanel extends Component {
               py = convertY(player.character.pos['x']);
         if (px !== mCharacter.x || py !== mCharacter.y) {
           if (px > mCharacter.x) mCharacter.x++;
-          else if (px < mCharacter.x) mCharacter.x--;
-          else if (py > mCharacter.y) mCharacter.y++;
-          else if (py < mCharacter.y) mCharacter.y--;
+          else if (px < mCharacter.x) {
+            mCharacter.x--;
+          }
+          else if (py > mCharacter.y) {
+            mCharacter.y++;
+          }
+          else if (py < mCharacter.y) {
+            mCharacter.y--;
+          }
           mCharacter.texture = chaId[`${10 + baseDir * 10 + updatePhase(mPhase / FPS)}.png`];
           mPhase = (mPhase + 1) % (4 * FPS);
         }
@@ -239,16 +264,12 @@ export default class GamePanel extends Component {
           player.nextStep();
         }
       }
-      else if (status === 2) {
-        state = end;
-      }
-      else if (status === 3) {
+      else if (status >= 2) {
         state = end;
       }
     }
 
     function end() {
-      const player = mainControl.player;
       const status = mainControl.player.getStatus();
       if (status < 2) {
         state = play;

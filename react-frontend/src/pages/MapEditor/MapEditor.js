@@ -243,7 +243,6 @@ export default class MapEditor extends Component {
         const j = parseInt((newPosition.y - lefty) / szy);
         newPosition.x = leftx + i * innerWidth / row + szx / 2;
         newPosition.y = lefty + j * innerHeight / col + szy / 2;
-        console.log(str);
         if (str == "cha") {
           mapRecord.pos = i * row + j;
         }
