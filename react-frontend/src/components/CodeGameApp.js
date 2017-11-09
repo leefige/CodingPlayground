@@ -44,7 +44,7 @@ class CodeGameApp extends Component {
   render() {
     return (
       <div>
-        <div className="container">
+        <div className="container-fluid">
           <div className='game-header row'>
           <div className="col-md-offset-4 btn-group clear-fix text-left pull-left" role="group" aria-label="...">
           <Link to='/map/301' type="button" class="btn btn-default">1</Link>

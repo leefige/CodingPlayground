@@ -118,7 +118,7 @@ class MainControl{
             //this._status = this._character.turnRight();
             break;
           case actionTable.open:
-            //this._status = this._character.open();
+            this._status = this._character.open();
             break;
           
         }

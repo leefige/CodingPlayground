@@ -68,14 +68,20 @@ class Player {
       if (this._curStep < this._totalStep)
         this._curStep = this._curStep + 1;
       else if (this._mode == 'step') {
-        this._callback();
+        if (this._callback !== undefined) {
+          this._callback();
+        }
         this.status = playerStatus.pause;
       }
       else { // player end
-        if (this._result === playerStatus.success)
-          this._gameOverCallback(true);
-        else
-          this._gameOverCallback(false);
+        if (this._result === playerStatus.success) {
+          if (this._gameOverCallback !== undefined)
+            this._gameOverCallback(true);
+        }
+        else {
+          if (this._gameOverCallback !== undefined)
+            this._gameOverCallback(false);
+        }
         this._status = this._result;
       }
     }
