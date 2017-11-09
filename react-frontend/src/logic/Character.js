@@ -50,8 +50,9 @@ class Character extends Unit {
     let nextPos = this.getNextPos();
     if (nextPos.x < 0 || nextPos.x >= this._board.size || nextPos.y < 0 || nextPos.y >= this._board.size)
       return 3;
-    if (this._board.map[nextPos.x][nextPos.y] === this._board.elements.treasure)
+    if (this._board.map[nextPos.x][nextPos.y] === this._board.elements.chest){
       return 2;
+    }
     return 3;
   }
 }
