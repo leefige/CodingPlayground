@@ -2,8 +2,10 @@ import Basic from "./Basic"
 // 方向: up:0, right:1, down:2, left:3 
 class Unit extends Basic {
   getNextPos() {
-    const dir = this.dir;
-    const pos = this.pos;
+    return this.getNextPosBasic(this.pos, this.dir);
+  }
+
+  getNextPosBasic(pos, dir) {
     let nextPos = pos;
     if (dir === 0)
       nextPos = { x : pos.x - 1, y : pos.y };
@@ -15,6 +17,7 @@ class Unit extends Basic {
       nextPos = { x : pos.x, y : pos.y - 1};
     return nextPos;
   }
+
   get pos() { return this._state.pos; }
   get dir() { return this._state.dir; }
 }

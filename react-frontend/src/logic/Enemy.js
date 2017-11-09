@@ -8,14 +8,14 @@ class Enemy extends Unit {
 
   go() {
     if (this._state.status == 'alive') {
-      let nextPos = this.getNextPos();
-      this._nextState.pos = nextPos;
       for (let i = 0; i < this._state.turningPoint.length; i++) {
-        if (nextPos.x === this._state.turningPoint[i].pos.x && nextPos.y === this._state.turningPoint[i].pos.y) {
+        if (this.pos.x === this._state.turningPoint[i].pos.x && this.pos.y === this._state.turningPoint[i].pos.y) {
           this._nextState.dir = this._state.turningPoint[i].dir;
           break;
         }
       }
+      let nextPos = this.getNextPosBasic(this.pos, this._nextState.dir);
+      this._nextState.pos = nextPos;
     }
   }
 
