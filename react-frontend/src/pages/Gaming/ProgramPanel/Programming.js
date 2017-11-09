@@ -136,6 +136,8 @@ class Programming extends Component {
     const finalCode = this.completeCode(code);
     try{
       this.myInterpreter = new Interpreter(finalCode, this.initInterpreterApi.bind(this));
+      this.props.setCallback(this.handleFinishAnimation.bind(this));
+      this.props.setGameOverCallback(this.handleGameOver.bind(this));
       this.myInterpreter.run();
     } catch (err) {
       if (err === this.props.INFINITE_LOOP_ERROR) {
@@ -161,6 +163,7 @@ class Programming extends Component {
       this.myInterpreter = new Interpreter(finalCode, this.initInterpreterApi.bind(this));
       this.props.startStepThrough();  // call back function
       this.props.setCallback(this.handleFinishAnimation.bind(this));
+      this.props.setGameOverCallback(this.handleGameOver.bind(this));
     }
 
     this.highlightPause = false;
@@ -180,6 +183,7 @@ class Programming extends Component {
           document.getElementById("step_btn").disabled = false;
           document.getElementById("abort_btn").disabled = true;
           document.getElementById("step_btn_text").innerHTML = "&nbsp;&nbsp;单步调试";
+          document.getElementById("blockly_layer").style.display = 'none';
         }
       }
     } while (hasMoreCode && !this.highlightPause);
@@ -190,6 +194,16 @@ class Programming extends Component {
   
   handleFinishAnimation() {
     document.getElementById("step_btn").disabled = false;
+  }
+
+  handleGameOver(success) {
+    document.getElementById("run_btn").disabled = false;
+    document.getElementById("step_btn").disabled = false;
+    document.getElementById("step_btn_text").innerHTML = "&nbsp;&nbsp;单步调试";
+    document.getElementById("blockly_layer").style.display = 'none';
+    if(success) {
+      this.props.onSuccess();
+    }
   }
 
   handleCodeSubmit(pureCode, runableCode) {
@@ -210,7 +224,6 @@ class Programming extends Component {
       code: '',
       text: '已终止',
     });
-    document.getElementById("step_btn").disabled = false;
   }
 
   handleXmlChange(newXml) {
