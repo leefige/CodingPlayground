@@ -73,17 +73,19 @@ export default class GamePanel extends Component {
     this.stage = new Container();
     const stage = this.stage;
 
-    let gameScene, id, chaId, gameover;
+    let gameScene, id, chaId, enmId, gameover;
 
-    let mCharacter, mPhase;
+    let mCharacter, mPhase, mEnemy, mEnmPhase;
 
-    const gpJson = `${process.env.PUBLIC_URL}/img/sources/gamePic.json`
-    const chaJson = `${process.env.PUBLIC_URL}/img/character/character.json`
+    const gpJson = `${process.env.PUBLIC_URL}/img/sources/gamePic.json`;
+    const chaJson = `${process.env.PUBLIC_URL}/img/character/character.json`;
+    const enmJson = `${process.env.PUBLIC_URL}/img/enemy/enemy.json`;
 
     //Use Pixi's built-in `loader` object to load an image
     loader
       .add(gpJson)
       .add(chaJson)
+      .add(enmJson)
       .load(setup);
 
     function convertX(x) {
@@ -143,6 +145,21 @@ export default class GamePanel extends Component {
       mCharacter.y = convertY(mainControl.player.character.pos['x']);
       gameScene.addChild(mCharacter);
 
+      const numEnemy = mainControl.player.enemy.length;
+      mEnemy = new Array(numEnemy);
+      mEnmPhase = new Array(numEnemy);
+      enmId = resources[enmJson].textures;
+      for (let i = 0; i < numEnemy; i++) {
+        mEnmPhase[i] = 1 * FPS;
+        const baseDir = mainControl.player.enemy[i].dir;
+        mEnemy[i] = new Sprite(enmId[`${10 + baseDir * 10 + updatePhase(mEnmPhase[i] / FPS)}.png`]);
+        mEnemy[i].width = width / 10;
+        mEnemy[i].height = height / 8;
+        mEnemy[i].x = convertX(mainControl.player.enemy[i].pos['y']);
+        mEnemy[i].y = convertY(mainControl.player.enemy[i].pos['x']);
+        gameScene.addChild(mEnemy[i]);
+      }
+
       gameover = new Sprite(id['gameover.png']);
       gameover.x = width, gameover.y = height;
       gameover.width = width, gameover.y = height;
@@ -172,6 +189,22 @@ export default class GamePanel extends Component {
         player.nextStep();
       }
       if (status === 1) {
+        
+        const numEnemy = mainControl.player.enemy.length;
+        for (let i = 0; i < numEnemy; i++) {
+          const px = convertX(player.enemy[i].pos['y']),
+                py = convertY(player.enemy[i].pos['x']);
+          const baseEnmDir = player.enemy[i].dir;
+          if (px !== mEnemy[i].x || py !== mEnemy[i].y) {
+            if (px > mEnemy[i].x) mEnemy[i].x++;
+            else if (px < mEnemy[i].x) mEnemy[i].x--;
+            else if (py > mEnemy[i].y) mEnemy[i].y++;
+            else if (py < mEnemy[i].y) mEnemy[i].y--;
+            mEnemy[i].texture = enmId[`${10 + baseEnmDir * 10 + updatePhase(mEnmPhase[i] / FPS)}.png`];
+            mEnmPhase[i] = (mEnmPhase[i] + 1) % (4 * FPS); 
+          }
+        }
+
         const px = convertX(player.character.pos['y']),
               py = convertY(player.character.pos['x']);
         if (px !== mCharacter.x || py !== mCharacter.y) {
@@ -181,7 +214,6 @@ export default class GamePanel extends Component {
           else if (py < mCharacter.y) mCharacter.y--;
           mCharacter.texture = chaId[`${10 + baseDir * 10 + updatePhase(mPhase / FPS)}.png`];
           mPhase = (mPhase + 1) % (4 * FPS);
-          console.log(mPhase);
         }
         else {
           player.nextStep();
