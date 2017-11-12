@@ -58,6 +58,11 @@ class Personal extends Component {
     return (
       <div className='col-md-8 col-md-offset-2'>
         <div className="tab-content">
+          <div class="tab-pane active" id="about">
+            <h3>个人中心</h3>
+            <h5>Personal Space</h5>
+          </div>
+          <hr/>
           <form className="edit-user prepend-top-default" id="edit_user_6" enctype="multipart/form-data" action="/updateProfile" accept-charset="UTF-8" method="post">
             <div className="row">
               <div className="col-lg-3">
@@ -88,7 +93,6 @@ class Personal extends Component {
             <div className="row">
               <div className="col-lg-3 profile-settings-sidebar">
                 <h4>账号设置</h4>
-                <p>修改邮箱、修改密码、绑定手机</p>
               </div>
               <div className="col-lg-9">
                 <div className="form-group">
@@ -99,9 +103,38 @@ class Personal extends Component {
                   <label className="label-light" for="user_email">绑定邮箱</label>
                   <input className="personal-control" required="required" type="text" value="xxx@email.com" name="user[email]" id="user_email" />
                 </div>
+              </div>
+            </div>
+            <hr/>
+            <div className="row">
+              <div className="col-lg-3">
+                <h4>修改密码</h4>
+                <div className="clearfix avatar-image append-bottom-default">
+                </div>
+              </div>
+              <div className="col-lg-9">
+                <div className="form-group">
+                  <span>旧密码</span>
+                  <input className="personal-control" required="required" type="password" value="" name="user[password]" id="user_old_password" />
+                  <p/>
+                  <span>新密码</span>
+                  <input className="personal-control" required="required" type="password" value="" name="user[password]" id="user_new_password" />
+                  <p/>
+                  <span>确认新密码</span>
+                  <input className="personal-control" required="required" type="password" value="" name="user[password]" id="user_new_password_again" />
+                </div>
+              </div>
+              
+            </div>
+            <hr/>
+            <div className="row">
+              <div className="col-lg-3 profile-settings-sidebar">
+                <h4>提交修改</h4>
+              </div>
+              <div className="col-lg-9">
                 <div className="prepend-top-default append-bottom-default">
-                <input type="submit" name="commit" value="Update profile settings" className="btn btn-success" />
-                <a className="btn btn-cancel" href="/gitlab/u/2015010062">Cancel</a>
+                  <input type="submit" name="commit" value="确认提交" className="btn btn-success" />
+                  <a className="btn btn-cancel" href="/login">取消修改</a>
                 </div>
               </div>
             </div>
