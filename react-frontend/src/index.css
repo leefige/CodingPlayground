@@ -282,3 +282,151 @@ textarea.form-control::-webkit-input-placeholder {
   vertical-align: middle;
   font-size: 16px;
 }
+
+.form-box {
+  margin-top: 70px;
+}
+
+.form-top {
+  overflow: hidden;
+  padding: 0 25px 15px 25px;
+  background: #444;
+  background: rgba(0, 0, 0, 0.35);
+  -moz-border-radius: 4px 4px 0 0;
+  -webkit-border-radius: 4px 4px 0 0;
+  border-radius: 4px 4px 0 0;
+  text-align: left;
+}
+
+.form-top-left {
+  float: left;
+  width: 75%;
+  padding-top: 25px;
+}
+
+.form-top-left h3 {
+  margin-top: 0;
+  color: #fff;
+}
+
+.form-top-left h4 {
+  margin-top: 20px;
+  opacity: 0.8;
+  color: #fff;
+}
+
+.form-top-right {
+  float: left;
+  width: 25%;
+  padding-top: 5px;
+  font-size: 66px;
+  color: #fff;
+  line-height: 100px;
+  text-align: right;
+  opacity: 0.3;
+}
+
+
+/* for personal page */
+
+.tab-content {
+  background-color: #ffffff;
+  margin-bottom: 50px;
+	padding-left: 40px;
+  padding-top: 80px;
+	padding-bottom: 50px;
+  padding-right: 20px;
+  border-radius: 6px 6px 6px 6px;
+  box-shadow: 5px 5px 5px rgba(65, 65, 65, 0.2);
+}
+
+.tab-content h5 {
+	color: #54575c;
+	font-weight: 700;
+	letter-spacing: 1px;
+}
+
+.profile-avatar-form-option hr {
+    margin: 10px 0;
+}
+
+.avatar-image {
+    float: left;
+    margin-bottom: 0;
+}
+
+.avatar-file-name {
+  position: relative;
+  top: 2px;
+  display: inline-block;
+}
+
+.avatar {
+  width: 160px;
+  height: 160px;
+  margin-right: 20px;
+
+  float: left;
+  border-radius: 80px;
+  border: 1px solid #fff;
+
+  padding: 0;
+  overflow: hidden;
+}
+
+.avatar .avatar-inline {
+  float: none;
+  display: inline-block;
+  margin-left: 2px;
+  flex-shrink: 0;
+  -webkit-flex-shrink: 0;
+  margin-right: 4px;
+}
+
+.avatar .center {
+  font-size: 14px;
+  line-height: 1.8em;
+  text-align: center;
+}
+
+.avatar .avatar-tile {
+  border-radius: 0;
+  border: 0;
+}
+
+.avatar :not([href]):hover {
+  border-color: darken(#fff, 10%);
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+textarea:focus,
+textarea.personal-control:focus {
+  outline: 0;
+  background: #fff;
+  border: 3px solid #fff;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+input[type="text"]:-moz-placeholder,
+input[type="password"]:-moz-placeholder,
+textarea:-moz-placeholder,
+textarea.personal-control:-moz-placeholder {
+  color: #000;
+}
+
+input[type="text"]:-ms-input-placeholder,
+input[type="password"]:-ms-input-placeholder,
+textarea:-ms-input-placeholder,
+textarea.personal-control:-ms-input-placeholder {
+  color: #000;
+}
+
+input[type="text"]::-webkit-input-placeholder,
+input[type="password"]::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder,
+textarea.personal-control::-webkit-input-placeholder {
+  color: #000;
+}
