@@ -46,7 +46,6 @@ export default class PixiComponent {
 
   setup = () => {
     const {
-      Sprite,
       row,
       col,
       FPS,
@@ -106,7 +105,7 @@ export default class PixiComponent {
     this.mCharacter.addTo(gameScene);
 
     const numEnemy = mainControl.player.enemy.length;
-    this.mEnemy = new Array();
+    this.mEnemy = [];
     const enmId = this.resources[this.enmJson].textures;
     for (let i = 0; i < numEnemy; i++) {
       const enemy = new Obj(

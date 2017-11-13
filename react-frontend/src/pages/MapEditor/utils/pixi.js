@@ -1,11 +1,5 @@
 import * as PIXI from "pixi.js";
-import {
-  convertX,
-  convertY,
-  updatePhase
-} from "./misc";
 import Obj, { Button, Dragable } from "./obj";
-import { mainControl } from '../../../logic/MainControl';
 import { post } from '../../../utils/Request'
 
 // `setup` function will run when the image has loaded
@@ -13,7 +7,6 @@ export default class PixiComponent {
 
   constructor(stage, width, height, innerWidth, innerHeight, renderer) {
     this.Container = PIXI.Container;
-    this.Sprite = PIXI.Sprite;
     this.resources = PIXI.loader.resources;
 
     this.gpJson = `${process.env.PUBLIC_URL}/img/sources/gamePic.json`;
@@ -43,10 +36,7 @@ export default class PixiComponent {
 
   setup = () => {
     const {
-      Sprite,
-      width, height,
-      innerWidth, innerHeight,
-      row, col
+      width, height
     } = this;
 
     this.gameScene = new this.Container();
@@ -61,7 +51,7 @@ export default class PixiComponent {
         i * 0.13 * width + 0.25 * width,
         10
       );
-      map.obj.on('click', () => {this.loadmap(parseInt(key.split('.')[0]))});
+      map.obj.on('click', () => {this.loadmap(parseInt(key.split('.')[0], 10))});
       map.addTo(this.stage);
       i++;
     }

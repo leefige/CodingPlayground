@@ -1,7 +1,4 @@
 import * as PIXI from "pixi.js";
-import {
-  updatePhase
-} from "./misc";
 
 export default class Obj {
   constructor(sprite, width, height, posx, posy, phase = null, visible = true) {
@@ -100,15 +97,15 @@ export class Dragable extends Obj {
     const szy = innerHeight / col;
 
     if (leftx < newPosition.x && newPosition.x < rightx && lefty < newPosition.y && newPosition.y < righty) {
-      const i = parseInt((newPosition.x - leftx) / szx);
-      const j = parseInt((newPosition.y - lefty) / szy);
+      const i = parseInt((newPosition.x - leftx) / szx, 10);
+      const j = parseInt((newPosition.y - lefty) / szy, 10);
       newPosition.x = leftx + i * innerWidth / row + szx / 2;
       newPosition.y = lefty + j * innerHeight / col + szy / 2;
       if (this.type === "cha") {
         this.mapRecord.pos = i * row + j;
       }
       else {
-        this.mapRecord.id_tools[i * row + j] = parseInt(this.type);
+        this.mapRecord.id_tools[i * row + j] = parseInt(this.type, 10);
       }
     }
 

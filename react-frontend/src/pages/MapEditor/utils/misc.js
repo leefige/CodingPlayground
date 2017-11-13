@@ -1,13 +1,5 @@
 import * as PIXI from "pixi.js";
 
-export function convertX(x, width, row) {
-  return parseInt(x * width / row + 6);
-}
-
-export function convertY(x, height, col) {
-  return parseInt(x * height / col - height / col / 2);
-}
-
 export function canvasSetup() {
 
   this.aspectRatio = 0.7;
@@ -33,10 +25,4 @@ export function canvasSetup() {
     this.stage.scale.y = zoomLevel;
     this.renderer.resize(accWidth, accWidth * this.aspectRatio);
   });
-}
-
-export function updatePhase(x) {
-  x = parseInt(x);
-  if (x === 3) return 1;
-  return x;
 }

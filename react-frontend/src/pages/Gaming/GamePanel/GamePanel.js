@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 
 import {
-  convertX,
-  convertY,
-  canvasSetup,
-  updatePhase
+  canvasSetup
 } from './utils/misc';
 
 import PixiComponent from './utils/pixi';
