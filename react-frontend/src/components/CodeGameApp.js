@@ -5,7 +5,7 @@ import Header from './Header';
 import Footer from './Footer';
 import Signup from './Signup';
 import Login from './Login';
-import Personal from '../pages/Personal/Personal';
+import Account from '../pages/Personal/Account';
 import {
   BrowserRouter as Router,
   Route,
@@ -79,7 +79,7 @@ class CodeGameApp extends Component {
           <Route path="/mapEditor" component={MapEditor} />
           <Route path="/login" component={props => <Login {...props} onLogin={this.handleLogin.bind(this)} />} />
           <Route path="/signup" component={Signup} />
-          <Route path="/personal" component={props => <Personal {...props} userId={this.getLoginUserId.bind(this)}/>} />
+          <Route path="/personal/account" component={props => <Account {...props} userId={this.getLoginUserId.bind(this)}/>} />
           <Footer className='footer-style' />
         </div>
       </div>

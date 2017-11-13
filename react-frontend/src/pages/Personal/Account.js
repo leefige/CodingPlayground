@@ -3,13 +3,15 @@ import { Link } from 'react-router-dom'
 import { post } from "../../utils/Request"
 
 
-class Personal extends Component {
+class Account extends Component {
   constructor() {
     super()
     this.state = {
+      id: 'user ID',
       email: '',
-      password: '',
-      rememberMe: false,
+      oldPassword: '',
+      newPassword: '',
+      againPassword: '',
     }
 
   }
@@ -33,13 +35,25 @@ class Personal extends Component {
   handleEmailChange(event) {
     this.setState({
       email: event.target.value
-    })
+    });
   }
 
-  handlePasswordChange(event) {
+  handleOldPasswordChange(event) {
     this.setState({
-      password: event.target.value
-    })
+      oldPassword: event.target.value
+    });
+  }
+
+  handleNewPasswordChange(event) {
+    this.setState({
+      newPassword: event.target.value
+    });
+  }
+
+  handleAgainPasswordChange(event) {
+    this.setState({
+      againPassword: event.target.value
+    });
   }
 
   handleUploadAvatot() {
@@ -59,8 +73,8 @@ class Personal extends Component {
       <div className='col-md-8 col-md-offset-2'>
         <div className="tab-content">
           <div class="tab-pane active" id="about">
-            <h3>个人中心</h3>
-            <h5>Personal Space</h5>
+            <h3>账户管理</h3>
+            <h5>Account Management</h5>
           </div>
           <hr/>
           <form className="edit-user prepend-top-default" id="edit_user_6" enctype="multipart/form-data" action="/updateProfile" accept-charset="UTF-8" method="post">
@@ -89,7 +103,9 @@ class Personal extends Component {
                 <div className="help-block">图片最大尺寸为200KB</div>
               </div>
             </div>
-            <hr/>
+          </form>
+          <hr/>
+          <form className="edit-user prepend-top-default" id="edit_user_6" enctype="multipart/form-data" action="/updateProfile" accept-charset="UTF-8" method="post">
             <div className="row">
               <div className="col-lg-3 profile-settings-sidebar">
                 <h4>账号设置</h4>
@@ -97,15 +113,24 @@ class Personal extends Component {
               <div className="col-lg-9">
                 <div className="form-group">
                   <label className="label-light" for="user_name">用户名</label>
-                  <span>user ID</span>
+                  <input className="personal-control" type="text" 
+                    value={this.state.id} readonly='readonly' name="user[id]" id="user_id" />
                 </div>
                 <div className="form-group">
                   <label className="label-light" for="user_email">绑定邮箱</label>
-                  <input className="personal-control" required="required" type="text" value="xxx@email.com" name="user[email]" id="user_email" />
+                  <input className="personal-control" required="required" 
+                    type="text" value={this.state.email} onChange={this.handleEmailChange.bind(this)}
+                    placeholder="sample@xyz.com" name="user[email]" id="user_email" />
+                </div>
+                <div className="prepend-top-default append-bottom-default">
+                  <input type="submit" name="commit" value="确认提交" className="btn btn-success" />
+                  <a className="btn btn-cancel" href="/personal">取消修改</a>
                 </div>
               </div>
             </div>
-            <hr/>
+          </form>
+          <hr/>
+          <form className="edit-user prepend-top-default" id="edit_user_6" enctype="multipart/form-data" action="/updateProfile" accept-charset="UTF-8" method="post">
             <div className="row">
               <div className="col-lg-3">
                 <h4>修改密码</h4>
@@ -115,29 +140,27 @@ class Personal extends Component {
               <div className="col-lg-9">
                 <div className="form-group">
                   <span>旧密码</span>
-                  <input className="personal-control" required="required" type="password" value="" name="user[password]" id="user_old_password" />
+                  <input className="personal-control" required="required" 
+                    type="password" value={this.state.oldPassword} onChange={this.handleOldPasswordChange.bind(this)}
+                    placeholder="请输入旧密码" name="user[old_password]" id="user_old_password" />
                   <p/>
                   <span>新密码</span>
-                  <input className="personal-control" required="required" type="password" value="" name="user[password]" id="user_new_password" />
+                  <input className="personal-control" required="required" type="password" 
+                    type="password" value={this.state.newPassword} onChange={this.handleNewPasswordChange.bind(this)}
+                    placeholder="请输入新密码" name="user[new_password]" id="user_new_password" />
                   <p/>
                   <span>确认新密码</span>
-                  <input className="personal-control" required="required" type="password" value="" name="user[password]" id="user_new_password_again" />
+                  <input className="personal-control" required="required" type="password" 
+                    type="password" value={this.state.againPassword} onChange={this.handleAgainPasswordChange.bind(this)}
+                    placeholder="请再次输入新密码" name="user[again_password]" id="user_again_password" />
                 </div>
-              </div>
-              
-            </div>
-            <hr/>
-            <div className="row">
-              <div className="col-lg-3 profile-settings-sidebar">
-                <h4>提交修改</h4>
-              </div>
-              <div className="col-lg-9">
                 <div className="prepend-top-default append-bottom-default">
                   <input type="submit" name="commit" value="确认提交" className="btn btn-success" />
-                  <a className="btn btn-cancel" href="/login">取消修改</a>
+                  <a className="btn btn-cancel" href="/personal">取消修改</a>
                 </div>
               </div>
             </div>
+            <hr/>
           </form>
         </div>
       </div>
@@ -146,4 +169,4 @@ class Personal extends Component {
   }
 }
 
-export default Personal;
+export default Account;
