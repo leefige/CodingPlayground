@@ -14,8 +14,7 @@
 			"pos" : { "x" : 7, "y" : 0},
 			"dir" : 2
 		},
-		"enemy" :["enemy1"],
-		"enemy1" : {
+		"enemy" :[{
 			"pos" : { "x" : 5, "y" : 4},
 			"dir" : 1,
 			"status" : "alive",
@@ -29,7 +28,7 @@
 					"dir" : 1
 				}
 			]
-		}
+		}]
 	},
 	"mapResource": {
 		"width": 8,

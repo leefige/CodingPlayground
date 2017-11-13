@@ -13,7 +13,8 @@
 		"character" : {
 			"pos" : { "x" : 2, "y" : 3},
 			"dir" : 2
-		}
+		},
+		"enemy" : []
 	},
 	"mapResource": {
 		"width": 8,
