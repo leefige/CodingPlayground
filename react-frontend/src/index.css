@@ -1,7 +1,7 @@
 * {
   -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 body {
@@ -89,6 +89,9 @@ body {
 
 .blockly-btn {
   margin-right: 15px;
+  padding: 11px 20px;
+  vertical-align: middle;
+  font-size: 15px;
 }
 
 .blockly-btn-group {
@@ -102,7 +105,7 @@ body {
   z-index: 2;
 }
 
-.blockly-area {
+.blockly-area {  
   height: 480px;
   margin-right: 10px;
   margin-left: 5px;
@@ -111,7 +114,7 @@ body {
   box-shadow: 2px 2px 5px rgba(65, 65, 65, 0.2);
 }
 
-.blockly-layer {
+.blockly-layer {  
   height: 480px;
   width: 100%;
   display: none;
@@ -201,9 +204,9 @@ body {
   border-color: #19b9e7;
 }
 
-input[type="text"],
-input[type="password"],
-textarea,
+input[type="text"], 
+input[type="password"], 
+textarea, 
 textarea.form-control {
   height: 50px;
   margin: 0;
@@ -228,46 +231,46 @@ textarea.form-control {
   transition: all .3s;
 }
 
-textarea,
+textarea, 
 textarea.form-control {
   padding-top: 10px;
   padding-bottom: 10px;
   line-height: 30px;
 }
 
-input[type="text"]:focus,
-input[type="password"]:focus,
-textarea:focus,
+input[type="text"]:focus, 
+input[type="password"]:focus, 
+textarea:focus, 
 textarea.form-control:focus {
   outline: 0;
   background: #fff;
-  border: 3px solid #fff;
-  -moz-box-shadow: none;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-}
-
-input[type="text"]:-moz-placeholder,
-input[type="password"]:-moz-placeholder,
-textarea:-moz-placeholder,
-textarea.form-control:-moz-placeholder {
-  color: #888;
-}
-
-input[type="text"]:-ms-input-placeholder,
-input[type="password"]:-ms-input-placeholder,
-textarea:-ms-input-placeholder,
-textarea.form-control:-ms-input-placeholder {
-  color: #888;
-}
-
-input[type="text"]::-webkit-input-placeholder,
-input[type="password"]::-webkit-input-placeholder,
-textarea::-webkit-input-placeholder,
-textarea.form-control::-webkit-input-placeholder {
-  color: #888;
-}
-
+    border: 3px solid #fff;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
+  
+  input[type="text"]:-moz-placeholder,
+  input[type="password"]:-moz-placeholder,
+  textarea:-moz-placeholder,
+  textarea.form-control:-moz-placeholder {
+    color: #888;
+  }
+  
+  input[type="text"]:-ms-input-placeholder,
+  input[type="password"]:-ms-input-placeholder,
+  textarea:-ms-input-placeholder,
+  textarea.form-control:-ms-input-placeholder {
+    color: #888;
+  }
+  
+  input[type="text"]::-webkit-input-placeholder,
+  input[type="password"]::-webkit-input-placeholder,
+  textarea::-webkit-input-placeholder,
+  textarea.form-control::-webkit-input-placeholder {
+    color: #888;
+  }
+  
 .form-checkbox {
   opacity: 0.8;
   color: #fff;
@@ -275,58 +278,39 @@ textarea.form-control::-webkit-input-placeholder {
   font-weight: 400;
 }
 
-.btn-form {
-  height: 50px;
+.form-btn {
   margin: 0;
-  padding: 0 20px;
+  padding: 14px 20px;
   vertical-align: middle;
   font-size: 16px;
 }
 
-.form-box {
-  margin-top: 70px;
+.modal-backdrop {
+  background-color : transparent;
 }
 
-.form-top {
-  overflow: hidden;
-  padding: 0 25px 15px 25px;
-  background: #444;
-  background: rgba(0, 0, 0, 0.35);
-  -moz-border-radius: 4px 4px 0 0;
-  -webkit-border-radius: 4px 4px 0 0;
-  border-radius: 4px 4px 0 0;
-  text-align: left;
+.result-btn {
+  margin-bottom: 15px;
+  padding: 14px 20px;
+  vertical-align: middle;
+  font-size: 16px;
 }
 
-.form-top-left {
-  float: left;
-  width: 75%;
-  padding-top: 25px;
+.result-btn-group {
+  margin-top: 10px;
+  margin-bottom: 5px;
 }
 
-.form-top-left h3 {
-  margin-top: 0;
-  color: #fff;
+.header-btn {
+  padding: 10px 15px;
+  vertical-align: middle;
+  font-size: 13px;
 }
 
-.form-top-left h4 {
-  margin-top: 20px;
-  opacity: 0.8;
-  color: #fff;
+.modal-content {
+  background-color: transparent;
+  border: 0;
 }
-
-.form-top-right {
-  float: left;
-  width: 25%;
-  padding-top: 5px;
-  font-size: 66px;
-  color: #fff;
-  line-height: 100px;
-  text-align: right;
-  opacity: 0.3;
-}
-
-
 /* for personal page */
 
 .tab-content {

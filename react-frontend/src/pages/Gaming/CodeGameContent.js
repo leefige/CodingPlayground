@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Scene from './GamePanel/Scene';
+import Result from './Result';
+import ReactDOM from 'react-dom'
 import Programming from './ProgramPanel/Programming';
 import { mainControl } from '../../logic/MainControl';
 import { post } from '../../utils/Request';
@@ -52,11 +54,12 @@ class CodeGameContent extends Component {
       },
       blocklyConfig: {},
       didFetchMap: false,
-      // 待解决：recordData要不要作为state刷新子部件？
       stdBlockNum: 5,       // fetch from backend
       savedSolution: "",    // fetch from backend
       userSolution: "",     // upload to backend when succeed
-      userBlocklyCount: 0
+      userBlocklyCount: 0,
+      gameScore: 0,
+      showResultModal: false,
     };
   }
 
@@ -97,12 +100,31 @@ class CodeGameContent extends Component {
   }
 
   handleCodeSubmit() {
+    this.setState({
+      showResultModal: false,
+      gameScore: 0,
+    })
     mainControl.restart(this.state.mapInitState);
   }
 
-  handleSuccess() {
-    // TODO: send solution to backend
-    // console.log("success, send solution to backend");
+  handleResult(result) {
+    let score = 0;
+    if (result) {
+      if (this.state.userBlocklyCount <= this.state.stdBlockNum)
+        score = 3;
+      else if (this.state.userBlocklyCount <= 2 * this.state.stdBlockNum)
+        score = 2;
+      else
+        score = 1;
+    }
+    this.setState({
+      showResultModal: true,
+      gameScore: score,
+    })
+    if (result) {
+      // console.log("success, send solution to backend");
+      // TODO: send solution to backend
+    }
   }
 
   nextStep(_actionList) {
@@ -110,7 +132,17 @@ class CodeGameContent extends Component {
   }
 
   handleReset() {
+    this.setState({
+      showResultModal: false,
+      gameScore: 0,
+    })
     mainControl.reset(this.state.mapInitState);
+  }
+
+  handleResultModalClose() {
+    this.setState({
+      showResultModal: false,
+    })
   }
 
   setPlayerCallback(callback) {
@@ -149,11 +181,15 @@ class CodeGameContent extends Component {
                   setCallback={this.setPlayerCallback}
                   setGameOverCallback={this.setPlayerGameOverCallback}
                   startStepThrough={this.StepThroughInit.bind(this)}
-                  onSuccess={this.handleSuccess.bind(this)}
+                  onGetResult={this.handleResult.bind(this)}
                 />
                 :<div></div>
               }
             </div>
+            <button className="btn btn-primary btn-lg" data-toggle="modal" data-target="#resultModal">
+	开始演示模态框
+</button>
+            <Result mapID={this.props.match.params.mapID} userID={this.props.match.params.shareUserID} score={this.state.gameScore}/>
         </div>
       );
     // }

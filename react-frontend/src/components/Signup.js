@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 import { post } from "../utils/Request"
 
 
@@ -80,7 +79,7 @@ class Signup extends Component {
                   onChange={this.handlePasswordChange.bind(this)}
                   />
               </div>
-              <button type="button" className="btn btn-success btn-form" onClick={this.handleSignup.bind(this)}>注册！</button>
+              <button type="button" className="btn btn-success form-btn" onClick={this.handleSignup.bind(this)}>注册！</button>
             </form>
           </div>
         </div>
