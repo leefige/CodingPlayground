@@ -36,29 +36,11 @@ class Level extends Component {
     }
     else {
       const lv = 300 + this.state.dest;
-      switch(lv) {
-        case 301:
-          return (<Redirect push to="/map/301"/>);
-        case 302:
-          return (<Redirect push to="/map/302"/>);
-        case 303:
-          return (<Redirect push to="/map/303"/>);
-        case 304:
-          return (<Redirect push to="/map/304"/>);
-        case 305:
-          return (<Redirect push to="/map/305"/>);
-        case 306:
-          return (<Redirect push to="/map/306"/>);
-        case 307:
-          return (<Redirect push to="/map/307"/>);
-        case 308:
-          return (<Redirect push to="/map/308"/>);
-        case 309:
-          return (<Redirect push to="/map/309"/>);
-        case 310:
-          return (<Redirect push to="/map/310"/>);
-        default:
-          return (<Redirect push to="/mapEditor"/>);
+      if (lv > 300) {
+        return (<Redirect push to={"/map/"+lv}/>);
+      }
+      else {
+        return (<Redirect push to="/mapEditor"/>);
       }
     }
   }
