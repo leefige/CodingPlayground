@@ -65,7 +65,7 @@ class MainControl{
   constructor(state) {
     this.load(state);
   }
-  
+
   load(state) {
     this._state = JSON.parse(JSON.stringify(state));
     this._board = new Board(this._state.board);
@@ -74,7 +74,7 @@ class MainControl{
       this._enemy[i] = new Enemy(this._state.enemy[i])
     this._character = new Character(this._state.character, this._board, this._enemy);
     this._player = new Player(state);
-    this._status = 1; //游戏状态，0为初始状态，1为正常运行，2为胜利，3为失败, 4为暂停
+    this._status = playerStatus.running; //游戏状态，0为初始状态，1为正常运行，2为胜利，3为失败, 4为暂停
   }
 
   restart(state) {
@@ -120,7 +120,7 @@ class MainControl{
           case actionTable.open:
             this._status = this._character.open();
             break;
-          
+
         }
         // calcutale enemy's next pos and dir
         for (let i = 0; i < this._enemy.length; i++) {
@@ -139,7 +139,7 @@ class MainControl{
     if (this._player.getMode() === 'step')
       this._player.run();
   }
-  
+
   isOver() {
     for (let i = 0; i < this._enemy.length; i++) {
       if (this._enemy[i].pos.x === this._character.pos.x && this._enemy[i].pos.y === this._character.pos.y && this._enemy[i].status === "alive")

@@ -1,6 +1,6 @@
 import Unit from "./Unit"
 import {board} from "./MainControl"
-// 方向: up:0, right:1, down:2, left:3 
+// 方向: up:0, right:1, down:2, left:3
 class Character extends Unit {
   _board;
   constructor(state, board, enemy) {
@@ -50,7 +50,7 @@ class Character extends Unit {
     let nextPos = this.getNextPos();
     if (nextPos.x < 0 || nextPos.x >= this._board.size || nextPos.y < 0 || nextPos.y >= this._board.size)
       return 3;
-    if (this._board.map[nextPos.x][nextPos.y] === this._board.elements.treasure)
+    if (this._board.map[nextPos.x][nextPos.y] === this._board.elements.chest)
       return 2;
     return 3;
   }

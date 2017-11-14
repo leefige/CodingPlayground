@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 import { post } from "../utils/Request"
 
 class Login extends Component {
@@ -23,7 +22,7 @@ class Login extends Component {
       .then((responseJson) => {
         //console.log(responseJson);
         if (responseJson.login_success) {
-          this.props.onLogin(this.state.email);          
+          this.props.onLogin(this.state.email);
         }
         else
           alert("登录失败！");

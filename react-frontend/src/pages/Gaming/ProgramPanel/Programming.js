@@ -28,7 +28,7 @@ class Programming extends Component {
       text: '',
     };
     this.myInterpreter = null;
-    this.highlightPause = false;    
+    this.highlightPause = false;
     this.loopTrap = 0;
   }
 
@@ -54,7 +54,7 @@ class Programming extends Component {
   }
 
 /*-------connect to blockly workspace-------*/
-  
+
   highlightBlock(id) {
     this.refs.blockly_pad.highlightBlock(id);
     this.highlightPause = true;
@@ -191,19 +191,17 @@ class Programming extends Component {
   }
 
 /*-----------interact with UI------------*/
-  
+
   handleFinishAnimation() {
     document.getElementById("step_btn").disabled = false;
   }
 
-  handleGameOver(success) {
+  handleGameOver(result) {
     document.getElementById("run_btn").disabled = false;
     document.getElementById("step_btn").disabled = false;
     document.getElementById("step_btn_text").innerHTML = "&nbsp;&nbsp;单步调试";
     document.getElementById("blockly_layer").style.display = 'none';
-    if(success) {
-      this.props.onSuccess();
-    }
+    this.props.onGetResult(result);
   }
 
   handleCodeSubmit(pureCode, runableCode) {
@@ -237,7 +235,7 @@ class Programming extends Component {
       st = tmp.search(patt);
     }
     document.getElementById("user_count").innerHTML = num;
-    document.getElementById("user_count").className = 
+    document.getElementById("user_count").className =
     num <= this.props.stdBlockNum ? 'cnt-color-norm' :
       num <= 2 * this.props.stdBlockNum ? 'cnt-color-large' : 'cnt-color-huge';
     this.props.onSolutionChanged(newXml, num);
