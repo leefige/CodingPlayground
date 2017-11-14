@@ -11,28 +11,28 @@ import {
   BrowserRouter as Router,
   Route,
   Link
-} from 'react-router-dom'
+} from 'react-router-dom';
 
 class CodeGameApp extends Component {
   constructor() {
-    super()
+    super();
     this.state = {
       isLogin: false,
       id: '',
-    }
+    };
   }
 
   handleLogin(id) {
     this.setState({
       isLogin: true,
       id: id
-    })
+    });
   }
 
   handleLogout() {
     this.setState({
       isLogin: false
-    })
+    });
   }
 
   render() {
@@ -40,7 +40,7 @@ class CodeGameApp extends Component {
       <div>
         <div className="container-fluid">
           <div className='game-header row'>
-            <div className="col-md-offset-4 btn-group clear-fix text-left pull-left" role="group" aria-label="...">
+            {/* <div className="col-md-offset-4 btn-group clear-fix text-left pull-left" role="group" aria-label="...">
               <Link to='/map/301' type="button" class="btn btn-default">1</Link>
               <Link to='/map/302' type="button" class="btn btn-default">2</Link>
               <Link to='/map/303' type="button" class="btn btn-default">3</Link>
@@ -51,7 +51,7 @@ class CodeGameApp extends Component {
               <Link to='/map/308' type="button" class="btn btn-default">8</Link>
               <Link to='/map/309' type="button" class="btn btn-default">9</Link>
               <Link to='/map/310' type="button" class="btn btn-default">10</Link>
-            </div>
+            </div> */}
 
             <div className='pull-right'>
               <Header
@@ -81,4 +81,4 @@ class CodeGameApp extends Component {
   }
 }
 
-export default CodeGameApp
+export default CodeGameApp;
