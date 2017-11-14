@@ -52,7 +52,7 @@ class Login extends Component {
 
   render() {
     return (
-      <div className='col-md-4 col-md-offset-4'>
+      <div className='col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3'>
         <div className="form-box">
           <div className="form-top">
             <div className="form-top-left">
@@ -91,7 +91,7 @@ class Login extends Component {
               <div className="form-group form-checkbox">
                   <input type="checkbox" value={"remember-me"} checked={this.state.rememberMe} onChange={this.handleRememberMeChange.bind(this)} /> 记住我
               </div>
-              <button type="button" className="btn btn-success btn-form" onClick={this.handleLogin.bind(this)}>进入游戏！</button>
+              <button type="button" className="btn btn-success form-btn" onClick={this.handleLogin.bind(this)}>进入游戏！</button>
             </form>
           </div>
         </div>

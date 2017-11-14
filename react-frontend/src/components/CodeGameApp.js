@@ -10,7 +10,7 @@ import {
   BrowserRouter as Router,
   Route,
   Link
-} from 'react-router-dom'
+} from 'react-router-dom';
 
 class CodeGameApp extends Component {
   constructor() {
@@ -47,18 +47,19 @@ class CodeGameApp extends Component {
       <div>
         <div className="container-fluid">
           <div className='game-header row'>
-            <div className="col-md-offset-4 btn-group clear-fix text-left pull-left" role="group" aria-label="...">
-              <Link to='/map/301' type="button" class="btn btn-default">1</Link>
-              <Link to='/map/302' type="button" class="btn btn-default">2</Link>
-              <Link to='/map/303' type="button" class="btn btn-default">3</Link>
-              <Link to='/map/304' type="button" class="btn btn-default">4</Link>
-              <Link to='/map/305' type="button" class="btn btn-default">5</Link>
-              <Link to='/map/306' type="button" class="btn btn-default">6</Link>
-              <Link to='/map/307' type="button" class="btn btn-default">7</Link>
-              <Link to='/map/308' type="button" class="btn btn-default">8</Link>
-              <Link to='/map/309' type="button" class="btn btn-default">9</Link>
-              <Link to='/map/310' type="button" class="btn btn-default">10</Link>
-            </div>
+          <div className="col-md-offset-4 btn-group clear-fix text-left pull-left" role="group" aria-label="...">
+          <Link to='/map/301' type="button" className="btn btn-default">1</Link>
+          <Link to='/map/302' type="button" className="btn btn-default">2</Link>
+          <Link to='/map/303' type="button" className="btn btn-default">3</Link>
+          <Link to='/map/304' type="button" className="btn btn-default">4</Link>
+          <Link to='/map/305' type="button" className="btn btn-default">5</Link>
+          <Link to='/map/306' type="button" className="btn btn-default">6</Link>
+          <Link to='/map/307' type="button" className="btn btn-default">7</Link>
+          <Link to='/map/308' type="button" className="btn btn-default">8</Link>
+          <Link to='/map/309' type="button" className="btn btn-default">9</Link>
+          <Link to='/map/310' type="button" className="btn btn-default">10</Link>
+          
+        </div>
         
             <div className='pull-right'>
               <Header

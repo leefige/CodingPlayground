@@ -37,8 +37,8 @@ class Header extends Component {
           </div>
           :
           <div className="login-header">
-            <Link to='/login' type="button" className="btn btn-success">登录</Link>
-            <Link to='/signup' type="button" className="btn btn-default">注册</Link>
+            <Link to='/login' type="button" className="btn btn-success header-btn">登录</Link>
+            <Link to='/signup' type="button" className="btn btn-default header-btn">注册</Link>
           </div>
         }
       </div>
