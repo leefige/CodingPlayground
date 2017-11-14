@@ -7,7 +7,7 @@ class Enemy extends Unit {
   }
 
   go() {
-    if (this._state.status == 'alive') {
+    if (this._state.status === 'alive') {
       for (let i = 0; i < this._state.turningPoint.length; i++) {
         if (this.pos.x === this._state.turningPoint[i].pos.x && this.pos.y === this._state.turningPoint[i].pos.y) {
           this._nextState.dir = this._state.turningPoint[i].dir;

@@ -67,7 +67,7 @@ class Player {
     if (this._status === playerStatus.running) {
       if (this._curStep < this._totalStep)
         this._curStep = this._curStep + 1;
-      else if (this._mode == 'step') {
+      else if (this._mode === 'step') {
         if (this._callback !== undefined) {
           this._callback();
         }
