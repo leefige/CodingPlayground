@@ -22,19 +22,13 @@ export default class Obj {
     this.phase = phase;
     this.obj.texture = res[`${10 + dir * 10 + updatePhase(this.phase / FPS)}.png`];
   }
-  moveTo(px, py, FPS, dir, res) {
+  moveTo(px, py, FPS, dir, res, state) {
     if (px !== this.obj.x || py !== this.obj.y) {
-      if (px > this.obj.x) {
-        this.obj.x++;
+      if (px !== this.obj.x) {
+        this.obj.x = (px - this.prevPos.x) / 60 * state + this.prevPos.x;
       }
-      else if (px < this.obj.x) {
-        this.obj.x--;
-      }
-      else if (py > this.obj.y) {
-        this.obj.y++;
-      }
-      else if (py < this.obj.y) {
-        this.obj.y--;
+      else if (py !== this.obj.y) {
+        this.obj.y = (py - this.prevPos.y) / 60 * state + this.prevPos.y;
       }
       this.obj.texture = res[`${10 + dir * 10 + updatePhase(this.phase / FPS)}.png`];
       this.phase = (this.phase + 1) % (4 * FPS);

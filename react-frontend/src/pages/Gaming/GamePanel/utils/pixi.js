@@ -181,13 +181,17 @@ export default class PixiComponent {
         py = convertY(player.character.pos['x'], height, col);
       this.mCharacter.update(px, py, 1*FPS, FPS, baseDir, chaId);
       this.timeStatus = 0;
+      this.mCharacter.prevPos = {'x': px, 'y': py};
       player.nextStep();
     }
     else if (status === 1) {
       const baseDir = player.character.dir;
       this.timeStatus++;
-      if (this.timeStatus == 120) {
+      if (this.timeStatus == 60) {
         this.timeStatus = 0;
+        const px = convertX(player.character.pos['y'], width, row),
+        py = convertY(player.character.pos['x'], height, col);
+        this.mCharacter.prevPos = {'x': px, 'y': py};
         player.nextStep();
       }
 
@@ -196,12 +200,12 @@ export default class PixiComponent {
         const px = convertX(player.enemy[i].pos['y'], width, row),
           py = convertY(player.enemy[i].pos['x'], height, col);
         const baseEnmDir = player.enemy[i].dir;
-        this.mEnemy[i].moveTo(px, py, FPS, baseEnmDir, enmId);
+        this.mEnemy[i].moveTo(px, py, FPS, baseEnmDir, enmId, this.timeStatus);
       }
 
       const px = convertX(player.character.pos['y'], width, row),
         py = convertY(player.character.pos['x'], height, col);
-      if (!this.mCharacter.moveTo(px, py, FPS, baseDir, chaId)) {
+      if (!this.mCharacter.moveTo(px, py, FPS, baseDir, chaId, this.timeStatus)) {
         // player.nextStep();
       }
     }
