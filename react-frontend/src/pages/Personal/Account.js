@@ -107,7 +107,7 @@ class Account extends Component {
                   </button>
                   </div>
                   <input type="file" id="user_avatar" accept="image/*"
-                    className="js-user-avatar-input hidden" 
+                    className="js-user-avatar-input hidden"
                     name="user[avatar]"
                     onClick = {this.handleReceiveAvator.bind(this)}/>
                 </div>
@@ -129,12 +129,12 @@ class Account extends Component {
               <div className="col-lg-9">
                 <div className="form-group">
                   <label className="label-light" for="user_name">用户名</label>
-                  <input className="personal-control" type="text" 
-                    value={this.state.id} readonly='readonly' name="user[id]" id="user_id" />
+                  <input className="personal-control" type="text"
+                    value={this.props.userId} readonly='readonly' name="user[id]" id="user_id" />
                 </div>
                 <div className="form-group">
                   <label className="label-light" for="user_email">绑定邮箱</label>
-                  <input className="personal-control" required="required" 
+                  <input className="personal-control" required="required"
                     type="email" value={this.state.email} onChange={this.handleEmailChange.bind(this)}
                     placeholder="sample@xyz.com" name="user[email]" id="user_email" />
                 </div>
@@ -156,17 +156,17 @@ class Account extends Component {
               <div className="col-lg-9">
                 <div className="form-group">
                   <span>旧密码</span>
-                  <input className="personal-control" required="required" 
+                  <input className="personal-control" required="required"
                     type="password" value={this.state.oldPassword} onChange={this.handleOldPasswordChange.bind(this)}
                     placeholder="请输入旧密码" name="user[old_password]" id="user_old_password" />
                   <p/>
                   <span>新密码</span>
-                  <input className="personal-control" required="required" type="password" 
+                  <input className="personal-control" required="required" type="password"
                     type="password" value={this.state.newPassword} onChange={this.handleNewPasswordChange.bind(this)}
                     placeholder="请输入新密码" name="user[new_password]" id="user_new_password" />
                   <p/>
                   <span>确认新密码</span>
-                  <input className="personal-control" required="required" type="password" 
+                  <input className="personal-control" required="required" type="password"
                     type="password" value={this.state.againPassword} onChange={this.handleAgainPasswordChange.bind(this)}
                     placeholder="请再次输入新密码" name="user[again_password]" id="user_again_password" />
                 </div>
@@ -180,7 +180,7 @@ class Account extends Component {
           </form>
         </div>
       </div>
-      
+
     );
   }
 }

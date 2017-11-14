@@ -335,7 +335,7 @@ textarea.form-control::-webkit-input-placeholder {
 	padding-left: 40px;
   padding-top: 40px;
 	padding-bottom: 40px;
-  padding-right: 30px;
+  padding-right: 40px;
   border-radius: 6px 6px 6px 6px;
   box-shadow: 5px 5px 5px rgba(65, 65, 65, 0.2);
 }
@@ -493,4 +493,32 @@ input[type="password"]::-webkit-input-placeholder,
 textarea::-webkit-input-placeholder,
 textarea.personal-control::-webkit-input-placeholder {
   color: #888;
+}
+
+/* map card */
+
+.card-content {
+  background-color: #ffffff;
+  padding-bottom: 30px;
+  border-radius: 5px 5px 5px 5px;
+  margin-bottom: 20px;
+  text-align: center;
+  box-shadow: 4px 4px 3px rgba(65, 65, 65, 0.2);
+}
+
+.card-content h4 {
+	color: #54575c;
+	font-weight: 700;
+	letter-spacing: 1px;
+}
+
+.level-title {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.minimap {
+  width: 100%;
+  border-radius: 5px 5px 0 0;
+  overflow: hidden;
 }
