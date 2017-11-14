@@ -40,6 +40,8 @@ export default class Obj {
       this.phase = (this.phase + 1) % (4 * FPS);
       return true;
     }
+    this.obj.texture = res[`${10 + dir * 10 + updatePhase(this.phase / FPS)}.png`];
+    this.phase = 1 * FPS;
     return false;
   }
 }
