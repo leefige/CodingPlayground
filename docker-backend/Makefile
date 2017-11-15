@@ -1,8 +1,8 @@
 V        = @
 
 deploy:
-	$(V)docker-compose build
-	$(V)docker-compose up -d
+	$(V)docker-compose -f docker-compose-deploy.yml build
+	$(V)docker-compose -f docker-compose-deploy.yml up -d
 
 dev:
 	$(V)docker-compose -f docker-compose-dev.yml build
