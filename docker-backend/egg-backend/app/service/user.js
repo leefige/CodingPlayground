@@ -5,6 +5,9 @@ module.exports = app => {
       const sql = "create table if not exists user(" +
         "id VARCHAR(100)," +
         "password VARCHAR(100)," +
+        "email VARCHAR(100)," +
+        "mobile VARCHAR(100)," +
+        "image TEXT," +
         "primary key (id)" +
         ");";
       await app.mysql.query(sql);
@@ -26,15 +29,70 @@ module.exports = app => {
       const sql = "create table if not exists user(" +
       "id VARCHAR(100)," +
       "password VARCHAR(100)," +
+      "email VARCHAR(100)," +
+      "mobile VARCHAR(100)," +
+      "image TEXT," +
       "primary key (id)" +
       ");";
     await app.mysql.query(sql);
       try {
         const result = await app.mysql.get('user', { id: _body.id, password: _body.password });
-        if (result == null) { 
-          return false; 
+        if (result == null) {
+          return false;
         }
         return true;
+      } catch (err) {
+        console.error(err);
+        return false;
+      }
+    }
+
+
+    async changePassword(_body){
+      try {
+        const is_insert = await app.mysql.get('user', { id: _body.id, password: _body.old_password });
+        if (is_insert === null) {
+          return false;
+        }
+        else{
+          const result = await app.mysql.update('user', { id: _body.id, password: _body.password });
+          const insertSuccess = result.affectedRows === 1;
+          return insertSuccess;
+        }
+      } catch (err) {
+        console.error(err);
+        return false;
+      }
+    }
+
+    async changeEmail(_body){
+      try {
+        const is_insert = await app.mysql.get('user', { id: _body.id });
+        if (is_insert === null) {
+          return false;
+        }
+        else{
+          const result = await app.mysql.update('user', { id: _body.id, email: _body.email });
+          const insertSuccess = result.affectedRows === 1;
+          return insertSuccess;
+        }
+      } catch (err) {
+        console.error(err);
+        return false;
+      }
+    }
+
+    async changeMobile(_body){
+      try {
+        const is_insert = await app.mysql.get('user', { id: _body.id });
+        if (is_insert === null) {
+          return false;
+        }
+        else{
+          const result = await app.mysql.update('user', { id: _body.id, mobile: _body.mobile });
+          const insertSuccess = result.affectedRows === 1;
+          return insertSuccess;
+        }
       } catch (err) {
         console.error(err);
         return false;

@@ -17,6 +17,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@alicloud/sms-sdk": "^1.0.2",
     "connect-multiparty": "^2.0.0",
     "egg": "^1.9.0",
     "egg-cluster": "^1.12.3",

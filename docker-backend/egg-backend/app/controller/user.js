@@ -10,7 +10,7 @@ module.exports = app => {
         });
       } catch (err) {
         console.error(err);
-        this.ctx.body = { 
+        this.ctx.body = {
           signup_success: false,
         };
         return;
@@ -32,7 +32,7 @@ module.exports = app => {
         });
       } catch (err) {
         console.error(err);
-        this.ctx.body = { 
+        this.ctx.body = {
           login_success: false,
         };
         return;
@@ -42,11 +42,14 @@ module.exports = app => {
       this.ctx.body = {
         login_success: result,
       };
+      if(result === true){
       this.ctx.session.userId = body.id;
       this.ctx.session.userPassword = body.password;
       if(body.rememberMe === false){
         this.ctx.session.maxAge = 1000 * 1800;
       }
+      await this.ctx.service.map.insertId(body);
+    }
     }
 
     async autoLogin() {
@@ -56,7 +59,7 @@ module.exports = app => {
         });
       } catch (err) {
         console.error(err);
-        this.ctx.body = { 
+        this.ctx.body = {
           autoLogin_success: false,
         };
         return;
@@ -79,6 +82,71 @@ module.exports = app => {
           logout_success: true,
         };
     }
+
+    async changePassword(){
+      const body = this.ctx.request.body;
+      try {
+        await this.ctx.validate({
+          id: { type: 'string' },
+          old_password { type: 'string'},
+          password: { type: 'string' },
+        });
+      } catch (err) {
+        console.error(err);
+        this.ctx.body = {
+          changePassword_success: false,
+        };
+        return;
+      }
+
+      const result = await this.ctx.service.user.changePassword(body);
+      this.ctx.body = {
+        changePassword_success: result,
+      };
+    }
+
+    async changeEmail(){
+      const body = this.ctx.request.body;
+      try {
+        await this.ctx.validate({
+          id: { type: 'string' },
+          email: { type: 'string' },
+        });
+      } catch (err) {
+        console.error(err);
+        this.ctx.body = {
+          changePassword_success: false,
+        };
+        return;
+      }
+
+      const result = await this.ctx.service.user.changePassword(body);
+      this.ctx.body = {
+        changePassword_success: result,
+      };
+    }
+
+    async changeMobile(){
+      const body = this.ctx.request.body;
+      try {
+        await this.ctx.validate({
+          id: { type: 'string' },
+          mobile: { type: 'string' },
+        });
+      } catch (err) {
+        console.error(err);
+        this.ctx.body = {
+          changePassword_success: false,
+        };
+        return;
+      }
+
+      const result = await this.ctx.service.user.changePassword(body);
+      this.ctx.body = {
+        changePassword_success: result,
+      };
+    }
+
   }
   return UserController;
 };
