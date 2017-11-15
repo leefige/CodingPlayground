@@ -119,7 +119,7 @@ export default class PixiComponent {
 
         (new Dragable(
           this.mapRecord,
-          '1',
+          'chest',
           innerWidth / row, innerHeight / col,
           0.06 * width, Math.floor(height / 5) * 1 + 0.06 * width,
           width, height, innerWidth, innerHeight, row, col
@@ -129,7 +129,7 @@ export default class PixiComponent {
         for (let i = 2; i < 5; i++) {
           (new Dragable(
             this.mapRecord,
-            '5',
+            'stone',
             innerWidth / row, innerHeight / col,
             0.06 * width, Math.floor(height / 5) * i + 0.06 * width,
             width, height, innerWidth, innerHeight, row, col
@@ -138,7 +138,7 @@ export default class PixiComponent {
         for (let i = 0; i < 4; i++) {
           (new Dragable(
             this.mapRecord,
-            '3',
+            'grass',
             innerWidth / row, innerHeight / col,
             Math.floor(width - 0.06 * width), Math.floor(height / 5 * i + 0.06 * width),
             width, height, innerWidth, innerHeight, row, col
