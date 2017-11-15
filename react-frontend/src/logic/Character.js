@@ -71,6 +71,12 @@ class Character extends Unit {
     const board = this._mainControl.board;
     return board.setBomb(nextPos, this.dir);
   }
+
+  frontIs(elementId) {
+    const nextPos = this.getNextPos();
+    const board = this._mainControl.board;
+    return board.map[nextPos.x][nextPos.y] === elementId;
+  }
 }
 
 export default Character;
