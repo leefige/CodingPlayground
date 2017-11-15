@@ -2,18 +2,20 @@ import React, { Component } from 'react';
 import TaskGuide from './TaskGuide';
 import BlocklyPad from './BlocklyPad';
 import Interpreter from 'react-js-interpreter-private';
+import { mainControl } from '../../../logic/MainControl';
+import { actionTable, elements } from '../../../logic/Constant';
 
 class Programming extends Component {
 
   static defaultProps = {
     HEADER: [
       "initLoop(); ",
-      "function goForward() {emitAction(1);} ",
-      "function turnLeft() {emitAction(2);} ",
-      "function turnRight() {emitAction(3);} ",
-      "function attack() {emitAction(4);} ",
-      "function use(obj) {switch (obj) {case 'TORCH':emitAction(5);break;case 'BOMB':emitAction(6);break;default:break;}} ",
-      "function openChest() {emitAction(7);}",
+      "function goForward() {emitAction(" + actionTable.go + ");} ",
+      "function turnLeft() {emitAction(" + actionTable.turnLeft + ");} ",
+      "function turnRight() {emitAction(" + actionTable.turnRight + ");} ",
+      "function attack() {emitAction(" + actionTable.attack + ");} ",
+      "function use(obj) {switch (obj) {case 'TORCH':emitAction(" + actionTable.torch + ");break;case 'BOMB':emitAction(" + actionTable.bomb + ");break;default:break;}} ",
+      "function openChest() {emitAction(" + actionTable.open + ");}",
       "function inFrontOf(obj) {queryMapInfo(obj);} ",
     ],
     INFINITE_LOOP_ERROR: "Infinite loop!",
@@ -45,6 +47,36 @@ class Programming extends Component {
 
   queryMapInfo(object) {
     // TODO: 调用maincontrol的回调函数
+    let target = elements.empty;
+    switch(object) {
+      case "CHEST":
+        target = elements.chest;
+        break;
+      case "ENEMY":
+        target = elements.enemy;
+        break;
+      case "GRASS":
+        target = elements.grass;
+        break;
+      case "TREE":
+        target = elements.tree;
+        break;
+      case "FENCE":
+        target = elements.fence;
+        break;
+      case "STONE":
+        target = elements.stone;
+        break;
+      case "CLIFF":
+        target = elements.precipice;
+        break;
+      case "POND":
+        target = elements.pond;
+        break;
+      default:
+        target = elements.empty;
+    }
+    return mainControl.character.frontIs(target);
   }
 
   callNextStep(action) {

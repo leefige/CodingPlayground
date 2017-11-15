@@ -75,6 +75,7 @@ const actionTable = {
 const elements = {
   empty : 0,
   chest : 90,
+  enemy : 91,
   grass : 92,
   tree : 93,
   fence : 94,
