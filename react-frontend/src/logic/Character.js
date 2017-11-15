@@ -65,8 +65,6 @@ class Character extends Unit {
     const nextPos = this.getNextPos();
     //console.log("next pos");
     //console.log(nextPos)
-    if (nextPos.x < 0 || nextPos.x >= this._board.size || nextPos.y < 0 || nextPos.y >= this._board.size)
-      return gameStatus.failed;
     if (this._board.setTorch(nextPos) === gameStatus.running) {
     //  this._nextState.items.torchNum = this._state.items.torchNum - 1;
       return gameStatus.running;

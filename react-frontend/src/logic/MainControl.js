@@ -65,7 +65,7 @@ class MainControl{
             this._status = this._character.useTorch();
             break;
           case actionTable.bomb:
-            //this._status = this._character.turnRight();
+            this._status = this._character.useBomb();
             break;
           case actionTable.open:
             this._status = this._character.open();
@@ -99,8 +99,6 @@ class MainControl{
   }
 
   update() {
-//    console.log(this._state);
-
     this._character.update();
     for (let i = 0; i < this._enemy.length; i++)
       this._enemy[i].update();
