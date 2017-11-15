@@ -187,7 +187,7 @@ export default class PixiComponent {
     else if (status === 1) {
       const baseDir = player.character.dir;
       this.timeStatus++;
-      if (this.timeStatus == 60) {
+      if (this.timeStatus === 60) {
         this.timeStatus = 0;
         this.updatePrevPos();
 
@@ -233,8 +233,7 @@ export default class PixiComponent {
   updatePrevPos = () => {
     const {
       width, height,
-      row, col,
-      FPS
+      row, col
     } = this;
 
     const px = convertX(mainControl.player.character.pos['y'], width, row),
