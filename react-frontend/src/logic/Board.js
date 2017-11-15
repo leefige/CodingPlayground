@@ -6,7 +6,6 @@ class Board extends Basic {
   _enemy;
   constructor(state, mainControl) {
     super(state, mainControl);
-    this._enemy = this._mainControl.enemy;
     this._size = this._state.map.length;
     this._chestPos = { x : -1, y : -1};
     // get treasurePos
@@ -56,36 +55,35 @@ class Board extends Basic {
       this.map[pos.x][pos.y] === elements.stone || this.map[pos.x][pos.y] === elements.empty);
   }
 
+  bombKillEnemy(pos) {
+    const enemy = this._mainControl.enemy;
+    for (let i = 0; i < enemy.length; i++) {
+      if (pos.x === enemy[i].pos.x && pos.y === enemy[i].pos.y && enemy[i].status === 'alive') {
+        enemy[i].killed();
+      }
+    }
+  }
+
+  // add bomb area effect and kill enemy if possible
+  setBombArea(pos) {
+    if (this.canSetBomb(pos)) {
+      this._nextState.map[pos.x][pos.y] = elements.empty;
+      this._nextState.bombArea.push({x : pos.x, y: pos.y});
+      this.bombKillEnemy(pos);
+    }
+  }
   setBomb(pos, dir) {
     if (this.canSetBomb(pos)) {
       this._nextState.bombPos.x = pos.x;
       this._nextState.bombPos.y = pos.y;
-      this._nextState.map[pos.x][pos.y] = elements.empty;
-      this._nextState.bombArea.push({x : pos.x, y: pos.y});
-      let nextPos;
+      this.setBombArea(pos)
       if (dir === direction.up || dir === direction.down) {
-        nextPos = {x : pos.x, y: pos.y + 1};
-        if (this.canSetBomb(nextPos)) {
-          this._nextState.map[nextPos.x][nextPos.y] = elements.empty;
-          this._nextState.bombArea.push({x : nextPos.x, y: nextPos.y});
-        }
-        nextPos = {x : pos.x, y: pos.y - 1};
-        if (this.canSetBomb(nextPos)) {
-          this._nextState.map[nextPos.x][nextPos.y] = elements.empty;
-          this._nextState.bombArea.push({x : nextPos.x, y: nextPos.y});
-        }
+        this.setBombArea({x : pos.x, y: pos.y + 1});
+        this.setBombArea({x : pos.x, y: pos.y - 1});
       }
       else if (dir === direction.left || dir === direction.right) {
-        nextPos = {x : pos.x + 1, y: pos.y};
-        if (this.canSetBomb(nextPos)) {
-          this._nextState.map[nextPos.x][nextPos.y] = elements.empty;
-          this._nextState.bombArea.push({x : nextPos.x, y: nextPos.y});
-        }
-        nextPos = {x : pos.x - 1, y: pos.y};
-        if (this.canSetBomb(nextPos)) {
-          this._nextState.map[nextPos.x][nextPos.y] = elements.empty;
-          this._nextState.bombArea.push({x : nextPos.x, y: nextPos.y});
-        }
+        this.setBombArea({x : pos.x + 1, y: pos.y});
+        this.setBombArea({x : pos.x - 1, y: pos.y});
       }
       return gameStatus.running;
     }
