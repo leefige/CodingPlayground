@@ -39,9 +39,23 @@ describe('test/service/user.test.js', () => {
       const user = await ctx.service.user.login({
           id: 'azxsd',
           password: 'cxv',
+          rememberMe: false,
       });
       assert(user === true);
     });
+
+    it('should login user and remember', async function () {
+      // 创建 ctx
+      const ctx = app.mockContext();
+      // 通过 ctx 访问到 service.user
+      const user = await ctx.service.user.login({
+          id: 'azxsd',
+          password: 'cxv',
+          rememberMe: true,
+      });
+      assert(user === true);
+    });
+
     it('should get false when id or password error', async function () {
       const ctx = app.mockContext();
       const user = await ctx.service.user.login({
@@ -56,4 +70,67 @@ describe('test/service/user.test.js', () => {
       assert(!user);
     });
   });
+
+  describe('changePassword test', () => {
+    it('should changePassword', async function() {
+      const ctx = app.mockContext();
+      const flag = await ctx.service.user.changePassword({
+          id: '233',
+          old_password: '223',
+          password: '233',
+        });
+        assert(flag === true);
+    });
+
+    it('should get error when id not correct', async function() {
+      const ctx = app.mockContext();
+      const flag = await ctx.service.user.changePassword({
+          id: false,
+          old_password: '23',
+          password: '233',
+        });
+        assert(flag === false);
+    });
+  });
+
+  describe('changeEmail test', () => {
+    it('should changeEmail', async function() {
+      const ctx = app.mockContext();
+      const flag = await ctx.service.user.changeEmail({
+          id: '233',
+          email: '23',
+        });
+        assert(flag === false);
+    });
+
+    it('should get error when data struction not correct', async function() {
+      const ctx = app.mockContext();
+      const flag = await ctx.service.user.changeEmail({
+          id: false,
+        });
+        assert(flag === false);
+    });
+  });
+
+  describe('changeMobile test', () => {
+    it('should changeMobile', async function() {
+      const ctx = app.mockContext();
+      const flag = await ctx.service.user.changeMobile({
+          id: '233',
+          mobile: '12321',
+        });
+        assert(flag === false);
+    });
+
+    it('should get error when data struction not correct', async function() {
+      const ctx = app.mockContext();
+      const flag = await ctx.service.user.changeMobile({
+          id: true,
+        });
+        assert(flag === false);
+    });
+  });
+
+
+
 });

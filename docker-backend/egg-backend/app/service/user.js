@@ -37,7 +37,7 @@ module.exports = app => {
     await app.mysql.query(sql);
       try {
         const result = await app.mysql.get('newuser', { id: _body.id, password: _body.password });
-        if (result == null) {
+        if (result === null) {
           return false;
         }
         return true;
@@ -93,6 +93,21 @@ module.exports = app => {
           const insertSuccess = result.affectedRows === 1;
           return insertSuccess;
         }
+      } catch (err) {
+        console.error(err);
+        return false;
+      }
+    }
+
+    async verfifyMobile(body){
+      try {
+        const SMSClient = require('@alicloud/sms-sdk');
+        // ACCESS_KEY_ID/ACCESS_KEY_SECRET 根据实际申请的账号信息进行替换
+        const accessKeyId = 'yourAccessKeyId';
+        const secretAccessKey = 'yourAccessKeySecret';
+        //初始化sms_client
+        let smsClient = new SMSClient({accessKeyId, secretAccessKey})
+
       } catch (err) {
         console.error(err);
         return false;

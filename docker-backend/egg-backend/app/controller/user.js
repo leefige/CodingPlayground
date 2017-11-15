@@ -43,13 +43,13 @@ module.exports = app => {
         login_success: result,
       };
       if(result === true){
-      this.ctx.session.userId = body.id;
-      this.ctx.session.userPassword = body.password;
-      if(body.rememberMe === false){
-        this.ctx.session.maxAge = 1000 * 1800;
+        this.ctx.session.userId = body.id;
+        this.ctx.session.userPassword = body.password;
+        if(body.rememberMe === false){
+          this.ctx.session.maxAge = 1000 * 1800;
+        }
+        await this.ctx.service.map.insertId(body);
       }
-      await this.ctx.service.map.insertId(body);
-    }
     }
 
     async autoLogin() {
@@ -122,7 +122,7 @@ module.exports = app => {
 
       const result = await this.ctx.service.user.changePassword(body);
       this.ctx.body = {
-        changePassword_success: result,
+        changeEmail_success: result,
       };
     }
 
@@ -143,7 +143,7 @@ module.exports = app => {
 
       const result = await this.ctx.service.user.changePassword(body);
       this.ctx.body = {
-        changePassword_success: result,
+        changeMobile_success: result,
       };
     }
 
