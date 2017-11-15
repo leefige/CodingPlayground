@@ -43,35 +43,6 @@ describe('test/controller/user.test.js', () => {
       });
     });
 
-    it('should remember user when rememberMe is true', () => {
-      return app.httpRequest()
-      .post('/user/signup')
-      .type('json')
-      .send({
-        id: '2341',
-        password: '213',
-      })
-      .expect(200)
-      .expect({
-        signup_success: false,
-      });
-    });
-
-    it('should get error when data struction not correct', () => {
-      return app.httpRequest()
-      .post('/user/signup')
-      .type('json')
-      .send({
-        id: true,
-        password: '213',
-      })
-      .expect(200)
-      .expect({
-        signup_success: false,
-      });
-    });
-
-
     it('should get error when data not correct', () =>{
       return app.httpRequest()
       .post('/user/signup')
@@ -185,9 +156,9 @@ describe('test/controller/user.test.js', () => {
         .post('/user/login')
         .type('json')
         .send({
-          id: '212',
-          password: '233',
-          rememberMe: true,
+          id: '233',
+          password: '2',
+          rememberMe: false,
         })
         .expect(200)
         .expect({
@@ -280,7 +251,7 @@ describe('test/controller/user.test.js', () => {
       .post('/user/changePassword')
       .type('json')
       .send({
-        autoLogin: 'error',
+        id: true,
       })
       .expect(200)
       .expect({
@@ -310,7 +281,7 @@ describe('test/controller/user.test.js', () => {
       .post('/user/changePassword')
       .type('json')
       .send({
-        autoLogin: 'error',
+        id: true,
       })
       .expect(200)
       .expect({

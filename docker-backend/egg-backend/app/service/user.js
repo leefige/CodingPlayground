@@ -98,6 +98,21 @@ module.exports = app => {
         return false;
       }
     }
+
+    async verfifyMobile(body){
+      try {
+        const SMSClient = require('@alicloud/sms-sdk');
+        // ACCESS_KEY_ID/ACCESS_KEY_SECRET 根据实际申请的账号信息进行替换
+        const accessKeyId = 'yourAccessKeyId';
+        const secretAccessKey = 'yourAccessKeySecret';
+        //初始化sms_client
+        let smsClient = new SMSClient({accessKeyId, secretAccessKey})
+
+      } catch (err) {
+        console.error(err);
+        return false;
+      }
+    }
   }
   return UserService;
 };

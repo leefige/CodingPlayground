@@ -39,9 +39,23 @@ describe('test/service/user.test.js', () => {
       const user = await ctx.service.user.login({
           id: 'azxsd',
           password: 'cxv',
+          rememberMe: false,
       });
       assert(user === true);
     });
+
+    it('should login user and remember', async function () {
+      // 创建 ctx
+      const ctx = app.mockContext();
+      // 通过 ctx 访问到 service.user
+      const user = await ctx.service.user.login({
+          id: 'azxsd',
+          password: 'cxv',
+          rememberMe: true,
+      });
+      assert(user === true);
+    });
+
     it('should get false when id or password error', async function () {
       const ctx = app.mockContext();
       const user = await ctx.service.user.login({
@@ -58,20 +72,20 @@ describe('test/service/user.test.js', () => {
   });
 
   describe('changePassword test', () => {
-    it('should changePassword', () => {
+    it('should changePassword', async function() {
       const ctx = app.mockContext();
       const flag = await ctx.service.user.changePassword({
-          id: 'byn',
-          old_password: '23',
+          id: '233',
+          old_password: '2',
           password: '233',
         });
         assert(flag === true);
     });
 
-    it('should get error when id not correct', () => {
+    it('should get error when id not correct', async function() {
       const ctx = app.mockContext();
       const flag = await ctx.service.user.changePassword({
-          userid: 'error',
+          id: 'error',
           old_password: '23',
           password: '233',
         });
@@ -80,63 +94,43 @@ describe('test/service/user.test.js', () => {
   });
 
   describe('changeEmail test', () => {
-    it('should changeEmail', () => {
-      // 对 app 发起 `POST /` 请求
-      return app.httpRequest()
-        .post('/user/changeEmail')
-        .type('json')
-        .send({
-          id: 'byn',
-          email: '2333333@163.com',
-        })
-        .expect(200) // 期望返回 status 200
-        .expect({
-          changeEmail_success: false,
+    it('should changeEmail', async function() {
+      const ctx = app.mockContext();
+      const flag = await ctx.service.user.changePassword({
+          id: 'error',
+          email: '23',
         });
+        assert(flag === false);
     });
 
-    it('should get error when data struction not correct', () => {
-      return app.httpRequest()
-      .post('/user/changePassword')
-      .type('json')
-      .send({
-        autoLogin: 'error',
-      })
-      .expect(200)
-      .expect({
-        changeEmail_success: false,
-      });
+    it('should get error when data struction not correct', async function() {
+      const ctx = app.mockContext();
+      const flag = await ctx.service.user.changePassword({
+          id: 'error',
+        });
+        assert(flag === false);
     });
   });
 
   describe('changeMobile test', () => {
-    it('should changeMobile', () => {
-      // 对 app 发起 `POST /` 请求
-      return app.httpRequest()
-        .post('/user/changeMobile')
-        .type('json')
-        .send({
-          id: 'byn',
-          mobile: '23',
-        })
-        .expect(200) // 期望返回 status 200
-        .expect({
-          changeMobile_success: false,
+    it('should changeMobile', async function() {
+      const ctx = app.mockContext();
+      const flag = await ctx.service.user.changePassword({
+          id: '233',
+          mobile: '12321',
         });
+        assert(flag === false);
     });
 
-    it('should get error when data struction not correct', () => {
-      return app.httpRequest()
-      .post('/user/changePassword')
-      .type('json')
-      .send({
-        autoLogin: 'error',
-      })
-      .expect(200)
-      .expect({
-        changeMobile_success: false,
-      });
+    it('should get error when data struction not correct', async function() {
+      const ctx = app.mockContext();
+      const flag = await ctx.service.user.changePassword({
+          id: 'error',
+        });
+        assert(flag === false);
     });
   });
+
+
 
 });
