@@ -5,7 +5,7 @@ module.exports = app => {
   class MapService extends app.Service {
     async getId(body){
       try {
-        const result = await app.mysql.get('map', { userid: body.userid, mapid: body.mapid});
+        const result = await app.mysql.get('newmap', { userid: body.userid, mapid: body.mapid});
         const map = JSON.parse(result.data);
         return {
           mapInitState: map.mapInitState,
@@ -20,7 +20,7 @@ module.exports = app => {
 
     async insertId(_body){
       try {
-        const sql = "create table if not exists map(" +
+        const sql = "create table if not exists newmap(" +
         "userid VARCHAR(100)," +
         "mapid VARCHAR(100," +
         "data TEXT," +
@@ -46,11 +46,11 @@ module.exports = app => {
           _data.blocklyConfig.toolboxCategories = blockly;
           const data = JSON.stringify(_data);
           const readid = mapid + i;
-          const is_insert1 = await app.mysql.get('map', { userid: _body.id, mapid: readid });
+          const is_insert1 = await app.mysql.get('newmap', { userid: _body.id, mapid: readid });
           if(is_insert1 === null)
-            await app.mysql.insert('map', { userid: _body.id, mapid: readid, data: data });
+            await app.mysql.insert('newmap', { userid: _body.id, mapid: readid, data: data });
           else
-            await app.mysql.update('map', { userid: _body.id, mapid: readid, data: data });
+            await app.mysql.update('newmap', { userid: _body.id, mapid: readid, data: data });
         }
         return true;
       } catch (err) {
@@ -59,8 +59,19 @@ module.exports = app => {
       }
     }
 
-    async updateBlockly(){
-
+    async updateBlockly(body){
+      try {
+        const result = await app.mysql.get('map', { userid: body.userid, mapid: body.mapid});
+        var map = JSON.parse(result.data);
+        map.blocklyConfig = body.blockly;
+        const data = JSON.stringify(map);
+        const result = await app.mysql.update('newmap', {userid: body.id, mapid: body.mapid, data: data});
+        const insertSuccess = result.affectedRows === 1;
+        return insertSuccess;
+      } catch (err) {
+        console.error(err);
+        return false;
+      }
     }
   }
   return MapService;

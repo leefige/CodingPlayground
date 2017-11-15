@@ -88,7 +88,7 @@ module.exports = app => {
       try {
         await this.ctx.validate({
           id: { type: 'string' },
-          old_password { type: 'string'},
+          old_password: { type: 'string'},
           password: { type: 'string' },
         });
       } catch (err) {
@@ -115,7 +115,7 @@ module.exports = app => {
       } catch (err) {
         console.error(err);
         this.ctx.body = {
-          changePassword_success: false,
+          changeEmail_success: false,
         };
         return;
       }
@@ -136,7 +136,7 @@ module.exports = app => {
       } catch (err) {
         console.error(err);
         this.ctx.body = {
-          changePassword_success: false,
+          changeMobile_success: false,
         };
         return;
       }
