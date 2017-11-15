@@ -6,7 +6,7 @@ describe('test/service/map.test.js', () => {
     it('should get map id', async function () {
       const ctx = app.mockContext();
       const map = await ctx.service.map.getId({
-          id: '233301',
+          id: '1233301',
       });
       assert(map === null);
     });
@@ -38,7 +38,7 @@ describe('test/service/map.test.js', () => {
     it('should update blockly file', async function () {
       const ctx = app.mockContext();
       const map = await ctx.service.map.insertId({
-        id: 'byn',
+        id: '1233301',
         savedSolution: '1',
       });
       assert(map !== null);

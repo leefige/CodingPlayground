@@ -76,7 +76,7 @@ describe('test/service/user.test.js', () => {
       const ctx = app.mockContext();
       const flag = await ctx.service.user.changePassword({
           id: '233',
-          old_password: '2',
+          old_password: '223',
           password: '233',
         });
         assert(flag === true);
@@ -85,7 +85,7 @@ describe('test/service/user.test.js', () => {
     it('should get error when id not correct', async function() {
       const ctx = app.mockContext();
       const flag = await ctx.service.user.changePassword({
-          id: 'error',
+          id: false,
           old_password: '23',
           password: '233',
         });
@@ -97,7 +97,7 @@ describe('test/service/user.test.js', () => {
     it('should changeEmail', async function() {
       const ctx = app.mockContext();
       const flag = await ctx.service.user.changeEmail({
-          id: 'error',
+          id: '233',
           email: '23',
         });
         assert(flag === false);
@@ -106,7 +106,7 @@ describe('test/service/user.test.js', () => {
     it('should get error when data struction not correct', async function() {
       const ctx = app.mockContext();
       const flag = await ctx.service.user.changeEmail({
-          id: 'error',
+          id: false,
         });
         assert(flag === false);
     });
@@ -125,7 +125,7 @@ describe('test/service/user.test.js', () => {
     it('should get error when data struction not correct', async function() {
       const ctx = app.mockContext();
       const flag = await ctx.service.user.changeMobile({
-          id: 'error',
+          id: true,
         });
         assert(flag === false);
     });

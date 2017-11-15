@@ -248,7 +248,7 @@ describe('test/controller/user.test.js', () => {
 
     it('should get error when data struction not correct', () => {
       return app.httpRequest()
-      .post('/user/changePassword')
+      .post('/user/changeEmail')
       .type('json')
       .send({
         id: true,
@@ -278,7 +278,7 @@ describe('test/controller/user.test.js', () => {
 
     it('should get error when data struction not correct', () => {
       return app.httpRequest()
-      .post('/user/changePassword')
+      .post('/user/changeMobile')
       .type('json')
       .send({
         id: true,
