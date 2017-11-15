@@ -13,19 +13,21 @@ class Login extends Component {
   }
 
   async handleLogin() {
-    //console.log("login")
+    // console.log("login")
     post('/user/login', {
       id: this.state.email,
       password: this.state.password,
       rememberMe: this.state.rememberMe,
     })
       .then((responseJson) => {
-        //console.log(responseJson);
+        // console.log(responseJson);
         if (responseJson.login_success) {
+          alert("登录成功！");
           this.props.onLogin(this.state.email);
         }
-        else
+        else {
           alert("登录失败！");
+        }
       }).catch((error) => {
         console.error(error);
       });
@@ -90,7 +92,7 @@ class Login extends Component {
               <div className="form-group form-checkbox">
                   <input type="checkbox" value={"remember-me"} checked={this.state.rememberMe} onChange={this.handleRememberMeChange.bind(this)} /> 记住我
               </div>
-              <Link to='/index' type="button" class="btn btn-success form-btn" onClick={this.handleLogin.bind(this)}>进入游戏！</Link>
+              <button type="button" class="btn btn-success form-btn" onClick={this.handleLogin.bind(this)}>进入游戏！</button>
             </form>
           </div>
         </div>

@@ -63,11 +63,15 @@ class CodeGameContent extends Component {
 
   componentWillMount() {
     // TODO: 用一个请求同时获取地图和用户解法，避免异步问题
+    // console.log("type: "+this.props.userType);
+    // console.log("id: "+this.props.getLoginUserId);
+    // console.log("share: "+this.props.match.params.shareUserID);
+    // console.log("final: "+(this.props.userType === "game" ? this.props.getLoginUserId : this.props.match.params.shareUserID));
 
     // 获取地图信息和blockly配置和用户解法
     post('/map/getId', {
       id: this.props.match.params.mapID,
-      userId: this.props.userType === "game" ? this.props.getLoginUserId : this.props.match.params.shareUserID,
+      userId: (this.props.userType === "game" ? this.props.getLoginUserId : this.props.match.params.shareUserID),
 		})
     .then((responseJson) => {
       mainControl.load(responseJson.mapInitState);
