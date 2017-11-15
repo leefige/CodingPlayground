@@ -31,6 +31,7 @@ export default class PixiComponent {
     this.height = height;
 
     this.FPS = FPS;
+    this.timeStatus = 0;
 
     this.renderer = renderer;
 
@@ -154,7 +155,7 @@ export default class PixiComponent {
   play = () => {
     const player = mainControl.player;
     const status = player.getStatus();
-    const baseDir = player.character.dir;
+
 
     const enmId = this.resources[this.enmJson].textures;
     const chaId = this.resources[this.chaJson].textures;
@@ -166,35 +167,49 @@ export default class PixiComponent {
     } = this;
 
     if (status === 0) {
+      const baseDir = player.character.dir;
       const numEnemy = mainControl.player.enemy.length;
       for (let i = 0; i < numEnemy; i++) {
         const px = convertX(player.enemy[i].pos['y'], width, row),
           py = convertY(player.enemy[i].pos['x'], height, col);
         const baseEnmDir = player.enemy[i].dir;
         this.mEnemy[i].update(px, py, 1*FPS, FPS, baseEnmDir, enmId);
+
       }
 
       const px = convertX(player.character.pos['y'], width, row),
         py = convertY(player.character.pos['x'], height, col);
       this.mCharacter.update(px, py, 1*FPS, FPS, baseDir, chaId);
+      this.timeStatus = 0;
+      this.updatePrevPos();
       player.nextStep();
     }
     else if (status === 1) {
+      const baseDir = player.character.dir;
+      this.timeStatus++;
+      if (this.timeStatus == 60) {
+        this.timeStatus = 0;
+        this.updatePrevPos();
+
+        player.nextStep();
+      }
+
       const numEnemy = mainControl.player.enemy.length;
       for (let i = 0; i < numEnemy; i++) {
         const px = convertX(player.enemy[i].pos['y'], width, row),
           py = convertY(player.enemy[i].pos['x'], height, col);
         const baseEnmDir = player.enemy[i].dir;
-        this.mEnemy[i].moveTo(px, py, FPS, baseEnmDir, enmId);
+        this.mEnemy[i].moveTo(px, py, FPS, baseEnmDir, enmId, this.timeStatus);
       }
 
       const px = convertX(player.character.pos['y'], width, row),
         py = convertY(player.character.pos['x'], height, col);
-      if (!this.mCharacter.moveTo(px, py, FPS, baseDir, chaId)) {
-        player.nextStep();
+      if (!this.mCharacter.moveTo(px, py, FPS, baseDir, chaId, this.timeStatus)) {
+        // player.nextStep();
       }
     }
     else if (status >= 2) {
+      this.timeStatus = 0;
       this.state = this.end;
     }
   }
@@ -212,6 +227,24 @@ export default class PixiComponent {
     }
     else if (status === 3) {
       this.gameover.obj.visible = true;
+    }
+  }
+
+  updatePrevPos = () => {
+    const {
+      width, height,
+      row, col,
+      FPS
+    } = this;
+
+    const px = convertX(mainControl.player.character.pos['y'], width, row),
+    py = convertY(mainControl.player.character.pos['x'], height, col);
+    this.mCharacter.prevPos = {'x': px, 'y': py};
+    const numEnemy = mainControl.player.enemy.length;
+    for (let i = 0; i < numEnemy; i++) {
+      const px = convertX(mainControl.player.enemy[i].pos['y'], width, row),
+        py = convertY(mainControl.player.enemy[i].pos['x'], height, col);
+      this.mEnemy[i].prevPos = {'x': px, 'y': py};
     }
   }
 }
