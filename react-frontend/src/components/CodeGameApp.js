@@ -7,8 +7,7 @@ import Signup from './Signup';
 import Login from './Login';
 import Account from '../pages/Personal/Account';
 import Level from '../pages/Level/Level';
-import { Route } from 'react-router-dom';
-
+import { Route, Redirect } from 'react-router-dom';
 class CodeGameApp extends Component {
   constructor() {
     super();
@@ -40,6 +39,7 @@ class CodeGameApp extends Component {
           <div className='game-header row'>
             <div className='pull-right'>
               <Header
+                pathname={this.props.location.pathname}
                 isLogin={this.state.isLogin}
                 id={this.state.id}
                 onLogin={this.handleLogin.bind(this)}

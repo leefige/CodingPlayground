@@ -13,7 +13,6 @@ class Login extends Component {
   }
 
   async handleLogin() {
-    // console.log("login")
     post('/user/login', {
       id: this.state.email,
       password: this.state.password,
@@ -64,7 +63,7 @@ class Login extends Component {
           <div className="form-bottom">
             <form role="form" className="login-form">
               <div className="form-group">
-                <label className="sr-only" for="form-email">Email</label>
+                <label className="sr-only" htmlFor="form-email">Email</label>
                 <input
                   type="text"
                   name="form-email"
@@ -72,7 +71,7 @@ class Login extends Component {
                   className="form-email form-control"
                   id="form-email"
                   required
-                  autofocus
+                  autoFocus
                   value={this.state.email}
                   onChange={this.handleEmailChange.bind(this)}
                   />
@@ -92,7 +91,7 @@ class Login extends Component {
               <div className="form-group form-checkbox">
                   <input type="checkbox" value={"remember-me"} checked={this.state.rememberMe} onChange={this.handleRememberMeChange.bind(this)} /> 记住我
               </div>
-              <button type="button" class="btn btn-success form-btn" onClick={this.handleLogin.bind(this)}>进入游戏！</button>
+              <button type="button" className="btn btn-success form-btn" onClick={this.handleLogin.bind(this)}>进入游戏！</button>
             </form>
           </div>
         </div>
