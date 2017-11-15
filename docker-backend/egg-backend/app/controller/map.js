@@ -15,7 +15,10 @@ module.exports = app => {
     }
 
     async updateBlockly(){
-      await this.ctx.service.map.updateBlockly(this.ctx.request.body);
+      const result = await this.ctx.service.map.updateBlockly(this.ctx.request.body);
+      this.ctx.body = {
+        updateBlockly_sucess: result,
+      }
     }
   }
   return MapController;

@@ -10,6 +10,7 @@ module.exports = app => {
   app.post('/user/changePassword', app.controller.changePassword);
   app.post('/user/changeEmail', app.controller.changeEmail);
   app.post('/user/changeMobile', app.controller.changeMobile);
+  app.post('/map/updateBlockly', app.controller.updateBlockly);
   app.get('/map/insertId', app.controller.map.insertId);
   app.get('/record/insertId', app.controller.record.insertId);
 };

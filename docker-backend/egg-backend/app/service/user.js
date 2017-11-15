@@ -2,7 +2,7 @@
 module.exports = app => {
   class UserService extends app.Service {
     async signup(_body) {
-      const sql = "create table if not exists user(" +
+      const sql = "create table if not exists newuser(" +
         "id VARCHAR(100)," +
         "password VARCHAR(100)," +
         "email VARCHAR(100)," +
@@ -12,9 +12,9 @@ module.exports = app => {
         ");";
       await app.mysql.query(sql);
       try {
-        const is_insert = await app.mysql.get('user', { id: _body.id });
+        const is_insert = await app.mysql.get('newuser', { id: _body.id });
         if (is_insert === null) {
-          const result = await app.mysql.insert('user', { id: _body.id, password: _body.password });
+          const result = await app.mysql.insert('newuser', { id: _body.id, password: _body.password });
           const insertSuccess = result.affectedRows === 1;
           return insertSuccess;
         }
@@ -26,7 +26,7 @@ module.exports = app => {
     }
 
     async login(_body) {
-      const sql = "create table if not exists user(" +
+      const sql = "create table if not exists newuser(" +
       "id VARCHAR(100)," +
       "password VARCHAR(100)," +
       "email VARCHAR(100)," +
@@ -36,7 +36,7 @@ module.exports = app => {
       ");";
     await app.mysql.query(sql);
       try {
-        const result = await app.mysql.get('user', { id: _body.id, password: _body.password });
+        const result = await app.mysql.get('newuser', { id: _body.id, password: _body.password });
         if (result == null) {
           return false;
         }
@@ -50,12 +50,12 @@ module.exports = app => {
 
     async changePassword(_body){
       try {
-        const is_insert = await app.mysql.get('user', { id: _body.id, password: _body.old_password });
+        const is_insert = await app.mysql.get('newuser', { id: _body.id, password: _body.old_password });
         if (is_insert === null) {
           return false;
         }
         else{
-          const result = await app.mysql.update('user', { id: _body.id, password: _body.password });
+          const result = await app.mysql.update('newuser', { id: _body.id, password: _body.password });
           const insertSuccess = result.affectedRows === 1;
           return insertSuccess;
         }
@@ -67,12 +67,12 @@ module.exports = app => {
 
     async changeEmail(_body){
       try {
-        const is_insert = await app.mysql.get('user', { id: _body.id });
+        const is_insert = await app.mysql.get('newuser', { id: _body.id });
         if (is_insert === null) {
           return false;
         }
         else{
-          const result = await app.mysql.update('user', { id: _body.id, email: _body.email });
+          const result = await app.mysql.update('newuser', { id: _body.id, email: _body.email });
           const insertSuccess = result.affectedRows === 1;
           return insertSuccess;
         }
@@ -84,12 +84,12 @@ module.exports = app => {
 
     async changeMobile(_body){
       try {
-        const is_insert = await app.mysql.get('user', { id: _body.id });
+        const is_insert = await app.mysql.get('newuser', { id: _body.id });
         if (is_insert === null) {
           return false;
         }
         else{
-          const result = await app.mysql.update('user', { id: _body.id, mobile: _body.mobile });
+          const result = await app.mysql.update('newuser', { id: _body.id, mobile: _body.mobile });
           const insertSuccess = result.affectedRows === 1;
           return insertSuccess;
         }
