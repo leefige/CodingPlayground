@@ -8,7 +8,8 @@ describe('test/controller/record.test.js', () => {
         .post('/record/getId')
         .type('json')
         .send({
-          id: '2341',
+          id: '233',
+          userId: '23',
         })
         .expect(204);
     });
@@ -19,6 +20,7 @@ describe('test/controller/record.test.js', () => {
         .type('json')
         .send({
           id: '23411',
+          userId: '233',
         })
         .expect(204)
         .expect({});
@@ -36,7 +38,13 @@ describe('test/controller/record.test.js', () => {
   describe('insertId test', () => {
     it('should status 200 and get the body', () => {
       return app.httpRequest()
-      .get('/record/insertId')
+      .post('/record/insertId')
+      .type('json')
+      .send({
+        id: '123',
+        userId: '213',
+        data: '2',
+      })
       .expect(200);
     });
   });
