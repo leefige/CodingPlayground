@@ -5,12 +5,14 @@ import {
   updatePhase
 } from "./misc";
 import Obj from "./obj";
-import { mainControl } from '../../../../logic/MainControl';
+import { mainControl, gameStatus } from '../../../../logic/MainControl';
 
 // `setup` function will run when the image has loaded
 export default class PixiComponent {
 
   constructor(stage, mapResource, FPS, width, height, renderer) {
+    PIXI.loader.reset();
+
     this.Container = PIXI.Container;
     this.Sprite = PIXI.Sprite;
     this.resources = PIXI.loader.resources;
@@ -34,6 +36,7 @@ export default class PixiComponent {
     this.timeStatus = 0;
 
     this.renderer = renderer;
+
 
     //Use Pixi's built-in `loader` object to load an image
     PIXI.loader
@@ -84,13 +87,22 @@ export default class PixiComponent {
 
     const objId = this.resources[this.objJson].textures;
     const chest = new Obj(
-      objId['1.png'],
+      objId['chest.png'],
       width / row,
       height / col,
       convertX(mainControl.board.chestPos['y'], width, row),
       convertY(mainControl.board.chestPos['x'], height, col)
     );
     chest.addTo(gameScene);
+
+    this.bomb = new Obj(
+      objId['bomb.png'],
+      width / row,
+      height / col,
+      0, 0,
+      null, false
+    );
+    this.bomb.addTo(gameScene);
 
     const chaId = this.resources[this.chaJson].textures;
 
@@ -156,7 +168,6 @@ export default class PixiComponent {
     const player = mainControl.player;
     const status = player.getStatus();
 
-
     const enmId = this.resources[this.enmJson].textures;
     const chaId = this.resources[this.chaJson].textures;
 
@@ -187,7 +198,7 @@ export default class PixiComponent {
     else if (status === 1) {
       const baseDir = player.character.dir;
       this.timeStatus++;
-      if (this.timeStatus == 60) {
+      if (this.timeStatus === 60) {
         this.timeStatus = 0;
         this.updatePrevPos();
 
@@ -204,8 +215,17 @@ export default class PixiComponent {
 
       const px = convertX(player.character.pos['y'], width, row),
         py = convertY(player.character.pos['x'], height, col);
-      if (!this.mCharacter.moveTo(px, py, FPS, baseDir, chaId, this.timeStatus)) {
-        // player.nextStep();
+      this.mCharacter.moveTo(px, py, FPS, baseDir, chaId, this.timeStatus);
+
+      if (mainControl.player.board.bombPos.x !== -1) {
+        if (this.timeStatus === 0) {
+            this.bomb.obj.x = convertX(mainControl.player.board.bombPos['y'] + 1, width, row);
+            this.bomb.obj.y = convertY(mainControl.player.board.bombPos['x'] + 1, height, col);
+            this.bomb.obj.visible = true;
+        }
+        else if (this.timeStatus === 30){
+          this.bomb.obj.visible = false;
+        }
       }
     }
     else if (status >= 2) {
@@ -233,8 +253,7 @@ export default class PixiComponent {
   updatePrevPos = () => {
     const {
       width, height,
-      row, col,
-      FPS
+      row, col
     } = this;
 
     const px = convertX(mainControl.player.character.pos['y'], width, row),
