@@ -31,10 +31,27 @@ module.exports = app => {
     await app.mysql.query(sql);
       try {
         const result = await app.mysql.get('user', { id: _body.id, password: _body.password });
-        if (result == null) { 
-          return false; 
+        if (result == null) {
+          return false;
         }
         return true;
+      } catch (err) {
+        console.error(err);
+        return false;
+      }
+    }
+
+    async changePassword(_body){
+      try {
+        const is_insert = await app.mysql.get('user', { id: _body.id });
+        if (is_insert === null) {
+          return false;
+        }
+        else{
+          const result = await app.mysql.update('user', { id: _body.id, password: _body.password });
+          const insertSuccess = result.affectedRows === 1;
+          return insertSuccess;
+        }
       } catch (err) {
         console.error(err);
         return false;
