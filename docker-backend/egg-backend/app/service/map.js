@@ -61,7 +61,7 @@ module.exports = app => {
 
     async updateBlockly(body){
       try {
-        const result = await app.mysql.get('map', { userid: body.userid, mapid: body.mapid});
+        const result = await app.mysql.get('newmap', { userid: body.userid, mapid: body.mapid});
         var map = JSON.parse(result.data);
         map.blocklyConfig = body.blockly;
         const data = JSON.stringify(map);
