@@ -119,10 +119,21 @@ class CodeGameContent extends Component {
       showResultModal: true,
       gameScore: score,
     })
-    if (result) {
-      // console.log("success, send solution to backend");
-      // TODO: send solution to backend
+    if (result && this.props.userType === "game") {
+      this.sendUserSolution();
     }
+    this.refs.show_btn.click();
+  }
+
+  async sendUserSolution() {
+    post('/map/updateBlockly', {
+      userid: this.props.getLoginUserId,
+      mapid: this.props.match.params.mapID,
+      blockly: this.state.userSolution,
+    }).then((responseJson) => {
+    }).catch((error) => {
+      console.error(error);
+    });
   }
 
   nextStep(_actionList) {
@@ -184,8 +195,8 @@ class CodeGameContent extends Component {
                 :<div></div>
               }
             </div>
-            <button className="btn btn-primary btn-lg" data-toggle="modal" data-target="#resultModal">开始演示模态框</button>
-            <Result mapID={this.props.match.params.mapID} userID={this.props.match.params.shareUserID} score={this.state.gameScore}/>
+            <button ref="show_btn" className="btn btn-primary btn-lg hide" data-toggle="modal" data-target="#resultModal"/>
+            <Result ref="show_result" mapID={this.props.match.params.mapID} userID={this.props.match.params.shareUserID} score={this.state.gameScore}/>
         </div>
       );
     // }
