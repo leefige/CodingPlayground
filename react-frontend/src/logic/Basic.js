@@ -1,9 +1,11 @@
 class Basic {
   _state;
   _nextState;
-  constructor(state) {
+  _mainControl;
+  constructor(state, mainControl) {
     this._state = state;
     this._nextState = state;
+    this._mainControl = mainControl;
   }
 
   update() {

@@ -2,7 +2,13 @@ import Board from "./Board";
 import Character from "./Character";
 import Enemy from "./Enemy";
 import Player from "./Player";
-import { playerStatus } from "./Player"
+const gameStatus = {
+  init : 0,
+  running : 1,
+  success : 2,
+  failed : 3,
+  pause : 4,
+}
 const state = {
   board : {
     map : [[0, 0, 0, 0, 0, 0, 0, 0],
@@ -67,31 +73,33 @@ class MainControl{
   }
 
   load(state) {
+    //console.log("maincontrol")
     this._state = JSON.parse(JSON.stringify(state));
-    this._board = new Board(this._state.board);
+    //console.log(this._state)
+    this._board = new Board(this._state.board, this);
     this._enemy = [];
     for (let i = 0; i < this._state.enemy.length; i++)
-      this._enemy[i] = new Enemy(this._state.enemy[i])
-    this._character = new Character(this._state.character, this._board, this._enemy);
+      this._enemy[i] = new Enemy(this._state.enemy[i], this)
+    this._character = new Character(this._state.character, this);
     this._player = new Player(state);
-    this._status = playerStatus.running; //游戏状态，0为初始状态，1为正常运行，2为胜利，3为失败, 4为暂停
+    this._status = gameStatus.running;
   }
 
   restart(state) {
     this.load(state);
-    this._player.setNextStatus(playerStatus.running);
+    this._player.setNextStatus(gameStatus.running);
     this._player.setMode('normal');
   }
 
   reset(state) {
     this.load(state);
-    this._player.setNextStatus(playerStatus.pause);
+    this._player.setNextStatus(gameStatus.pause);
   }
 
   // init for step-through mode
   stepThrough(state) {
     this.load(state);
-    this._player.setNextStatus(playerStatus.running);
+    this._player.setNextStatus(gameStatus.running);
     this._player.setMode('step');
   }
 
@@ -112,7 +120,7 @@ class MainControl{
             this._status = this._character.attack();
             break;
           case actionTable.torch:
-            //this._status = this._character.turnRight();
+            this._status = this._character.useTorch();
             break;
           case actionTable.bomb:
             //this._status = this._character.turnRight();
@@ -149,6 +157,8 @@ class MainControl{
   }
 
   update() {
+//    console.log(this._state);
+
     this._character.update();
     for (let i = 0; i < this._enemy.length; i++)
       this._enemy[i].update();
@@ -162,8 +172,9 @@ class MainControl{
   get character() { return this._character; }
   get board() { return this._board; }
   get player() { return this._player; }
+  get enemy() { return this._enemy; }
 }
 
 const mainControl = new MainControl(state);
 
-export { mainControl };
+export { mainControl, gameStatus };

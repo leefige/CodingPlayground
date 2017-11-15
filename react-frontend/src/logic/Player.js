@@ -1,10 +1,5 @@
-const playerStatus = {
-  init : 0,
-  running : 1, 
-  success : 2,
-  failed : 3,
-  pause : 4,
-}
+import { gameStatus as playerStatus} from "./MainControl"
+
 class Player {
   _curStep;
   _totalStep;
@@ -54,7 +49,7 @@ class Player {
 
   nextStep() {
     //console.log(this.enemy);
-    
+
     // console.log(this._mode);
     // console.log("status")
     // console.log(this._status);
@@ -63,7 +58,7 @@ class Player {
     // console.log(this._totalStep);
     if (this._status === playerStatus.init)
       this._status = this._nextStatus;
-    
+
     if (this._status === playerStatus.running) {
       if (this._curStep < this._totalStep)
         this._curStep = this._curStep + 1;
@@ -92,7 +87,7 @@ class Player {
   }
 
   add(state) {
-    this._totalStep = this._totalStep + 1;    
+    this._totalStep = this._totalStep + 1;
     this._states[this._totalStep] = JSON.parse(JSON.stringify(state)); // 深拷贝
   }
 
@@ -107,7 +102,7 @@ class Player {
   pause() {
     this._status = playerStatus.pause;
   }
-  
+
   setStatus(status) {
     this._status = status;
   }
@@ -140,4 +135,3 @@ class Player {
 }
 
 export default Player;
-export { playerStatus };
