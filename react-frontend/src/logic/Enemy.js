@@ -1,10 +1,6 @@
 import Unit from "./Unit"
-// 方向: up:0, right:1, down:2, left:3 
+// 方向: up:0, right:1, down:2, left:3
 class Enemy extends Unit {
-  _board;
-  constructor(state) {
-    super(state)
-  }
 
   go() {
     if (this._state.status === 'alive') {

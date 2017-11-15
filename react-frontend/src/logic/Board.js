@@ -1,16 +1,22 @@
 import Basic from "./Basic"
 const elements = {
   empty : 0,
-  chest : 1,
-  barrier : 2,
-  grass : 4,
-  stone : 5,
+  chest : 90,
+  grass : 92,
+  tree : 93,
+  fence : 94,
+  stone : 95,
+  precipice: 96,
+  pond: 97,
 }
+
 class Board extends Basic {
   _size;
   _elements;
-  constructor(state) {
-    super(state);
+  _enemy;
+  constructor(state, mainControl) {
+    super(state, mainControl);
+    this._enemy = this._mainControl.enemy;
     this._size = this._state.map.length;
     this._elements = elements;
     this._chestPos = { x : -1, y : -1};
@@ -22,6 +28,14 @@ class Board extends Basic {
         }
       }
     }
+  }
+
+  setTorch(pos) {
+
+  }
+
+  setBomb(pos) {
+
   }
   get chestPos() { return this._chestPos; }
   get map() { return this._state.map; }
