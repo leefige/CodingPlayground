@@ -65,8 +65,8 @@ module.exports = app => {
         var map = JSON.parse(result.data);
         map.blocklyConfig = body.blockly;
         const data = JSON.stringify(map);
-        const result = await app.mysql.update('newmap', {userid: body.id, mapid: body.mapid, data: data});
-        const insertSuccess = result.affectedRows === 1;
+        const ans = await app.mysql.update('newmap', {userid: body.id, mapid: body.mapid, data: data});
+        const insertSuccess = ans.affectedRows === 1;
         return insertSuccess;
       } catch (err) {
         console.error(err);
