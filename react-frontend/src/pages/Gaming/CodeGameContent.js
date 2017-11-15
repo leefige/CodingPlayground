@@ -63,11 +63,15 @@ class CodeGameContent extends Component {
 
   componentWillMount() {
     // TODO: 用一个请求同时获取地图和用户解法，避免异步问题
+    // console.log("type: "+this.props.userType);
+    // console.log("id: "+this.props.getLoginUserId);
+    // console.log("share: "+this.props.match.params.shareUserID);
+    // console.log("final: "+(this.props.userType === "game" ? this.props.getLoginUserId : this.props.match.params.shareUserID));
 
     // 获取地图信息和blockly配置和用户解法
     post('/map/getId', {
       id: this.props.match.params.mapID,
-      userId: this.props.userType === "game" ? this.props.getLoginUserId : this.props.match.params.shareUserID,
+      userId: (this.props.userType === "game" ? this.props.getLoginUserId : this.props.match.params.shareUserID),
 		})
     .then((responseJson) => {
       mainControl.load(responseJson.mapInitState);
@@ -119,10 +123,21 @@ class CodeGameContent extends Component {
       showResultModal: true,
       gameScore: score,
     })
-    if (result) {
-      // console.log("success, send solution to backend");
-      // TODO: send solution to backend
+    if (result && this.props.userType === "game") {
+      this.sendUserSolution();
     }
+    this.refs.show_btn.click();
+  }
+
+  async sendUserSolution() {
+    post('/map/updateBlockly', {
+      userid: this.props.getLoginUserId,
+      mapid: this.props.match.params.mapID,
+      blockly: this.state.userSolution,
+    }).then((responseJson) => {
+    }).catch((error) => {
+      console.error(error);
+    });
   }
 
   nextStep(_actionList) {
@@ -184,8 +199,8 @@ class CodeGameContent extends Component {
                 :<div></div>
               }
             </div>
-            <button className="btn btn-primary btn-lg" data-toggle="modal" data-target="#resultModal">开始演示模态框</button>
-            <Result mapID={this.props.match.params.mapID} userID={this.props.match.params.shareUserID} score={this.state.gameScore}/>
+            <button ref="show_btn" className="btn btn-primary btn-lg hide" data-toggle="modal" data-target="#resultModal"/>
+            <Result ref="show_result" mapID={this.props.match.params.mapID} userID={this.props.match.params.shareUserID} score={this.state.gameScore}/>
         </div>
       );
     // }
