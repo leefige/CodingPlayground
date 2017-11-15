@@ -55,32 +55,20 @@ class Character extends Unit {
   }
 
   useTorch() {
-    //console.log("use torch");
-    // if (this._state.items.torchNum === 0) {
-    //   return gameStatus.failed;
-    // }
+    if (this._state.items.torchNum === 0)
+      return gameStatus.failed;
+    this._nextState.items.torchNum = this._state.items.torchNum - 1;
     const nextPos = this.getNextPos();
     const board = this._mainControl.board;
-
-    //console.log("next pos");
-    //console.log(nextPos)
-    if (board.setTorch(nextPos) === gameStatus.running) {
-    //  this._nextState.items.torchNum = this._state.items.torchNum - 1;
-      return gameStatus.running;
-    }
-    else
-      return gameStatus.failed;
+    return board.setTorch(nextPos);
   }
 
   useBomb() {
-    //if (this._state.items.bombNum === 0) {
-    //  return gameStatus.failed;
-    //}
+    if (this._state.items.bombNum === 0)
+      return gameStatus.failed;
+    this._nextState.items.bombNum = this._state.items.bombNum - 1;
     const nextPos = this.getNextPos();
     const board = this._mainControl.board;
-
-    if (nextPos.x < 0 || nextPos.x >= board.size || nextPos.y < 0 || nextPos.y >= board.size)
-      return gameStatus.failed;
     return board.setBomb(nextPos, this.dir);
   }
 }
