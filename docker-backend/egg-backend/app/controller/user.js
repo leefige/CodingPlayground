@@ -88,6 +88,7 @@ module.exports = app => {
       try {
         await this.ctx.validate({
           id: { type: 'string' },
+          old_password { type: 'string'},
           password: { type: 'string' },
         });
       } catch (err) {

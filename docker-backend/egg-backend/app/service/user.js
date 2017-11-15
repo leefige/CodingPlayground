@@ -50,7 +50,7 @@ module.exports = app => {
 
     async changePassword(_body){
       try {
-        const is_insert = await app.mysql.get('user', { id: _body.id });
+        const is_insert = await app.mysql.get('user', { id: _body.id, password: _body.old_password });
         if (is_insert === null) {
           return false;
         }
