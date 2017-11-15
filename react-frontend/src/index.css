@@ -1,7 +1,7 @@
 * {
   -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-          box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body {
@@ -105,7 +105,7 @@ body {
   z-index: 2;
 }
 
-.blockly-area {  
+.blockly-area {
   height: 480px;
   margin-right: 10px;
   margin-left: 5px;
@@ -114,7 +114,7 @@ body {
   box-shadow: 2px 2px 5px rgba(65, 65, 65, 0.2);
 }
 
-.blockly-layer {  
+.blockly-layer {
   height: 480px;
   width: 100%;
   display: none;
@@ -204,9 +204,9 @@ body {
   border-color: #19b9e7;
 }
 
-input[type="text"], 
-input[type="password"], 
-textarea, 
+input[type="text"],
+input[type="password"],
+textarea,
 textarea.form-control {
   height: 50px;
   margin: 0;
@@ -231,46 +231,46 @@ textarea.form-control {
   transition: all .3s;
 }
 
-textarea, 
+textarea,
 textarea.form-control {
   padding-top: 10px;
   padding-bottom: 10px;
   line-height: 30px;
 }
 
-input[type="text"]:focus, 
-input[type="password"]:focus, 
-textarea:focus, 
+input[type="text"]:focus,
+input[type="password"]:focus,
+textarea:focus,
 textarea.form-control:focus {
   outline: 0;
   background: #fff;
-    border: 3px solid #fff;
-    -moz-box-shadow: none;
-    -webkit-box-shadow: none;
-    box-shadow: none;
-  }
-  
-  input[type="text"]:-moz-placeholder,
-  input[type="password"]:-moz-placeholder,
-  textarea:-moz-placeholder,
-  textarea.form-control:-moz-placeholder {
-    color: #888;
-  }
-  
-  input[type="text"]:-ms-input-placeholder,
-  input[type="password"]:-ms-input-placeholder,
-  textarea:-ms-input-placeholder,
-  textarea.form-control:-ms-input-placeholder {
-    color: #888;
-  }
-  
-  input[type="text"]::-webkit-input-placeholder,
-  input[type="password"]::-webkit-input-placeholder,
-  textarea::-webkit-input-placeholder,
-  textarea.form-control::-webkit-input-placeholder {
-    color: #888;
-  }
-  
+  border: 3px solid #fff;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+input[type="text"]:-moz-placeholder,
+input[type="password"]:-moz-placeholder,
+textarea:-moz-placeholder,
+textarea.form-control:-moz-placeholder {
+  color: #888;
+}
+
+input[type="text"]:-ms-input-placeholder,
+input[type="password"]:-ms-input-placeholder,
+textarea:-ms-input-placeholder,
+textarea.form-control:-ms-input-placeholder {
+  color: #888;
+}
+
+input[type="text"]::-webkit-input-placeholder,
+input[type="password"]::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder,
+textarea.form-control::-webkit-input-placeholder {
+  color: #888;
+}
+
 .form-checkbox {
   opacity: 0.8;
   color: #fff;
@@ -283,10 +283,11 @@ textarea.form-control:focus {
   padding: 14px 20px;
   vertical-align: middle;
   font-size: 16px;
+  width: 100%;
 }
 
 .modal-backdrop {
-  background-color : transparent;
+  background-color: transparent;
 }
 
 .result-btn {
@@ -311,32 +312,34 @@ textarea.form-control:focus {
   background-color: transparent;
   border: 0;
 }
+
+
 /* for personal page */
 
 .tab-content {
   background-color: #ffffff;
   margin-bottom: 50px;
-	padding-left: 40px;
+  padding-left: 40px;
   padding-top: 40px;
-	padding-bottom: 40px;
+  padding-bottom: 40px;
   padding-right: 40px;
   border-radius: 6px 6px 6px 6px;
   box-shadow: 5px 5px 5px rgba(65, 65, 65, 0.2);
 }
 
 .tab-content h5 {
-	color: #54575c;
-	font-weight: 700;
-	letter-spacing: 1px;
+  color: #54575c;
+  font-weight: 700;
+  letter-spacing: 1px;
 }
 
 .profile-avatar-form-option hr {
-    margin: 10px 0;
+  margin: 10px 0;
 }
 
 .avatar-image {
-    float: left;
-    margin-bottom: 0;
+  float: left;
+  margin-bottom: 0;
 }
 
 .avatar-file-name {
@@ -349,11 +352,9 @@ textarea.form-control:focus {
   width: 160px;
   height: 160px;
   margin-right: 20px;
-
   float: left;
   border-radius: 80px;
   border: 1px solid #fff;
-
   padding: 0;
   overflow: hidden;
 }
@@ -479,6 +480,7 @@ textarea.personal-control::-webkit-input-placeholder {
   color: #888;
 }
 
+
 /* map card */
 
 .card-content {
@@ -490,10 +492,14 @@ textarea.personal-control::-webkit-input-placeholder {
   box-shadow: 4px 4px 3px rgba(65, 65, 65, 0.2);
 }
 
+.card-content :hover {
+  color: rgb(104, 220, 255)
+}
+
 .card-content h4 {
-	color: #54575c;
-	font-weight: 700;
-	letter-spacing: 1px;
+  color: #54575c;
+  font-weight: 700;
+  letter-spacing: 1px;
 }
 
 .level-title {
@@ -502,6 +508,7 @@ textarea.personal-control::-webkit-input-placeholder {
 }
 
 .minimap {
+  cursor:pointer;
   width: 100%;
   border-radius: 5px 5px 0 0;
   overflow: hidden;

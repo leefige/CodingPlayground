@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
-import { post } from "../utils/Request"
-import { Link } from 'react-router-dom'
+import React, { Component } from 'react';
+import { post } from "../utils/Request";
+import { Link } from 'react-router-dom';
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
 
@@ -30,10 +30,10 @@ class Header extends Component {
   render() {
     return (
       <div>
-        {this.props.state ?
+        {this.props.isLogin ?
           <div className="logout-header">
-            <span className="header-username">{this.props.id}</span>
-            <button type="button" class="btn btn-default" onClick={this.handleLogout.bind(this)}>登出</button>
+            <Link to='/personal/account' type="button" className="btn btn-success header-btn">{this.props.id}</Link>
+            <Link to='/login' type="button" class="btn btn-default" onClick={this.handleLogout.bind(this)}>登出</Link>
           </div>
           :
           <div className="login-header">

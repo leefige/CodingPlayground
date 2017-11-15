@@ -7,11 +7,7 @@ import Signup from './Signup';
 import Login from './Login';
 import Account from '../pages/Personal/Account';
 import Level from '../pages/Level/Level';
-import {
-  BrowserRouter as Router,
-  Route,
-  Link
-} from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
 class CodeGameApp extends Component {
   constructor() {
@@ -25,14 +21,16 @@ class CodeGameApp extends Component {
   handleLogin(id) {
     this.setState({
       isLogin: true,
-      id: id
+      id: id,
     });
   }
 
   handleLogout() {
     this.setState({
-      isLogin: false
+      id: '',
+      isLogin: false,
     });
+    alert("您已登出！");
   }
 
   render() {
@@ -42,7 +40,7 @@ class CodeGameApp extends Component {
           <div className='game-header row'>
             <div className='pull-right'>
               <Header
-                state={this.state.isLogin}
+                isLogin={this.state.isLogin}
                 id={this.state.id}
                 onLogin={this.handleLogin.bind(this)}
                 onLogout={this.handleLogout.bind(this)} />
