@@ -73,14 +73,16 @@ class MainControl{
   }
 
   load(state) {
+    //console.log("maincontrol")
     this._state = JSON.parse(JSON.stringify(state));
+    //console.log(this._state)
     this._board = new Board(this._state.board, this);
     this._enemy = [];
     for (let i = 0; i < this._state.enemy.length; i++)
       this._enemy[i] = new Enemy(this._state.enemy[i], this)
     this._character = new Character(this._state.character, this);
     this._player = new Player(state);
-    this._status = gameStatus.running; //游戏状态，0为初始状态，1为正常运行，2为胜利，3为失败, 4为暂停
+    this._status = gameStatus.running;
   }
 
   restart(state) {
@@ -155,6 +157,8 @@ class MainControl{
   }
 
   update() {
+//    console.log(this._state);
+
     this._character.update();
     for (let i = 0; i < this._enemy.length; i++)
       this._enemy[i].update();
@@ -169,7 +173,6 @@ class MainControl{
   get board() { return this._board; }
   get player() { return this._player; }
   get enemy() { return this._enemy; }
-  get items() { return this._state.items; }
 }
 
 const mainControl = new MainControl(state);

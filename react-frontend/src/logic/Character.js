@@ -1,5 +1,4 @@
 import Unit from "./Unit"
-import {board} from "./MainControl"
 import { gameStatus } from "./MainControl"
 
 const direction = {
@@ -37,7 +36,7 @@ class Character extends Unit {
     let nextPos = this.getNextPos();
     if (nextPos.x < 0 || nextPos.x >= this._board.size || nextPos.y < 0 || nextPos.y >= this._board.size)
       return gameStatus.failed;
-    if (this._board.map[nextPos.x][nextPos.y] === this._board.elements.barrier)
+    if (this._board.map[nextPos.x][nextPos.y] !== this._board.elements.empty)
       return gameStatus.failed;
     this._nextState.pos = nextPos;
     return gameStatus.running;
@@ -55,7 +54,7 @@ class Character extends Unit {
 
   // open the treasure in front of character
   open() {
-    let nextPos = this.getNextPos();
+    const nextPos = this.getNextPos();
     if (nextPos.x < 0 || nextPos.x >= this._board.size || nextPos.y < 0 || nextPos.y >= this._board.size)
       return gameStatus.failed;
     if (this._board.map[nextPos.x][nextPos.y] === this._board.elements.chest)
@@ -64,9 +63,31 @@ class Character extends Unit {
   }
 
   useTorch() {
-    if (this._mainControl.item.torchNum === 0) {
-      return
+    console.log("use torch");
+    // if (this._state.items.torchNum === 0) {
+    //   return gameStatus.failed;
+    // }
+    const nextPos = this.getNextPos();
+    console.log("next pos");
+    console.log(nextPos)
+    if (nextPos.x < 0 || nextPos.x >= this._board.size || nextPos.y < 0 || nextPos.y >= this._board.size)
+      return gameStatus.failed;
+    if (this._board.setTorch(nextPos) === gameStatus.running) {
+    //  this._nextState.items.torchNum = this._state.items.torchNum - 1;
+      return gameStatus.running;
     }
+    else
+      return gameStatus.failed;
+  }
+
+  useBomb() {
+    if (this._state.items.bombNum === 0) {
+      return gameStatus.failed;
+    }
+    const nextPos = this.getNextPos();
+    if (nextPos.x < 0 || nextPos.x >= this._board.size || nextPos.y < 0 || nextPos.y >= this._board.size)
+      return gameStatus.failed;
+    return this._board.setBomb(nextPos, this.dir);
   }
 }
 

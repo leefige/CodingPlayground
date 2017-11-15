@@ -1,4 +1,6 @@
+import { gameStatus } from "./MainControl"
 import Basic from "./Basic"
+
 const elements = {
   empty : 0,
   chest : 90,
@@ -16,6 +18,10 @@ class Board extends Basic {
   _enemy;
   constructor(state, mainControl) {
     super(state, mainControl);
+    //--- test ---
+    this._state.torchPos = {x:-1, y:-1};
+    this._nextState.torchPos = {x:-1, y:-1};
+    //------------
     this._enemy = this._mainControl.enemy;
     this._size = this._state.map.length;
     this._elements = elements;
@@ -31,11 +37,41 @@ class Board extends Basic {
   }
 
   setTorch(pos) {
+    // console.log(this._mainControl._state)
+    // console.log(this._state)
+    // console.log(this._nextState)
+    // console.log("set torch")
+    // console.log(pos)
+
+    if (this.map[pos.x][pos.y] === this.elements.grass || this.map[pos.x][pos.y] === this.elements.fence ||
+      this.map[pos.x][pos.y] === this.elements.empty) {
+      this._nextState.torchPos.x = pos.x;
+      this._nextState.torchPos.y = pos.y;
+      this._nextState.map[pos.x][pos.y] = this.elements.empty;
+      // console.log(pos)
+      // console.log(this._nextState)
+      // console.log(this._nextState.torchPos)
+      // console.log(this._nextState.torchPos.x)
+      // console.log(this._nextState.torchPos.y)
+
+      // console.log("set torch success")
+      return gameStatus.running;
+    }
+    else
+      return gameStatus.failed;
+  }
+
+  setBomb(pos, dir) {
 
   }
 
-  setBomb(pos) {
-
+  update() {
+    //console.log(this._nextState)
+    super.update();
+    //console.log(this._state);
+    this._nextState.torchPos = {x : -1, y : -1};
+    this._nextState.bombPos = {x : -1, y : -1};
+    this._nextState.bombArea = [];
   }
   get chestPos() { return this._chestPos; }
   get map() { return this._state.map; }
