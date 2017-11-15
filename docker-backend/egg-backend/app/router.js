@@ -11,6 +11,5 @@ module.exports = app => {
   app.post('/user/changeEmail', app.controller.user.changeEmail);
   app.post('/user/changeMobile', app.controller.user.changeMobile);
   app.post('/map/updateBlockly', app.controller.map.updateBlockly);
-  app.get('/map/insertId', app.controller.map.insertId);
-  app.get('/record/insertId', app.controller.record.insertId);
+  app.post('/record/insertId', app.controller.record.insertId);
 };

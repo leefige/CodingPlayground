@@ -2,17 +2,15 @@
 module.exports = app => {
   class RecordService extends app.Service {
     async getId(body) {
-      const sql = "create table if not exists record(" +
-      "id VARCHAR(100)," +
-      "data TEXT," +
-      "primary key (id)" +
-      ");";
-      await app.mysql.query(sql);
       try {
-        const result = await app.mysql.get('record', { id: body.id });
-        const record = JSON.parse(result.data);
+        const result = await app.mysql.get('record', { id: body.userId+body.id});
+        const map = JSON.parse(result.data);
         return {
-          recordData: record.data,
+          mapInitState: map.mapInitState,
+          mapResource: map.mapResource,
+          blocklyConfig: map.blocklyConfig,
+          savedSolution: map.savedSolution,
+          stdBlockNum: map.stdBlockNum,
         };
       } catch (err) {
         console.error(err);
@@ -30,9 +28,17 @@ module.exports = app => {
         await app.mysql.query(sql);
 
         const data = JSON.stringify(body.data);
-        const result = await app.mysql.insert('record', { id: 675, data: '9' });
-        const insertSuccess = result.affectedRows === 1;
-        return insertSuccess;
+        const is_insert1 = await app.mysql.get('record', { id: _body.userId+body.id});
+        if(is_insert1 === null){
+          const result = await app.mysql.insert('record', { id: body.userId+body.id, data: data });
+          const insertSuccess = result.affectedRows === 1;
+          return insertSuccess;
+        }
+        else{
+          const result = await app.mysql.update('record', { id: body.userId+body.id, data: data });
+          const insertSuccess = result.affectedRows === 1;
+          return insertSuccess;
+        }
       } catch (err) {
         console.error(err);
         return false;
