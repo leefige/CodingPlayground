@@ -181,7 +181,7 @@ export default class PixiComponent {
         py = convertY(player.character.pos['x'], height, col);
       this.mCharacter.update(px, py, 1*FPS, FPS, baseDir, chaId);
       this.timeStatus = 0;
-      this.mCharacter.prevPos = {'x': px, 'y': py};
+      this.updatePrevPos();
       player.nextStep();
     }
     else if (status === 1) {
@@ -189,9 +189,8 @@ export default class PixiComponent {
       this.timeStatus++;
       if (this.timeStatus == 60) {
         this.timeStatus = 0;
-        const px = convertX(player.character.pos['y'], width, row),
-        py = convertY(player.character.pos['x'], height, col);
-        this.mCharacter.prevPos = {'x': px, 'y': py};
+        this.updatePrevPos();
+
         player.nextStep();
       }
 
@@ -228,6 +227,24 @@ export default class PixiComponent {
     }
     else if (status === 3) {
       this.gameover.obj.visible = true;
+    }
+  }
+
+  updatePrevPos = () => {
+    const {
+      width, height,
+      row, col,
+      FPS
+    } = this;
+
+    const px = convertX(mainControl.player.character.pos['y'], width, row),
+    py = convertY(mainControl.player.character.pos['x'], height, col);
+    this.mCharacter.prevPos = {'x': px, 'y': py};
+    const numEnemy = mainControl.player.enemy.length;
+    for (let i = 0; i < numEnemy; i++) {
+      const px = convertX(mainControl.player.enemy[i].pos['y'], width, row),
+        py = convertY(mainControl.player.enemy[i].pos['x'], height, col);
+      this.mEnemy[i].prevPos = {'x': px, 'y': py};
     }
   }
 }
