@@ -1,12 +1,7 @@
 import Unit from "./Unit"
-import { gameStatus } from "./MainControl"
+import { gameStatus, elements, direction } from "./Constant"
 
-const direction = {
-  up : 0,
-  right : 1,
-  down : 2,
-  left : 3,
-}
+
 // 方向: up:0, right:1, down:2, left:3
 class Character extends Unit {
   _board;
@@ -36,7 +31,7 @@ class Character extends Unit {
     let nextPos = this.getNextPos();
     if (nextPos.x < 0 || nextPos.x >= this._board.size || nextPos.y < 0 || nextPos.y >= this._board.size)
       return gameStatus.failed;
-    if (this._board.map[nextPos.x][nextPos.y] !== this._board.elements.empty)
+    if (this._board.map[nextPos.x][nextPos.y] !== elements.empty)
       return gameStatus.failed;
     this._nextState.pos = nextPos;
     return gameStatus.running;
@@ -57,7 +52,7 @@ class Character extends Unit {
     const nextPos = this.getNextPos();
     if (nextPos.x < 0 || nextPos.x >= this._board.size || nextPos.y < 0 || nextPos.y >= this._board.size)
       return gameStatus.failed;
-    if (this._board.map[nextPos.x][nextPos.y] === this._board.elements.chest)
+    if (this._board.map[nextPos.x][nextPos.y] === elements.chest)
       return gameStatus.success;
     return gameStatus.failed;
   }
@@ -81,9 +76,9 @@ class Character extends Unit {
   }
 
   useBomb() {
-    if (this._state.items.bombNum === 0) {
-      return gameStatus.failed;
-    }
+    //if (this._state.items.bombNum === 0) {
+    //  return gameStatus.failed;
+    //}
     const nextPos = this.getNextPos();
     if (nextPos.x < 0 || nextPos.x >= this._board.size || nextPos.y < 0 || nextPos.y >= this._board.size)
       return gameStatus.failed;

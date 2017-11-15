@@ -1,20 +1,8 @@
-import { gameStatus } from "./MainControl"
+import { gameStatus, elements, direction } from "./Constant"
 import Basic from "./Basic"
-
-const elements = {
-  empty : 0,
-  chest : 90,
-  grass : 92,
-  tree : 93,
-  fence : 94,
-  stone : 95,
-  precipice: 96,
-  pond: 97,
-}
 
 class Board extends Basic {
   _size;
-  _elements;
   _enemy;
   constructor(state, mainControl) {
     super(state, mainControl);
@@ -24,7 +12,6 @@ class Board extends Basic {
     //------------
     this._enemy = this._mainControl.enemy;
     this._size = this._state.map.length;
-    this._elements = elements;
     this._chestPos = { x : -1, y : -1};
     // get treasurePos
     for (let i = 0; i < this._size; i++) {
@@ -43,11 +30,11 @@ class Board extends Basic {
     // console.log("set torch")
     // console.log(pos)
 
-    if (this.map[pos.x][pos.y] === this.elements.grass || this.map[pos.x][pos.y] === this.elements.fence ||
-      this.map[pos.x][pos.y] === this.elements.empty) {
+    if (this.map[pos.x][pos.y] === elements.grass || this.map[pos.x][pos.y] === elements.fence ||
+      this.map[pos.x][pos.y] === elements.empty) {
       this._nextState.torchPos.x = pos.x;
       this._nextState.torchPos.y = pos.y;
-      this._nextState.map[pos.x][pos.y] = this.elements.empty;
+      this._nextState.map[pos.x][pos.y] = elements.empty;
       // console.log(pos)
       // console.log(this._nextState)
       // console.log(this._nextState.torchPos)
@@ -62,7 +49,25 @@ class Board extends Basic {
   }
 
   setBomb(pos, dir) {
+    if (this.map[pos.x][pos.y] === elements.grass || this.map[pos.x][pos.y] === elements.fence ||
+      this.map[pos.x][pos.y] === elements.stone || this.map[pos.x][pos.y] === elements.empty) {
+      this._nextState.bombPos.x = pos.x;
+      this._nextState.bombPos.y = pos.y;
+      this._nextState.map[pos.x][pos.y] = elements.empty;
+      if (dir === direction.up || dir === direction.down) {
 
+      }
+      // console.log(pos)
+      // console.log(this._nextState)
+      // console.log(this._nextState.torchPos)
+      // console.log(this._nextState.torchPos.x)
+      // console.log(this._nextState.torchPos.y)
+
+      // console.log("set torch success")
+      return gameStatus.running;
+    }
+    else
+      return gameStatus.failed;
   }
 
   update() {
@@ -76,7 +81,6 @@ class Board extends Basic {
   get chestPos() { return this._chestPos; }
   get map() { return this._state.map; }
   get size() { return this._size; }
-  get elements() { return this._elements; }
 }
 
 export default Board;

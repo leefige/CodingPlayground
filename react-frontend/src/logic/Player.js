@@ -1,4 +1,4 @@
-import { gameStatus as playerStatus} from "./MainControl"
+import { gameStatus as playerStatus} from "./Constant"
 
 class Player {
   _curStep;
