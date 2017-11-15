@@ -1,30 +1,12 @@
-import { gameStatus } from "./MainControl"
+import { gameStatus, elements, direction } from "./Constant"
 import Basic from "./Basic"
-
-const elements = {
-  empty : 0,
-  chest : 90,
-  grass : 92,
-  tree : 93,
-  fence : 94,
-  stone : 95,
-  precipice: 96,
-  pond: 97,
-}
 
 class Board extends Basic {
   _size;
-  _elements;
   _enemy;
   constructor(state, mainControl) {
     super(state, mainControl);
-    //--- test ---
-    this._state.torchPos = {x:-1, y:-1};
-    this._nextState.torchPos = {x:-1, y:-1};
-    //------------
-    this._enemy = this._mainControl.enemy;
     this._size = this._state.map.length;
-    this._elements = elements;
     this._chestPos = { x : -1, y : -1};
     // get treasurePos
     for (let i = 0; i < this._size; i++) {
@@ -36,6 +18,12 @@ class Board extends Basic {
     }
   }
 
+  canSetTorch(pos) {
+    if (pos.x < 0 || pos.x >= this.size || pos.y < 0 || pos.y >= this.size)
+      return false;
+    return (this.map[pos.x][pos.y] === elements.grass || this.map[pos.x][pos.y] === elements.fence || this.map[pos.x][pos.y] === elements.empty);
+  }
+
   setTorch(pos) {
     // console.log(this._mainControl._state)
     // console.log(this._state)
@@ -43,11 +31,10 @@ class Board extends Basic {
     // console.log("set torch")
     // console.log(pos)
 
-    if (this.map[pos.x][pos.y] === this.elements.grass || this.map[pos.x][pos.y] === this.elements.fence ||
-      this.map[pos.x][pos.y] === this.elements.empty) {
+    if (this.canSetTorch(pos)) {
       this._nextState.torchPos.x = pos.x;
       this._nextState.torchPos.y = pos.y;
-      this._nextState.map[pos.x][pos.y] = this.elements.empty;
+      this._nextState.map[pos.x][pos.y] = elements.empty;
       // console.log(pos)
       // console.log(this._nextState)
       // console.log(this._nextState.torchPos)
@@ -61,14 +48,55 @@ class Board extends Basic {
       return gameStatus.failed;
   }
 
-  setBomb(pos, dir) {
+  canSetBomb(pos) {
+    if (pos.x < 0 || pos.x >= this.size || pos.y < 0 || pos.y >= this.size)
+    return false;
+    return (this.map[pos.x][pos.y] === elements.grass || this.map[pos.x][pos.y] === elements.fence ||
+      this.map[pos.x][pos.y] === elements.stone || this.map[pos.x][pos.y] === elements.empty);
+  }
 
+  bombKillEnemy(pos) {
+    const enemy = this._mainControl.enemy;
+    for (let i = 0; i < enemy.length; i++) {
+      if (pos.x === enemy[i].pos.x && pos.y === enemy[i].pos.y && enemy[i].status === 'alive') {
+        enemy[i].killed();
+      }
+    }
+  }
+
+  // add bomb area effect and kill enemy if possible
+  setBombArea(pos) {
+    if (this.canSetBomb(pos)) {
+      this._nextState.map[pos.x][pos.y] = elements.empty;
+      this._nextState.bombArea.push({x : pos.x, y: pos.y});
+      this.bombKillEnemy(pos);
+    }
+  }
+  setBomb(pos, dir) {
+    if (this.canSetBomb(pos)) {
+      this._nextState.bombPos.x = pos.x;
+      this._nextState.bombPos.y = pos.y;
+      this.setBombArea(pos)
+      if (dir === direction.up || dir === direction.down) {
+        this.setBombArea({x : pos.x, y: pos.y + 1});
+        this.setBombArea({x : pos.x, y: pos.y - 1});
+      }
+      else if (dir === direction.left || dir === direction.right) {
+        this.setBombArea({x : pos.x + 1, y: pos.y});
+        this.setBombArea({x : pos.x - 1, y: pos.y});
+      }
+      return gameStatus.running;
+    }
+    else
+      return gameStatus.failed;
   }
 
   update() {
-    //console.log(this._nextState)
     super.update();
-    //console.log(this._state);
+    this.resetNextState();
+  }
+
+  resetNextState() {
     this._nextState.torchPos = {x : -1, y : -1};
     this._nextState.bombPos = {x : -1, y : -1};
     this._nextState.bombArea = [];
@@ -76,7 +104,6 @@ class Board extends Basic {
   get chestPos() { return this._chestPos; }
   get map() { return this._state.map; }
   get size() { return this._size; }
-  get elements() { return this._elements; }
 }
 
 export default Board;

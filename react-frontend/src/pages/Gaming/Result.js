@@ -32,11 +32,11 @@ class Result extends Component {
                         : <img src="/img/nostar.png" className="img-responsive" alt="Responsive image" />}
                     </div>
                     <div className="col-md-4 col-sm-4 col-xs-4">
-                      {this.props.score > 0 ?
+                      {this.props.score > 1 ?
                         <img src="/img/star.png" className="img-responsive" alt="Responsive image" />
                         : <img src="/img/nostar.png" className="img-responsive" alt="Responsive image" />}
                     </div><div className="col-md-4 col-sm-4 col-xs-4">
-                      {this.props.score > 0 ?
+                      {this.props.score > 2 ?
                         <img src="/img/star.png" className="img-responsive" alt="Responsive image" />
                         : <img src="/img/nostar.png" className="img-responsive" alt="Responsive image" />}
                     </div>

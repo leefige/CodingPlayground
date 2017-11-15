@@ -2,65 +2,7 @@ import Board from "./Board";
 import Character from "./Character";
 import Enemy from "./Enemy";
 import Player from "./Player";
-const gameStatus = {
-  init : 0,
-  running : 1,
-  success : 2,
-  failed : 3,
-  pause : 4,
-}
-const state = {
-  board : {
-    map : [[0, 0, 0, 0, 0, 0, 0, 0],
-           [0, 0, 0, 0, 0, 0, 0, 0],
-           [0, 0, 0, 0, 0, 0, 0, 0],
-           [0, 0, 0, 0, 0, 0, 0, 0],
-           [0, 0, 0, 0, 0, 0, 0, 0],
-           [0, 0, 0, 0, 0, 0, 0, 0],
-           [0, 0, 0, 0, 0, 0, 0, 0],
-           [0, 0, 0, 0, 0, 0, 0, 0]],
-  },
-  character : {
-    pos : { x : 4, y : 4},
-    dir : 2
-  },
-  enemy : [
-    {
-      pos : { x : 1, y : 1},
-      dir : 2,
-      status : 'alive',
-      turningPoint : [
-        {
-          pos : { x : 2, y : 1},
-          dir : 1,
-        },
-        {
-          pos : { x : 2, y : 2},
-          dir : 0,
-        },
-        {
-          pos : { x : 1, y : 2},
-          dir : 3,
-        },
-        {
-          pos : { x : 1, y : 1},
-          dir : 2,
-        },
-      ]
-    },
-  ],
-}
-
-const actionTable = {
-  go : '1',
-  turnLeft : '2',
-  turnRight : '3',
-  attack : '4',
-  torch : '5',
-  bomb : '6',
-  open : '7',
-}
-
+import { actionTable, defaultState, gameStatus} from "./Constant";
 class MainControl{
   _state;
   _board;
@@ -123,7 +65,7 @@ class MainControl{
             this._status = this._character.useTorch();
             break;
           case actionTable.bomb:
-            //this._status = this._character.turnRight();
+            this._status = this._character.useBomb();
             break;
           case actionTable.open:
             this._status = this._character.open();
@@ -157,8 +99,6 @@ class MainControl{
   }
 
   update() {
-//    console.log(this._state);
-
     this._character.update();
     for (let i = 0; i < this._enemy.length; i++)
       this._enemy[i].update();
@@ -175,6 +115,6 @@ class MainControl{
   get enemy() { return this._enemy; }
 }
 
-const mainControl = new MainControl(state);
+const mainControl = new MainControl(defaultState);
 
-export { mainControl, gameStatus };
+export { mainControl };

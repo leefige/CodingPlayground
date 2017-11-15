@@ -1,4 +1,4 @@
-import { gameStatus as playerStatus} from "./MainControl"
+import { gameStatus as playerStatus} from "./Constant"
 
 class Player {
   _curStep;
@@ -89,6 +89,7 @@ class Player {
   add(state) {
     this._totalStep = this._totalStep + 1;
     this._states[this._totalStep] = JSON.parse(JSON.stringify(state)); // 深拷贝
+    console.log(this._states);
   }
 
   run() {
