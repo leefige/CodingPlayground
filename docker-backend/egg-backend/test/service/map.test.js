@@ -6,7 +6,8 @@ describe('test/service/map.test.js', () => {
     it('should get map id', async function () {
       const ctx = app.mockContext();
       const map = await ctx.service.map.getId({
-          id: 'azxsd',
+          userid: 'azxsd',
+          mapid: '301',
       });
       assert(map === null);
     });
@@ -14,6 +15,7 @@ describe('test/service/map.test.js', () => {
       const ctx = app.mockContext();
       const map = await ctx.service.map.getId({
         id: 'fengmk1',
+        mapid:'233',
       });
       assert(map === null);
     });
@@ -27,9 +29,22 @@ describe('test/service/map.test.js', () => {
   describe('insertId()', () => {
     it('should insert map status', async function () {
       const ctx = app.mockContext();
-      const map = await ctx.service.map.insertId();
+      const map = await ctx.service.map.insertId({
+        userid: 'byn',
+      });
       assert(map !== null);
     });
   });
 
+  describe('updateBlockly', () => {
+    it('should update blockly file', async function () {
+      const ctx = app.mockContext();
+      const map = await ctx.service.map.insertId({
+        userid: 'byn',
+        mapid: '301',
+        savedSolution: null,
+      });
+      assert(map !== null);
+    })
+  });
 });

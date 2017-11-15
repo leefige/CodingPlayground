@@ -37,7 +37,7 @@ module.exports = app => {
     await app.mysql.query(sql);
       try {
         const result = await app.mysql.get('newuser', { id: _body.id, password: _body.password });
-        if (result == null) {
+        if (result === null) {
           return false;
         }
         return true;

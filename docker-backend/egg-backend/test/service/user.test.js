@@ -56,4 +56,87 @@ describe('test/service/user.test.js', () => {
       assert(!user);
     });
   });
+
+  describe('changePassword test', () => {
+    it('should changePassword', () => {
+      const ctx = app.mockContext();
+      const flag = await ctx.service.user.changePassword({
+          id: 'byn',
+          old_password: '23',
+          password: '233',
+        });
+        assert(flag === true);
+    });
+
+    it('should get error when id not correct', () => {
+      const ctx = app.mockContext();
+      const flag = await ctx.service.user.changePassword({
+          userid: 'error',
+          old_password: '23',
+          password: '233',
+        });
+        assert(flag === false);
+    });
+  });
+
+  describe('changeEmail test', () => {
+    it('should changeEmail', () => {
+      // 对 app 发起 `POST /` 请求
+      return app.httpRequest()
+        .post('/user/changeEmail')
+        .type('json')
+        .send({
+          id: 'byn',
+          email: '2333333@163.com',
+        })
+        .expect(200) // 期望返回 status 200
+        .expect({
+          changeEmail_success: false,
+        });
+    });
+
+    it('should get error when data struction not correct', () => {
+      return app.httpRequest()
+      .post('/user/changePassword')
+      .type('json')
+      .send({
+        autoLogin: 'error',
+      })
+      .expect(200)
+      .expect({
+        changeEmail_success: false,
+      });
+    });
+  });
+
+  describe('changeMobile test', () => {
+    it('should changeMobile', () => {
+      // 对 app 发起 `POST /` 请求
+      return app.httpRequest()
+        .post('/user/changeMobile')
+        .type('json')
+        .send({
+          id: 'byn',
+          mobile: '23',
+        })
+        .expect(200) // 期望返回 status 200
+        .expect({
+          changeMobile_success: false,
+        });
+    });
+
+    it('should get error when data struction not correct', () => {
+      return app.httpRequest()
+      .post('/user/changePassword')
+      .type('json')
+      .send({
+        autoLogin: 'error',
+      })
+      .expect(200)
+      .expect({
+        changeMobile_success: false,
+      });
+    });
+  });
+
 });

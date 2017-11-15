@@ -122,7 +122,7 @@ module.exports = app => {
 
       const result = await this.ctx.service.user.changePassword(body);
       this.ctx.body = {
-        changePassword_success: result,
+        changeEmail_success: result,
       };
     }
 
@@ -143,7 +143,7 @@ module.exports = app => {
 
       const result = await this.ctx.service.user.changePassword(body);
       this.ctx.body = {
-        changePassword_success: result,
+        changeMobile_success: result,
       };
     }
 
