@@ -63,13 +63,13 @@ class Character extends Unit {
   }
 
   useTorch() {
-    console.log("use torch");
+    //console.log("use torch");
     // if (this._state.items.torchNum === 0) {
     //   return gameStatus.failed;
     // }
     const nextPos = this.getNextPos();
-    console.log("next pos");
-    console.log(nextPos)
+    //console.log("next pos");
+    //console.log(nextPos)
     if (nextPos.x < 0 || nextPos.x >= this._board.size || nextPos.y < 0 || nextPos.y >= this._board.size)
       return gameStatus.failed;
     if (this._board.setTorch(nextPos) === gameStatus.running) {
