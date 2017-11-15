@@ -13,6 +13,10 @@ module.exports = app => {
         id: result,
       };
     }
+
+    async updateBlockly(){
+      await this.ctx.service.map.updateBlockly(this.ctx.request.body);
+    }
   }
   return MapController;
 };

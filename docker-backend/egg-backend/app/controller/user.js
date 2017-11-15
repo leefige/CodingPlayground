@@ -42,11 +42,14 @@ module.exports = app => {
       this.ctx.body = {
         login_success: result,
       };
+      if(result === true){
       this.ctx.session.userId = body.id;
       this.ctx.session.userPassword = body.password;
       if(body.rememberMe === false){
         this.ctx.session.maxAge = 1000 * 1800;
       }
+      await this.ctx.service.map.insertId(body);
+    }
     }
 
     async autoLogin() {
@@ -100,6 +103,49 @@ module.exports = app => {
         changePassword_success: result,
       };
     }
+
+    async changeEmail(){
+      const body = this.ctx.request.body;
+      try {
+        await this.ctx.validate({
+          id: { type: 'string' },
+          email: { type: 'string' },
+        });
+      } catch (err) {
+        console.error(err);
+        this.ctx.body = {
+          changePassword_success: false,
+        };
+        return;
+      }
+
+      const result = await this.ctx.service.user.changePassword(body);
+      this.ctx.body = {
+        changePassword_success: result,
+      };
+    }
+
+    async changeMobile(){
+      const body = this.ctx.request.body;
+      try {
+        await this.ctx.validate({
+          id: { type: 'string' },
+          mobile: { type: 'string' },
+        });
+      } catch (err) {
+        console.error(err);
+        this.ctx.body = {
+          changePassword_success: false,
+        };
+        return;
+      }
+
+      const result = await this.ctx.service.user.changePassword(body);
+      this.ctx.body = {
+        changePassword_success: result,
+      };
+    }
+
   }
   return UserController;
 };
