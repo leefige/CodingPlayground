@@ -60,9 +60,7 @@ module.exports = app => {
     }
 
     async updateBlockly(){
-      try{
 
-      }
     }
   }
   return MapService;
