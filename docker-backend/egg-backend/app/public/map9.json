@@ -86,5 +86,7 @@
   },
   "blocklyConfig": {
     "initialXml": "<xml xmlns='http://www.w3.org/1999/xhtml'><block type='go' x='10' y='40'></block></xml>"
-  }
+  },
+  "savedSolution":{},
+  "stdBlockNum": 10
 }

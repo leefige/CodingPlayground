@@ -195,7 +195,37 @@ describe('test/controller/user.test.js', () => {
       });
     });
 
-  
+
+  });
+
+  describe('autoLogin test', () => {
+    it('should autoLogin', () => {
+      // 对 app 发起 `POST /` 请求
+      return app.httpRequest()
+        .post('/user/autoLogin')
+        .type('json')
+        .send({
+          autoLogin: true,
+        })
+        .expect(200) // 期望返回 status 200
+        .expect({
+          autoLogin_success: false,
+        });
+    });
+
+    it('should get error when data struction not correct', () => {
+      return app.httpRequest()
+      .post('/user/autoLogin')
+      .type('json')
+      .send({
+        autoLogin: 'error',
+      })
+      .expect(200)
+      .expect({
+        autoLogin_success: false,
+      });
+    });
+
   });
 
   describe('autoLogin test', () => {

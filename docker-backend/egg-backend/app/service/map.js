@@ -11,6 +11,8 @@ module.exports = app => {
           mapInitState: map.mapInitState,
           mapResource: map.mapResource,
           blocklyConfig: map.blocklyConfig,
+          savedSolution: map.savedSolution,
+          stdBlockNum: map.stdBlockNum,
         };
       } catch (err) {
         console.error(err);
@@ -63,7 +65,7 @@ module.exports = app => {
       try {
         const result = await app.mysql.get('newmap', { userid: body.userid, mapid: body.mapid});
         var map = JSON.parse(result.data);
-        map.blocklyConfig = body.blockly;
+        map.savedSolution = body.savedSolution;
         const data = JSON.stringify(map);
         const ans = await app.mysql.update('newmap', {userid: body.id, mapid: body.mapid, data: data});
         const insertSuccess = ans.affectedRows === 1;

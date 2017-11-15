@@ -8,7 +8,8 @@ describe('test/controller/map.test.js', () => {
         .post('/map/getId')
         .type('json')
         .send({
-          id: '251',
+          userid: '123',
+          mapid: '301',
         })
         .expect(200);
     });
@@ -18,7 +19,8 @@ describe('test/controller/map.test.js', () => {
         .post('/map/getId')
         .type('json')
         .send({
-          id: '23411',
+          userid: '123',
+          mapid: '23411',
         })
         .expect(204)
         .expect({});
@@ -39,6 +41,20 @@ describe('test/controller/map.test.js', () => {
       .get('/map/insertId')
       .expect(200);
 
+    });
+  });
+
+  describe('updateblockly test', () => {
+    it('should status 200 and get the body', () => {
+      return app.httpRequest()
+      .post('/map/updateBlockly')
+      .type('json')
+      .send({
+        userid: 123411,
+        mapid: 303,
+        savedSolution: {},
+      })
+      .expect(200);
     });
   });
 
