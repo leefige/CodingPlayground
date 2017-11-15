@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { post } from "../../utils/Request";
 
 
@@ -161,12 +160,12 @@ class Account extends Component {
                     placeholder="请输入旧密码" name="user[old_password]" id="user_old_password" />
                   <p/>
                   <span>新密码</span>
-                  <input className="personal-control" required="required" type="password"
+                  <input className="personal-control" required="required"
                     type="password" value={this.state.newPassword} onChange={this.handleNewPasswordChange.bind(this)}
                     placeholder="请输入新密码" name="user[new_password]" id="user_new_password" />
                   <p/>
                   <span>确认新密码</span>
-                  <input className="personal-control" required="required" type="password"
+                  <input className="personal-control" required="required"
                     type="password" value={this.state.againPassword} onChange={this.handleAgainPasswordChange.bind(this)}
                     placeholder="请再次输入新密码" name="user[again_password]" id="user_again_password" />
                 </div>

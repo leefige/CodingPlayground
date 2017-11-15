@@ -4,9 +4,8 @@ import './index.css';
 import CodeGameApp from './components/CodeGameApp';
 import {
   BrowserRouter as Router,
-  Route,
-  Link
-} from 'react-router-dom'
+  Route
+} from 'react-router-dom';
 
 ReactDOM.render((
   <Router forceRefresh={true}>

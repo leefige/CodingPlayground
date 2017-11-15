@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import Scene from './GamePanel/Scene';
 import Result from './Result';
-import ReactDOM from 'react-dom'
 import Programming from './ProgramPanel/Programming';
 import { mainControl } from '../../logic/MainControl';
 import { post } from '../../utils/Request';
-import { Redirect } from 'react-router-dom';
 
 class CodeGameContent extends Component {
   constructor(props) {
@@ -186,9 +184,7 @@ class CodeGameContent extends Component {
                 :<div></div>
               }
             </div>
-            <button className="btn btn-primary btn-lg" data-toggle="modal" data-target="#resultModal">
-	开始演示模态框
-</button>
+            <button className="btn btn-primary btn-lg" data-toggle="modal" data-target="#resultModal">开始演示模态框</button>
             <Result mapID={this.props.match.params.mapID} userID={this.props.match.params.shareUserID} score={this.state.gameScore}/>
         </div>
       );

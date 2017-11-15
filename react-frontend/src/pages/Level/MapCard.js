@@ -11,7 +11,7 @@ class MapCard extends Component {
 
   componentWillMount() {
     this.setState({
-      level: parseInt(this.props.levelNumber),
+      level: parseInt(this.props.levelNumber, 10),
     })
   }
 

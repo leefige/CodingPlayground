@@ -1,15 +1,15 @@
-import React, { Component } from 'react'
-import { post } from "../utils/Request"
+import React, { Component } from 'react';
+import { post } from "../utils/Request";
+import { Link } from 'react-router-dom';
 
 class Login extends Component {
   constructor() {
-    super()
+    super();
     this.state = {
       email: '',
       password: '',
       rememberMe: false,
-    }
-
+    };
   }
 
   async handleLogin() {
@@ -34,19 +34,19 @@ class Login extends Component {
   handleEmailChange(event) {
     this.setState({
       email: event.target.value
-    })
+    });
   }
 
   handlePasswordChange(event) {
     this.setState({
       password: event.target.value
-    })
+    });
   }
 
   handleRememberMeChange(event) {
     this.setState({
       rememberMe: event.target.checked
-    })
+    });
   }
 
   render() {
@@ -90,7 +90,7 @@ class Login extends Component {
               <div className="form-group form-checkbox">
                   <input type="checkbox" value={"remember-me"} checked={this.state.rememberMe} onChange={this.handleRememberMeChange.bind(this)} /> 记住我
               </div>
-              <button type="button" className="btn btn-success form-btn" onClick={this.handleLogin.bind(this)}>进入游戏！</button>
+              <Link to='/index' type="button" class="btn btn-success form-btn" onClick={this.handleLogin.bind(this)}>进入游戏！</Link>
             </form>
           </div>
         </div>
@@ -99,4 +99,4 @@ class Login extends Component {
   }
 }
 
-export default Login
+export default Login;

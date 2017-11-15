@@ -283,6 +283,7 @@ textarea.form-control::-webkit-input-placeholder {
   padding: 14px 20px;
   vertical-align: middle;
   font-size: 16px;
+  width: 100%;
 }
 
 .modal-backdrop {
