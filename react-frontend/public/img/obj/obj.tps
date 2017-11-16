@@ -199,18 +199,16 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">1.png</key>
-            <key type="filename">3.png</key>
-            <key type="filename">5.png</key>
+            <key type="filename">bomb.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>32,32,64,64</rect>
+                <rect>250,256,500,513</rect>
                 <key>scale9Paddings</key>
-                <rect>32,32,64,64</rect>
+                <rect>250,256,500,513</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -227,13 +225,31 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">chest.png</key>
+            <key type="filename">grass.png</key>
+            <key type="filename">stone.png</key>
+            <key type="filename">torch.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>32,32,64,64</rect>
+                <key>scale9Paddings</key>
+                <rect>32,32,64,64</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
         </map>
         <key>fileList</key>
         <array>
-            <filename>1.png</filename>
-            <filename>3.png</filename>
-            <filename>5.png</filename>
             <filename>cha.png</filename>
+            <filename>bomb.png</filename>
+            <filename>chest.png</filename>
+            <filename>grass.png</filename>
+            <filename>stone.png</filename>
+            <filename>torch.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

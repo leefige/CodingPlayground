@@ -20,6 +20,7 @@ export default class Obj {
     this.obj.x = px;
     this.obj.y = py;
     this.phase = phase;
+    this.obj.visible = true;
     this.obj.texture = res[`${10 + dir * 10 + updatePhase(this.phase / FPS)}.png`];
   }
   moveTo(px, py, FPS, dir, res, state) {
