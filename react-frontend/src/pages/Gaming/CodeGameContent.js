@@ -200,7 +200,7 @@ class CodeGameContent extends Component {
               }
             </div>
             <button ref="show_btn" className="btn btn-primary btn-lg hide" data-toggle="modal" data-target="#resultModal"/>
-            <Result ref="show_result" mapID={this.props.match.params.mapID} userID={this.props.match.params.shareUserID} score={this.state.gameScore}/>
+            <Result ref="show_result" mapID={this.props.match.params.mapID} shareUserID={this.props.getLoginUserId} score={this.state.gameScore}/>
         </div>
       );
     // }
