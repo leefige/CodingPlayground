@@ -22,6 +22,7 @@ export default class PixiComponent {
     this.utilJson = `${process.env.PUBLIC_URL}/img/util/util.json`;
     this.objJson = `${process.env.PUBLIC_URL}/img/obj/obj.json`
     this.enmJson = `${process.env.PUBLIC_URL}/img/enemy/enemy.json`;
+    this.effectJson = `${process.env.PUBLIC_URL}/img/effect/effect.json`;
 
     this.stage = stage;
     this.mapId = mapResource['id'];
@@ -45,6 +46,7 @@ export default class PixiComponent {
       .add(this.enmJson)
       .add(this.utilJson)
       .add(this.objJson)
+      .add(this.effectJson)
       .load(this.setup);
   }
 
@@ -113,6 +115,16 @@ export default class PixiComponent {
       null, false
     );
     this.torch.addTo(gameScene);
+
+    const effectId = this.resources[this.effectJson].textures;
+    this.effect = new Obj(
+      effectId['1.png'],
+      width / row,
+      height / col,
+      0, 0,
+      null, false
+    );
+    this.effect.addTo(gameScene);
 
     const chaId = this.resources[this.chaJson].textures;
 
@@ -206,6 +218,7 @@ export default class PixiComponent {
       this.mCharacter.update(px, py, 1*FPS, FPS, baseDir, chaId);
       this.bomb.obj.visible = false;
       this.torch.obj.visible = false;
+      this.effect.obj.visible = false;
       this.timeStatus = 0;
       this.updatePrevPos();
       player.nextStep();
@@ -215,8 +228,8 @@ export default class PixiComponent {
       this.timeStatus++;
       if (this.timeStatus === 60) {
         this.timeStatus = 0;
+        this.effect.obj.visible = false;
         this.updatePrevPos();
-
         player.nextStep();
       }
 
@@ -259,11 +272,19 @@ export default class PixiComponent {
         }
         else if (this.timeStatus === 30) {
           this.torch.obj.visible = false;
+          this.effect.obj.x = convertX(mainControl.player.board.torchPos['y'], width, row);;
+          this.effect.obj.y = convertY(mainControl.player.board.torchPos['x'], height, col);
+          this.effect.obj.visible = true;
         }
         else if (this.timeStatus === 50) {
           const i = mainControl.player.board.torchPos['y'];
           const j = mainControl.player.board.torchPos['x'];
           this.bg[row * j + i].obj.visible = false;
+        }
+        if (this.timeStatus > 30 && this.timeStatus < 60) {
+          const effectId = this.resources[this.effectJson].textures;
+          const phase = parseInt((this.timeStatus - 30) / 3 * 4, 10);
+          this.effect.obj.texture = effectId[`${phase}.png`];
         }
       }
     }
@@ -271,6 +292,7 @@ export default class PixiComponent {
       this.timeStatus = 0;
       this.torch.obj.visible = false;
       this.bomb.obj.visible = false;
+      this.effect.obj.visible = false;
       this.state = this.end;
     }
   }
