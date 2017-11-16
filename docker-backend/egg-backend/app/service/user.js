@@ -100,18 +100,56 @@ module.exports = app => {
     }
 
     async verfifyMobile(body){
-      try {
-        const SMSClient = require('@alicloud/sms-sdk');
-        // ACCESS_KEY_ID/ACCESS_KEY_SECRET 根据实际申请的账号信息进行替换
-        const accessKeyId = 'yourAccessKeyId';
-        const secretAccessKey = 'yourAccessKeySecret';
-        //初始化sms_client
-        let smsClient = new SMSClient({accessKeyId, secretAccessKey})
+      const SMSClient = require('@alicloud/sms-sdk');
+      // ACCESS_KEY_ID/ACCESS_KEY_SECRET 根据实际申请的账号信息进行替换
+      const accessKeyId = 'LTAINBI7GDcyzx8X';
+      const secretAccessKey = '7Py5FG9GaLvvXy2EImX3hMqn0MYlo1';
+      const phoneNumbers = app.mysql.get('newuser', { id: body.id }).mobile;
+      //初始化sms_client
+      let smsClient = new SMSClient({accessKeyId, secretAccessKey})
+      smsClient.sendSMS({
+        PhoneNumbers: '18693939177',
+        SignName: '云通信产品',
+        TemplateCode: 'SMS_110895009',
+        TemplateParam: '{"code":"12345"}'
+      }).then(function (res) {
+          let {Code}=res
+          if (Code === 'OK') {
+              //处理返回参数
+              return true;
+          }}, function (err) {
+            return false;
+        })
+    }
 
-      } catch (err) {
-        console.error(err);
-        return false;
-      }
+    async verfifyEmail(body){
+      const email = app.mysql.get('newuser', { id: body.id }).email;
+      var multer  = require('nodemailer');
+      var mailTransport = nodemailer.createTransport({
+        host : 'smtp.qq.com',
+        secureConnection: true, // 使用SSL方式（安全方式，防止被窃取信息）
+        auth : {
+            user : '845285227@qq.com',
+            pass : '19961127mymxhdd'
+        },
+      });
+      var options = {
+        from           : '845285227@qq.com',
+        to             : 'maoym15@mails.tsinghua.edu.cn',
+        subject        : '一封来自Node Mailer的邮件',
+        text           : '一封来自Node Mailer的邮件',
+        html           : '<h1>你好，这是一封来自NodeMailer的邮件！</h1><p><img src="cid:00000001"/></p>',
+      };
+
+      mailTransport.sendMail(options, function(err, msg){
+          if(err){
+              console.log(err);
+          }
+          else {
+              console.log(msg);
+          }
+    });
+
     }
   }
   return UserService;
