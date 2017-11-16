@@ -28,7 +28,7 @@ module.exports = app => {
         await app.mysql.query(sql);
 
         const data = JSON.stringify(body.data);
-        const is_insert1 = await app.mysql.get('record', { id: _body.userId+body.id});
+        const is_insert1 = await app.mysql.get('record', { id: body.userId+body.id});
         if(is_insert1 === null){
           const result = await app.mysql.insert('record', { id: body.userId+body.id, data: data });
           const insertSuccess = result.affectedRows === 1;

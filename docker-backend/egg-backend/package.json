@@ -28,6 +28,7 @@
     "egg-static": "^1.4.1",
     "egg-validate": "^1.0.0",
     "mysql2": "^1.4.2",
+    "nodemailer": "^4.4.0",
     "parameter": "^2.2.0"
   },
   "devDependencies": {

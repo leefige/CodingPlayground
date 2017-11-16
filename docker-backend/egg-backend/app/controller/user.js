@@ -147,6 +147,22 @@ module.exports = app => {
       };
     }
 
+    async verfifyMobile(){
+      const body = this.ctx.request.body;
+      const result = await this.ctx.service.user.verfifyMobile(body);
+      this.ctx.body = {
+        sendMobile_success: result,
+      };
+    }
+
+    async verfifyEmail(){
+      const body = this.ctx.request.body;
+      const result = await this.ctx.service.user.verfifyEmail(body);
+      this.ctx.body = {
+        sendEMail_success: result,
+      };
+    }
+
   }
   return UserController;
 };
