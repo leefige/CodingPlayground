@@ -109,7 +109,7 @@ module.exports = app => {
       let smsClient = new SMSClient({accessKeyId, secretAccessKey})
       smsClient.sendSMS({
         PhoneNumbers: '18693939177',
-        SignName: '云通信产品',
+        SignName: '代码操场',
         TemplateCode: 'SMS_110895009',
         TemplateParam: '{"code":"12345"}'
       }).then(function (res) {
@@ -123,8 +123,8 @@ module.exports = app => {
     }
 
     async verfifyEmail(body){
-      /*const email = app.mysql.get('newuser', { id: body.id }).email;
-      var multer  = require('nodemailer');
+      const email = app.mysql.get('newuser', { id: body.id }).email;
+      var nodemailer  = require('nodemailer');
       var mailTransport = nodemailer.createTransport({
         host : 'smtp.qq.com',
         secureConnection: true, // 使用SSL方式（安全方式，防止被窃取信息）
@@ -148,7 +148,7 @@ module.exports = app => {
           else {
               console.log(msg);
           }
-    });*/
+    });
 
     }
   }
