@@ -2,7 +2,7 @@
 
 "bomb.png":
 {
-	"frame": {"x":0,"y":0,"w":291,"h":299},
+	"frame": {"x":128,"y":128,"w":291,"h":299},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":291,"h":299},
@@ -10,7 +10,7 @@
 },
 "cha.png":
 {
-	"frame": {"x":0,"y":299,"w":400,"h":400},
+	"frame": {"x":0,"y":427,"w":400,"h":400},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":400,"h":400},
@@ -18,7 +18,7 @@
 },
 "chest.png":
 {
-	"frame": {"x":0,"y":699,"w":128,"h":128},
+	"frame": {"x":0,"y":128,"w":128,"h":128},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
@@ -26,7 +26,7 @@
 },
 "grass.png":
 {
-	"frame": {"x":128,"y":699,"w":127,"h":127},
+	"frame": {"x":0,"y":0,"w":127,"h":127},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":127,"h":127},
@@ -34,19 +34,27 @@
 },
 "stone.png":
 {
-	"frame": {"x":255,"y":699,"w":127,"h":127},
+	"frame": {"x":127,"y":0,"w":127,"h":127},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":127,"h":127},
 	"sourceSize": {"w":127,"h":127}
+},
+"torch.png":
+{
+	"frame": {"x":254,"y":0,"w":128,"h":128},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
+	"sourceSize": {"w":128,"h":128}
 }},
 "meta": {
 	"app": "http://www.codeandweb.com/texturepacker",
 	"version": "1.0",
 	"image": "obj.png",
 	"format": "RGBA8888",
-	"size": {"w":400,"h":827},
+	"size": {"w":419,"h":827},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:31342d3877d55f31df71c29c758ea80c:6be2c91041812f81c13365cbfdc75d2c:f2d1b9d98429158c28dc7d4db2acef6f$"
+	"smartupdate": "$TexturePacker:SmartUpdate:859df5a29a0ea4341b391d3edc598877:fbcc7c8fa729720b4f7b079fdd784999:f2d1b9d98429158c28dc7d4db2acef6f$"
 }
 }

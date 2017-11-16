@@ -1,11 +1,11 @@
 import * as PIXI from "pixi.js";
 
 export function convertX(x, width, row) {
-  return parseInt(x * width / row + 6, 10);
+  return parseInt(x * width / row, 10);
 }
 
 export function convertY(x, height, col) {
-  return parseInt(x * height / col - height / col / 2, 10);
+  return parseInt(x * height / col, 10);
 }
 
 export function canvasSetup() {

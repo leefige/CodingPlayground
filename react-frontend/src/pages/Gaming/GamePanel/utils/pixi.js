@@ -5,7 +5,7 @@ import {
   updatePhase
 } from "./misc";
 import Obj from "./obj";
-import { mainControl, gameStatus } from '../../../../logic/MainControl';
+import { mainControl } from '../../../../logic/MainControl';
 
 // `setup` function will run when the image has loaded
 export default class PixiComponent {
@@ -22,6 +22,7 @@ export default class PixiComponent {
     this.utilJson = `${process.env.PUBLIC_URL}/img/util/util.json`;
     this.objJson = `${process.env.PUBLIC_URL}/img/obj/obj.json`
     this.enmJson = `${process.env.PUBLIC_URL}/img/enemy/enemy.json`;
+    this.effectJson = `${process.env.PUBLIC_URL}/img/effect/effect.json`;
 
     this.stage = stage;
     this.mapId = mapResource['id'];
@@ -45,6 +46,7 @@ export default class PixiComponent {
       .add(this.enmJson)
       .add(this.utilJson)
       .add(this.objJson)
+      .add(this.effectJson)
       .load(this.setup);
   }
 
@@ -63,7 +65,7 @@ export default class PixiComponent {
     const id = this.resources[this.gpJson].textures;
     const backgroundArray = this.mapId;
     const transparentArray = this.mapIdt;
-
+    this.bg = [];
     for (let i = 0; i < row; i++)
       for (let j = 0; j < col; j++) {
         const background = new Obj(
@@ -82,6 +84,7 @@ export default class PixiComponent {
           j * width / row,
           i * height / col
         );
+        this.bg.push(trans);
         trans.addTo(gameScene);
       }
 
@@ -103,6 +106,25 @@ export default class PixiComponent {
       null, false
     );
     this.bomb.addTo(gameScene);
+
+    this.torch = new Obj(
+      objId['torch.png'],
+      width / row,
+      height / col,
+      0, 0,
+      null, false
+    );
+    this.torch.addTo(gameScene);
+
+    const effectId = this.resources[this.effectJson].textures;
+    this.effect = new Obj(
+      effectId['1.png'],
+      width / row,
+      height / col,
+      0, 0,
+      null, false
+    );
+    this.effect.addTo(gameScene);
 
     const chaId = this.resources[this.chaJson].textures;
 
@@ -185,12 +207,18 @@ export default class PixiComponent {
           py = convertY(player.enemy[i].pos['x'], height, col);
         const baseEnmDir = player.enemy[i].dir;
         this.mEnemy[i].update(px, py, 1*FPS, FPS, baseEnmDir, enmId);
+      }
 
+      for (let i = 0; i < row * col; i++) {
+        this.bg[i].obj.visible = true;
       }
 
       const px = convertX(player.character.pos['y'], width, row),
         py = convertY(player.character.pos['x'], height, col);
       this.mCharacter.update(px, py, 1*FPS, FPS, baseDir, chaId);
+      this.bomb.obj.visible = false;
+      this.torch.obj.visible = false;
+      this.effect.obj.visible = false;
       this.timeStatus = 0;
       this.updatePrevPos();
       player.nextStep();
@@ -200,8 +228,8 @@ export default class PixiComponent {
       this.timeStatus++;
       if (this.timeStatus === 60) {
         this.timeStatus = 0;
+        this.effect.obj.visible = false;
         this.updatePrevPos();
-
         player.nextStep();
       }
 
@@ -219,17 +247,52 @@ export default class PixiComponent {
 
       if (mainControl.player.board.bombPos.x !== -1) {
         if (this.timeStatus === 0) {
-            this.bomb.obj.x = convertX(mainControl.player.board.bombPos['y'] + 1, width, row);
-            this.bomb.obj.y = convertY(mainControl.player.board.bombPos['x'] + 1, height, col);
+            this.bomb.obj.x = convertX(mainControl.player.board.bombPos['y'], width, row);
+            this.bomb.obj.y = convertY(mainControl.player.board.bombPos['x'], height, col);
             this.bomb.obj.visible = true;
         }
-        else if (this.timeStatus === 30){
+        else if (this.timeStatus === 30) {
           this.bomb.obj.visible = false;
+        }
+        else if (this.timeStatus === 50) {
+          const len = mainControl.player.board.bombArea.length;
+          for (let i = 0; i < len; i++) {
+            const x = mainControl.player.board.bombArea[i].y;
+            const y = mainControl.player.board.bombArea[i].x;
+            this.bg[row * y + x].obj.visible = false;
+          }
+        }
+      }
+
+      if (mainControl.player.board.torchPos.x !== -1) {
+        if (this.timeStatus === 0) {
+            this.torch.obj.x = convertX(mainControl.player.board.torchPos['y'], width, row);
+            this.torch.obj.y = convertY(mainControl.player.board.torchPos['x'], height, col);
+            this.torch.obj.visible = true;
+        }
+        else if (this.timeStatus === 30) {
+          this.torch.obj.visible = false;
+          this.effect.obj.x = convertX(mainControl.player.board.torchPos['y'], width, row);;
+          this.effect.obj.y = convertY(mainControl.player.board.torchPos['x'], height, col);
+          this.effect.obj.visible = true;
+        }
+        else if (this.timeStatus === 50) {
+          const i = mainControl.player.board.torchPos['y'];
+          const j = mainControl.player.board.torchPos['x'];
+          this.bg[row * j + i].obj.visible = false;
+        }
+        if (this.timeStatus > 30 && this.timeStatus < 60) {
+          const effectId = this.resources[this.effectJson].textures;
+          const phase = parseInt((this.timeStatus - 30) / 3 * 4, 10);
+          this.effect.obj.texture = effectId[`${phase}.png`];
         }
       }
     }
     else if (status >= 2) {
       this.timeStatus = 0;
+      this.torch.obj.visible = false;
+      this.bomb.obj.visible = false;
+      this.effect.obj.visible = false;
       this.state = this.end;
     }
   }
