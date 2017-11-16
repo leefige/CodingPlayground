@@ -198,7 +198,6 @@ export default class PixiComponent {
       }
 
       for (let i = 0; i < row * col; i++) {
-        console.log(i);
         this.bg[i].obj.visible = true;
       }
 
@@ -239,8 +238,16 @@ export default class PixiComponent {
             this.bomb.obj.y = convertY(mainControl.player.board.bombPos['x'], height, col);
             this.bomb.obj.visible = true;
         }
-        else if (this.timeStatus === 30){
+        else if (this.timeStatus === 30) {
           this.bomb.obj.visible = false;
+        }
+        else if (this.timeStatus === 50) {
+          const len = mainControl.player.board.bombArea.length;
+          for (let i = 0; i < len; i++) {
+            const x = mainControl.player.board.bombArea[i].y;
+            const y = mainControl.player.board.bombArea[i].x;
+            this.bg[row * y + x].obj.visible = false;
+          }
         }
       }
 
@@ -256,7 +263,6 @@ export default class PixiComponent {
         else if (this.timeStatus === 50) {
           const i = mainControl.player.board.torchPos['y'];
           const j = mainControl.player.board.torchPos['x'];
-          console.log(this.bg[row*i+j], i, j);
           this.bg[row * j + i].obj.visible = false;
         }
       }
