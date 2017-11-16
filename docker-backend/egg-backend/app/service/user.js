@@ -123,7 +123,7 @@ module.exports = app => {
     }
 
     async verfifyEmail(body){
-      const email = app.mysql.get('newuser', { id: body.id }).email;
+      /*const email = app.mysql.get('newuser', { id: body.id }).email;
       var multer  = require('nodemailer');
       var mailTransport = nodemailer.createTransport({
         host : 'smtp.qq.com',
@@ -148,7 +148,7 @@ module.exports = app => {
           else {
               console.log(msg);
           }
-    });
+    });*/
 
     }
   }
