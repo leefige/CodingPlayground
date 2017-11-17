@@ -20,7 +20,7 @@ class Signup extends Component {
     })
       .then((responseJson) => {
         if (responseJson.signup_success) {
-          alert("注册成功！");
+          alert("注册成功，请登陆！");
           this.setState({
             success: true,
           });

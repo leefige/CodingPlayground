@@ -3,7 +3,7 @@
 <blockquote>
 - 我们是谁？ - SAOest!
 <br/>
-- 我们的PROJECT叫什么？ - 代码操场！
+- 我们要做什么？ - 代码操场！
 </blockquote>
 
 ## To-do List for Sprint 7:

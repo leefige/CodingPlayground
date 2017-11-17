@@ -21,7 +21,6 @@ class Login extends Component {
       .then((responseJson) => {
         // console.log(responseJson);
         if (responseJson.login_success) {
-          alert("登录成功！");
           this.props.onLogin(this.state.email);
         }
         else {
