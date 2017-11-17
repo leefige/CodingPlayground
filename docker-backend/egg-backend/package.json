@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "egg-bin dev",
+    "start": "egg-scripts start",
     "test": "npm run test-local",
     "ci": "npm run lint && npm run cov",
     "lint": "eslint .",
@@ -19,6 +20,7 @@
   "dependencies": {
     "@alicloud/sms-sdk": "^1.0.2",
     "connect-multiparty": "^2.0.0",
+    "egg-scripts": "^2.1.1",
     "egg": "^1.9.0",
     "egg-cluster": "^1.12.3",
     "egg-cors": "^1.2.0",
