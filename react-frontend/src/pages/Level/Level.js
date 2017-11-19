@@ -35,16 +35,18 @@ class Level extends Component {
           <div className='row'>
             <MapCard levelNumber="9" onSelectLevel={this.handleLevelClick.bind(this)}/>
             <MapCard levelNumber="10" onSelectLevel={this.handleLevelClick.bind(this)}/>
-            <MapCard levelNumber="11" onSelectLevel={this.handleLevelClick.bind(this)}/>
+            <MapCard levelNumber="100" onSelectLevel={this.handleLevelClick.bind(this)}/>
             <MapCard levelNumber="-1" onSelectLevel={this.handleLevelClick.bind(this)}/>
           </div>
         </div>
       );
     }
     else {
-      const lv = 300 + this.state.dest;
-      if (lv > 300) {
-        return (<Redirect push to={"/map/"+lv}/>);
+      if (this.state.dest === 100) {
+        return (<Redirect push to={"/mapHall"}/>);
+      }
+      else if (this.state.dest > 0) {
+        return (<Redirect push to={"/map/" + (300 + this.state.dest)}/>);
       }
       else {
         return (<Redirect push to="/mapEditor"/>);
