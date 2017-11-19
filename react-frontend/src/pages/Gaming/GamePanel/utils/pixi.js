@@ -116,15 +116,18 @@ export default class PixiComponent {
     );
     this.torch.addTo(gameScene);
 
+    this.effect = [];
     const effectId = this.resources[this.effectJson].textures;
-    this.effect = new Obj(
-      effectId['1.png'],
-      width / row,
-      height / col,
-      0, 0,
-      null, false
-    );
-    this.effect.addTo(gameScene);
+    for (let i = 0; i < 3; i++) {
+      this.effect[i] = new Obj(
+        effectId['1.png'],
+        width / row,
+        height / col,
+        0, 0,
+        null, false
+      );
+      this.effect[i].addTo(gameScene);
+    }
 
     const chaId = this.resources[this.chaJson].textures;
 
@@ -154,25 +157,6 @@ export default class PixiComponent {
       enemy.addTo(gameScene);
       this.mEnemy.push(enemy);
     }
-
-    const utilId = this.resources[this.utilJson].textures;
-    this.gameover = new Obj(
-      utilId['gameover.png'],
-      width, height,
-      0, 0,
-      null,
-      false
-    );
-    this.gameover.addTo(gameScene);
-
-    this.gamewin = new Obj(
-      utilId['gamewin.png'],
-      width, height,
-      0, 0,
-      null,
-      false
-    )
-    this.gamewin.addTo(gameScene);
 
     this.state = this.play;
 
@@ -216,9 +200,7 @@ export default class PixiComponent {
       const px = convertX(player.character.pos['y'], width, row),
         py = convertY(player.character.pos['x'], height, col);
       this.mCharacter.update(px, py, 1*FPS, FPS, baseDir, chaId);
-      this.bomb.obj.visible = false;
-      this.torch.obj.visible = false;
-      this.effect.obj.visible = false;
+      this.setInvisible();
       this.timeStatus = 0;
       this.updatePrevPos();
       player.nextStep();
@@ -228,7 +210,7 @@ export default class PixiComponent {
       this.timeStatus++;
       if (this.timeStatus === 60) {
         this.timeStatus = 0;
-        this.effect.obj.visible = false;
+        this.setInvisible();
         this.updatePrevPos();
         player.nextStep();
       }
@@ -247,12 +229,18 @@ export default class PixiComponent {
 
       if (mainControl.player.board.bombPos.x !== -1) {
         if (this.timeStatus === 0) {
-            this.bomb.obj.x = convertX(mainControl.player.board.bombPos['y'], width, row);
-            this.bomb.obj.y = convertY(mainControl.player.board.bombPos['x'], height, col);
+            this.bomb.obj.x = convertX(mainControl.player.board.bombPos.y, width, row);
+            this.bomb.obj.y = convertY(mainControl.player.board.bombPos.x, height, col);
             this.bomb.obj.visible = true;
         }
         else if (this.timeStatus === 30) {
           this.bomb.obj.visible = false;
+          const len = mainControl.player.board.bombArea.length;
+          for (let i = 0; i < len; i++) {
+            this.effect[i].obj.x = convertX(mainControl.player.board.bombArea[i].y, width, row);;
+            this.effect[i].obj.y = convertY(mainControl.player.board.bombArea[i].x, height, col);
+            this.effect[i].obj.visible = true;
+          }
         }
         else if (this.timeStatus === 50) {
           const len = mainControl.player.board.bombArea.length;
@@ -262,37 +250,42 @@ export default class PixiComponent {
             this.bg[row * y + x].obj.visible = false;
           }
         }
+        if (this.timeStatus > 30 && this.timeStatus < 60) {
+          const effectId = this.resources[this.effectJson].textures;
+          const phase = parseInt((this.timeStatus - 30) / 3 * 4, 10);
+          for (let i = 0; i < 3; i++) {
+            this.effect[i].obj.texture = effectId[`${phase}.png`];
+          }
+        }
       }
 
       if (mainControl.player.board.torchPos.x !== -1) {
         if (this.timeStatus === 0) {
-            this.torch.obj.x = convertX(mainControl.player.board.torchPos['y'], width, row);
-            this.torch.obj.y = convertY(mainControl.player.board.torchPos['x'], height, col);
+            this.torch.obj.x = convertX(mainControl.player.board.torchPos.y, width, row);
+            this.torch.obj.y = convertY(mainControl.player.board.torchPos.x, height, col);
             this.torch.obj.visible = true;
         }
         else if (this.timeStatus === 30) {
           this.torch.obj.visible = false;
-          this.effect.obj.x = convertX(mainControl.player.board.torchPos['y'], width, row);;
-          this.effect.obj.y = convertY(mainControl.player.board.torchPos['x'], height, col);
-          this.effect.obj.visible = true;
+          this.effect[0].obj.x = convertX(mainControl.player.board.torchPos.y, width, row);;
+          this.effect[0].obj.y = convertY(mainControl.player.board.torchPos.x, height, col);
+          this.effect[0].obj.visible = true;
         }
         else if (this.timeStatus === 50) {
-          const i = mainControl.player.board.torchPos['y'];
-          const j = mainControl.player.board.torchPos['x'];
+          const i = mainControl.player.board.torchPos.y;
+          const j = mainControl.player.board.torchPos.x;
           this.bg[row * j + i].obj.visible = false;
         }
         if (this.timeStatus > 30 && this.timeStatus < 60) {
           const effectId = this.resources[this.effectJson].textures;
           const phase = parseInt((this.timeStatus - 30) / 3 * 4, 10);
-          this.effect.obj.texture = effectId[`${phase}.png`];
+          this.effect[0].obj.texture = effectId[`${phase}.png`];
         }
       }
     }
     else if (status >= 2) {
       this.timeStatus = 0;
-      this.torch.obj.visible = false;
-      this.bomb.obj.visible = false;
-      this.effect.obj.visible = false;
+      this.setInvisible();
       this.state = this.end;
     }
   }
@@ -301,15 +294,7 @@ export default class PixiComponent {
     const status = mainControl.player.getStatus();
     if (status < 2) {
       this.state = this.play;
-      this.gameover.obj.visible = false;
-      this.gamewin.obj.visible = false;
       return;
-    }
-    else if (status === 2) {
-      this.gamewin.obj.visible = true;
-    }
-    else if (status === 3) {
-      this.gameover.obj.visible = true;
     }
   }
 
@@ -327,6 +312,14 @@ export default class PixiComponent {
       const px = convertX(mainControl.player.enemy[i].pos['y'], width, row),
         py = convertY(mainControl.player.enemy[i].pos['x'], height, col);
       this.mEnemy[i].prevPos = {'x': px, 'y': py};
+    }
+  }
+
+  setInvisible = () => {
+    this.bomb.obj.visible = false;
+    this.torch.obj.visible = false;
+    for (let i = 0; i < 3; i++) {
+      this.effect[i].obj.visible = false;
     }
   }
 }
