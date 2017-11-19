@@ -7,7 +7,9 @@ import Signup from './Signup';
 import Login from './Login';
 import Account from '../pages/Personal/Account';
 import Level from '../pages/Level/Level';
+import MapHall from '../pages/Level/MapHall';
 import { Route, Redirect } from 'react-router-dom';
+
 class CodeGameApp extends Component {
   constructor() {
     super();
@@ -55,6 +57,7 @@ class CodeGameApp extends Component {
               <CodeGameContent {...props} userType="share" getIsLogin={this.state.isLogin} getLoginUserId={this.state.id} />
             } />
           <Route path="/mapEditor" component={MapEditor} />
+          <Route path="/mapHall" component={MapHall} />
           <Route path="/login" component={props => <Login {...props} onLogin={this.handleLogin.bind(this)} />} />
           <Route path="/signup" component={Signup} />
           <Route path="/personal/account" component={props => <Account {...props} userId={this.state.id}/>} />
