@@ -19,7 +19,7 @@ module.exports = app => {
     }
 
     async insertId(){
-      const result = await this.ctx.service.map.insertId();
+      const result = await this.ctx.service.map.insertId(this.ctx.request.body);
       this.ctx.body = {
         id: result,
       };
