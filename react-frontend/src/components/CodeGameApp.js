@@ -8,7 +8,7 @@ import Login from './Login';
 import Account from '../pages/Personal/Account';
 import Level from '../pages/Level/Level';
 import MapHall from '../pages/Level/MapHall';
-import { Route, Redirect } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
 class CodeGameApp extends Component {
   constructor() {
