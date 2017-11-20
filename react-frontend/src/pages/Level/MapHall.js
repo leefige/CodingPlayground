@@ -26,17 +26,18 @@ class MapHall extends Component {
   constructor() {
     super();
     this.state = {
-      mapList: [{key: "301", name: "一张地图", editor: "mym", time:"2017/11/15"}, {key: "305", name: "另一张地图",  editor: "also mym", time:"2017/11/20"}],
+      mapList: [{key: "305", name: "另一张地图",  editor: "also mym", time:"2017/11/20"}, {key: "301", name: "一张地图", editor: "mym", time:"2017/11/15"}, ],
     };
   }
 
   componentWillMount() {
+    // 获取所有用户自定义地图列表
     post('/map/getMapList', {
       userId: this.props.getLoginUserId,
 		})
     .then((responseJson) => {
       this.setState({
-        mapInitState: responseJson.mapList || [{key: "301", name: "一张地图", editor: "mym", time:"2017/11/15"}, {key: "305", name: "另一张地图",  editor: "also mym", time:"2017/11/20"}],
+        mapList: responseJson.mapList || [{key: "301", name: "一张地图", editor: "mym", time:"2017/11/15"}, {key: "305", name: "另一张地图",  editor: "also mym", time:"2017/11/20"}],
       });
     })
     .catch((error) => {
