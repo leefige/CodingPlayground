@@ -7,11 +7,9 @@ module.exports = app => {
       try {
         var result = await app.mysql.get('newsmap', { id: body.userId+body.id});
         if(result === null){
-          console.log('nop');
           result = await app.mysql.get('newsmap', { id: body.id});
         }
         const map = JSON.parse(result.data);
-        console.log(map);
         return {
           mapInitState: map.mapInitState,
           mapResource: map.mapResource,
