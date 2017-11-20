@@ -48,7 +48,6 @@ module.exports = app => {
         if(body.rememberMe === false){
           this.ctx.session.maxAge = 1000 * 1800;
         }
-        await this.ctx.service.map.insertId(body);
       }
     }
 

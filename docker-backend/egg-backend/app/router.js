@@ -6,12 +6,12 @@ module.exports = app => {
   app.post('/user/logout', app.controller.user.logout);
   app.post('/user/autoLogin', app.controller.user.autoLogin);
   app.post('/map/getId', app.controller.map.getId);
-  app.post('/record/getId', app.controller.record.getId);
+  app.post('/map/getMapList', app.controller.mapEditor.getAll);
   app.post('/user/changePassword', app.controller.user.changePassword);
   app.post('/user/changeEmail', app.controller.user.changeEmail);
   app.post('/user/changeMobile', app.controller.user.changeMobile);
   app.post('/map/updateBlockly', app.controller.map.updateBlockly);
-  app.post('/record/insertId', app.controller.record.insertId);
+  app.post('/mapEditor/insertId', app.controller.mapEditor.insertId);
   app.post('/user/verfifyMobile', app.controller.user.verfifyMobile);
   app.post('/user/verfifyEmail', app.controller.user.verfifyEmail);
 };
