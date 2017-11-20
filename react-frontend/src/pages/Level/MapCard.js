@@ -16,6 +16,9 @@ class MapCard extends Component {
   }
 
   handleClick() {
+    if (this.getIsLocked()) {
+      return;
+    }
     if (this.state.level <= 10) {
       this.props.onSelectLevel(this.state.level);
     }
@@ -27,6 +30,10 @@ class MapCard extends Component {
     }
   }
 
+  getIsLocked() {
+    return this.props.lock(this.state.level);
+  }
+
   render() {
     return (
       <div className='col-md-3' onClick={this.handleClick.bind(this)}>
@@ -34,8 +41,10 @@ class MapCard extends Component {
           <div className="row">
             <div className="col-lg-12">
               {this.state.level > 0 ? (
-                this.state.level <= 10 ?
-                    <img className="minimap" alt={"第" + this.props.levelNumber + "关"} src={"/img/mini_map/" + this.props.levelNumber + ".png"} /> :
+                this.state.level <= 10 ? (
+                  this.getIsLocked() ?
+                      <img className="minimap" alt="待解锁" src={"/img/mini_map/lock.jpg"} /> :
+                      <img className="minimap" alt={"第" + this.props.levelNumber + "关"} src={"/img/mini_map/" + this.props.levelNumber + ".png"} /> ) :
                     <img className="minimap" alt="地图大厅" src={"/img/mini_map/lock.jpg"} />
                 ) :
                 <img className="minimap" alt="地图编辑器" src={"/img/mini_map/edit.png"} />
