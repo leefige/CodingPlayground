@@ -5,7 +5,7 @@ describe('test/controller/user.test.js', () => {
   describe('logout test', () => {
     it('should status 200 and get the body', () => {
       return app.httpRequest()
-      .post('/user/logout')
+      .post('/api/v1/user/logout')
       .expect(200)
       .expect({
         logout_success: true,
@@ -17,7 +17,7 @@ describe('test/controller/user.test.js', () => {
     it('should status 200 and get the body', () => {
       // 对 app 发起 `POST /` 请求
       return app.httpRequest()
-        .post('/user/signup')
+        .post('/api/v1/user/signup')
         .type('json')
         .send({
           id: 'byn',
@@ -31,7 +31,7 @@ describe('test/controller/user.test.js', () => {
 
     it('should get false when user exists', () => {
       return app.httpRequest()
-      .post('/user/signup')
+      .post('/api/v1/user/signup')
       .type('json')
       .send({
         id: '2341',
@@ -45,7 +45,7 @@ describe('test/controller/user.test.js', () => {
 
     it('should get error when data not correct', () =>{
       return app.httpRequest()
-      .post('/user/signup')
+      .post('/api/v1/user/signup')
       .type('json')
       .send('error')
       .expect(400);
@@ -54,7 +54,7 @@ describe('test/controller/user.test.js', () => {
      it('should send multi requests', async function () {
       // 使用 generator function 方式写测试用例，可以在一个用例中串行发起多次请求
       await app.httpRequest()
-        .post('/user/signup')
+        .post('/api/v1/user/signup')
         .type('json')
         .send({
           id: '2341',
@@ -66,7 +66,7 @@ describe('test/controller/user.test.js', () => {
       }); // 期望 body 是 hello world
       // 再请求一次
       const result = await app.httpRequest()
-        .post('/user/signup')
+        .post('/api/v1/user/signup')
         .type('json')
         .send({
           id: '234a1',
@@ -86,7 +86,7 @@ describe('test/controller/user.test.js', () => {
     it('should status 200 and get the body', () => {
       // 对 app 发起 `POST /` 请求
       return app.httpRequest()
-        .post('/user/login')
+        .post('/api/v1/user/login')
         .type('json')
         .send({
           id: '2341',
@@ -101,7 +101,7 @@ describe('test/controller/user.test.js', () => {
 
     it('should get false when user not exists', async function() {
       return app.httpRequest()
-      .post('/user/login')
+      .post('/api/v1/user/login')
       .type('json')
       .send({
         id: '23jlkll4a1',
@@ -116,7 +116,7 @@ describe('test/controller/user.test.js', () => {
 
     it('should get error when data not correct', () =>{
       return app.httpRequest()
-      .post('/user/login')
+      .post('/api/v1/user/login')
       .type('json')
       .send('error')
       .expect(400);
@@ -124,7 +124,7 @@ describe('test/controller/user.test.js', () => {
 
     it('should get error when data struction not correct', () => {
       return app.httpRequest()
-      .post('/user/login')
+      .post('/api/v1/user/login')
       .type('json')
       .send({
         id: true,
@@ -140,7 +140,7 @@ describe('test/controller/user.test.js', () => {
      it('should send multi requests', async function () {
       // 使用 generator function 方式写测试用例，可以在一个用例中串行发起多次请求
       await app.httpRequest()
-        .post('/user/login')
+        .post('/api/v1/user/login')
         .type('json')
         .send({
           id: '233',
@@ -153,7 +153,7 @@ describe('test/controller/user.test.js', () => {
       }); // 期望 body 是 hello world
       // 再请求一次
       await app.httpRequest()
-        .post('/user/login')
+        .post('/api/v1/user/login')
         .type('json')
         .send({
           id: '233',
@@ -173,7 +173,7 @@ describe('test/controller/user.test.js', () => {
     it('should autoLogin', () => {
       // 对 app 发起 `POST /` 请求
       return app.httpRequest()
-        .post('/user/autoLogin')
+        .post('/api/v1/user/autoLogin')
         .type('json')
         .send({
           autoLogin: true,
@@ -186,7 +186,7 @@ describe('test/controller/user.test.js', () => {
 
     it('should get error when data struction not correct', () => {
       return app.httpRequest()
-      .post('/user/autoLogin')
+      .post('/api/v1/user/autoLogin')
       .type('json')
       .send({
         autoLogin: 'error',
@@ -203,7 +203,7 @@ describe('test/controller/user.test.js', () => {
     it('should changePassword', () => {
       // 对 app 发起 `POST /` 请求
       return app.httpRequest()
-        .post('/user/changePassword')
+        .post('/api/v1/user/changePassword')
         .type('json')
         .send({
           id: 'byn',
@@ -218,7 +218,7 @@ describe('test/controller/user.test.js', () => {
 
     it('should get error when data struction not correct', () => {
       return app.httpRequest()
-      .post('/user/changePassword')
+      .post('/api/v1/user/changePassword')
       .type('json')
       .send({
         autoLogin: 'error',
@@ -234,7 +234,7 @@ describe('test/controller/user.test.js', () => {
     it('should changeEmail', () => {
       // 对 app 发起 `POST /` 请求
       return app.httpRequest()
-        .post('/user/changeEmail')
+        .post('/api/v1/user/changeEmail')
         .type('json')
         .send({
           id: 'byn',
@@ -248,7 +248,7 @@ describe('test/controller/user.test.js', () => {
 
     it('should get error when data struction not correct', () => {
       return app.httpRequest()
-      .post('/user/changeEmail')
+      .post('/api/v1/user/changeEmail')
       .type('json')
       .send({
         id: true,
@@ -264,7 +264,7 @@ describe('test/controller/user.test.js', () => {
     it('should changeMobile', () => {
       // 对 app 发起 `POST /` 请求
       return app.httpRequest()
-        .post('/user/changeMobile')
+        .post('/api/v1/user/changeMobile')
         .type('json')
         .send({
           id: 'byn',
@@ -278,7 +278,7 @@ describe('test/controller/user.test.js', () => {
 
     it('should get error when data struction not correct', () => {
       return app.httpRequest()
-      .post('/user/changeMobile')
+      .post('/api/v1/user/changeMobile')
       .type('json')
       .send({
         id: true,

@@ -5,7 +5,7 @@ describe('test/controller/map.test.js', () => {
   describe('getId test', () => {
     it('should status 200 and get the body', () => {
       return app.httpRequest()
-        .post('/map/getId')
+        .post('/api/v1/map/getId')
         .type('json')
         .send({
           userid: '123',
@@ -16,7 +16,7 @@ describe('test/controller/map.test.js', () => {
 
     it('should get null when map not exist', () => {
       return app.httpRequest()
-        .post('/map/getId')
+        .post('/api/v1/map/getId')
         .type('json')
         .send({
           userid: '123',
@@ -28,7 +28,7 @@ describe('test/controller/map.test.js', () => {
 
     it('should get 400 when body is wrong', () => {
       return app.httpRequest()
-      .post('/map/getId')
+      .post('/api/v1/map/getId')
       .type('json')
       .send('error')
       .expect(400);
@@ -38,7 +38,7 @@ describe('test/controller/map.test.js', () => {
   describe('insertId test', () => {
     it('should status 200 and get the body', () => {
       return app.httpRequest()
-      .get('/map/insertId')
+      .get('/api/v1/map/insertId')
       .expect(200);
 
     });
@@ -47,7 +47,7 @@ describe('test/controller/map.test.js', () => {
   describe('updateblockly test', () => {
     it('should status 200 and get the body', () => {
       return app.httpRequest()
-      .post('/map/updateBlockly')
+      .post('/api/v1/map/updateBlockly')
       .type('json')
       .send({
         userid: 123411,
