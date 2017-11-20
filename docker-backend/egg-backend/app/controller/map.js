@@ -28,9 +28,9 @@ module.exports = app => {
     async updateBlockly(){
       try {
         await this.ctx.validate({
-          id: { type: 'string' },
-          userId: { type: 'string' },
-          savedSolution: {typr: 'string'},
+          userid: { type: 'string' },
+          mapid: { type: 'string' },
+          blockly: {type: 'string'},
         });
       } catch (err) {
         console.error(err);

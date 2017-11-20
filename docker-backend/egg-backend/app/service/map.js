@@ -5,12 +5,13 @@ module.exports = app => {
   class MapService extends app.Service {
     async getId(body){
       try {
-        var result = awaitapp.mysql.get('newsmap', { id: body.userId+body.id});
+        var result = await app.mysql.get('newsmap', { id: body.userId+body.id});
         if(result === null){
           console.log('nop');
-          resutl = await app.mysql.get('newsmap', { id: body.id});
+          result = await app.mysql.get('newsmap', { id: body.id});
         }
         const map = JSON.parse(result.data);
+        console.log(map);
         return {
           mapInitState: map.mapInitState,
           mapResource: map.mapResource,
@@ -66,11 +67,11 @@ module.exports = app => {
 
     async insertId(body){
       try {
-        const result = await app.mysql.get('newmap', { id: body.key});
+        const result = await app.mysql.get('newsmap', { id: body.key});
         if(result === null)
-          await app.mysql.insert('newmap', { id: body.key, data: body.data})
+          await app.mysql.insert('newsmap', { id: body.key, data: body.data})
         else
-          await app.mysql.update('newmap', { id: body.key, data: body.data});
+          await app.mysql.update('newsmap', { id: body.key, data: body.data});
         return true;
       } catch (err) {
         console.error(err);
@@ -80,15 +81,15 @@ module.exports = app => {
 
     async updateBlockly(body){
       try {
-        var result = await app.mysql.get('newmap', { id: body.userId+body.id});
+        var result = await app.mysql.get('newsmap', { id: body.userid+body.mapid});
         if(result === null){
-          result = await app.mysql.get('newmap', { id: body.id});
-          await app.mysql.insert("newmap", { id: body.userId+body.id});
+          result = await app.mysql.get('newsmap', { id: body.mapid});
+          await app.mysql.insert("newsmap", { id: body.userid+body.mapid});
         }
         var map = JSON.parse(result.data);
-        map.savedSolution = body.savedSolution;
+        map.savedSolution = body.blockly;
         const data = JSON.stringify(map);
-        const ans = await app.mysql.update('newmap', {id: body.userId+body.id, data: data});
+        await app.mysql.update('newsmap', {id: body.userid+body.mapid, data: data});
         return true;
       } catch (err) {
         console.error(err);
