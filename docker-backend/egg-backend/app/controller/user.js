@@ -170,15 +170,38 @@ module.exports = app => {
       };
     }
 
+    async getVip(){
+      const body = this.ctx.request.body;
+      const result = await this.ctx.service.user.getVip(body);
+      this.ctx.body = {
+        vip: result,
+      };
+    }
+
+    async getLevel(){
+      const body = this.ctx.request.body;
+      const result = await this.ctx.service.user.getLevel(body);
+      this.ctx.body = {
+        level: result,
+      };
+    }
+
     async uploadAvatar () {
       const stream = await this.ctx.getFileStream();
+      const body = this.ctx.request.body;
       const id = '0'; // ctx.params.id
-      const fileUrl = await this.ctx.service.file.upload('users', id, stream);
+      const fileUrl = await this.ctx.service.file.upload('users', id, stream, body);
       this.ctx.status = 200;
       this.ctx.body = {
         info: '上传头像成功',
-        url: fileUrl,
+        img: fileUrl,
       };
+    }
+
+    async getPersonalAccount(){
+      const body = this.ctx.request.body;
+      const result = await this.ctx.service.user.getLevel(body);
+      this.ctx.body = result;
     }
 
   }

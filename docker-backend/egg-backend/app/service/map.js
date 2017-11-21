@@ -86,8 +86,11 @@ module.exports = app => {
         }
         var map = JSON.parse(result.data);
         map.savedSolution = body.blockly;
+        var level = body.curLevel;
+        if(result.level === body.curLevel)
+          level++;
         const data = JSON.stringify(map);
-        await app.mysql.update('newsmap', {id: body.userid+body.mapid, data: data});
+        await app.mysql.update('newsmap', {id: body.userid+body.mapid, data: data, level: level});
         return true;
       } catch (err) {
         console.error(err);
