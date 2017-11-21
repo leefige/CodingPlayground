@@ -7,7 +7,7 @@ module.exports = app => {
         "password VARCHAR(100)," +
         "email VARCHAR(100)," +
         "mobile VARCHAR(100)," +
-        "image TEXT," +
+        "image VARCHAR(200)," +
         "level VARCHAR(100)," +
         "vip VARCHAR(100)," +
         "primary key (id)" +

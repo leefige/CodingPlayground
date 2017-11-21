@@ -14,4 +14,5 @@ module.exports = app => {
   app.post('/api/v1/mapEditor/insertId', app.controller.mapEditor.insertId);
   app.post('/api/v1/user/verfifyMobile', app.controller.user.verfifyMobile);
   app.post('/api/v1/user/verfifyEmail', app.controller.user.verfifyEmail);
+  app.post('/api/v1/user/uploadAvatar', app.controller.user.uploadAvatar);
 };
