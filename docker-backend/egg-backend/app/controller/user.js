@@ -200,7 +200,7 @@ module.exports = app => {
 
     async getPersonalAccount(){
       const body = this.ctx.request.body;
-      const result = await this.ctx.service.user.getLevel(body);
+      const result = await this.ctx.service.user.getPersonalAccount(body);
       this.ctx.body = result;
     }
 
