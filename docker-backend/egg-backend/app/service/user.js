@@ -9,13 +9,14 @@ module.exports = app => {
         "mobile VARCHAR(100)," +
         "image TEXT," +
         "level VARCHAR(100)," +
+        "vip VARCHAR(100)," +
         "primary key (id)" +
         ");";
       await app.mysql.query(sql);
       try {
         const is_insert = await app.mysql.get('newsuser', { id: _body.id });
         if (is_insert === null) {
-          const result = await app.mysql.insert('newsuser', { id: _body.id, password: _body.password });
+          const result = await app.mysql.insert('newsuser', { id: _body.id, password: _body.password, level: '1', vip: '0' });
           const insertSuccess = result.affectedRows === 1;
           return insertSuccess;
         }
@@ -34,6 +35,7 @@ module.exports = app => {
       "mobile VARCHAR(100)," +
       "image TEXT," +
       "level VARCHAR(100)," +
+      "vip VARCHAR(100)," +
       "primary key (id)" +
       ");";
     await app.mysql.query(sql);
@@ -151,7 +153,23 @@ module.exports = app => {
               console.log(msg);
           }
     });
+    }
 
+    async changeVip(body){
+      try {
+        const is_insert = await app.mysql.get('newsuser', { id: body.id });
+        if (is_insert === null) {
+          return false;
+        }
+        else{
+          const result = await app.mysql.update('newsuser', { id: body.id, vip: body.vip });
+          const insertSuccess = result.affectedRows === 1;
+          return insertSuccess;
+        }
+      } catch (err) {
+        console.error(err);
+        return false;
+      }
     }
   }
   return UserService;
