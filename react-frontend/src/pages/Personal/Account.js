@@ -18,8 +18,18 @@ class Account extends Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.updateProfile();
+  }
+
+  resetInput() {
+    this.setState({
+      email: '',
+      mobile: '',
+      oldPassword: '',
+      newPassword: '',
+      againPassword: '',
+    });
   }
 
   async updateProfile() {
@@ -27,6 +37,7 @@ class Account extends Component {
       id: this.props.userId,
 		})
     .then((responseJson) => {
+      console.log("response", responseJson);
       this.setState({
         avatar: responseJson.img,
         oldEmail: responseJson.email,
@@ -36,6 +47,7 @@ class Account extends Component {
     .catch((error) => {
       console.error(error);
     });
+    this.resetInput();
   }
 
   async handleSubmitEmail(event) {
@@ -147,15 +159,15 @@ class Account extends Component {
     const res = await uploadFile('/api/v1/user/uploadAvatar', formData);
     const data = await res.json();
     console.log("upload res: ", data);
-    if (data.info === '上传头像成功') {
+    // if (data.info === '上传头像成功') {
       alert("修改成功！");
       this.setState({
         avatar: data.img,
       });
-    }
-    else {
-      alert("修改失败！");
-    }
+    // }
+    // else {
+      // alert("修改失败！");
+    // }
     event.preventDefault();
   }
 
@@ -164,7 +176,7 @@ class Account extends Component {
       return (
         <div className='col-md-8 col-md-offset-2'>
           <div className="tab-content">
-            <div class="tab-pane active" id="about">
+            <div className="tab-pane active" id="about">
               <h3>账户管理</h3>
               <h5>Account Management</h5>
             </div>
@@ -206,12 +218,12 @@ class Account extends Component {
                   <div className="form-group">
                     <label className="label-light" htmlFor="user_name">用户名</label>
                     <input className="personal-control" type="text"
-                      value={this.props.userId} readonly='readonly' name="user[id]" id="user_id" />
+                      value={this.props.userId} readOnly='readonly' name="user[id]" id="user_id" />
                   </div>
                   <div className="form-group">
                     <label className="label-light" htmlFor="user_cur_email">邮箱</label>
                     <input className="personal-control" type="text"
-                      value={this.props.oldEmail} readonly='readonly' name="user[cur_email]" id="user_cur_email" />
+                      value={this.state.oldEmail} readOnly='readonly' name="user[cur_email]" id="user_cur_email" />
                   </div>
                   <div className="form-group">
                     <label className="label-light" htmlFor="user_email">修改绑定邮箱</label>
@@ -236,7 +248,7 @@ class Account extends Component {
                   <div className="form-group">
                     <label className="label-light" htmlFor="user_cur_mobile">手机</label>
                     <input className="personal-control" type="text"
-                      value={this.props.oldMobile} readonly='readonly' name="user[cur_mobile]" id="user_cur_email" />
+                      value={this.state.oldMobile} readOnly='readonly' name="user[cur_mobile]" id="user_cur_email" />
                   </div>
                   <div>
                     <label className="label-light" htmlFor="user_mobile">修改手机号码</label>
