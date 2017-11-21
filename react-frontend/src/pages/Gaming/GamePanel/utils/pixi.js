@@ -31,7 +31,8 @@ export default class PixiComponent {
     this.col = mapResource['height'];
 
     this.width = width;
-    this.height = height;
+    this.height = width;
+    this.invHeight = height - width;
 
     this.FPS = FPS;
     this.timeStatus = 0;
@@ -56,11 +57,22 @@ export default class PixiComponent {
       col,
       FPS,
       width,
-      height
+      height,
+      invHeight
     } = this;
 
     const gameScene = new this.Container();
     this.stage.addChild(gameScene);
+
+    const utilId = this.resources[this.utilJson].textures;
+    const inventory = new Obj(
+      utilId['inventory.jpeg'],
+      width,
+      invHeight,
+      0,
+      height
+    );
+    inventory.addTo(gameScene);
 
     const id = this.resources[this.gpJson].textures;
     const backgroundArray = this.mapId;
