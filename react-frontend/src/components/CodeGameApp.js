@@ -42,8 +42,9 @@ class CodeGameApp extends Component {
       id: this.props.userId,
 		})
     .then((responseJson) => {
+      // console.log("level res: ", responseJson);
       this.setState({
-        topLevel: responseJson.level + 1,
+        topLevel: responseJson.level,
       });
     })
     .catch((error) => {

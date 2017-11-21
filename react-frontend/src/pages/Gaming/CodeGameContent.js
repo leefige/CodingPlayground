@@ -76,7 +76,6 @@ class CodeGameContent extends Component {
         mapInitState: responseJson.mapInitState,
         mapResource: responseJson.mapResource,
         blocklyConfig: responseJson.blocklyConfig,
-        // TODO:
         stdBlockNum: responseJson.stdBlockNum || 5,
         savedSolution: responseJson.savedSolution || '<xml xmlns="http://www.w3.org/1999/xhtml"><variables><variable type="" id="08RrVFGh7Vd6kRq}mp$]">i</variable></variables><block type="controls_for" id="H7oSz,,1hk]3/OS!=4h^" x="16" y="124"><field name="VAR" id="08RrVFGh7Vd6kRq}mp$]" variabletype="">i</field><value name="FROM"><shadow type="math_number" id="(;*U0)NkbjzX8NVD2g:?"><field name="NUM">1</field></shadow></value><value name="TO"><shadow type="math_number" id="X.JaW(ygNj@x%hOssFbn"><field name="NUM">3</field></shadow></value><value name="BY"><shadow type="math_number" id="6Lw*,xc9jW%PKZJ3qJ0!"><field name="NUM">1</field></shadow></value><statement name="DO"><block type="actions_go" id="1Nap5j;e.L47Gqd5gfjg"><next><block type="actions_turn" id="77^+iQnejgOKgz`z4DMA"><field name="DIRECTION">LEFT</field><next><block type="actions_use" id="@/Ls+sqZIqy)Q)s.qS}G"><value name="OBJECT"><block type="objects_bomb" id="9NcR_]TVWvZ?1+9_O}Z-"></block></value></block></next></block></next></block></statement></block></xml>',
         didFetchMap: true,
@@ -127,10 +126,20 @@ class CodeGameContent extends Component {
   }
 
   async sendUserSolution() {
+    let isSystemMap = false;
+    if (this.state.curMapID >= 301 && this.state.curMapID <= 310) {
+      isSystemMap = true;
+    }
+    let curLevel = -1;
+    if (isSystemMap) {
+      curLevel = this.state.curMapID - 300;
+    }
+    console.log("cur level: ", curLevel);
     post('/api/v1/map/updateBlockly', {
       userid: this.props.getLoginUserId,
       mapid: this.props.match.params.mapID,
       blockly: this.state.userSolution,
+      curLevel: curLevel,
     }).then((responseJson) => {
     }).catch((error) => {
       console.error(error);
