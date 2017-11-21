@@ -75,7 +75,7 @@ class Character extends Unit {
   frontIs(elementId) {
     const nextPos = this.getNextPos();
     const board = this._mainControl.board;
-    return board.map[nextPos.x][nextPos.y] === elementId;
+    return (board.map[nextPos.x][nextPos.y] === elementId);
   }
 }
 
