@@ -18,8 +18,7 @@ class Level extends Component {
   }
 
   isLocked(level) {
-    if (level > this.state.topLevel && level != 100) {
-      console.log("level "+level+": true");
+    if (level > this.state.topLevel && level !== 100) {
       return true;
     }
     return false;
