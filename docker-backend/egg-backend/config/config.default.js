@@ -20,18 +20,13 @@ module.exports = appInfo => {
       // bodyName: '_csrf', // 通过 body 传递 CSRF token 的默认字段为 _csrf
     // },
     },
-    mail: {
-      from: {
-          name: 'App name',
-          service: 'Gmail',
-          auth: {
-              user: 'gmail.name@gmail.com',
-              pass: 'gmail.password'
-          }
-      },
-      to: [
-          'Zhixin Wen <wenzhixin2010@gmail.com>'
-      ]
+  multipart: {
+    whitelist: [
+      '.png',
+      '.jpg',
+      '.jpeg',
+      '.bmp'
+    ]
   }
 
   };

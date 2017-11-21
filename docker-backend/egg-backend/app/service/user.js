@@ -1,4 +1,5 @@
 'use strict';
+
 module.exports = app => {
   class UserService extends app.Service {
     async signup(_body) {
@@ -7,8 +8,8 @@ module.exports = app => {
         "password VARCHAR(100)," +
         "email VARCHAR(100)," +
         "mobile VARCHAR(100)," +
-        "image TEXT," +
-        "level VARCHAR(100)," +
+        "image VARCHAR(200)," +
+        "level int," +
         "vip VARCHAR(100)," +
         "primary key (id)" +
         ");";
@@ -16,7 +17,7 @@ module.exports = app => {
       try {
         const is_insert = await app.mysql.get('newsuser', { id: _body.id });
         if (is_insert === null) {
-          const result = await app.mysql.insert('newsuser', { id: _body.id, password: _body.password, level: '1', vip: '0' });
+          const result = await app.mysql.insert('newsuser', { id: _body.id, password: _body.password, level: 1, vip: '0' });
           const insertSuccess = result.affectedRows === 1;
           return insertSuccess;
         }
@@ -33,7 +34,7 @@ module.exports = app => {
       "password VARCHAR(100)," +
       "email VARCHAR(100)," +
       "mobile VARCHAR(100)," +
-      "image TEXT," +
+      "image VARCHAR(200)," +
       "level VARCHAR(100)," +
       "vip VARCHAR(100)," +
       "primary key (id)" +
@@ -171,6 +172,50 @@ module.exports = app => {
         return false;
       }
     }
+
+    async getVip(body){
+      try {
+        const result = await app.mysql.get('newsuser', { id: body.id });
+        if (result === null) {
+          return false;
+        }
+        if(result.vip === '1'){
+          return true;
+        }
+        return false;
+      } catch (err) {
+        console.error(err);
+        return false;
+      }
+    }
+
+    async getLevel(body){
+      try {
+        const result = await app.mysql.get('newsuser', { id: body.id });
+        if (result === null) {
+          return 0;
+        }
+        return result.level;
+      } catch (err) {
+        console.error(err);
+        return false;
+      }
+    }
+
+    async getPersonalAccount(body){
+      try {
+        const result = await app.mysql.get('newsuser', { id: body.id });
+        return {
+          img: result.image,
+          email: result.email,
+          mobile: result.mobile,
+        }
+      } catch (err) {
+        console.error(err);
+        return false;
+      }
+    }
   }
+
   return UserService;
 };
