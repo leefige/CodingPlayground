@@ -199,16 +199,16 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">inventory.jpeg</key>
+            <key type="filename">inventory.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>48,10,96,20</rect>
+                <rect>71,25,143,50</rect>
                 <key>scale9Paddings</key>
-                <rect>48,10,96,20</rect>
+                <rect>71,25,143,50</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -229,7 +229,7 @@
         <key>fileList</key>
         <array>
             <filename>ok.png</filename>
-            <filename>inventory.jpeg</filename>
+            <filename>inventory.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

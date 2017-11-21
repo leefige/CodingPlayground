@@ -15,7 +15,7 @@ export function canvasSetup() {
   this.FPS = 7;
 
   //Setup PIXI Canvas in componentDidMount
-  this.renderer = PIXI.autoDetectRenderer(this.width, this.height);
+  this.renderer = PIXI.autoDetectRenderer(this.width, this.height, { transparent: true });
   this.self.appendChild(this.renderer.view);
 
   //Create a Pixi stage and renderer

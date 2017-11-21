@@ -66,13 +66,25 @@ export default class PixiComponent {
 
     const utilId = this.resources[this.utilJson].textures;
     const inventory = new Obj(
-      utilId['inventory.jpeg'],
+      utilId['inventory.png'],
       width,
       invHeight,
       0,
       height
     );
     inventory.addTo(gameScene);
+
+    const objId = this.resources[this.objJson].textures;
+    this.item = [];
+    for (let i = 0; i < 5; i++) {
+      this.item[i] = new Obj(
+        objId['torch.png'],
+        width / row,
+        height / col,
+        width * 0.17 + i * width * 0.7 / 5, width + invHeight / 4,
+      );
+      this.item[i].addTo(gameScene);
+    }
 
     const id = this.resources[this.gpJson].textures;
     const backgroundArray = this.mapId;
@@ -100,7 +112,7 @@ export default class PixiComponent {
         trans.addTo(gameScene);
       }
 
-    const objId = this.resources[this.objJson].textures;
+
     const chest = new Obj(
       objId['chest.png'],
       width / row,
