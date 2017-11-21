@@ -28,27 +28,27 @@ class Result extends Component {
                   <div className="row">
                     <div className="col-md-4 col-sm-4 col-xs-4">
                       {this.props.score > 0 ?
-                        <img src="/img/star.png" className="img-responsive" alt="Responsive image" />
-                        : <img src="/img/nostar.png" className="img-responsive" alt="Responsive image" />}
+                        <img src="/img/star.png" className="img-responsive" alt="Responsive" />
+                        : <img src="/img/nostar.png" className="img-responsive" alt="Responsive" />}
                     </div>
                     <div className="col-md-4 col-sm-4 col-xs-4">
                       {this.props.score > 1 ?
-                        <img src="/img/star.png" className="img-responsive" alt="Responsive image" />
-                        : <img src="/img/nostar.png" className="img-responsive" alt="Responsive image" />}
+                        <img src="/img/star.png" className="img-responsive" alt="Responsive" />
+                        : <img src="/img/nostar.png" className="img-responsive" alt="Responsive" />}
                     </div><div className="col-md-4 col-sm-4 col-xs-4">
                       {this.props.score > 2 ?
-                        <img src="/img/star.png" className="img-responsive" alt="Responsive image" />
-                        : <img src="/img/nostar.png" className="img-responsive" alt="Responsive image" />}
+                        <img src="/img/star.png" className="img-responsive" alt="Responsive" />
+                        : <img src="/img/nostar.png" className="img-responsive" alt="Responsive" />}
                     </div>
                   </div>
                   {this.props.score > 0 ?
                   <div className="result-btn-group">
                     <div className="row">
-                      <Link to={'/map/'+(parseInt(this.props.mapID)+1)} type="button" className="btn btn-success result-btn col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1" >下一关</Link>
+                      <Link to={'/map/'+(parseInt(this.props.mapID, 10) + 1)} ><button disabled={this.props.userType !== "game"} type="button" className="btn btn-success result-btn col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1" >下一关</button></Link>
                     </div>
                     <div className="row">
                       <CopyToClipboard text={window.location.host + "/share/"+this.props.mapID+"/"+this.props.shareUserID}>
-                        <button type="button" className="btn btn-primary result-btn col-md-4 col-md-offset-1 col-sm-4 col-sm-offset-1 col-xs-4 col-xs-offset-1" onClick={this.handleShare.bind(this)}>分享</button>
+                        <button type="button" disabled={this.props.userType !== "game"} className="btn btn-primary result-btn col-md-4 col-md-offset-1 col-sm-4 col-sm-offset-1 col-xs-4 col-xs-offset-1" onClick={this.handleShare.bind(this)}>分享</button>
                       </CopyToClipboard>
 
                       <button type="button" className="btn btn-default result-btn col-md-4 col-md-offset-2 col-sm-4 col-sm-offset-2 col-xs-4 col-xs-offset-2" data-dismiss="modal">返回</button>
