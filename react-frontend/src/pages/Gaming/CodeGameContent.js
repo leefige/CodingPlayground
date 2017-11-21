@@ -4,12 +4,14 @@ import Result from './Result';
 import Programming from './ProgramPanel/Programming';
 import { mainControl } from '../../logic/MainControl';
 import { post } from '../../utils/Request';
+import { Redirect } from 'react-router-dom';
 
 class CodeGameContent extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      curMapID: this.props.match.params.mapID,
       mapInitState: {
         board : {
           map : [[0, 0, 0, 0, 0, 0, 0, 0],
@@ -63,11 +65,6 @@ class CodeGameContent extends Component {
 
   componentWillMount() {
     // TODO: 用一个请求同时获取地图和用户解法，避免异步问题
-    // console.log("type: "+this.props.userType);
-    // console.log("id: "+this.props.getLoginUserId);
-    // console.log("share: "+this.props.match.params.shareUserID);
-    // console.log("final: "+(this.props.userType === "game" ? this.props.getLoginUserId : this.props.match.params.shareUserID));
-
     // 获取地图信息和blockly配置和用户解法
     post('/api/v1/map/getId', {
       id: this.props.match.params.mapID,
@@ -171,6 +168,18 @@ class CodeGameContent extends Component {
   }
 
   render() {
+      let isSystemMap = false;
+      if (this.state.curMapID >= 301 && this.state.curMapID <= 310) {
+        isSystemMap = true;
+      }
+      if (isSystemMap) {
+        const curLevel = this.state.curMapID - 300;
+        if (curLevel > this.props.topLevel || (!this.props.vip && curLevel > 5)) {
+          return (
+            <Redirect push to={"/index"}/>
+          );
+        }
+      }
       return (
         <div className='row'>
             <div className='col-xs-12 col-md-5 col-md-offset-1'>

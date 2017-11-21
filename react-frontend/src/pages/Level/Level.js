@@ -7,7 +7,6 @@ class Level extends Component {
     super();
     this.state = {
       dest: 0,
-      topLevel: 1
     };
   }
 
@@ -18,7 +17,13 @@ class Level extends Component {
   }
 
   isLocked(level) {
-    if (level > this.state.topLevel && level !== 100) {
+    if (level === 100) {  // map editor
+      return false;
+    }
+    else if (level > this.props.topLevel) {
+      return true;
+    }
+    else if (level > 5 && !this.props.vip) {
       return true;
     }
     return false;

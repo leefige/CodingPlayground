@@ -10,6 +10,7 @@ class Account extends Component {
       oldMobile: '',
       email: '',
       mobile: '',
+      vip: false,
       oldPassword: '',
       newPassword: '',
       againPassword: '',
@@ -18,8 +19,9 @@ class Account extends Component {
     };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.updateProfile();
+    this.getIsVIP();
   }
 
   resetInput() {
@@ -32,12 +34,25 @@ class Account extends Component {
     });
   }
 
+  async getIsVIP() {
+    post('/api/v1/user/getVip', {
+      id: this.props.userId,
+		})
+    .then((responseJson) => {
+      this.setState({
+        vip: responseJson.vip,
+      });
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+  }
+
   async updateProfile() {
     post('/api/v1/user/getPersonalAccount', {
       id: this.props.userId,
 		})
     .then((responseJson) => {
-      console.log("response", responseJson);
       this.setState({
         avatar: responseJson.img,
         oldEmail: responseJson.email,
@@ -158,16 +173,22 @@ class Account extends Component {
     formData.append('avatar', files[0]);
     const res = await uploadFile('/api/v1/user/uploadAvatar', formData);
     const data = await res.json();
-    console.log("upload res: ", data);
+    // console.log("upload res: ", data);
     // if (data.info === '上传头像成功') {
-      alert("修改成功！");
-      this.setState({
-        avatar: data.img,
-      });
+    alert("修改成功！");
+    this.setState({
+      avatar: data.img,
+    });
     // }
     // else {
       // alert("修改失败！");
     // }
+    event.preventDefault();
+  }
+
+  handlePayment(event) {
+    // TODO
+    this.props.updateVIP();
     event.preventDefault();
   }
 
@@ -293,6 +314,25 @@ class Account extends Component {
                     <a className="btn btn-cancel" href="/personal/account">取消修改</a>
                   </div>
                 </div>
+              </div>
+              <hr/>
+            </form>
+            <form className="edit-user prepend-top-default" enctype="multipart/form-data" onSubmit={this.handlePayment.bind(this)} accept-charset="UTF-8" method="post">
+              <div className="row">
+                <div className="col-lg-3">
+                  <h4>充值VIP</h4>
+                  <div className="clearfix avatar-image append-bottom-default">
+                  </div>
+                </div>
+                <div className="col-lg-9">
+                  <span className="personal-control" >
+                    {this.state.vip ? "您已经是VIP用户了!" : "充值VIP，畅玩更多关卡！"}
+                  </span>
+                  <span className="prepend-top-default append-bottom-default">
+                    <input type="submit" name="commit" value="确认付款" className="btn btn-success" />
+                  </span>
+                </div>
+
               </div>
               <hr/>
             </form>
