@@ -162,6 +162,14 @@ module.exports = app => {
       };
     }
 
+    async changeVip(){
+      const body = this.ctx.request.body;
+      const result = await this.ctx.service.user.changeVip(body);
+      this.ctx.body = {
+        changeVip_success: result,
+      };
+    }
+
   }
   return UserController;
 };

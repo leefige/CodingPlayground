@@ -22,6 +22,8 @@ module.exports = app => {
         ");";
         await app.mysql.query(sql);
         await app.mysql.insert('mapeditor', { key: body.key, name: body.name, editor: body.editor, time: body.time});
+        const data = JSON.stringify(body.data);
+        await app.mysql.insert('newsmap', { id: body.key, data: data});
         return true;
       } catch (err) {
         console.error(err);

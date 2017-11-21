@@ -1,17 +1,17 @@
 // app/router.js
 'use strict';
 module.exports = app => {
-  app.post('/user/signup', app.controller.user.signup);
-  app.post('/user/login', app.controller.user.login);
-  app.post('/user/logout', app.controller.user.logout);
-  app.post('/user/autoLogin', app.controller.user.autoLogin);
-  app.post('/map/getId', app.controller.map.getId);
-  app.post('/map/getMapList', app.controller.mapEditor.getAll);
-  app.post('/user/changePassword', app.controller.user.changePassword);
-  app.post('/user/changeEmail', app.controller.user.changeEmail);
-  app.post('/user/changeMobile', app.controller.user.changeMobile);
-  app.post('/map/updateBlockly', app.controller.map.updateBlockly);
-  app.post('/mapEditor/insertId', app.controller.mapEditor.insertId);
-  app.post('/user/verfifyMobile', app.controller.user.verfifyMobile);
-  app.post('/user/verfifyEmail', app.controller.user.verfifyEmail);
+  app.post('/api/v1/user/signup', app.controller.user.signup);
+  app.post('/api/v1/user/login', app.controller.user.login);
+  app.post('/api/v1/user/logout', app.controller.user.logout);
+  app.post('/api/v1/user/autoLogin', app.controller.user.autoLogin);
+  app.post('/api/v1/map/getId', app.controller.map.getId);
+  app.post('/api/v1/map/getMapList', app.controller.mapEditor.getAll);
+  app.post('/api/v1/user/changePassword', app.controller.user.changePassword);
+  app.post('/api/v1/user/changeEmail', app.controller.user.changeEmail);
+  app.post('/api/v1/user/changeMobile', app.controller.user.changeMobile);
+  app.post('/api/v1/map/updateBlockly', app.controller.map.updateBlockly);
+  app.post('/api/v1/mapEditor/insertId', app.controller.mapEditor.insertId);
+  app.post('/api/v1/user/verfifyMobile', app.controller.user.verfifyMobile);
+  app.post('/api/v1/user/verfifyEmail', app.controller.user.verfifyEmail);
 };

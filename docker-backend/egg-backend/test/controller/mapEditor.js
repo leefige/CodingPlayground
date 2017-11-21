@@ -1,11 +1,11 @@
 // 'use strict';
 const { app, mock, assert } = require('egg-mock/bootstrap');
-describe('test/controller/record.test.js', () => {
+describe('test/controller/mapEditor.test.js', () => {
   afterEach(mock.restore);
   describe('getId test', () => {
     it('should status 200 and get the body', () => {
       return app.httpRequest()
-        .post('/record/getId')
+        .post('/api/v1/mapEditor/getId')
         .type('json')
         .send({
           id: '233',
@@ -16,7 +16,7 @@ describe('test/controller/record.test.js', () => {
 
     it('should get null when map not exist', () => {
       return app.httpRequest()
-        .post('/record/getId')
+        .post('/api/v1/mapEditor/getId')
         .type('json')
         .send({
           id: '23411',
@@ -28,7 +28,7 @@ describe('test/controller/record.test.js', () => {
 
     it('should get 400 when body is wrong', () => {
       return app.httpRequest()
-        .post('/record/getId')
+        .post('/api/v1/mapEditor/getId')
         .type('json')
         .send('error')
         .expect(400);
@@ -38,7 +38,7 @@ describe('test/controller/record.test.js', () => {
   describe('insertId test', () => {
     it('should status 200 and get the body', () => {
       return app.httpRequest()
-      .post('/record/insertId')
+      .post('/api/v1/mapEditor/insertId')
       .type('json')
       .send({
         id: '123',

@@ -2,19 +2,21 @@
 module.exports = app => {
   class UserService extends app.Service {
     async signup(_body) {
-      const sql = "create table if not exists newuser(" +
+      const sql = "create table if not exists newsuser(" +
         "id VARCHAR(100)," +
         "password VARCHAR(100)," +
         "email VARCHAR(100)," +
         "mobile VARCHAR(100)," +
         "image TEXT," +
+        "level VARCHAR(100)," +
+        "vip VARCHAR(100)," +
         "primary key (id)" +
         ");";
       await app.mysql.query(sql);
       try {
-        const is_insert = await app.mysql.get('newuser', { id: _body.id });
+        const is_insert = await app.mysql.get('newsuser', { id: _body.id });
         if (is_insert === null) {
-          const result = await app.mysql.insert('newuser', { id: _body.id, password: _body.password });
+          const result = await app.mysql.insert('newsuser', { id: _body.id, password: _body.password, level: '1', vip: '0' });
           const insertSuccess = result.affectedRows === 1;
           return insertSuccess;
         }
@@ -26,17 +28,19 @@ module.exports = app => {
     }
 
     async login(_body) {
-      const sql = "create table if not exists newuser(" +
+      const sql = "create table if not exists newsuser(" +
       "id VARCHAR(100)," +
       "password VARCHAR(100)," +
       "email VARCHAR(100)," +
       "mobile VARCHAR(100)," +
       "image TEXT," +
+      "level VARCHAR(100)," +
+      "vip VARCHAR(100)," +
       "primary key (id)" +
       ");";
     await app.mysql.query(sql);
       try {
-        const result = await app.mysql.get('newuser', { id: _body.id, password: _body.password });
+        const result = await app.mysql.get('newsuser', { id: _body.id, password: _body.password });
         if (result === null) {
           return false;
         }
@@ -50,12 +54,12 @@ module.exports = app => {
 
     async changePassword(_body){
       try {
-        const is_insert = await app.mysql.get('newuser', { id: _body.id, password: _body.old_password });
+        const is_insert = await app.mysql.get('newsuser', { id: _body.id, password: _body.old_password });
         if (is_insert === null) {
           return false;
         }
         else{
-          const result = await app.mysql.update('newuser', { id: _body.id, password: _body.password });
+          const result = await app.mysql.update('newsuser', { id: _body.id, password: _body.password });
           const insertSuccess = result.affectedRows === 1;
           return insertSuccess;
         }
@@ -67,12 +71,12 @@ module.exports = app => {
 
     async changeEmail(_body){
       try {
-        const is_insert = await app.mysql.get('newuser', { id: _body.id });
+        const is_insert = await app.mysql.get('newsuser', { id: _body.id });
         if (is_insert === null) {
           return false;
         }
         else{
-          const result = await app.mysql.update('newuser', { id: _body.id, email: _body.email });
+          const result = await app.mysql.update('newsuser', { id: _body.id, email: _body.email });
           const insertSuccess = result.affectedRows === 1;
           return insertSuccess;
         }
@@ -84,12 +88,12 @@ module.exports = app => {
 
     async changeMobile(_body){
       try {
-        const is_insert = await app.mysql.get('newuser', { id: _body.id });
+        const is_insert = await app.mysql.get('newsuser', { id: _body.id });
         if (is_insert === null) {
           return false;
         }
         else{
-          const result = await app.mysql.update('newuser', { id: _body.id, mobile: _body.mobile });
+          const result = await app.mysql.update('newsuser', { id: _body.id, mobile: _body.mobile });
           const insertSuccess = result.affectedRows === 1;
           return insertSuccess;
         }
@@ -104,7 +108,7 @@ module.exports = app => {
       // ACCESS_KEY_ID/ACCESS_KEY_SECRET 根据实际申请的账号信息进行替换
       const accessKeyId = 'LTAINBI7GDcyzx8X';
       const secretAccessKey = '7Py5FG9GaLvvXy2EImX3hMqn0MYlo1';
-      const phoneNumbers = app.mysql.get('newuser', { id: body.id }).mobile;
+      const phoneNumbers = app.mysql.get('newsuser', { id: body.id }).mobile;
       //初始化sms_client
       let smsClient = new SMSClient({accessKeyId, secretAccessKey})
       smsClient.sendSMS({
@@ -123,7 +127,7 @@ module.exports = app => {
     }
 
     async verfifyEmail(body){
-      const email = app.mysql.get('newuser', { id: body.id }).email;
+      const email = app.mysql.get('newsuser', { id: body.id }).email;
       var nodemailer  = require('nodemailer');
       var mailTransport = nodemailer.createTransport({
         host : 'smtp.qq.com',
@@ -149,7 +153,23 @@ module.exports = app => {
               console.log(msg);
           }
     });
+    }
 
+    async changeVip(body){
+      try {
+        const is_insert = await app.mysql.get('newsuser', { id: body.id });
+        if (is_insert === null) {
+          return false;
+        }
+        else{
+          const result = await app.mysql.update('newsuser', { id: body.id, vip: body.vip });
+          const insertSuccess = result.affectedRows === 1;
+          return insertSuccess;
+        }
+      } catch (err) {
+        console.error(err);
+        return false;
+      }
     }
   }
   return UserService;

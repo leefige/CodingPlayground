@@ -115,6 +115,15 @@ class Account extends Component {
 
   }
 
+  handleUpload = (v) => {
+    v.preventDefault();
+    const target = v.target;
+    console.log('upload: ', target.files);
+    const file = target.files[0];
+    const formData = new FormData();
+    formData.append('avatar', file);
+  }
+
   render() {
     if (!this.state.shouldJump) {
       return (
@@ -140,10 +149,13 @@ class Account extends Component {
                       上传新头像
                     </button>
                     </div>
-                    <input type="file" id="user_avatar" accept="image/*"
+                    <input
+                      type="file" id="user_avatar" accept="image/*"
                       className="js-user-avatar-input hidden"
                       name="user[avatar]"
-                      onClick = {this.handleReceiveAvator.bind(this)}/>
+                      onClick = {this.handleReceiveAvator.bind(this)}
+                      onChange={v => this.handleUpload(v)}
+                    />
                   </div>
                   <div className="help-block">图片最大尺寸为200KB</div>
                 </div>
