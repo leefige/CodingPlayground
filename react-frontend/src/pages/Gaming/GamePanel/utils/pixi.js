@@ -81,7 +81,7 @@ export default class PixiComponent {
         objId['torch.png'],
         width / row,
         height / col,
-        width * 0.17 + i * width * 0.7 / 5, width + invHeight / 4,
+        width * 0.17 + i * width * 0.7 / 5, width + invHeight / 4.5,
       );
       this.item[i].addTo(gameScene);
     }
@@ -200,6 +200,22 @@ export default class PixiComponent {
 
     const enmId = this.resources[this.enmJson].textures;
     const chaId = this.resources[this.chaJson].textures;
+    const objId = this.resources[this.objJson].textures;
+
+    const torchNum = player.character.items.torchNum;
+    const bombNum = player.character.items.bombNum;
+
+    for (let i = 0; i < torchNum; i++) {
+      this.item[i].obj.texture = objId['torch.png'];
+      this.item[i].obj.visible = true;
+    }
+    for (let i = torchNum; i < torchNum + bombNum; i++) {
+      this.item[i].obj.texture = objId['bomb.png'];
+      this.item[i].obj.visible = true;
+    }
+    for (let i = torchNum + bombNum; i < 5; i++) {
+      this.item[i].obj.visible = false;
+    }
 
     const {
       width, height,
@@ -214,6 +230,7 @@ export default class PixiComponent {
         const px = convertX(player.enemy[i].pos['y'], width, row),
           py = convertY(player.enemy[i].pos['x'], height, col);
         const baseEnmDir = player.enemy[i].dir;
+        this.mEnemy[i].obj.visible = true;
         this.mEnemy[i].update(px, py, 1*FPS, FPS, baseEnmDir, enmId);
       }
 
@@ -245,6 +262,8 @@ export default class PixiComponent {
           py = convertY(player.enemy[i].pos['x'], height, col);
         const baseEnmDir = player.enemy[i].dir;
         this.mEnemy[i].moveTo(px, py, FPS, baseEnmDir, enmId, this.timeStatus);
+        console.log(mainControl.player.enemy[i]);
+        this.mEnemy[i].obj.visible = mainControl.player.enemy[i].status === "alive";
       }
 
       const px = convertX(player.character.pos['y'], width, row),
