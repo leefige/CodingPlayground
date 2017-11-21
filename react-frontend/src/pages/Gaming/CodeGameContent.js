@@ -69,7 +69,7 @@ class CodeGameContent extends Component {
     // console.log("final: "+(this.props.userType === "game" ? this.props.getLoginUserId : this.props.match.params.shareUserID));
 
     // 获取地图信息和blockly配置和用户解法
-    post('/map/getId', {
+    post('/api/v1/map/getId', {
       id: this.props.match.params.mapID,
       userId: (this.props.userType === "game" ? this.props.getLoginUserId : this.props.match.params.shareUserID),
 		})
@@ -130,7 +130,7 @@ class CodeGameContent extends Component {
   }
 
   async sendUserSolution() {
-    post('/map/updateBlockly', {
+    post('/api/v1/map/updateBlockly', {
       userid: this.props.getLoginUserId,
       mapid: this.props.match.params.mapID,
       blockly: this.state.userSolution,
@@ -171,7 +171,6 @@ class CodeGameContent extends Component {
   }
 
   render() {
-    // if ((this.props.getIsLogin() && this.props.userType === "game") || this.props.userType === "share") {
       return (
         <div className='row'>
             <div className='col-xs-12 col-md-5 col-md-offset-1'>
@@ -200,15 +199,9 @@ class CodeGameContent extends Component {
               }
             </div>
             <button ref="show_btn" className="btn btn-primary btn-lg hide" data-toggle="modal" data-target="#resultModal"/>
-            <Result ref="show_result" mapID={this.props.match.params.mapID} shareUserID={this.props.getLoginUserId} score={this.state.gameScore}/>
+            <Result ref="show_result" userType={this.props.userType} mapID={this.props.match.params.mapID} shareUserID={this.props.userType === "game" ? this.props.getLoginUserId : this.props.match.params.shareUserID} score={this.state.gameScore}/>
         </div>
       );
-    // }
-    // else {
-    //   return (
-    //     <Redirect push to="/login" />
-    //   );
-    // }
   }
 }
 

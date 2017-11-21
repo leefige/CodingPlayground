@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { post } from "../utils/Request";
-import { Link } from 'react-router-dom';
 
 class Login extends Component {
   constructor() {
@@ -13,13 +12,12 @@ class Login extends Component {
   }
 
   async handleLogin() {
-    post('/user/login', {
+    post('/api/v1/user/login', {
       id: this.state.email,
       password: this.state.password,
       rememberMe: this.state.rememberMe,
     })
       .then((responseJson) => {
-        // console.log(responseJson);
         if (responseJson.login_success) {
           this.props.onLogin(this.state.email);
         }

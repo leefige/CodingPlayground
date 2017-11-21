@@ -48,14 +48,6 @@ class Player {
   }
 
   nextStep() {
-    //console.log(this.enemy);
-
-    // console.log(this._mode);
-    // console.log("status")
-    // console.log(this._status);
-    // console.log("curStep")
-    // console.log(this._curStep);
-    // console.log(this._totalStep);
     if (this._status === playerStatus.init)
       this._status = this._nextStatus;
 
@@ -109,12 +101,6 @@ class Player {
   }
 
   getStatus() {
-    // console.log("current step");
-    // console.log(this._curStep);
-    // console.log(this._totalStep);
-    // console.log(this._result)
-    // console.log("status");
-    // console.log(this._status);
     return this._status;
   }
 

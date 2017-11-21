@@ -70,7 +70,9 @@ class MainControl{
           case actionTable.open:
             this._status = this._character.open();
             break;
-
+          default:
+            this._status = null;
+            break;
         }
         // calcutale enemy's next pos and dir
         for (let i = 0; i < this._enemy.length; i++) {

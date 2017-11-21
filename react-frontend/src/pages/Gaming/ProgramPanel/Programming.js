@@ -16,7 +16,7 @@ class Programming extends Component {
       "function attack() {emitAction(" + actionTable.attack + ");} ",
       "function use(obj) {switch (obj) {case 'TORCH':emitAction(" + actionTable.torch + ");break;case 'BOMB':emitAction(" + actionTable.bomb + ");break;default:break;}} ",
       "function openChest() {emitAction(" + actionTable.open + ");}",
-      "function inFrontOf(obj) {queryMapInfo(obj);} ",
+      "function inFrontOf(obj) {return queryMapInfo(obj);} ",
     ],
     INFINITE_LOOP_ERROR: "Infinite loop!",
     MAX_LOOP: 100000,
@@ -76,7 +76,8 @@ class Programming extends Component {
       default:
         target = elements.empty;
     }
-    return mainControl.character.frontIs(target);
+    const res = mainControl.character.frontIs(target);
+    return res;
   }
 
   callNextStep(action) {

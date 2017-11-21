@@ -32,7 +32,7 @@ class MapHall extends Component {
 
   componentWillMount() {
     // 获取所有用户自定义地图列表
-    post('/map/getMapList', {
+    post('/api/v1/map/getMapList', {
       userId: this.props.getLoginUserId,
 		})
     .then((responseJson) => {

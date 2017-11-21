@@ -14,7 +14,7 @@ class Header extends Component {
     }
   }
   async handleLogout() {
-    post('/user/logout', {})
+    post('/api/v1/user/logout', {})
     .then((responseJson) => {
       if (responseJson.logout_success) {
         this.props.onLogout();
@@ -39,7 +39,7 @@ class Header extends Component {
     this.setState({
       didAutoLogin : false,
     })
-    post('/user/autoLogin', {
+    post('/api/v1/user/autoLogin', {
       autoLogin: true,
     })
       .then((responseJson) => {
