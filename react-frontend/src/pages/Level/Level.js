@@ -7,6 +7,7 @@ class Level extends Component {
     super();
     this.state = {
       dest: 0,
+      topLevel: 1
     };
   }
 
@@ -16,35 +17,45 @@ class Level extends Component {
     });
   }
 
+  isLocked(level) {
+    if (level > this.state.topLevel && level != 100) {
+      console.log("level "+level+": true");
+      return true;
+    }
+    return false;
+  }
+
   render() {
     if (this.state.dest === 0) {
       return (
         <div className='col-md-8 col-md-offset-2'>
           <div className='row'>
-            <MapCard levelNumber="1" onSelectLevel={this.handleLevelClick.bind(this)}/>
-            <MapCard levelNumber="2" onSelectLevel={this.handleLevelClick.bind(this)}/>
-            <MapCard levelNumber="3" onSelectLevel={this.handleLevelClick.bind(this)}/>
-            <MapCard levelNumber="4" onSelectLevel={this.handleLevelClick.bind(this)}/>
+            <MapCard levelNumber="1" lock={this.isLocked.bind(this)} onSelectLevel={this.handleLevelClick.bind(this)}/>
+            <MapCard levelNumber="2" lock={this.isLocked.bind(this)} onSelectLevel={this.handleLevelClick.bind(this)}/>
+            <MapCard levelNumber="3" lock={this.isLocked.bind(this)} onSelectLevel={this.handleLevelClick.bind(this)}/>
+            <MapCard levelNumber="4" lock={this.isLocked.bind(this)} onSelectLevel={this.handleLevelClick.bind(this)}/>
           </div>
           <div className='row'>
-            <MapCard levelNumber="5" onSelectLevel={this.handleLevelClick.bind(this)}/>
-            <MapCard levelNumber="6" onSelectLevel={this.handleLevelClick.bind(this)}/>
-            <MapCard levelNumber="7" onSelectLevel={this.handleLevelClick.bind(this)}/>
-            <MapCard levelNumber="8" onSelectLevel={this.handleLevelClick.bind(this)}/>
+            <MapCard levelNumber="5" lock={this.isLocked.bind(this)} onSelectLevel={this.handleLevelClick.bind(this)}/>
+            <MapCard levelNumber="6" lock={this.isLocked.bind(this)} onSelectLevel={this.handleLevelClick.bind(this)}/>
+            <MapCard levelNumber="7" lock={this.isLocked.bind(this)} onSelectLevel={this.handleLevelClick.bind(this)}/>
+            <MapCard levelNumber="8" lock={this.isLocked.bind(this)} onSelectLevel={this.handleLevelClick.bind(this)}/>
           </div>
           <div className='row'>
-            <MapCard levelNumber="9" onSelectLevel={this.handleLevelClick.bind(this)}/>
-            <MapCard levelNumber="10" onSelectLevel={this.handleLevelClick.bind(this)}/>
-            <MapCard levelNumber="11" onSelectLevel={this.handleLevelClick.bind(this)}/>
-            <MapCard levelNumber="-1" onSelectLevel={this.handleLevelClick.bind(this)}/>
+            <MapCard levelNumber="9" lock={this.isLocked.bind(this)} onSelectLevel={this.handleLevelClick.bind(this)}/>
+            <MapCard levelNumber="10" lock={this.isLocked.bind(this)} onSelectLevel={this.handleLevelClick.bind(this)}/>
+            <MapCard levelNumber="100" lock={this.isLocked.bind(this)} onSelectLevel={this.handleLevelClick.bind(this)}/>
+            <MapCard levelNumber="-1" lock={this.isLocked.bind(this)} onSelectLevel={this.handleLevelClick.bind(this)}/>
           </div>
         </div>
       );
     }
     else {
-      const lv = 300 + this.state.dest;
-      if (lv > 300) {
-        return (<Redirect push to={"/map/"+lv}/>);
+      if (this.state.dest === 100) {
+        return (<Redirect push to={"/mapHall"}/>);
+      }
+      else if (this.state.dest > 0) {
+        return (<Redirect push to={"/map/" + (300 + this.state.dest)}/>);
       }
       else {
         return (<Redirect push to="/mapEditor"/>);

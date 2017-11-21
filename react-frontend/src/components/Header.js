@@ -66,6 +66,7 @@ class Header extends Component {
       <div>
         {this.props.isLogin || this.state.isAutoLogin ?
           <div className="logout-header">
+            <Link to='/index' type="button" className="btn btn-warning header-btn">返回主页</Link>
             <Link to='/personal/account' type="button" className="btn btn-success header-btn">{this.props.id}</Link>
             <button type="button" className="btn btn-default" onClick={this.handleLogout.bind(this)}>登出</button>
           </div>
