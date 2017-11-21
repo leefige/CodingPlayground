@@ -170,6 +170,19 @@ module.exports = app => {
       };
     }
 
+    async uploadAvatar () {
+      const stream = await this.ctx.getFileStream();
+      const id = '0'; // ctx.params.id
+      console.log('filename: ', stream.filename)
+      const fileUrl = await this.ctx.service.file.upload('users', id, stream);
+      console.log('fileUrl: ', fileUrl);
+      this.ctx.status = 200;
+      this.ctx.body = {
+        info: '上传头像成功',
+        url: fileUrl,
+      };
+    }
+
   }
   return UserController;
 };

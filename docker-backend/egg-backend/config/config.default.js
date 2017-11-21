@@ -32,6 +32,13 @@ module.exports = appInfo => {
       to: [
           'Zhixin Wen <wenzhixin2010@gmail.com>'
       ]
+  },
+  multipart: {
+    whitelist: [
+      '.png',
+      '.jpg', '.jpeg',
+      '.bmp'
+    ]
   }
 
   };
