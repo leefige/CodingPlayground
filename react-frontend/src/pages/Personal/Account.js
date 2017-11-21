@@ -17,7 +17,7 @@ class Account extends Component {
 
   async handleSubmitEmail(event) {
     // alert("submit email");
-    post('/user/changeEmail', {
+    post('/api/v1/user/changeEmail', {
       id: this.props.userId,
       email: this.state.email,
     }).then((responseJson) => {
@@ -35,7 +35,7 @@ class Account extends Component {
 
   async handleSubmitMobile(event) {
     // alert("submit mobile");
-    post('/user/changeMobile', {
+    post('/api/v1/user/changeMobile', {
       id: this.props.userId,
       mobile: this.state.mobile
     }).then((responseJson) => {
@@ -56,7 +56,7 @@ class Account extends Component {
       alert("两次输入的密码不同！");
     } else {
       // alert("submit psw");
-      post('/user/changePassword', {
+      post('/api/v1/user/changePassword', {
         id: this.props.userId,
         old_password: this.state.oldPassword,
         password: this.state.newPassword,

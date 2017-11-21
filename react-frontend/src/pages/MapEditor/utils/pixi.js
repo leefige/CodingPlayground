@@ -77,7 +77,7 @@ export default class PixiComponent {
   }
 
   loadmap = (mapId) => {
-    post('/map/getId', {
+    post('/api/v1/map/getId', {
       id: mapId,
     })
     .then((responseJson) => {
@@ -150,7 +150,7 @@ export default class PixiComponent {
   }
 
   report = () => {
-    post('/mapEdit/insert', {
+    post('/api/v1/mapEdit/insert', {
       mapRecord: JSON.stringify(this.mapRecord),
       userId: "TEST"
     })

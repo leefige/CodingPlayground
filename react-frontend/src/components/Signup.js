@@ -14,7 +14,7 @@ class Signup extends Component {
   }
 
   async handleSignup() {
-    post('/user/signup', {
+    post('/api/v1/user/signup', {
       id: this.state.email,
       password: this.state.password,
     })
