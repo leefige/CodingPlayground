@@ -262,7 +262,6 @@ export default class PixiComponent {
           py = convertY(player.enemy[i].pos['x'], height, col);
         const baseEnmDir = player.enemy[i].dir;
         this.mEnemy[i].moveTo(px, py, FPS, baseEnmDir, enmId, this.timeStatus);
-        console.log(mainControl.player.enemy[i]);
         this.mEnemy[i].obj.visible = mainControl.player.enemy[i].status === "alive";
       }
 
