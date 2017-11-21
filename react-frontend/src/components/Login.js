@@ -12,7 +12,7 @@ class Login extends Component {
   }
 
   async handleLogin() {
-    post('/user/login', {
+    post('/api/v1/user/login', {
       id: this.state.email,
       password: this.state.password,
       rememberMe: this.state.rememberMe,

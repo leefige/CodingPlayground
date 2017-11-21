@@ -69,7 +69,7 @@ class CodeGameContent extends Component {
     // console.log("final: "+(this.props.userType === "game" ? this.props.getLoginUserId : this.props.match.params.shareUserID));
 
     // 获取地图信息和blockly配置和用户解法
-    post('/map/getId', {
+    post('/api/v1/map/getId', {
       id: this.props.match.params.mapID,
       userId: (this.props.userType === "game" ? this.props.getLoginUserId : this.props.match.params.shareUserID),
 		})
@@ -130,7 +130,7 @@ class CodeGameContent extends Component {
   }
 
   async sendUserSolution() {
-    post('/map/updateBlockly', {
+    post('/api/v1/map/updateBlockly', {
       userid: this.props.getLoginUserId,
       mapid: this.props.match.params.mapID,
       blockly: this.state.userSolution,
