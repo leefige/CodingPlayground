@@ -6,23 +6,58 @@ class Account extends Component {
   constructor() {
     super();
     this.state = {
+      oldEmail: '',
+      oldMobile: '',
       email: '',
       mobile: '',
       oldPassword: '',
       newPassword: '',
       againPassword: '',
+      avatar: null,
       shouldJump: false,
     };
   }
 
+  componentDidMount() {
+    this.updateProfile();
+  }
+
+  resetInput() {
+    this.setState({
+      email: '',
+      mobile: '',
+      oldPassword: '',
+      newPassword: '',
+      againPassword: '',
+    });
+  }
+
+  async updateProfile() {
+    post('/api/v1/user/getPersonalAccount', {
+      id: this.props.userId,
+		})
+    .then((responseJson) => {
+      console.log("response", responseJson);
+      this.setState({
+        avatar: responseJson.img,
+        oldEmail: responseJson.email,
+        oldMobile: responseJson.mobile,
+      });
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+    this.resetInput();
+  }
+
   async handleSubmitEmail(event) {
-    // alert("submit email");
     post('/api/v1/user/changeEmail', {
       id: this.props.userId,
       email: this.state.email,
     }).then((responseJson) => {
         if (responseJson.changeEmail_success) {
           alert("修改成功！");
+          this.updateProfile();
         }
         else {
           alert("修改失败！");
@@ -34,13 +69,13 @@ class Account extends Component {
   }
 
   async handleSubmitMobile(event) {
-    // alert("submit mobile");
     post('/api/v1/user/changeMobile', {
       id: this.props.userId,
       mobile: this.state.mobile
     }).then((responseJson) => {
         if (responseJson.changeMobile_success) {
           alert("修改成功！");
+          this.updateProfile();
         }
         else {
           alert("修改失败！");
@@ -55,7 +90,6 @@ class Account extends Component {
     if (this.state.newPassword !== this.state.againPassword) {
       alert("两次输入的密码不同！");
     } else {
-      // alert("submit psw");
       post('/api/v1/user/changePassword', {
         id: this.props.userId,
         old_password: this.state.oldPassword,
@@ -107,21 +141,34 @@ class Account extends Component {
     });
   }
 
-  handleUploadAvatot() {
-    document.getElementById("user_avatar").click();
+  handleClickUpload() {
+    this.refs.user_avatar.click();
   }
 
-  handleReceiveAvator() {
-
-  }
-
-  handleUpload = (v) => {
-    v.preventDefault();
-    const target = v.target;
-    console.log('upload: ', target.files);
-    const file = target.files[0];
+  async handleUploadAvatar(event) {
+    const uploadFile = (url, formData) => fetch(url, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+      },
+      body: formData,
+    });
+    const files = event.target.files;
     const formData = new FormData();
-    formData.append('avatar', file);
+    formData.append('avatar', files[0]);
+    const res = await uploadFile('/api/v1/user/uploadAvatar', formData);
+    const data = await res.json();
+    console.log("upload res: ", data);
+    // if (data.info === '上传头像成功') {
+      alert("修改成功！");
+      this.setState({
+        avatar: data.img,
+      });
+    // }
+    // else {
+      // alert("修改失败！");
+    // }
+    event.preventDefault();
   }
 
   render() {
@@ -129,12 +176,11 @@ class Account extends Component {
       return (
         <div className='col-md-8 col-md-offset-2'>
           <div className="tab-content">
-            <div class="tab-pane active" id="about">
+            <div className="tab-pane active" id="about">
               <h3>账户管理</h3>
               <h5>Account Management</h5>
             </div>
             <hr/>
-            {/* <form className="edit-user prepend-top-default" id="edit_user_6" enctype="multipart/form-data" action="/updateProfile" accept-charset="UTF-8" method="post"> */}
               <div className="row">
                 <div className="col-lg-3">
                   <h4>我的头像</h4>
@@ -145,27 +191,23 @@ class Account extends Component {
                     <div>
                     <button type="button" id="upload_avator"
                       className="btn btn-success blockly-btn"
-                      onClick = {this.handleUploadAvatot.bind(this)}>
+                      onClick = {this.handleClickUpload.bind(this)}>
                       上传新头像
                     </button>
                     </div>
-                    <input
-                      type="file" id="user_avatar" accept="image/*"
-                      className="js-user-avatar-input hidden"
-                      name="user[avatar]"
-                      onClick = {this.handleReceiveAvator.bind(this)}
-                      onChange={v => this.handleUpload(v)}
+                    <input type="file" ref="user_avatar" accept="image/*"
+                      className="hidden" name="user[avatar]"
+                      onChange={this.handleUploadAvatar.bind(this)}
                     />
                   </div>
                   <div className="help-block">图片最大尺寸为200KB</div>
                 </div>
                 <div className="col-lg-4 col-lg-offset-1">
                   <div className="clearfix avatar-image append-bottom-default">
-                    <img alt="" className="avatar s160" src="http://47.94.142.165:8088/gitlab/uploads/user/avatar/6/avatar.png" />
+                    <img alt="" className="avatar s160" src={this.state.avatar || "http://uus-img8.android.d.cn/content_pic/201601/behpic/icon/858/2-67858/icon-1453688695417.png"} />
                   </div>
                 </div>
               </div>
-            {/* </form> */}
             <hr/>
             <form className="edit-user prepend-top-default" enctype="multipart/form-data" onSubmit={this.handleSubmitEmail.bind(this)} accept-charset="UTF-8" method="post">
               <div className="row">
@@ -176,10 +218,15 @@ class Account extends Component {
                   <div className="form-group">
                     <label className="label-light" htmlFor="user_name">用户名</label>
                     <input className="personal-control" type="text"
-                      value={this.props.userId} readonly='readonly' name="user[id]" id="user_id" />
+                      value={this.props.userId} readOnly='readonly' name="user[id]" id="user_id" />
                   </div>
                   <div className="form-group">
-                    <label className="label-light" htmlFor="user_email">绑定邮箱</label>
+                    <label className="label-light" htmlFor="user_cur_email">邮箱</label>
+                    <input className="personal-control" type="text"
+                      value={this.state.oldEmail} readOnly='readonly' name="user[cur_email]" id="user_cur_email" />
+                  </div>
+                  <div className="form-group">
+                    <label className="label-light" htmlFor="user_email">修改绑定邮箱</label>
                     <input className="personal-control"  required="required"
                       type="email" value={this.state.email} onChange={this.handleEmailChange.bind(this)}
                       placeholder="sample@xyz.com" name="user[email]" id="user_email" />
@@ -198,8 +245,13 @@ class Account extends Component {
                   <h4>绑定手机</h4>
                 </div>
                 <div className="col-lg-9">
+                  <div className="form-group">
+                    <label className="label-light" htmlFor="user_cur_mobile">手机</label>
+                    <input className="personal-control" type="text"
+                      value={this.state.oldMobile} readOnly='readonly' name="user[cur_mobile]" id="user_cur_email" />
+                  </div>
                   <div>
-                    <label className="label-light" htmlFor="user_mobile">手机号码</label>
+                    <label className="label-light" htmlFor="user_mobile">修改手机号码</label>
                     <input className="personal-control" required="required"
                       type="text" value={this.state.mobile} onChange={this.handleMobileChange.bind(this)}
                       placeholder="11122223333" name="user[mobile]" id="user_mobile" />
