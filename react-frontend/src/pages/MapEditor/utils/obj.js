@@ -81,9 +81,10 @@ export class Dragable extends Obj {
     const szy = innerHeight / col;
     const i = parseInt((newPosition.x - leftx) / szx, 10);
     const j = parseInt((newPosition.y - lefty) / szy, 10);
-
-    this.responseJson.mapInitState.board.map[j * row + i] = 0;
-    this.responseJson.mapResource.id_t[j * row + i] = convertId("blank");
+    if (i > 0 && j > 0 && i < row && j < col) {
+      this.responseJson.mapInitState.board.map[j][i] = 0;
+      this.responseJson.mapResource.id_t[j * row + i] = convertId("blank");
+    }
   }
 
   onDragEnd = () => {
@@ -130,7 +131,7 @@ export class Dragable extends Obj {
       }
       else if (this.type === "chest") {
         this.bg[j * row + i].obj.visible = false;
-        this.responseJson.mapInitState.board.map[j * row + i] = 90;
+        this.responseJson.mapInitState.board.map[j][i] = 90;
         // this.mapRecord.chestPos = i * row + j;
       }
       else {
