@@ -35,6 +35,7 @@ class CodeGameApp extends Component {
     });
     this.updateTopLevel();
     this.updateVIP();
+    global.id = id;
   }
 
   async updateTopLevel() {
