@@ -252,17 +252,17 @@ class Account extends Component {
                 <div className="col-lg-9">
                   <div className="form-group">
                     <label className="label-light" htmlFor="user_name">用户名</label>
-                    <input className="personal-control" type="text"
+                    <input className="personal-control personal-margin" type="text"
                       value={this.props.userId} readOnly='readonly' name="user[id]" id="user_id" />
                   </div>
                   <div className="form-group">
                     <label className="label-light" htmlFor="user_cur_email">邮箱</label>
-                    <input className="personal-control" type="text"
+                    <input className="personal-control personal-margin" type="text"
                       value={this.state.oldEmail} readOnly='readonly' name="user[cur_email]" id="user_cur_email" />
                   </div>
                   <div className="form-group">
                     <label className="label-light" htmlFor="user_email">修改绑定邮箱</label>
-                    <input className="personal-control"  required="required"
+                    <input className="personal-control personal-margin"  required="required"
                       type="email" value={this.state.email} onChange={this.handleEmailChange.bind(this)}
                       placeholder="sample@xyz.com" name="user[email]" id="user_email" />
                   </div>
@@ -282,12 +282,12 @@ class Account extends Component {
                 <div className="col-lg-9">
                   <div className="form-group">
                     <label className="label-light" htmlFor="user_cur_mobile">手机</label>
-                    <input className="personal-control" type="text"
+                    <input className="personal-control personal-margin" type="text"
                       value={this.state.oldMobile} readOnly='readonly' name="user[cur_mobile]" id="user_cur_email" />
                   </div>
                   <div>
                     <label className="label-light" htmlFor="user_mobile">修改手机号码</label>
-                    <input className="personal-control" required="required"
+                    <input className="personal-control personal-margin" required="required"
                       type="text" value={this.state.mobile} onChange={this.handleMobileChange.bind(this)}
                       placeholder="11122223333" name="user[mobile]" id="user_mobile" />
                   </div>
@@ -309,17 +309,17 @@ class Account extends Component {
                 <div className="col-lg-9">
                   <div className="form-group">
                     <span>旧密码</span>
-                    <input className="personal-control" required="required"
+                    <input className="personal-control personal-margin" required="required"
                       type="password" value={this.state.oldPassword} onChange={this.handleOldPasswordChange.bind(this)}
                       placeholder="请输入旧密码" name="user[old_password]" id="user_old_password" />
                     <p/>
                     <span>新密码</span>
-                    <input className="personal-control" required="required"
+                    <input className="personal-control personal-margin" required="required"
                       type="password" value={this.state.newPassword} onChange={this.handleNewPasswordChange.bind(this)}
                       placeholder="请输入新密码" name="user[new_password]" id="user_new_password" />
                     <p/>
                     <span>确认新密码</span>
-                    <input className="personal-control" required="required"
+                    <input className="personal-control personal-margin" required="required"
                       type="password" value={this.state.againPassword} onChange={this.handleAgainPasswordChange.bind(this)}
                       placeholder="请再次输入新密码" name="user[again_password]" id="user_again_password" />
                   </div>

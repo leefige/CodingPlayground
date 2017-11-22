@@ -100,9 +100,9 @@ class ForgetPassword extends Component {
           <hr />
           <form className="edit-user prepend-top-default" enctype="multipart/form-data" onSubmit={this.handleSubmitFindPassword.bind(this)} accept-charset="UTF-8" method="post">
             <div className="row">
-              <div className="col-lg-9">
+              <div className="col-lg-12">
                 <div className="form-group">
-                  <label className="label-light" htmlFor="user_id">请输入您的用户名</label>
+                  <label className="label-light" htmlFor="user_id">请输入用户名</label>
                   <input className="personal-control" required="required"
                     type="text" value={this.state.userId} onChange={this.handleUserIdChange.bind(this)}
                     name="user[id]" id="user_id" />
@@ -114,11 +114,11 @@ class ForgetPassword extends Component {
                     maxLength="6" name="user[validCode]" id="user_valid_code" />
                 </div>
                 <div className="prepend-top-default append-bottom-default">
-                  <button type="button" className="btn btn-default" onClick={this.handleGetValidCode.bind(this)}
+                  <button type="button" className="btn btn-default forget-margin" onClick={this.handleGetValidCode.bind(this)}
                     id="valid_btn">
                     {this.state.didValidCodeGet ? "获取验证码(" + this.state.timerCount + ")" : "获取验证码"}
                   </button>
-                  <button type="submit" className="btn btn-primary">提交</button>
+                  <button type="submit" className="btn btn-primary forget-margin">提交</button>
                 </div>
               </div>
             </div>
