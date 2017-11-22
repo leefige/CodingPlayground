@@ -109,12 +109,19 @@ class Login extends Component {
         }
       }
     }, 1000)
-    post("/api/v1/user/verfifyMobile", {
-      phoneNumber: this.state.phone,
+    console.log("mobile login");
+    console.log(this.state.phone)
+    console.log(answer)
+    post("/api/v1/user/mobileLogin", {
+      mobile: this.state.phone,
       code: answer,
     }).then((responseJson) => {
-      if (responseJson.sendMobile_success) {
+      console.log(responseJson)
+      if (responseJson.mobileLogin_success) {
         alert("验证码成功发送至您的手机");
+        this.setState({
+          email: responseJson.userId,
+        })
       }
       else {
         alert("获取验证码失败,请检查您的用户名是否正确后重试");
@@ -135,7 +142,7 @@ class Login extends Component {
       this.setState({
         validCodeCorrect: true,
       })
-      // TODO: post to backend to get password
+      this.props.onLogin(this.state.email);
     }
     event.preventDefault();
   }
