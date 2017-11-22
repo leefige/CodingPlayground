@@ -36,7 +36,7 @@ module.exports = app => {
 
       // const addr = await getIP()
       // return `http://${addr}:${process.env.PORT}${app.config.static.prefix}assets/${category}/${id}/${stream.filename}`
-      return `/public/meida/${category}/${id}/${stream.filename}`;
+      return `/public/media/${category}/${id}/${stream.filename}`;
     }
   }
   return FileService;

@@ -86,7 +86,8 @@ module.exports = app => {
         }
         var map = JSON.parse(result.data);
         map.savedSolution = body.blockly;
-        if(result.level === body.curLevel){
+        const user = await app.mysql.get('newsuser', { id: body.userid });
+        if(user.level === body.curLevel){
           await app.mysql.update('newsuser', {id: body.userid, level: body.curLevel+1});
         }
         const data = JSON.stringify(map);
