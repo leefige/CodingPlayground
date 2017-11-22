@@ -35,10 +35,11 @@ class MapHall extends Component {
 
   componentWillMount() {
     // 获取所有用户自定义地图列表
-    post('/api/v1/map/getMapList', {
+    post('/api/v1/map/getAll', {
       userId: this.props.getLoginUserId,
 		})
     .then((responseJson) => {
+      // console.log("getall res", responseJson);
       this.setState({
         mapList: responseJson.mapList || [{key: "301", name: "一张地图", editor: "mym", time:"2017/11/15"}, {key: "305", name: "另一张地图",  editor: "also mym", time:"2017/11/20"}],
       });
