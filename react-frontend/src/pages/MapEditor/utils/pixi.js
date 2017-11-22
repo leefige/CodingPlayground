@@ -5,7 +5,7 @@ import { post } from '../../../utils/Request'
 // `setup` function will run when the image has loaded
 export default class PixiComponent {
 
-  constructor(stage, width, height, innerWidth, innerHeight, renderer) {
+  constructor(stage, width, height, innerWidth, innerHeight, renderer, mapId) {
     this.Container = PIXI.Container;
     this.resources = PIXI.loader.resources;
 
@@ -25,6 +25,8 @@ export default class PixiComponent {
 
     this.mapRecord = {};
 
+    this.mapId = mapId;
+
     //Use Pixi's built-in `loader` object to load an image
     PIXI.loader
       .add(this.gpJson)
@@ -42,18 +44,23 @@ export default class PixiComponent {
     this.gameScene = new this.Container();
     this.stage.addChild(this.gameScene);
 
-    const id = this.resources[this.mapJson].textures;
-    let i = 0;
-    for (let key in id) {
-      const map = new Button(
-        id[key],
-        width / 10, width / 10,
-        i * 0.13 * width + 0.25 * width,
-        10
-      );
-      map.obj.on('click', () => {this.loadmap(parseInt(key.split('.')[0], 10))});
-      map.addTo(this.stage);
-      i++;
+    if (this.mapId === undefined) {
+      const id = this.resources[this.mapJson].textures;
+      let i = 0;
+      for (let key in id) {
+        const map = new Button(
+          id[key],
+          width / 10, width / 10,
+          i * 0.13 * width + 0.25 * width,
+          10
+        );
+        map.obj.on('click', () => {this.loadmap(parseInt(key.split('.')[0], 10))});
+        map.addTo(this.stage);
+        i++;
+      }
+    }
+    else {
+      this.loadmap(parseInt(this.mapId, 10));
     }
 
     const util = this.resources[this.utilJson].textures;
