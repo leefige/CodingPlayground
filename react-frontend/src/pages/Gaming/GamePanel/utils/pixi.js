@@ -286,7 +286,7 @@ export default class PixiComponent {
           this.bomb.obj.visible = false;
           const len = mainControl.player.board.bombArea.length;
           for (let i = 0; i < len; i++) {
-            this.effect[i].obj.x = convertX(mainControl.player.board.bombArea[i].y, width, row);;
+            this.effect[i].obj.x = convertX(mainControl.player.board.bombArea[i].y, width, row);
             this.effect[i].obj.y = convertY(mainControl.player.board.bombArea[i].x, height, col);
             this.effect[i].obj.visible = true;
           }
@@ -316,7 +316,7 @@ export default class PixiComponent {
         }
         else if (this.timeStatus === 30) {
           this.torch.obj.visible = false;
-          this.effect[0].obj.x = convertX(mainControl.player.board.torchPos.y, width, row);;
+          this.effect[0].obj.x = convertX(mainControl.player.board.torchPos.y, width, row);
           this.effect[0].obj.y = convertY(mainControl.player.board.torchPos.x, height, col);
           this.effect[0].obj.visible = true;
         }
