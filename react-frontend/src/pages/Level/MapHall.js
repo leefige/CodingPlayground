@@ -7,14 +7,17 @@ class ListItem extends Component {
     const { item } = this.props;
     return (
       <div className="row">
-        <div className="col-lg-4">
+        <div className="col-lg-3">
           <Link to={"/map/" + item.key}>{item.name}</Link>
         </div>
-        <div className="col-lg-4">
+        <div className="col-lg-3">
           {item.editor}
         </div>
-        <div className="col-lg-4">
+        <div className="col-lg-3">
           {item.time}
+        </div>
+        <div className="col-lg-3">
+        <Link type="button" to={"/mapEditor/" + item.key}>编辑地图</Link>
         </div>
         <hr />
       </div>
@@ -55,9 +58,9 @@ class MapHall extends Component {
           </div>
           <hr/>
           <div className="row">
-            <div className="col-lg-4"><h5>地图名称</h5></div>
-            <div className="col-lg-4"><h5>作者</h5></div>
-            <div className="col-lg-4"><h5>创建时间</h5></div>
+            <div className="col-lg-3"><h5>地图名称</h5></div>
+            <div className="col-lg-3"><h5>作者</h5></div>
+            <div className="col-lg-3"><h5>创建时间</h5></div>
           </div>
           <hr/>
           <div>
