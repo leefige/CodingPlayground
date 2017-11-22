@@ -21,7 +21,6 @@ module.exports = app => {
         "time VARCHAR(100)," +
         "primary key (url)" +
         ");";
-        console.log('insertId....');
         await app.mysql.query(sql);
         const key = uuidv1();
         const result = await app.mysql.get('mapeditor', { url: key});
