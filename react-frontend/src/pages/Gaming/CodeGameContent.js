@@ -71,7 +71,6 @@ class CodeGameContent extends Component {
       userId: (this.props.userType === "game" ? this.props.getLoginUserId : this.props.match.params.shareUserID),
 		})
     .then((responseJson) => {
-      console.log("fetch res: ", responseJson);
       mainControl.load(responseJson.mapInitState);
       this.setState({
         mapInitState: responseJson.mapInitState,
@@ -135,7 +134,6 @@ class CodeGameContent extends Component {
     if (isSystemMap) {
       curLevel = this.state.curMapID - 300;
     }
-    console.log("cur level: ", curLevel);
     post('/api/v1/map/updateBlockly', {
       userid: this.props.getLoginUserId,
       mapid: this.props.match.params.mapID,

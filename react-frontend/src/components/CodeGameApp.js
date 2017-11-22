@@ -39,11 +39,12 @@ class CodeGameApp extends Component {
 
   async updateTopLevel() {
     post('/api/v1/user/getLevel', {
-      id: this.state.id,
+      id: this.props.userId,
 		})
     .then((responseJson) => {
+      // console.log("level res: ", responseJson);
       this.setState({
-        topLevel: responseJson.level,
+        topLevel: responseJson.level + 1,
       });
     })
     .catch((error) => {
@@ -53,9 +54,10 @@ class CodeGameApp extends Component {
 
   async updateVIP() {
     post('/api/v1/user/getVip', {
-      id: this.state.id,
+      id: this.props.userId,
 		})
     .then((responseJson) => {
+      // console.log("vip res: ", responseJson);
       this.setState({
         vip: responseJson.vip,
       });

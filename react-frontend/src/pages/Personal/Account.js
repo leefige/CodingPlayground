@@ -173,6 +173,7 @@ class Account extends Component {
     formData.append('avatar', files[0]);
     const res = await uploadFile('/api/v1/user/uploadAvatar', formData);
     const data = await res.json();
+    // console.log("upload res: ", data);
     // if (data.info === '上传头像成功') {
     alert("修改成功！");
     this.setState({
