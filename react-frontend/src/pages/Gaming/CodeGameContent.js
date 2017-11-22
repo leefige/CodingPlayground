@@ -6,6 +6,7 @@ import { mainControl } from '../../logic/MainControl';
 import { post } from '../../utils/Request';
 import { Redirect } from 'react-router-dom';
 
+
 class CodeGameContent extends Component {
   constructor(props) {
     super(props);

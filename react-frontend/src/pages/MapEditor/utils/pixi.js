@@ -5,7 +5,7 @@ import { post } from '../../../utils/Request'
 // `setup` function will run when the image has loaded
 export default class PixiComponent {
 
-  constructor(stage, width, height, innerWidth, innerHeight, renderer, mapId) {
+  constructor(stage, width, height, innerWidth, innerHeight, renderer, mapId, id) {
     this.Container = PIXI.Container;
     this.resources = PIXI.loader.resources;
 
@@ -26,6 +26,7 @@ export default class PixiComponent {
     this.mapRecord = {};
 
     this.mapId = mapId;
+    this.id = id;
 
     //Use Pixi's built-in `loader` object to load an image
     PIXI.loader
@@ -183,7 +184,7 @@ export default class PixiComponent {
     const name = prompt("给你的地图取个名字吧！");
     post('/api/v1/mapEditor/insertId', {
       map: JSON.stringify(this.responseJson),
-      editor: global.id,
+      editor: this.id,
       name: name,
       time: `${(new Date()).getMonth() + 1}月${(new Date()).getDate()}日`
     })
