@@ -154,11 +154,11 @@ module.exports = app => {
       };
     }
 
-    async verfifyEmail(){
+    async mobileLogin(){
       const body = this.ctx.request.body;
-      const result = await this.ctx.service.user.verfifyEmail(body);
+      const result = await this.ctx.service.user.mobileLogin(body);
       this.ctx.body = {
-        sendEMail_success: result,
+        mobileLogin_success: result,
       };
     }
 

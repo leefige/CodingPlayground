@@ -13,7 +13,8 @@ services:
     ports:
       - "7001:7001"
   db:
-    image: mysql:5.7
+    build:
+      context: mysql
     hostname: db
     ports:
       - "3306:3306"
