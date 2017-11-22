@@ -112,6 +112,13 @@ export default class PixiComponent {
         trans.addTo(gameScene);
       }
 
+    const cell = new Obj(
+      utilId['cell.png'],
+      width, width,
+      0, 0
+    );
+    cell.obj.alpha = 0.2;
+    cell.addTo(gameScene);
 
     const chest = new Obj(
       objId['chest.png'],
