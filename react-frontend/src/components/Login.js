@@ -108,15 +108,22 @@ class Login extends Component {
         }
       }
     }, 1000)
-    post("/api/v1/user/verfifyMobile", {
-      phoneNumber: this.state.phone,
+    console.log("mobile login");
+    console.log(this.state.phone)
+    console.log(answer)
+    post("/api/v1/user/mobileLogin", {
+      mobile: this.state.phone,
       code: answer,
     }).then((responseJson) => {
-      if (responseJson.sendMobile_success) {
-        alert("验证码成功发送至您的手机");
+      console.log(responseJson)
+      alert("验证码成功发送至您的手机");
+      if (responseJson.mobileLogin_success) {
+        this.setState({
+          email: responseJson.userId,
+        })
       }
       else {
-        alert("获取验证码失败,请检查您的用户名是否正确后重试");
+        //alert("获取验证码失败,请检查您的用户名是否正确后重试");
         document.getElementById("valid_btn").disabled = false;
         this.setState({
           didValidCodeGet: false,
@@ -134,7 +141,7 @@ class Login extends Component {
       this.setState({
         validCodeCorrect: true,
       })
-      // TODO: post to backend to get password
+      this.props.onLogin(this.state.email);
     }
     event.preventDefault();
   }

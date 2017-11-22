@@ -8,11 +8,6 @@ class ForgetPassword extends Component {
     super();
     this.state = {
       userId: '',
-      validCode: '',
-      answer: undefined,
-      didValidCodeGet: false,
-      timerCount: 60,
-      validCodeCorrect: false,
     };
   }
 
@@ -22,69 +17,21 @@ class ForgetPassword extends Component {
     });
   }
 
-  handleValidCodeChange(event) {
-    this.setState({
-      validCode: event.target.value
-    });
-  }
-
-  prefixInteger(num, n) {
-    return (Array(n).join(0) + num).slice(-n);
-  }
-
-  async handleGetValidCode() {
-    const answer = this.prefixInteger(parseInt(Math.random() * 999999), 6);
-    document.getElementById("valid_btn").disabled = true;
-    this.setState({
-      didValidCodeGet: true,
-      timerCount: 60,
-      answer: answer,
+  handleSubmitFindPassword(event) {
+    post('/api/v1/user/verfifyEmail', {
+      id: this.state.userId,
     })
-    this.intervel = setInterval(() => {
-      if (!this.state.validCodeCorrect) {
-        const count = this.state.timerCount - 1;
-        if (count === -1) {
-          document.getElementById("valid_btn").disabled = false;
-          this.setState({
-            didValidCodeGet: false,
-            timerCount: 60,
-          })
+      .then((responseJson) => {
+        if (responseJson.sendEmail_success) {
+           alert("已将密码发送至邮箱！");
         }
         else {
-          this.setState({
-            timerCount: count,
-          })
+          //alert("找回密码失败");
         }
-      }
-    }, 1000)
-    post("/api/v1/user/verfifyMobile", {
-      id: this.state.userId,
-      code: answer,
-    }).then((responseJson) => {
-      if (responseJson.sendMobile_success) {
-        alert("验证码成功发送至您的手机");
-      }
-      else {
-        alert("获取验证码失败,请检查您的用户名是否正确后重试");
-        document.getElementById("valid_btn").disabled = false;
-        this.setState({
-          didValidCodeGet: false,
-          timerCount: 60,
-          answer: undefined,
-        })
-      }
-    }).catch((error) => {
-      console.error(error);
-    });
-  }
-
-  handleSubmitFindPassword(event) {
-    if (this.state.validCode === this.state.answer) {
-      this.setState({
-        validCodeCorrect: true,
       })
-      // TODO: post to backend to get password
-    }
+      .catch((error) => {
+        console.error(error);
+      });
     event.preventDefault();
   }
 
@@ -97,7 +44,7 @@ class ForgetPassword extends Component {
             <h5>Find Your Password</h5>
           </div>
           <hr />
-          <form className="edit-user prepend-top-default" enctype="multipart/form-data" onSubmit={this.handleSubmitFindPassword.bind(this)} accept-charset="UTF-8" method="post">
+          <form className="edit-user prepend-top-default" encType="multipart/form-data" onSubmit={this.handleSubmitFindPassword.bind(this)} acceptCharset="UTF-8" method="post">
             <div className="row">
               <div className="col-lg-12">
                 <div className="form-group">
@@ -106,18 +53,8 @@ class ForgetPassword extends Component {
                     type="text" value={this.state.userId} onChange={this.handleUserIdChange.bind(this)}
                     name="user[id]" id="user_id" />
                 </div>
-                <div className="form-group">
-                  <label className="label-light" htmlFor="user_valid_code">请输入验证码</label>
-                  <input className="personal-control" required="required"
-                    type="text" value={this.state.validCode} onChange={this.handleValidCodeChange.bind(this)}
-                    maxLength="6" name="user[validCode]" id="user_valid_code" />
-                </div>
                 <div className="prepend-top-default append-bottom-default">
-                  <button type="button" className="btn btn-default forget-margin" onClick={this.handleGetValidCode.bind(this)}
-                    id="valid_btn">
-                    {this.state.didValidCodeGet ? "获取验证码(" + this.state.timerCount + ")" : "获取验证码"}
-                  </button>
-                  <button type="submit" className="btn btn-primary forget-margin">提交</button>
+                  <button type="submit" className="btn btn-primary">找回密码</button>
                 </div>
               </div>
             </div>
