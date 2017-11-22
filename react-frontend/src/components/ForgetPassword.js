@@ -22,18 +22,12 @@ class ForgetPassword extends Component {
       id: this.state.userId,
     })
       .then((responseJson) => {
-        // if (responseJson.autoLogin_success) {
-        //   this.setState({
-        //     didAutoLogin : true,
-        //     isAutoLogin : true,
-        //   })
-        //   this.props.onLogin(responseJson.id);
-        // }
-        // else {
-        //   this.setState({
-        //     didAutoLogin : true,
-        //   })
-        // }
+        if (responseJson.sendEmail_success) {
+           alert("已将密码发送至邮箱！");
+        }
+        else {
+          //alert("找回密码失败");
+        }
       })
       .catch((error) => {
         console.error(error);

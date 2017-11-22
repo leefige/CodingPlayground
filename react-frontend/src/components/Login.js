@@ -117,14 +117,14 @@ class Login extends Component {
       code: answer,
     }).then((responseJson) => {
       console.log(responseJson)
+      alert("验证码成功发送至您的手机");
       if (responseJson.mobileLogin_success) {
-        alert("验证码成功发送至您的手机");
         this.setState({
           email: responseJson.userId,
         })
       }
       else {
-        alert("获取验证码失败,请检查您的用户名是否正确后重试");
+        //alert("获取验证码失败,请检查您的用户名是否正确后重试");
         document.getElementById("valid_btn").disabled = false;
         this.setState({
           didValidCodeGet: false,
