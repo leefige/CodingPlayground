@@ -53,6 +53,7 @@ class Account extends Component {
       id: this.props.userId,
 		})
     .then((responseJson) => {
+      console.log("up res", responseJson)
       this.setState({
         avatar: responseJson.img,
         oldEmail: responseJson.email,
@@ -170,10 +171,12 @@ class Account extends Component {
     });
     const files = event.target.files;
     const formData = new FormData();
+    formData.append('id', this.props.userId);
+
     formData.append('avatar', files[0]);
     const res = await uploadFile('/api/v1/user/uploadAvatar', formData);
     const data = await res.json();
-    // console.log("upload res: ", data);
+    console.log("upload res: ", data);
     // if (data.info === '上传头像成功') {
     alert("修改成功！");
     this.setState({
