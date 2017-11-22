@@ -1,5 +1,6 @@
 {"frames": {
 
+<<<<<<< HEAD
 "cell.png":
 {
 	"frame": {"x":0,"y":0,"w":400,"h":400},
@@ -11,14 +12,31 @@
 "inventory.png":
 {
 	"frame": {"x":0,"y":400,"w":285,"h":100},
+=======
+"gameover.png":
+{
+	"frame": {"x":0,"y":0,"w":283,"h":201},
+>>>>>>> #168 Add .gitignore in public/img/.
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":285,"h":100},
-	"sourceSize": {"w":285,"h":100}
+	"spriteSourceSize": {"x":0,"y":0,"w":283,"h":201},
+	"sourceSize": {"w":283,"h":201}
+},
+"gamewin.png":
+{
+	"frame": {"x":283,"y":0,"w":283,"h":213},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":283,"h":213},
+	"sourceSize": {"w":283,"h":213}
 },
 "ok.png":
 {
+<<<<<<< HEAD
 	"frame": {"x":285,"y":400,"w":150,"h":150},
+=======
+	"frame": {"x":0,"y":213,"w":1600,"h":1600},
+>>>>>>> #168 Add .gitignore in public/img/.
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":150,"h":150},
@@ -29,8 +47,14 @@
 	"version": "1.0",
 	"image": "util.png",
 	"format": "RGBA8888",
+<<<<<<< HEAD
 	"size": {"w":435,"h":550},
 	"scale": "1",
 	"smartupdate": "$TexturePacker:SmartUpdate:bbbcb6a2aeb9172753c62e7890786dd6:34b119ec86c0ff2c3947d3180291ed4b:ea51476c211b15ae76e4107c2ec467a4$"
+=======
+	"size": {"w":1600,"h":1813},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:4b3c8ac6d6a5e03be4852637525144ef:77f44351aeee7d2453a122d237a7b2a6:ea51476c211b15ae76e4107c2ec467a4$"
+>>>>>>> #168 Add .gitignore in public/img/.
 }
 }
