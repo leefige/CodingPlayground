@@ -115,7 +115,7 @@ export default class PixiComponent {
       gameScene.removeChildren();
       const id = this.resources[this.gpJson].textures;
       this.bg = [];
-      for (let i = 0; i < row; i++)
+      for (let i = 0; i < row; i++) {
         for (let j = 0; j < col; j++) {
           const background = new Obj(
             id[`${mapId[i*row+j]}.png`],
@@ -133,46 +133,47 @@ export default class PixiComponent {
           this.bg.push(trans);
           trans.addTo(gameScene);
         }
+      }
 
+      (new Dragable(
+        this.responseJson,
+        'cha',
+        innerWidth / row, innerHeight / col,
+        0.06 * width, 0.06 * height,
+        width, height, innerWidth, innerHeight, row, col,
+        this.bg
+      )).addTo(this.gameScene);
+
+      (new Dragable(
+        this.responseJson,
+        'chest',
+        innerWidth / row, innerHeight / col,
+        0.06 * width, Math.floor(height / 5) * 1 + 0.06 * width,
+        width, height, innerWidth, innerHeight, row, col,
+        this.bg
+      )).addTo(this.gameScene);
+
+      // create a texture from an image path
+      for (let i = 2; i < 5; i++) {
         (new Dragable(
           this.responseJson,
-          'cha',
+          'stone',
           innerWidth / row, innerHeight / col,
-          0.06 * width, 0.06 * height,
+          0.06 * width, Math.floor(height / 5) * i + 0.06 * width,
           width, height, innerWidth, innerHeight, row, col,
           this.bg
         )).addTo(this.gameScene);
-
+      }
+      for (let i = 0; i < 4; i++) {
         (new Dragable(
           this.responseJson,
-          'chest',
+          'grass',
           innerWidth / row, innerHeight / col,
-          0.06 * width, Math.floor(height / 5) * 1 + 0.06 * width,
+          Math.floor(width - 0.06 * width), Math.floor(height / 5 * i + 0.06 * width),
           width, height, innerWidth, innerHeight, row, col,
           this.bg
         )).addTo(this.gameScene);
-
-        // create a texture from an image path
-        for (let i = 2; i < 5; i++) {
-          (new Dragable(
-            this.responseJson,
-            'stone',
-            innerWidth / row, innerHeight / col,
-            0.06 * width, Math.floor(height / 5) * i + 0.06 * width,
-            width, height, innerWidth, innerHeight, row, col,
-            this.bg
-          )).addTo(this.gameScene);
-        }
-        for (let i = 0; i < 4; i++) {
-          (new Dragable(
-            this.responseJson,
-            'grass',
-            innerWidth / row, innerHeight / col,
-            Math.floor(width - 0.06 * width), Math.floor(height / 5 * i + 0.06 * width),
-            width, height, innerWidth, innerHeight, row, col,
-            this.bg
-          )).addTo(this.gameScene);
-        }
+      }
 
       requestAnimationFrame(this.animate);
     });
