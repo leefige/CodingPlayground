@@ -8,6 +8,7 @@ class Result extends Component {
   }
 
   render() {
+    // alert(parseInt(this.props.mapID, 10))
     return (
       <div className="modal" id="resultModal" tabIndex="-1" role="dialog" aria-labelledby="resultModalLabel">
         <div className="modal-dialog">
@@ -44,7 +45,7 @@ class Result extends Component {
                   {this.props.score > 0 ?
                   <div className="result-btn-group">
                     <div className="row">
-                      <Link to={'/map/'+(parseInt(this.props.mapID, 10) + 1)} ><button disabled={this.props.userType !== "game"} type="button" className="btn btn-success result-btn col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1" >下一关</button></Link>
+                      <Link to={'/map/'+(parseInt(this.props.mapID, 10) + 1)} ><button disabled={this.props.userType !== "game" || isNaN(parseInt(this.props.mapID, 10))} type="button" className="btn btn-success result-btn col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1" >下一关</button></Link>
                     </div>
                     <div className="row">
                       <CopyToClipboard text={window.location.host + "/share/"+this.props.mapID+"/"+this.props.shareUserID}>
