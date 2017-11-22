@@ -180,19 +180,22 @@ class Login extends Component {
                 />
               </div>
               <div className="form-group form-checkbox">
-                <input type="checkbox" value={"remember-me"} checked={this.state.rememberMe} onChange={this.handleRememberMeChange.bind(this)} /> 记住我
+                <input className="white-font" type="checkbox" value={"remember-me"} checked={this.state.rememberMe} onChange={this.handleRememberMeChange.bind(this)} /> 记住我
             </div>
-              <div className="form-group">
-                <span type="button" className="btn btn-default" onClick={this.handleGetValidCode.bind(this)}
-                id="valid_btn">
-                  {this.state.didValidCodeGet ? "获取验证码(" + this.state.timerCount + ")" : "获取验证码"}
-                </span>
-                <span type="button" className="btn btn-success" onClick={this.handleEmailPage.bind(this)}>邮箱登陆</span>
-              </div>
+
               <div className="form-group">
                 <button type="submit" className="btn btn-success form-btn">进入游戏！</button>
               </div>
             </form>
+            <div className="form-group">
+                <div className="row">
+                <span type="button" className="btn btn-default login-margin" onClick={this.handleGetValidCode.bind(this)}
+                id="valid_btn">
+                  {this.state.didValidCodeGet ? "获取验证码(" + this.state.timerCount + ")" : "获取验证码"}
+                </span>
+                <span type="button" className="btn btn-default login-margin" onClick={this.handleEmailPage.bind(this)}>账号登陆</span>
+                </div>
+            </div>
           </div>
         </div>
       </div>
@@ -211,11 +214,11 @@ class Login extends Component {
             <div className="form-bottom">
               <form role="form" className="login-form" enctype="multipart/form-data" onSubmit={this.handleLogin.bind(this)} accept-charset="UTF-8" method="post">
                 <div className="form-group">
-                  <label className="sr-only" htmlFor="form-email">Email</label>
+                  <label className="sr-only" htmlFor="form-email">ID</label>
                   <input
                     type="text"
                     name="form-email"
-                    placeholder="邮箱"
+                    placeholder="账号"
                     className="form-email form-control"
                     id="form-email"
                     required
@@ -236,17 +239,20 @@ class Login extends Component {
                     onChange={this.handlePasswordChange.bind(this)}
                   />
                 </div>
-                <div className="form-group form-checkbox">
-                  <input type="checkbox" value={"remember-me"} checked={this.state.rememberMe} onChange={this.handleRememberMeChange.bind(this)} /> 记住我
-              </div>
-                <div className="form-group">
-                  <Link to="/forgetPassword" type="button" className="btn btn-success">忘记密码？</Link>
-                  <span type="button" className="btn btn-success" onClick={this.handleMobilePage.bind(this)}>手机登陆</span>
+                <div className="form-group ">
+                  <input type="checkbox" className="white-font" value={"remember-me"} checked={this.state.rememberMe} onChange={this.handleRememberMeChange.bind(this)} /> 记住我
                 </div>
+
                 <div className="form-group">
                   <button type="submit" className="btn btn-success form-btn">进入游戏！</button>
                 </div>
               </form>
+              <div className="form-group">
+                <div className="row">
+                  <Link to="/forgetPassword" type="button" className="login-margin col-md-6 btn btn-default">忘记密码？</Link>
+                  <span type="button" className="login-margin col-md-6 btn btn-default" onClick={this.handleMobilePage.bind(this)}>手机登陆</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>

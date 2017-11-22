@@ -8,7 +8,7 @@ class ListItem extends Component {
     return (
       <div className="row">
         <div className="col-lg-3">
-          <Link to={"/map/" + item.key}>{item.name}</Link>
+          <Link to={"/map/" + item.url}>{item.name}</Link>
         </div>
         <div className="col-lg-3">
           {item.editor}
@@ -17,7 +17,7 @@ class ListItem extends Component {
           {item.time}
         </div>
         <div className="col-lg-3">
-        <Link type="button" to={"/mapEditor/" + item.key}>编辑地图</Link>
+        <Link type="button" to={"/mapEditor/" + item.url}>编辑地图</Link>
         </div>
         <hr />
       </div>
@@ -29,19 +29,18 @@ class MapHall extends Component {
   constructor() {
     super();
     this.state = {
-      mapList: [{key: "305", name: "另一张地图",  editor: "also mym", time:"2017/11/20"}, {key: "301", name: "一张地图", editor: "mym", time:"2017/11/15"}, ],
+      mapList: [{url: "305", name: "另一张地图",  editor: "also mym", time:"2017/11/20"}, {url: "301", name: "一张地图", editor: "mym", time:"2017/11/15"}, ],
     };
   }
 
   componentWillMount() {
     // 获取所有用户自定义地图列表
-    post('/api/v1/map/getAll', {
+    post('/api/v1/mapEditor/getAll', {
       userId: this.props.getLoginUserId,
 		})
     .then((responseJson) => {
-      // console.log("getall res", responseJson);
       this.setState({
-        mapList: responseJson.mapList || [{key: "301", name: "一张地图", editor: "mym", time:"2017/11/15"}, {key: "305", name: "另一张地图",  editor: "also mym", time:"2017/11/20"}],
+        mapList: responseJson.mapList || [{url: "301", name: "一张地图", editor: "mym", time:"2017/11/15"}, {url: "305", name: "另一张地图",  editor: "also mym", time:"2017/11/20"}],
       });
     })
     .catch((error) => {
