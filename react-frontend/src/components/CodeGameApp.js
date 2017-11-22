@@ -140,8 +140,7 @@ class CodeGameApp extends Component {
           <Route path="/login" component={props => this.requireLogout(props, isLogin, <Login {...props} onLogin={this.handleLogin.bind(this)} />)} />
           <Route path="/signup" component={props => this.requireLogout(props, isLogin, <Signup />)} />
           <Route path="/forgetPassword" component={props => this.requireLogout(props, isLogin, <ForgetPassword />)} />
-          <Route path="/personal/account"
-            component={
+          <Route path="/personal/account" component={
               props => this.requireLogin(props, isLogin,
                 <Account {...props} userId={this.state.id} updateVIP={this.updateVIP.bind(this)}/>)} />
           <Route path="/index"
