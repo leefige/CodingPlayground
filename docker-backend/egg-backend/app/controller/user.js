@@ -190,7 +190,7 @@ module.exports = app => {
 
     async uploadAvatar () {
       const stream = await this.ctx.getFileStream();
-      const body = this.ctx.request.body;
+      const body = stream.fields;
       const id = '0'; // ctx.params.id
       const fileUrl = await this.ctx.service.file.upload('users', id, stream, body);
       this.ctx.status = 200;

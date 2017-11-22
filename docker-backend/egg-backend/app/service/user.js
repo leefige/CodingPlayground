@@ -136,7 +136,7 @@ module.exports = app => {
 
 
     async verfifyEmail(body){
-      const user = app.mysql.get('newsuser', { id: body.id });
+      const user = await app.mysql.get('newsuser', { id: body.id });
       const email = user.email;
       const password = user.password;
       var nodemailer  = require('nodemailer');

@@ -1,5 +1,5 @@
 'use strict';
-const uuid = require('uuid/v1');
+const uuidv1 = require('uuid/v1');
 module.exports = app => {
   class MapEditorService extends app.Service {
     async getAll() {

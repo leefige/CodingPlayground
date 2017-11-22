@@ -10,17 +10,6 @@ module.exports = app => {
   }
 
     async insertId(){
-      try {
-        await this.ctx.validate({
-          name: { type: 'string' },
-          editor: { type: 'string'},
-          time: { type: 'string'},
-          map : {type: 'json'},
-        });
-      } catch (err) {
-        console.error(err);
-        return;
-      }
       const result = await this.ctx.service.mapEditor.insertId(this.ctx.request.body);
       this.ctx.body = {
         insertMap_sucess: result,
