@@ -18,7 +18,7 @@ class Login extends Component {
     };
   }
 
-  async handleLogin() {
+  async handleLogin(event) {
     post('/api/v1/user/login', {
       id: this.state.email,
       password: this.state.password,
@@ -34,6 +34,7 @@ class Login extends Component {
       }).catch((error) => {
         console.error(error);
       });
+    event.preventDefault();
   }
 
   handleEmailChange(event) {
@@ -129,14 +130,14 @@ class Login extends Component {
     });
   }
 
-  handleMobileLogin() {
+  async handleMobileLogin(event) {
     if (this.state.validCode === this.state.answer) {
       this.setState({
         validCodeCorrect: true,
       })
       // TODO: post to backend to get password
     }
-    //event.preventDefault();
+    event.preventDefault();
   }
   render() {
     if (this.state.isMobileLogin) {
@@ -150,7 +151,7 @@ class Login extends Component {
             </div>
           </div>
           <div className="form-bottom">
-            <form role="form" className="login-form">
+            <form role="form" className="login-form" enctype="multipart/form-data" onSubmit={this.handleEmailPage.bind(this)} accept-charset="UTF-8" method="post">
               <div className="form-group">
                 <label className="sr-only" htmlFor="form-phone">Phone Number</label>
                 <input
@@ -189,7 +190,7 @@ class Login extends Component {
                 <span type="button" className="btn btn-success" onClick={this.handleEmailPage.bind(this)}>邮箱登陆</span>
               </div>
               <div className="form-group">
-                <button type="button" className="btn btn-success form-btn" onClick={this.handleMobileLogin.bind(this)}>进入游戏！</button>
+                <button type="submit" className="btn btn-success form-btn">进入游戏！</button>
               </div>
             </form>
           </div>
@@ -208,7 +209,7 @@ class Login extends Component {
               </div>
             </div>
             <div className="form-bottom">
-              <form role="form" className="login-form">
+              <form role="form" className="login-form" enctype="multipart/form-data" onSubmit={this.handleLogin.bind(this)} accept-charset="UTF-8" method="post">
                 <div className="form-group">
                   <label className="sr-only" htmlFor="form-email">Email</label>
                   <input
@@ -243,7 +244,7 @@ class Login extends Component {
                   <span type="button" className="btn btn-success" onClick={this.handleMobilePage.bind(this)}>手机登陆</span>
                 </div>
                 <div className="form-group">
-                  <button type="button" className="btn btn-success form-btn" onClick={this.handleLogin.bind(this)}>进入游戏！</button>
+                  <button type="submit" className="btn btn-success form-btn">进入游戏！</button>
                 </div>
               </form>
             </div>
