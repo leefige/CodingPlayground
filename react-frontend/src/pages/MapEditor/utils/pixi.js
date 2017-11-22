@@ -97,6 +97,14 @@ export default class PixiComponent {
       this.row = mapResource['width'];
       this.col = mapResource['height'];
 
+      for (let i = 0; i < this.row; i++) {
+        for (let j = 0; j < this.col; j++) {
+          if (this.responseJson.mapInitState.board.map[i][j] === 90) {
+            this.responseJson.mapInitState.board.map[i][j] = 0;
+          }
+        }
+      }
+
       const {
         row, col,
         width, height,
@@ -174,8 +182,8 @@ export default class PixiComponent {
     post('/api/v1/mapEditor/insertId', {
       map: JSON.stringify(this.responseJson),
       editor: global.id,
-      name: "map",
-      time: `${(new Date()).getTime() + 1}月${(new Date()).getDate()}日`
+      name: "mapnew",
+      time: `${(new Date()).getMonth() + 1}月${(new Date()).getDate()}日`
     })
     alert("编辑成功！");
   }
