@@ -129,7 +129,8 @@ class CodeGameApp extends Component {
           </div>
           <Route path="/map/:mapID"
             component={props => this.requireLogin(props, isLogin,
-              <CodeGameContent {...props} userType="game" getIsLogin={this.state.isLogin} getLoginUserId={this.state.id} topLevel={this.state.topLevel} vip={this.state.vip} />)
+              <CodeGameContent {...props}
+                topLevel={this.state.topLevel} vip={this.state.vip} userType="game" getIsLogin={this.state.isLogin} getLoginUserId={this.state.id}  />)
             } />
           <Route path="/share/:mapID/:shareUserID"
             component={props => this.requireLogin(props, isLogin,
@@ -141,8 +142,14 @@ class CodeGameApp extends Component {
           <Route path="/login" component={props => this.requireLogout(props, isLogin, <Login {...props} onLogin={this.handleLogin.bind(this)} />)} />
           <Route path="/signup" component={props => this.requireLogout(props, isLogin, <Signup />)} />
           <Route path="/forgetPassword" component={props => this.requireLogout(props, isLogin, <ForgetPassword />)} />
-          <Route path="/personal/account" component={props => this.requireLogin(props, isLogin, <Account {...props} userId={this.state.id} updateVIP={this.updateVIP.bind(this)}/>)} />
-          <Route path="/index" component={props => this.requireLogin(props, isLogin, <Level {...props} userId={this.state.id} topLevel={this.state.topLevel} vip={this.state.vip}/>)}/>
+          <Route path="/personal/account"
+            component={
+              props => this.requireLogin(props, isLogin,
+                <Account {...props} userId={this.state.id} updateVIP={this.updateVIP.bind(this)}/>)} />
+          <Route path="/index"
+            component={
+              props => this.requireLogin(props, isLogin,
+                <Level {...props} userId={this.state.id} topLevel={this.state.topLevel} vip={this.state.vip}/>)}/>
           <Footer className='footer-style' />
         </div>
       </div>
