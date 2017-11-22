@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import Header from './Header';
 import Footer from './Footer';
 import Signup from './Signup';
+import ForgetPassword from './ForgetPassword';
 import Login from './Login';
 import Account from '../pages/Personal/Account';
 import Level from '../pages/Level/Level';
@@ -60,6 +61,7 @@ class CodeGameApp extends Component {
           <Route path="/mapHall" component={MapHall} />
           <Route path="/login" component={props => <Login {...props} onLogin={this.handleLogin.bind(this)} />} />
           <Route path="/signup" component={Signup} />
+          <Route path="/forgetPassword" component={ForgetPassword} />
           <Route path="/personal/account" component={props => <Account {...props} userId={this.state.id}/>} />
           <Route path="/index" component={props => <Level {...props} userId={this.state.id}/>} />
           <Footer className='footer-style' />
