@@ -54,13 +54,13 @@ export default class PixiComponent {
           i * 0.13 * width + 0.25 * width,
           10
         );
-        map.obj.on('click', () => {this.loadmap(parseInt(key.split('.')[0], 10))});
+        map.obj.on('click', () => {this.loadmap(key.split('.')[0])});
         map.addTo(this.stage);
         i++;
       }
     }
     else {
-      this.loadmap(parseInt(this.mapId, 10));
+      this.loadmap(this.mapId);
     }
 
     const util = this.resources[this.utilJson].textures;
