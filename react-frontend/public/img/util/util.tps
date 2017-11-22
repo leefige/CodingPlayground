@@ -219,9 +219,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>71,50,142,101</rect>
+                <rect>71,25,143,50</rect>
                 <key>scale9Paddings</key>
-                <rect>71,50,142,101</rect>
+                <rect>71,25,143,50</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -242,8 +242,8 @@
         <key>fileList</key>
         <array>
             <filename>ok.png</filename>
-            <filename>gameover.png</filename>
-            <filename>gamewin.png</filename>
+            <filename>cell.png</filename>
+            <filename>inventory.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
