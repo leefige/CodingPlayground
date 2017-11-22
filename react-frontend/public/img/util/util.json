@@ -1,6 +1,5 @@
 {"frames": {
 
-<<<<<<< HEAD
 "cell.png":
 {
 	"frame": {"x":0,"y":0,"w":400,"h":400},
@@ -12,11 +11,6 @@
 "inventory.png":
 {
 	"frame": {"x":0,"y":400,"w":285,"h":100},
-=======
-"gameover.png":
-{
-	"frame": {"x":0,"y":0,"w":283,"h":201},
->>>>>>> #168 Add .gitignore in public/img/.
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":283,"h":201},

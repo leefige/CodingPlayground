@@ -199,7 +199,6 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-<<<<<<< HEAD
             <key type="filename">cell.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -214,9 +213,6 @@
                 <false/>
             </struct>
             <key type="filename">inventory.png</key>
-=======
-            <key type="filename">gameover.png</key>
->>>>>>> #168 Add .gitignore in public/img/.
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

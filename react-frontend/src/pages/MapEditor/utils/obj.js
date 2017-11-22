@@ -1,5 +1,9 @@
 import * as PIXI from "pixi.js";
 
+import {
+  convertId
+} from './misc';
+
 export default class Obj {
   constructor(sprite, width, height, posx, posy, phase = null, visible = true) {
     this.obj = new PIXI.Sprite(sprite);
@@ -25,7 +29,7 @@ export class Button extends Obj {
 }
 
 export class Dragable extends Obj {
-  constructor(mapRecord, type, width, height, posx, posy, wWidth, wHeight, innerWidth, innerHeight, row, col) {
+  constructor(responseJson, type, width, height, posx, posy, wWidth, wHeight, innerWidth, innerHeight, row, col) {
     const objJson = `${process.env.PUBLIC_URL}/img/obj/obj.json`;
     const id = PIXI.loader.resources[objJson].textures;
     super(id[`${type}.png`], width, height, posx, posy);
@@ -46,7 +50,7 @@ export class Dragable extends Obj {
       .on('mousemove', this.onDragMove)
       .on('touchmove', this.onDragMove);
 
-    this.mapRecord = mapRecord;
+    this.responseJson = responseJson;
     this.width = wWidth;
     this.height = wHeight;
     this.innerWidth = innerWidth;
@@ -102,10 +106,16 @@ export class Dragable extends Obj {
       newPosition.x = leftx + i * innerWidth / row + szx / 2;
       newPosition.y = lefty + j * innerHeight / col + szy / 2;
       if (this.type === "cha") {
-        this.mapRecord.pos = i * row + j;
+        this.responseJson.mapInitState.character.pos.x = j;
+        this.responseJson.mapInitState.character.pos.y = i;
+      }
+      else if (this.type === "chest") {
+        // this.mapRecord.chestPos = i * row + j;
       }
       else {
-        this.mapRecord.id_tools[i * row + j] = parseInt(this.type, 10);
+        this.responseJson.mapResource.id_t[i * row + j] = convertId(this.type);
+        // this.mapRecord.id_t[i * row + j] = convertId(this.type);
+        // this.mapRecord.id_tools[i * row + j] = parseInt(this.type, 10);
       }
     }
 
