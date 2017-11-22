@@ -16,12 +16,16 @@ module.exports = app => {
           name: { type: 'string' },
           editor: { type: 'string'},
           time: { type: 'string'},
+          map : {type: 'json'},
         });
       } catch (err) {
         console.error(err);
         return;
       }
       const result = await this.ctx.service.mapEditor.insertId(this.ctx.request.body);
+      this.ctx.body = {
+        insertMap_sucess: result,
+      };
     }
   }
   return MapEditor;

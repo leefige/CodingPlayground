@@ -21,9 +21,12 @@ module.exports = app => {
         "primary key (id)" +
         ");";
         await app.mysql.query(sql);
-        await app.mysql.insert('mapeditor', { key: body.key, name: body.name, editor: body.editor, time: body.time});
-        const data = JSON.stringify(body.data);
-        await app.mysql.insert('newsmap', { id: body.key, data: data});
+        const result = app.mysql.get('mapeditor', { key: body.key});
+        if(result === null)
+          await app.mysql.insert('mapeditor', { key: body.key, name: body.name, editor: body.editor, time: body.time});
+        else
+          await app.mysql.update('mapeditor', { key: body.key, name: body.name, editor: body.editor, time: body.time});
+        await this.ctx.service.map.insertId(body);
         return true;
       } catch (err) {
         console.error(err);

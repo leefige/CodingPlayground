@@ -116,7 +116,7 @@ module.exports = app => {
         PhoneNumbers: '18693939177',
         SignName: '代码操场',
         TemplateCode: 'SMS_110895009',
-        TemplateParam: '{"code":"12345"}'
+        TemplateParam: '{"code":' + body.code + '}',
       }).then(function (res) {
           let {Code}=res
           if (Code === 'OK') {
