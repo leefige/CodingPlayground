@@ -179,10 +179,11 @@ export default class PixiComponent {
   }
 
   report = () => {
+    const name = prompt("给你的地图取个名字吧！");
     post('/api/v1/mapEditor/insertId', {
       map: JSON.stringify(this.responseJson),
       editor: global.id,
-      name: "mapnew",
+      name: name,
       time: `${(new Date()).getMonth() + 1}月${(new Date()).getDate()}日`
     })
     alert("编辑成功！");

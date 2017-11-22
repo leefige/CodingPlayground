@@ -29,7 +29,7 @@ class MapHall extends Component {
   constructor() {
     super();
     this.state = {
-      mapList: [{url: "305", name: "另一张地图",  editor: "also mym", time:"2017/11/20"}, {url: "301", name: "一张地图", editor: "mym", time:"2017/11/15"}, ],
+      mapList: []
     };
   }
 
@@ -40,7 +40,7 @@ class MapHall extends Component {
 		})
     .then((responseJson) => {
       this.setState({
-        mapList: responseJson.mapList || [{url: "301", name: "一张地图", editor: "mym", time:"2017/11/15"}, {url: "305", name: "另一张地图",  editor: "also mym", time:"2017/11/20"}],
+        mapList: responseJson.mapList
       });
     })
     .catch((error) => {
