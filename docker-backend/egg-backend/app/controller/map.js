@@ -14,7 +14,7 @@ module.exports = app => {
         return;
       }
       const body = this.ctx.request.body;
-      const result = await this.ctx.service.map.getId(this.ctx.request.body);
+      const result = await this.ctx.service.map.getId(body);
       this.ctx.body = result;
     }
 
