@@ -4,6 +4,8 @@ services:
     build:
       context: egg-backend
       dockerfile: Dockerfile.deploy
+    volumes:
+      - ./egg-backend/app/public/:/usr/src/app/app/public/
     depends_on:
       - db
     ports:
