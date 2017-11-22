@@ -7,7 +7,7 @@ export function canvasSetup() {
   this.height = this.width * this.aspectRatio;
 
   //Setup PIXI Canvas in componentDidMount
-  this.renderer = PIXI.autoDetectRenderer(this.width, this.height);
+  this.renderer = PIXI.autoDetectRenderer(this.width, this.height, { transparent: true });
   this.self.appendChild(this.renderer.view);
 
   this.innerWidth = 0.45 * this.width;
@@ -25,4 +25,13 @@ export function canvasSetup() {
     this.stage.scale.y = zoomLevel;
     this.renderer.resize(accWidth, accWidth * this.aspectRatio);
   });
+}
+
+export function convertId(type) {
+  if (type === "stone") {
+    return 114;
+  }
+  else if (type === "grass") {
+    return 115;
+  }
 }

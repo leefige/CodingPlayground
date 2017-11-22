@@ -24,6 +24,7 @@ class CodeGameApp extends Component {
       isLogin: true,
       id: id,
     });
+    global.id = id;
   }
 
   handleLogout() {
@@ -56,7 +57,8 @@ class CodeGameApp extends Component {
             component={props =>
               <CodeGameContent {...props} userType="share" getIsLogin={this.state.isLogin} getLoginUserId={this.state.id} />
             } />
-          <Route path="/mapEditor" component={MapEditor} />
+          {/* <Route path="/mapEditor" component={props => <MapEditor {...props} userId={this.state.id}/>} /> */}
+          <Route path="/mapEditor/:mapID?" component={MapEditor} />
           <Route path="/mapHall" component={MapHall} />
           <Route path="/login" component={props => <Login {...props} onLogin={this.handleLogin.bind(this)} />} />
           <Route path="/signup" component={Signup} />

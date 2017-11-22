@@ -79,15 +79,15 @@ export default class PixiComponent {
   loadmap = (mapId) => {
     post('/api/v1/map/getId', {
       id: mapId,
+      userId: ""
     })
     .then((responseJson) => {
+      this.responseJson = responseJson;
       const mapResource = responseJson.mapResource;
       const mapId = mapResource['id'];
 
       this.row = mapResource['width'];
       this.col = mapResource['height'];
-
-      this.mapRecord.id_tools = new Array(this.row * this.col);
 
       const {
         row, col,
@@ -110,7 +110,7 @@ export default class PixiComponent {
         }
 
         (new Dragable(
-          this.mapRecord,
+          this.responseJson,
           'cha',
           innerWidth / row, innerHeight / col,
           0.06 * width, 0.06 * height,
@@ -118,7 +118,7 @@ export default class PixiComponent {
         )).addTo(this.gameScene);
 
         (new Dragable(
-          this.mapRecord,
+          this.responseJson,
           'chest',
           innerWidth / row, innerHeight / col,
           0.06 * width, Math.floor(height / 5) * 1 + 0.06 * width,
@@ -128,7 +128,7 @@ export default class PixiComponent {
         // create a texture from an image path
         for (let i = 2; i < 5; i++) {
           (new Dragable(
-            this.mapRecord,
+            this.responseJson,
             'stone',
             innerWidth / row, innerHeight / col,
             0.06 * width, Math.floor(height / 5) * i + 0.06 * width,
@@ -137,7 +137,7 @@ export default class PixiComponent {
         }
         for (let i = 0; i < 4; i++) {
           (new Dragable(
-            this.mapRecord,
+            this.responseJson,
             'grass',
             innerWidth / row, innerHeight / col,
             Math.floor(width - 0.06 * width), Math.floor(height / 5 * i + 0.06 * width),
@@ -150,10 +150,13 @@ export default class PixiComponent {
   }
 
   report = () => {
-    post('/api/v1/mapEdit/insert', {
-      mapRecord: JSON.stringify(this.mapRecord),
-      userId: "TEST"
+    post('/api/v1/mapEditor/insertId', {
+      map: JSON.stringify(this.responseJson),
+      editor: global.id,
+      name: "map",
+      time: `${(new Date()).getTime() + 1}月${(new Date()).getDate()}日`
     })
+    console.log(global.id);
     alert("编辑成功！");
   }
 }

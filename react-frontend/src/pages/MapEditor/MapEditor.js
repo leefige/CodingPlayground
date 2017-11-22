@@ -10,26 +10,26 @@ import PixiComponent from './utils/pixi';
 
 export default class MapEditor extends Component {
 
-  componentWillUnmount() {
-    window.removeEventListener('resize');
-  }
+  // componentWillUnmount() {
+  //   window.removeEventListener('resize');
+  // }
 
   /**
   * In this case, componentDidMount is used to grab the canvas container ref, and
   * and hook up the PixiJS renderer
   **/
   componentDidMount(props) {
-    canvasSetup.call(this);
 
-    new PixiComponent(
-      this.stage,
-      this.width,
-      this.height,
-      this.innerWidth,
-      this.innerHeight,
-      this.renderer
-    );
-
+    if (this.props.match.params.mapID === undefined)
+      canvasSetup.call(this);
+      new PixiComponent(
+        this.stage,
+        this.width,
+        this.height,
+        this.innerWidth,
+        this.innerHeight,
+        this.renderer
+      );
   }
 
   /**
