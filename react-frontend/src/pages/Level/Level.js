@@ -20,13 +20,12 @@ class Level extends Component {
     if (level === 100) {  // map editor
       return false;
     }
-    else if (level > this.props.topLevel) {
+    else if (level > this.props.topLevel || (level > 5 && !this.props.vip)) {
       return true;
     }
-    else if (level > 5 && !this.props.vip) {
-      return true;
+    else {
+      return false;
     }
-    return false;
   }
 
   render() {

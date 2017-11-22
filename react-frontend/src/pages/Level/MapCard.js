@@ -19,10 +19,7 @@ class MapCard extends Component {
     if (this.getIsLocked()) {
       return;
     }
-    if (this.state.level <= 10) {
-      this.props.onSelectLevel(this.state.level);
-    }
-    else if (this.state.level === 100) {
+    if (this.state.level <= 10 || this.state.level === 100) {
       this.props.onSelectLevel(this.state.level);
     }
     else {
