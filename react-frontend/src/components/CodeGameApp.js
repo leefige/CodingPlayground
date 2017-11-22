@@ -21,7 +21,6 @@ class CodeGameApp extends Component {
 
   constructor(props) {
     super(props);
-    console.log(props);
     this.state = {
       isLogin: false,
       id: '',
@@ -31,7 +30,6 @@ class CodeGameApp extends Component {
   }
 
   componentWillMount() {
-    console.log(this.props)
     const { cookies } = this.props;
     this.state = {
       isLogin: cookies.get('isLogin') || false,
@@ -48,8 +46,6 @@ class CodeGameApp extends Component {
     const { cookies } = this.props;
     cookies.set('id', id, { path: '/' });
     cookies.set('isLogin', 'true', { path: '/' });
-    console.log(document.cookie);
-    console.log(cookies);
     this.setState({
       isLogin: true,
       id: id,
@@ -92,8 +88,6 @@ class CodeGameApp extends Component {
   handleLogout() {
     const { cookies } = this.props;
     cookies.set('isLogin', 'false', { path: '/' });
-    console.log(document.cookie);
-    console.log(cookies);
     this.setState({
       id: '',
       isLogin: false,
@@ -102,8 +96,6 @@ class CodeGameApp extends Component {
   }
 
   requireLogin = (props, isLogin, shouldRender) => {
-    console.log("require login")
-    console.log(isLogin)
     if (!isLogin) {
       return <Redirect push to="/login"/>;
     }

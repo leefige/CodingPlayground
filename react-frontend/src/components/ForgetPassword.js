@@ -34,7 +34,6 @@ class ForgetPassword extends Component {
 
   async handleGetValidCode() {
     const answer = this.prefixInteger(parseInt(Math.random() * 999999), 6);
-    console.log(answer)
     document.getElementById("valid_btn").disabled = true;
     this.setState({
       didValidCodeGet: true,
