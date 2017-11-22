@@ -111,6 +111,14 @@ class CodeGameApp extends Component {
       return shouldRender;
   }
 
+  requireLogout = (props, isLogin, shouldRender) => {
+    if (isLogin) {
+      return <Redirect push to="/index"/>;
+    }
+    else
+      return shouldRender;
+  }
+
   render() {
     const { cookies } = this.props;
     const isLogin = cookies.get("isLogin") === "true";
@@ -138,9 +146,9 @@ class CodeGameApp extends Component {
           {/* <Route path="/mapEditor" component={props => <MapEditor {...props} userId={this.state.id}/>} /> */}
           <Route path="/mapEditor/:mapID?" component={props => this.requireLogin(props, isLogin, <MapEditor />)} onChange={this.requireLogin.bind(this)} />
           <Route path="/mapHall" component={props => this.requireLogin(props, isLogin, <MapHall />)} />
-          <Route path="/login" component={props => <Login {...props} onLogin={this.handleLogin.bind(this)} />} />
-          <Route path="/signup" component={Signup} />
-          <Route path="/forgetPassword" component={ForgetPassword} />
+          <Route path="/login" component={props => this.requireLogout(props, isLogin, <Login {...props} onLogin={this.handleLogin.bind(this)} />)} />
+          <Route path="/signup" component={props => this.requireLogout(props, isLogin, <Signup />)} />
+          <Route path="/forgetPassword" component={props => this.requireLogout(props, isLogin, <ForgetPassword />)} />
           <Route path="/personal/account" component={props => this.requireLogin(props, isLogin, <Account {...props} userId={this.state.id} updateVIP={this.updateVIP.bind(this)}/>)} />
           <Route path="/index" component={props => this.requireLogin(props, isLogin, <Level {...props} userId={this.state.id} topLevel={this.state.topLevel} vip={this.state.vip}/>)}/>
           <Footer className='footer-style' />
