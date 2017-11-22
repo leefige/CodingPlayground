@@ -58,11 +58,11 @@ class ForgetPassword extends Component {
         }
       }
     }, 1000)
-    post("/api/v1/user/verfifyEmail", {
+    post("/api/v1/user/verfifyMobile", {
       id: this.state.userId,
       code: answer,
     }).then((responseJson) => {
-      if (responseJson.sendEmail_success) {
+      if (responseJson.sendMobile_success) {
         alert("验证码成功发送至您的手机");
       }
       else {
