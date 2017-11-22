@@ -71,6 +71,7 @@ class CodeGameContent extends Component {
       userId: (this.props.userType === "game" ? this.props.getLoginUserId : this.props.match.params.shareUserID),
 		})
     .then((responseJson) => {
+      console.log("fetch res: ", responseJson);
       mainControl.load(responseJson.mapInitState);
       this.setState({
         mapInitState: responseJson.mapInitState,
@@ -177,6 +178,7 @@ class CodeGameContent extends Component {
   }
 
   render() {
+    if (this.props.userType === "game") {
       let isSystemMap = false;
       if (this.state.curMapID >= 301 && this.state.curMapID <= 310) {
         isSystemMap = true;
@@ -189,37 +191,38 @@ class CodeGameContent extends Component {
           );
         }
       }
-      return (
-        <div className='row'>
-            <div className='col-xs-12 col-md-5 col-md-offset-1'>
-              {this.state.didFetchMap?
-                <Scene mapResource={this.state.mapResource}/>
-                :<div></div>
-              }
-            </div>
-            <div className='col-xs-12 col-md-5'>
-              {this.state.didFetchMap?
-                <Programming ref="program_area" id="programming"
-                  userType={this.props.userType}
-                  blocklyConfig={this.state.blocklyConfig}
-                  initSolution={this.state.savedSolution}
-                  stdBlockNum={this.state.stdBlockNum}
-                  onCodeSubmit={this.handleCodeSubmit.bind(this)}
-                  onReset={this.handleReset.bind(this)}
-                  onSolutionChanged={this.updateUserSolution.bind(this)}
-                  onNextStep={this.nextStep.bind(this)}
-                  setCallback={this.setPlayerCallback}
-                  setGameOverCallback={this.setPlayerGameOverCallback}
-                  startStepThrough={this.StepThroughInit.bind(this)}
-                  onGetResult={this.handleResult.bind(this)}
-                />
-                :<div></div>
-              }
-            </div>
-            <button ref="show_btn" className="btn btn-primary btn-lg hide" data-toggle="modal" data-target="#resultModal"/>
-            <Result ref="show_result" userType={this.props.userType} mapID={this.props.match.params.mapID} shareUserID={this.props.userType === "game" ? this.props.getLoginUserId : this.props.match.params.shareUserID} score={this.state.gameScore}/>
-        </div>
-      );
+    }
+    return (
+      <div className='row'>
+          <div className='col-xs-12 col-md-5 col-md-offset-1'>
+            {this.state.didFetchMap?
+              <Scene mapResource={this.state.mapResource}/>
+              :<div></div>
+            }
+          </div>
+          <div className='col-xs-12 col-md-5'>
+            {this.state.didFetchMap?
+              <Programming ref="program_area" id="programming"
+                userType={this.props.userType}
+                blocklyConfig={this.state.blocklyConfig}
+                initSolution={this.state.savedSolution}
+                stdBlockNum={this.state.stdBlockNum}
+                onCodeSubmit={this.handleCodeSubmit.bind(this)}
+                onReset={this.handleReset.bind(this)}
+                onSolutionChanged={this.updateUserSolution.bind(this)}
+                onNextStep={this.nextStep.bind(this)}
+                setCallback={this.setPlayerCallback}
+                setGameOverCallback={this.setPlayerGameOverCallback}
+                startStepThrough={this.StepThroughInit.bind(this)}
+                onGetResult={this.handleResult.bind(this)}
+              />
+              :<div></div>
+            }
+          </div>
+          <button ref="show_btn" className="btn btn-primary btn-lg hide" data-toggle="modal" data-target="#resultModal"/>
+          <Result ref="show_result" userType={this.props.userType} mapID={this.props.match.params.mapID} shareUserID={this.props.userType === "game" ? this.props.getLoginUserId : this.props.match.params.shareUserID} score={this.state.gameScore}/>
+      </div>
+    );
   }
 }
 

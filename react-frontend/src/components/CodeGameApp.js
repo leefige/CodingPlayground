@@ -44,7 +44,7 @@ class CodeGameApp extends Component {
     .then((responseJson) => {
       // console.log("level res: ", responseJson);
       this.setState({
-        topLevel: responseJson.level,
+        topLevel: responseJson.level + 1,
       });
     })
     .catch((error) => {
