@@ -11,15 +11,31 @@ import Level from '../pages/Level/Level';
 import MapHall from '../pages/Level/MapHall';
 import { Route } from 'react-router-dom';
 import { post } from "../utils/Request";
+import { instanceOf } from 'prop-types';
+import { withCookies, Cookies } from 'react-cookie';
 
 class CodeGameApp extends Component {
-  constructor() {
-    super();
+  static propTypes = {
+    cookies: instanceOf(Cookies).isRequired
+  };
+
+  constructor(props) {
+    super(props);
+    console.log(props);
     this.state = {
       isLogin: false,
       id: '',
       topLevel: 1,
       vip: false,
+    };
+  }
+
+  componentWillMount() {
+    console.log(this.props)
+    const { cookies } = this.props;
+    this.state = {
+      isLogin: cookies.get('isLogin') || false,
+      id: cookies.get('id') || '',
     };
   }
 
@@ -29,6 +45,11 @@ class CodeGameApp extends Component {
   }
 
   handleLogin(id) {
+    const { cookies } = this.props;
+    cookies.set('id', id, { path: '/' });
+    cookies.set('isLogin', 'true', { path: '/' });
+    console.log(document.cookie);
+    console.log(cookies);
     this.setState({
       isLogin: true,
       id: id,
@@ -65,10 +86,14 @@ class CodeGameApp extends Component {
     })
     .catch((error) => {
       console.error(error);
-    });
+    });;///
   }
 
   handleLogout() {
+    const { cookies } = this.props;
+    cookies.set('isLogin', 'false', { path: '/' });
+    console.log(document.cookie);
+    console.log(cookies);
     this.setState({
       id: '',
       isLogin: false,
@@ -113,4 +138,4 @@ class CodeGameApp extends Component {
   }
 }
 
-export default CodeGameApp;
+export default withCookies(CodeGameApp);
