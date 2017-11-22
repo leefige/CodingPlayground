@@ -13,12 +13,20 @@
 	"frame": {"x":0,"y":400,"w":285,"h":100},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":285,"h":100},
-	"sourceSize": {"w":285,"h":100}
+	"spriteSourceSize": {"x":0,"y":0,"w":283,"h":201},
+	"sourceSize": {"w":283,"h":201}
+},
+"gamewin.png":
+{
+	"frame": {"x":283,"y":0,"w":283,"h":213},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":283,"h":213},
+	"sourceSize": {"w":283,"h":213}
 },
 "ok.png":
 {
-	"frame": {"x":285,"y":400,"w":150,"h":150},
+	"frame": {"x":0,"y":213,"w":1600,"h":1600},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":150,"h":150},
@@ -29,8 +37,9 @@
 	"version": "1.0",
 	"image": "util.png",
 	"format": "RGBA8888",
-	"size": {"w":435,"h":550},
+	"size": {"w":1600,"h":1813},
 	"scale": "1",
 	"smartupdate": "$TexturePacker:SmartUpdate:a361f48ba7ca07adfcc535b11a6d8ff4:34b119ec86c0ff2c3947d3180291ed4b:ea51476c211b15ae76e4107c2ec467a4$"
+
 }
 }

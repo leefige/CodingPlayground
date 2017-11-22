@@ -242,8 +242,8 @@
         <key>fileList</key>
         <array>
             <filename>ok.png</filename>
-            <filename>inventory.png</filename>
-            <filename>cell.png</filename>
+            <filename>gameover.png</filename>
+            <filename>gamewin.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
