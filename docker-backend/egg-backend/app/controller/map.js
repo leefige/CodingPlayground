@@ -18,19 +18,13 @@ module.exports = app => {
       this.ctx.body = result;
     }
 
-    async insertId(){
-      const result = await this.ctx.service.map.insertId(this.ctx.request.body);
-      this.ctx.body = {
-        id: result,
-      };
-    }
-
     async updateBlockly(){
       try {
         await this.ctx.validate({
           userid: { type: 'string' },
           mapid: { type: 'string' },
           blockly: {type: 'string'},
+          curLevel: {type: 'string'},
         });
       } catch (err) {
         console.error(err);
