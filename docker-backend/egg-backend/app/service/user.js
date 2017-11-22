@@ -166,7 +166,7 @@ module.exports = app => {
       });
       var options = {
         from           : '845285227@qq.com',
-        to             : 'maoym15@mails.tsinghua.edu.cn',
+        to             : email,
         subject        : '一封来自Node Mailer的邮件',
         text           : '一封来自Node Mailer的邮件',
         html           : `<h1>你好，您的账户密码为${password}</h1><p><img src="cid:00000001"/></p>`,

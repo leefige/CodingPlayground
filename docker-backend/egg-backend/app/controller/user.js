@@ -146,6 +146,14 @@ module.exports = app => {
       };
     }
 
+    async verfifyEmail(){
+      const body = this.ctx.request.body;
+      const result = await this.ctx.service.user.verfifyEmail(body);
+      this.ctx.body = {
+        sendEmail_success: result,
+      };
+    }
+
     async verfifyMobile(){
       const body = this.ctx.request.body;
       const result = await this.ctx.service.user.verfifyMobile(body);

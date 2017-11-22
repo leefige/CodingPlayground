@@ -12,6 +12,7 @@ module.exports = app => {
   app.post('/api/v1/user/changeMobile', app.controller.user.changeMobile);
   app.post('/api/v1/map/updateBlockly', app.controller.map.updateBlockly);
   app.post('/api/v1/mapEditor/insertId', app.controller.mapEditor.insertId);
+  app.post('/api/v1/mapEditor/getAll', app.controller.mapEditor.getAll);
   app.post('/api/v1/user/verfifyMobile', app.controller.user.verfifyMobile);
   app.post('/api/v1/user/mobileLogin', app.controller.user.mobileLogin);
   app.post('/api/v1/user/verfifyEmail', app.controller.user.verfifyEmail);
