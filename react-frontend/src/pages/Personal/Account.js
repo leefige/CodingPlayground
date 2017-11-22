@@ -177,15 +177,15 @@ class Account extends Component {
     const res = await uploadFile('/api/v1/user/uploadAvatar', formData);
     const data = await res.json();
     console.log("upload res: ", data);
-    // if (data.info === '上传头像成功') {
+    if (data.info === '上传头像成功') {
     alert("修改成功！");
     this.setState({
       avatar: data.img,
     });
-    // }
-    // else {
-      // alert("修改失败！");
-    // }
+    }
+    else {
+      alert("修改失败！");
+    }
     event.preventDefault();
   }
 
@@ -195,7 +195,7 @@ class Account extends Component {
       vip: true,
     }).then((responseJson) => {
         if (responseJson.changeVip_success) {
-          alert("支付成功，请重新登陆！");
+          alert("支付成功！");
           this.setState({
             shouldJump: true,
           });

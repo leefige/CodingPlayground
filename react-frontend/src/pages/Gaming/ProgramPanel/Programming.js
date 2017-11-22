@@ -215,7 +215,7 @@ class Programming extends Component {
           this.highlightBlock(null);
           document.getElementById("step_btn").disabled = false;
           document.getElementById("abort_btn").disabled = true;
-          document.getElementById("step_btn_text").innerHTML = "&nbsp;&nbsp;单步调试";
+          document.getElementById("step_btn_text").innerHTML = "  单步调试";
           document.getElementById("blockly_layer").style.display = 'none';
         }
       }
@@ -232,7 +232,7 @@ class Programming extends Component {
   handleGameOver(result) {
     document.getElementById("run_btn").disabled = false;
     document.getElementById("step_btn").disabled = false;
-    document.getElementById("step_btn_text").innerHTML = "&nbsp;&nbsp;单步调试";
+    document.getElementById("step_btn_text").innerHTML = "  单步调试";
     document.getElementById("blockly_layer").style.display = 'none';
     this.props.onGetResult(result);
   }
