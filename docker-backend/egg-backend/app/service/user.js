@@ -110,6 +110,7 @@ module.exports = app => {
       const accessKeyId = 'LTAINBI7GDcyzx8X';
       const secretAccessKey = '7Py5FG9GaLvvXy2EImX3hMqn0MYlo1';
       const phoneNumbers = body.mobile;
+      const userId = await app.mysql.get('newsuser', {mobile: phoneNumbers}).id;
       //初始化sms_client
       let smsClient = new SMSClient({accessKeyId, secretAccessKey});
       smsClient.sendSMS({
@@ -121,34 +122,18 @@ module.exports = app => {
           let {Code}=res;
           if (Code === 'OK') {
               //处理返回参数
-              return true;
+              return {
+                flag: true,
+                userId: userId,
+              };
           }}, function (err) {
-            return false;
+            return {
+              flag: false,
+              userId: userId,
+            };
         })
     }
 
-    async verfifyMobile(body){
-      const SMSClient = require('@alicloud/sms-sdk');
-      // ACCESS_KEY_ID/ACCESS_KEY_SECRET 根据实际申请的账号信息进行替换
-      const accessKeyId = 'LTAINBI7GDcyzx8X';
-      const secretAccessKey = '7Py5FG9GaLvvXy2EImX3hMqn0MYlo1';
-      const phoneNumbers = app.mysql.get('newsuser', { id: body.id }).mobile;
-      //初始化sms_client
-      let smsClient = new SMSClient({accessKeyId, secretAccessKey});
-      smsClient.sendSMS({
-        PhoneNumbers: phoneNumbers,
-        SignName: '代码操场',
-        TemplateCode: 'SMS_110895009',
-        TemplateParam: '{"code":' + body.code + '}',
-      }).then(function (res) {
-          let {Code}=res;
-          if (Code === 'OK') {
-              //处理返回参数
-              return true;
-          }}, function (err) {
-            return false;
-        })
-    }
 
     async verfifyEmail(body){
       const user = app.mysql.get('newsuser', { id: body.id });

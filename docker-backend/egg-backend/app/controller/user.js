@@ -154,19 +154,13 @@ module.exports = app => {
       };
     }
 
-    async verfifyMobile(){
-      const body = this.ctx.request.body;
-      const result = await this.ctx.service.user.verfifyMobile(body);
-      this.ctx.body = {
-        sendMobile_success: result,
-      };
-    }
 
     async mobileLogin(){
       const body = this.ctx.request.body;
       const result = await this.ctx.service.user.mobileLogin(body);
       this.ctx.body = {
-        mobileLogin_success: result,
+        mobileLogin_success: result.flag,
+        userId: result.userId,
       };
     }
 
