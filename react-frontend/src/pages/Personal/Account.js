@@ -187,8 +187,22 @@ class Account extends Component {
   }
 
   handlePayment(event) {
-    // TODO
-    this.props.updateVIP();
+    post('/api/v1/user/changeVip', {
+      id: this.props.userId,
+      vip: true,
+    }).then((responseJson) => {
+        if (responseJson.changeVip_success) {
+          alert("支付成功，请重新登陆！");
+          this.setState({
+            shouldJump: true,
+          });
+        }
+        else {
+          alert("支付失败！");
+        }
+    }).catch((error) => {
+      console.error(error);
+    });
     event.preventDefault();
   }
 
