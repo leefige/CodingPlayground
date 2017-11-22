@@ -199,29 +199,16 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">gameover.png</key>
+            <key type="filename">inventory.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>71,50,142,101</rect>
+                <rect>71,25,143,50</rect>
                 <key>scale9Paddings</key>
-                <rect>71,50,142,101</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">gamewin.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>71,53,142,107</rect>
-                <key>scale9Paddings</key>
-                <rect>71,53,142,107</rect>
+                <rect>71,25,143,50</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -242,8 +229,7 @@
         <key>fileList</key>
         <array>
             <filename>ok.png</filename>
-            <filename>gameover.png</filename>
-            <filename>gamewin.png</filename>
+            <filename>inventory.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

@@ -10,12 +10,12 @@ export function convertY(x, height, col) {
 
 export function canvasSetup() {
   this.width = this.self.parentNode.clientWidth;
-  this.aspectRatio = 1;
+  this.aspectRatio = 1.2;
   this.height = this.width * this.aspectRatio;
   this.FPS = 7;
 
   //Setup PIXI Canvas in componentDidMount
-  this.renderer = PIXI.autoDetectRenderer(this.width, this.height);
+  this.renderer = PIXI.autoDetectRenderer(this.width, this.height, { transparent: true });
   this.self.appendChild(this.renderer.view);
 
   //Create a Pixi stage and renderer

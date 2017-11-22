@@ -31,7 +31,8 @@ export default class PixiComponent {
     this.col = mapResource['height'];
 
     this.width = width;
-    this.height = height;
+    this.height = width;
+    this.invHeight = height - width;
 
     this.FPS = FPS;
     this.timeStatus = 0;
@@ -56,11 +57,34 @@ export default class PixiComponent {
       col,
       FPS,
       width,
-      height
+      height,
+      invHeight
     } = this;
 
     const gameScene = new this.Container();
     this.stage.addChild(gameScene);
+
+    const utilId = this.resources[this.utilJson].textures;
+    const inventory = new Obj(
+      utilId['inventory.png'],
+      width,
+      invHeight,
+      0,
+      height
+    );
+    inventory.addTo(gameScene);
+
+    const objId = this.resources[this.objJson].textures;
+    this.item = [];
+    for (let i = 0; i < 5; i++) {
+      this.item[i] = new Obj(
+        objId['torch.png'],
+        width / row,
+        height / col,
+        width * 0.17 + i * width * 0.7 / 5, width + invHeight / 4.5,
+      );
+      this.item[i].addTo(gameScene);
+    }
 
     const id = this.resources[this.gpJson].textures;
     const backgroundArray = this.mapId;
@@ -88,7 +112,7 @@ export default class PixiComponent {
         trans.addTo(gameScene);
       }
 
-    const objId = this.resources[this.objJson].textures;
+
     const chest = new Obj(
       objId['chest.png'],
       width / row,
@@ -176,6 +200,22 @@ export default class PixiComponent {
 
     const enmId = this.resources[this.enmJson].textures;
     const chaId = this.resources[this.chaJson].textures;
+    const objId = this.resources[this.objJson].textures;
+
+    const torchNum = player.character.items.torchNum;
+    const bombNum = player.character.items.bombNum;
+
+    for (let i = 0; i < torchNum; i++) {
+      this.item[i].obj.texture = objId['torch.png'];
+      this.item[i].obj.visible = true;
+    }
+    for (let i = torchNum; i < torchNum + bombNum; i++) {
+      this.item[i].obj.texture = objId['bomb.png'];
+      this.item[i].obj.visible = true;
+    }
+    for (let i = torchNum + bombNum; i < 5; i++) {
+      this.item[i].obj.visible = false;
+    }
 
     const {
       width, height,
@@ -190,6 +230,7 @@ export default class PixiComponent {
         const px = convertX(player.enemy[i].pos['y'], width, row),
           py = convertY(player.enemy[i].pos['x'], height, col);
         const baseEnmDir = player.enemy[i].dir;
+        this.mEnemy[i].obj.visible = true;
         this.mEnemy[i].update(px, py, 1*FPS, FPS, baseEnmDir, enmId);
       }
 
@@ -221,6 +262,7 @@ export default class PixiComponent {
           py = convertY(player.enemy[i].pos['x'], height, col);
         const baseEnmDir = player.enemy[i].dir;
         this.mEnemy[i].moveTo(px, py, FPS, baseEnmDir, enmId, this.timeStatus);
+        this.mEnemy[i].obj.visible = mainControl.player.enemy[i].status === "alive";
       }
 
       const px = convertX(player.character.pos['y'], width, row),
