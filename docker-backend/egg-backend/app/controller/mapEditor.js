@@ -12,7 +12,6 @@ module.exports = app => {
     async insertId(){
       try {
         await this.ctx.validate({
-          key: { type: 'string' },
           name: { type: 'string' },
           editor: { type: 'string'},
           time: { type: 'string'},

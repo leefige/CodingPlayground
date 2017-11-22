@@ -65,12 +65,12 @@ module.exports = app => {
 
     async insertId(body){
       try {
-        const data = JSON.stringify(body.data);
-        const result = await app.mysql.get('newsmap', { id: body.key});
+        const data = JSON.stringify(body.map);
+        const result = await app.mysql.get('newsmap', { id: body.id});
         if(result === null)
-          await app.mysql.insert('newsmap', { id: body.key, data: data})
+          await app.mysql.insert('newsmap', { id: body.id, data: data})
         else
-          await app.mysql.update('newsmap', { id: body.key, data: data});
+          await app.mysql.update('newsmap', { id: body.id, data: data});
         return true;
       } catch (err) {
         console.error(err);

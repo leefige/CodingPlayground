@@ -35,7 +35,7 @@ module.exports = app => {
       "email VARCHAR(100)," +
       "mobile VARCHAR(100)," +
       "image VARCHAR(200)," +
-      "level VARCHAR(100)," +
+      "level int," +
       "vip VARCHAR(100)," +
       "primary key (id)" +
       ");";
@@ -147,12 +147,14 @@ module.exports = app => {
       };
 
       mailTransport.sendMail(options, function(err, msg){
-          if(err){
-              console.log(err);
-          }
-          else {
-              console.log(msg);
-          }
+        if(err){
+          console.log(err);
+          return false;
+        }
+        else {
+          console.log(msg);
+          return true;
+        }
     });
     }
 

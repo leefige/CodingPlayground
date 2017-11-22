@@ -1,4 +1,5 @@
 'use strict';
+const uuid = require('uuid/v1');
 module.exports = app => {
   class MapEditorService extends app.Service {
     async getAll(body) {
@@ -21,12 +22,16 @@ module.exports = app => {
         "primary key (id)" +
         ");";
         await app.mysql.query(sql);
-        const result = app.mysql.get('mapeditor', { key: body.key});
+        const key = uuidv1();
+        const result = app.mysql.get('mapeditor', { key: key});
         if(result === null)
-          await app.mysql.insert('mapeditor', { key: body.key, name: body.name, editor: body.editor, time: body.time});
+          await app.mysql.insert('mapeditor', { key: key, name: body.name, editor: body.editor, time: body.time});
         else
-          await app.mysql.update('mapeditor', { key: body.key, name: body.name, editor: body.editor, time: body.time});
-        await this.ctx.service.map.insertId(body);
+          await app.mysql.update('mapeditor', { key: key, name: body.name, editor: body.editor, time: body.time});
+        await this.ctx.service.map.insertId({
+          id: key,
+          map: body.map,
+        });
         return true;
       } catch (err) {
         console.error(err);
