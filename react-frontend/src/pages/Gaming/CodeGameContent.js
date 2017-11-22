@@ -185,10 +185,7 @@ class CodeGameContent extends Component {
       if (isSystemMap) {
         const curLevel = this.state.curMapID - 300;
         if (curLevel > this.props.topLevel || (!this.props.vip && curLevel > 5)) {
-          console.log("curlev: "+curLevel);
-          console.log("top: "+this.props.topLevel);
           return (
-
             <Redirect push to={"/index"}/>
           );
         }
