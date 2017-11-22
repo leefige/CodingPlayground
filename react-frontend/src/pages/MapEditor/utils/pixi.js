@@ -5,7 +5,7 @@ import { post } from '../../../utils/Request'
 // `setup` function will run when the image has loaded
 export default class PixiComponent {
 
-  constructor(stage, width, height, innerWidth, innerHeight, renderer) {
+  constructor(stage, width, height, innerWidth, innerHeight, renderer, mapId) {
     this.Container = PIXI.Container;
     this.resources = PIXI.loader.resources;
 
@@ -25,6 +25,8 @@ export default class PixiComponent {
 
     this.mapRecord = {};
 
+    this.mapId = mapId;
+
     //Use Pixi's built-in `loader` object to load an image
     PIXI.loader
       .add(this.gpJson)
@@ -42,18 +44,23 @@ export default class PixiComponent {
     this.gameScene = new this.Container();
     this.stage.addChild(this.gameScene);
 
-    const id = this.resources[this.mapJson].textures;
-    let i = 0;
-    for (let key in id) {
-      const map = new Button(
-        id[key],
-        width / 10, width / 10,
-        i * 0.13 * width + 0.25 * width,
-        10
-      );
-      map.obj.on('click', () => {this.loadmap(parseInt(key.split('.')[0], 10))});
-      map.addTo(this.stage);
-      i++;
+    if (this.mapId === undefined) {
+      const id = this.resources[this.mapJson].textures;
+      let i = 0;
+      for (let key in id) {
+        const map = new Button(
+          id[key],
+          width / 10, width / 10,
+          i * 0.13 * width + 0.25 * width,
+          10
+        );
+        map.obj.on('click', () => {this.loadmap(key.split('.')[0])});
+        map.addTo(this.stage);
+        i++;
+      }
+    }
+    else {
+      this.loadmap(this.mapId);
     }
 
     const util = this.resources[this.utilJson].textures;
@@ -79,15 +86,16 @@ export default class PixiComponent {
   loadmap = (mapId) => {
     post('/api/v1/map/getId', {
       id: mapId,
+      userId: ""
     })
     .then((responseJson) => {
+      this.responseJson = responseJson;
       const mapResource = responseJson.mapResource;
       const mapId = mapResource['id'];
+      const mapIdt = mapResource['id_t'];
 
       this.row = mapResource['width'];
       this.col = mapResource['height'];
-
-      this.mapRecord.id_tools = new Array(this.row * this.col);
 
       const {
         row, col,
@@ -98,6 +106,7 @@ export default class PixiComponent {
 
       gameScene.removeChildren();
       const id = this.resources[this.gpJson].textures;
+      this.bg = [];
       for (let i = 0; i < row; i++)
         for (let j = 0; j < col; j++) {
           const background = new Obj(
@@ -107,41 +116,53 @@ export default class PixiComponent {
             i * innerHeight / col + (height - innerHeight) / 2
           );
           background.addTo(gameScene);
+          const trans = new Obj(
+            id[`${mapIdt[i * row + j]}.png`],
+            innerWidth / row, innerHeight / col,
+            j * innerWidth / row + (width - innerWidth) / 2,
+            i * innerHeight / col + (height - innerHeight) / 2
+          );
+          this.bg.push(trans);
+          trans.addTo(gameScene);
         }
 
         (new Dragable(
-          this.mapRecord,
+          this.responseJson,
           'cha',
           innerWidth / row, innerHeight / col,
           0.06 * width, 0.06 * height,
-          width, height, innerWidth, innerHeight, row, col
+          width, height, innerWidth, innerHeight, row, col,
+          this.bg
         )).addTo(this.gameScene);
 
         (new Dragable(
-          this.mapRecord,
+          this.responseJson,
           'chest',
           innerWidth / row, innerHeight / col,
           0.06 * width, Math.floor(height / 5) * 1 + 0.06 * width,
-          width, height, innerWidth, innerHeight, row, col
+          width, height, innerWidth, innerHeight, row, col,
+          this.bg
         )).addTo(this.gameScene);
 
         // create a texture from an image path
         for (let i = 2; i < 5; i++) {
           (new Dragable(
-            this.mapRecord,
+            this.responseJson,
             'stone',
             innerWidth / row, innerHeight / col,
             0.06 * width, Math.floor(height / 5) * i + 0.06 * width,
-            width, height, innerWidth, innerHeight, row, col
+            width, height, innerWidth, innerHeight, row, col,
+            this.bg
           )).addTo(this.gameScene);
         }
         for (let i = 0; i < 4; i++) {
           (new Dragable(
-            this.mapRecord,
+            this.responseJson,
             'grass',
             innerWidth / row, innerHeight / col,
             Math.floor(width - 0.06 * width), Math.floor(height / 5 * i + 0.06 * width),
-            width, height, innerWidth, innerHeight, row, col
+            width, height, innerWidth, innerHeight, row, col,
+            this.bg
           )).addTo(this.gameScene);
         }
 
@@ -150,9 +171,11 @@ export default class PixiComponent {
   }
 
   report = () => {
-    post('/api/v1/mapEdit/insert', {
-      mapRecord: JSON.stringify(this.mapRecord),
-      userId: "TEST"
+    post('/api/v1/mapEditor/insertId', {
+      map: JSON.stringify(this.responseJson),
+      editor: global.id,
+      name: "map",
+      time: `${(new Date()).getTime() + 1}月${(new Date()).getDate()}日`
     })
     alert("编辑成功！");
   }
