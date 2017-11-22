@@ -29,7 +29,7 @@ export class Button extends Obj {
 }
 
 export class Dragable extends Obj {
-  constructor(responseJson, type, width, height, posx, posy, wWidth, wHeight, innerWidth, innerHeight, row, col) {
+  constructor(responseJson, type, width, height, posx, posy, wWidth, wHeight, innerWidth, innerHeight, row, col, bg) {
     const objJson = `${process.env.PUBLIC_URL}/img/obj/obj.json`;
     const id = PIXI.loader.resources[objJson].textures;
     super(id[`${type}.png`], width, height, posx, posy);
@@ -57,6 +57,7 @@ export class Dragable extends Obj {
     this.innerHeight = innerHeight;
     this.row = row;
     this.col = col;
+    this.bg = bg;
   }
 
   onDragStart = (event) => {
@@ -66,6 +67,23 @@ export class Dragable extends Obj {
     this.data = event.data;
     this.obj.alpha = 0.5;
     this.obj.dragging = true;
+    const newPosition = this.data.getLocalPosition(this.obj.parent);
+
+    const {
+      width, height,
+      innerWidth, innerHeight,
+      row, col
+    } = this;
+
+    const leftx = (width - innerWidth) / 2;
+    const lefty = (height - innerHeight) / 2;
+    const szx = innerWidth / row;
+    const szy = innerHeight / col;
+    const i = parseInt((newPosition.x - leftx) / szx, 10);
+    const j = parseInt((newPosition.y - lefty) / szy, 10);
+
+    this.responseJson.mapInitState.board.map[j * row + i] = 0;
+    this.responseJson.mapResource.id_t[j * row + i] = convertId("blank");
   }
 
   onDragEnd = () => {
@@ -106,14 +124,18 @@ export class Dragable extends Obj {
       newPosition.x = leftx + i * innerWidth / row + szx / 2;
       newPosition.y = lefty + j * innerHeight / col + szy / 2;
       if (this.type === "cha") {
+        this.bg[j * row + i].obj.visible = false;
         this.responseJson.mapInitState.character.pos.x = j;
         this.responseJson.mapInitState.character.pos.y = i;
       }
       else if (this.type === "chest") {
+        this.bg[j * row + i].obj.visible = false;
+        this.responseJson.mapInitState.board.map[j * row + i] = 90;
         // this.mapRecord.chestPos = i * row + j;
       }
       else {
-        this.responseJson.mapResource.id_t[i * row + j] = convertId(this.type);
+        this.bg[j * row + i].obj.visible = false;
+        this.responseJson.mapResource.id_t[j * row + i] = convertId(this.type);
         // this.mapRecord.id_t[i * row + j] = convertId(this.type);
         // this.mapRecord.id_tools[i * row + j] = parseInt(this.type, 10);
       }

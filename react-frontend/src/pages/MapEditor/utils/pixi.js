@@ -92,6 +92,7 @@ export default class PixiComponent {
       this.responseJson = responseJson;
       const mapResource = responseJson.mapResource;
       const mapId = mapResource['id'];
+      const mapIdt = mapResource['id_t'];
 
       this.row = mapResource['width'];
       this.col = mapResource['height'];
@@ -105,6 +106,7 @@ export default class PixiComponent {
 
       gameScene.removeChildren();
       const id = this.resources[this.gpJson].textures;
+      this.bg = [];
       for (let i = 0; i < row; i++)
         for (let j = 0; j < col; j++) {
           const background = new Obj(
@@ -114,6 +116,14 @@ export default class PixiComponent {
             i * innerHeight / col + (height - innerHeight) / 2
           );
           background.addTo(gameScene);
+          const trans = new Obj(
+            id[`${mapIdt[i * row + j]}.png`],
+            innerWidth / row, innerHeight / col,
+            j * innerWidth / row + (width - innerWidth) / 2,
+            i * innerHeight / col + (height - innerHeight) / 2
+          );
+          this.bg.push(trans);
+          trans.addTo(gameScene);
         }
 
         (new Dragable(
@@ -121,7 +131,8 @@ export default class PixiComponent {
           'cha',
           innerWidth / row, innerHeight / col,
           0.06 * width, 0.06 * height,
-          width, height, innerWidth, innerHeight, row, col
+          width, height, innerWidth, innerHeight, row, col,
+          this.bg
         )).addTo(this.gameScene);
 
         (new Dragable(
@@ -129,7 +140,8 @@ export default class PixiComponent {
           'chest',
           innerWidth / row, innerHeight / col,
           0.06 * width, Math.floor(height / 5) * 1 + 0.06 * width,
-          width, height, innerWidth, innerHeight, row, col
+          width, height, innerWidth, innerHeight, row, col,
+          this.bg
         )).addTo(this.gameScene);
 
         // create a texture from an image path
@@ -139,7 +151,8 @@ export default class PixiComponent {
             'stone',
             innerWidth / row, innerHeight / col,
             0.06 * width, Math.floor(height / 5) * i + 0.06 * width,
-            width, height, innerWidth, innerHeight, row, col
+            width, height, innerWidth, innerHeight, row, col,
+            this.bg
           )).addTo(this.gameScene);
         }
         for (let i = 0; i < 4; i++) {
@@ -148,7 +161,8 @@ export default class PixiComponent {
             'grass',
             innerWidth / row, innerHeight / col,
             Math.floor(width - 0.06 * width), Math.floor(height / 5 * i + 0.06 * width),
-            width, height, innerWidth, innerHeight, row, col
+            width, height, innerWidth, innerHeight, row, col,
+            this.bg
           )).addTo(this.gameScene);
         }
 
@@ -163,7 +177,6 @@ export default class PixiComponent {
       name: "map",
       time: `${(new Date()).getTime() + 1}月${(new Date()).getDate()}日`
     })
-    console.log(global.id);
     alert("编辑成功！");
   }
 }
