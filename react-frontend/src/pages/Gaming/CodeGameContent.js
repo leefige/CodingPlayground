@@ -4,12 +4,14 @@ import Result from './Result';
 import Programming from './ProgramPanel/Programming';
 import { mainControl } from '../../logic/MainControl';
 import { post } from '../../utils/Request';
+import { Redirect } from 'react-router-dom';
 
 class CodeGameContent extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      curMapID: this.props.match.params.mapID,
       mapInitState: {
         board : {
           map : [[0, 0, 0, 0, 0, 0, 0, 0],
@@ -63,11 +65,6 @@ class CodeGameContent extends Component {
 
   componentWillMount() {
     // TODO: 用一个请求同时获取地图和用户解法，避免异步问题
-    // console.log("type: "+this.props.userType);
-    // console.log("id: "+this.props.getLoginUserId);
-    // console.log("share: "+this.props.match.params.shareUserID);
-    // console.log("final: "+(this.props.userType === "game" ? this.props.getLoginUserId : this.props.match.params.shareUserID));
-
     // 获取地图信息和blockly配置和用户解法
     post('/api/v1/map/getId', {
       id: this.props.match.params.mapID,
@@ -79,7 +76,6 @@ class CodeGameContent extends Component {
         mapInitState: responseJson.mapInitState,
         mapResource: responseJson.mapResource,
         blocklyConfig: responseJson.blocklyConfig,
-        // TODO:
         stdBlockNum: responseJson.stdBlockNum || 5,
         savedSolution: responseJson.savedSolution || '<xml xmlns="http://www.w3.org/1999/xhtml"><variables><variable type="" id="08RrVFGh7Vd6kRq}mp$]">i</variable></variables><block type="controls_for" id="H7oSz,,1hk]3/OS!=4h^" x="16" y="124"><field name="VAR" id="08RrVFGh7Vd6kRq}mp$]" variabletype="">i</field><value name="FROM"><shadow type="math_number" id="(;*U0)NkbjzX8NVD2g:?"><field name="NUM">1</field></shadow></value><value name="TO"><shadow type="math_number" id="X.JaW(ygNj@x%hOssFbn"><field name="NUM">3</field></shadow></value><value name="BY"><shadow type="math_number" id="6Lw*,xc9jW%PKZJ3qJ0!"><field name="NUM">1</field></shadow></value><statement name="DO"><block type="actions_go" id="1Nap5j;e.L47Gqd5gfjg"><next><block type="actions_turn" id="77^+iQnejgOKgz`z4DMA"><field name="DIRECTION">LEFT</field><next><block type="actions_use" id="@/Ls+sqZIqy)Q)s.qS}G"><value name="OBJECT"><block type="objects_bomb" id="9NcR_]TVWvZ?1+9_O}Z-"></block></value></block></next></block></next></block></statement></block></xml>',
         didFetchMap: true,
@@ -130,10 +126,19 @@ class CodeGameContent extends Component {
   }
 
   async sendUserSolution() {
+    let isSystemMap = false;
+    if (this.state.curMapID >= 301 && this.state.curMapID <= 310) {
+      isSystemMap = true;
+    }
+    let curLevel = -1;
+    if (isSystemMap) {
+      curLevel = this.state.curMapID - 300;
+    }
     post('/api/v1/map/updateBlockly', {
       userid: this.props.getLoginUserId,
       mapid: this.props.match.params.mapID,
       blockly: this.state.userSolution,
+      curLevel: curLevel,
     }).then((responseJson) => {
     }).catch((error) => {
       console.error(error);
@@ -171,37 +176,51 @@ class CodeGameContent extends Component {
   }
 
   render() {
-      return (
-        <div className='row'>
-            <div className='col-xs-12 col-md-5 col-md-offset-1'>
-              {this.state.didFetchMap?
-                <Scene mapResource={this.state.mapResource}/>
-                :<div></div>
-              }
-            </div>
-            <div className='col-xs-12 col-md-5'>
-              {this.state.didFetchMap?
-                <Programming ref="program_area" id="programming"
-                  userType={this.props.userType}
-                  blocklyConfig={this.state.blocklyConfig}
-                  initSolution={this.state.savedSolution}
-                  stdBlockNum={this.state.stdBlockNum}
-                  onCodeSubmit={this.handleCodeSubmit.bind(this)}
-                  onReset={this.handleReset.bind(this)}
-                  onSolutionChanged={this.updateUserSolution.bind(this)}
-                  onNextStep={this.nextStep.bind(this)}
-                  setCallback={this.setPlayerCallback}
-                  setGameOverCallback={this.setPlayerGameOverCallback}
-                  startStepThrough={this.StepThroughInit.bind(this)}
-                  onGetResult={this.handleResult.bind(this)}
-                />
-                :<div></div>
-              }
-            </div>
-            <button ref="show_btn" className="btn btn-primary btn-lg hide" data-toggle="modal" data-target="#resultModal"/>
-            <Result ref="show_result" userType={this.props.userType} mapID={this.props.match.params.mapID} shareUserID={this.props.userType === "game" ? this.props.getLoginUserId : this.props.match.params.shareUserID} score={this.state.gameScore}/>
-        </div>
-      );
+    if (this.props.userType === "game") {
+      let isSystemMap = false;
+      if (this.state.curMapID >= 301 && this.state.curMapID <= 310) {
+        isSystemMap = true;
+      }
+      if (isSystemMap) {
+        const curLevel = this.state.curMapID - 300;
+        if (curLevel > this.props.topLevel || (!this.props.vip && curLevel > 5)) {
+          return (
+            <Redirect push to={"/index"}/>
+          );
+        }
+      }
+    }
+    return (
+      <div className='row'>
+          <div className='col-xs-12 col-md-5 col-md-offset-1'>
+            {this.state.didFetchMap?
+              <Scene mapResource={this.state.mapResource}/>
+              :<div></div>
+            }
+          </div>
+          <div className='col-xs-12 col-md-5'>
+            {this.state.didFetchMap?
+              <Programming ref="program_area" id="programming"
+                userType={this.props.userType}
+                blocklyConfig={this.state.blocklyConfig}
+                initSolution={this.state.savedSolution}
+                stdBlockNum={this.state.stdBlockNum}
+                onCodeSubmit={this.handleCodeSubmit.bind(this)}
+                onReset={this.handleReset.bind(this)}
+                onSolutionChanged={this.updateUserSolution.bind(this)}
+                onNextStep={this.nextStep.bind(this)}
+                setCallback={this.setPlayerCallback}
+                setGameOverCallback={this.setPlayerGameOverCallback}
+                startStepThrough={this.StepThroughInit.bind(this)}
+                onGetResult={this.handleResult.bind(this)}
+              />
+              :<div></div>
+            }
+          </div>
+          <button ref="show_btn" className="btn btn-primary btn-lg hide" data-toggle="modal" data-target="#resultModal"/>
+          <Result ref="show_result" userType={this.props.userType} mapID={this.props.match.params.mapID} shareUserID={this.props.userType === "game" ? this.props.getLoginUserId : this.props.match.params.shareUserID} score={this.state.gameScore}/>
+      </div>
+    );
   }
 }
 

@@ -45,7 +45,7 @@ class MapCard extends Component {
                   this.getIsLocked() ?
                       <img className="minimap" alt="待解锁" src={"/img/mini_map/lock.jpg"} /> :
                       <img className="minimap" alt={"第" + this.props.levelNumber + "关"} src={"/img/mini_map/" + this.props.levelNumber + ".png"} /> ) :
-                    <img className="minimap" alt="地图大厅" src={"/img/mini_map/lock.jpg"} />
+                    <img className="minimap" alt="地图大厅" src={"/img/mini_map/playground.jpg"} />
                 ) :
                 <img className="minimap" alt="地图编辑器" src={"/img/mini_map/edit.png"} />
               }

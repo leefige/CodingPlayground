@@ -47,7 +47,7 @@ class Programming extends Component {
 
   queryMapInfo(object) {
     // TODO: 调用maincontrol的回调函数
-    let target = elements.empty;
+    let target;
     switch(object) {
       case "CHEST":
         target = elements.chest;
@@ -297,7 +297,7 @@ class Programming extends Component {
         <textarea id="code_textarea"
           className='code-text'
           disabled='disabled'
-          value={this.state.text}
+          value={this.state.text.replace(/\n+/, "\n")}
         />
       </div>
     );
