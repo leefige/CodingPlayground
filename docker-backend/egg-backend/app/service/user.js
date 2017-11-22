@@ -104,6 +104,29 @@ module.exports = app => {
       }
     }
 
+    async mobileLogin(body){
+      const SMSClient = require('@alicloud/sms-sdk');
+      // ACCESS_KEY_ID/ACCESS_KEY_SECRET 根据实际申请的账号信息进行替换
+      const accessKeyId = 'LTAINBI7GDcyzx8X';
+      const secretAccessKey = '7Py5FG9GaLvvXy2EImX3hMqn0MYlo1';
+      const phoneNumbers = body.mobile;
+      //初始化sms_client
+      let smsClient = new SMSClient({accessKeyId, secretAccessKey});
+      smsClient.sendSMS({
+        PhoneNumbers: phoneNumbers,
+        SignName: '代码操场',
+        TemplateCode: 'SMS_110895009',
+        TemplateParam: '{"code":' + body.code + '}',
+      }).then(function (res) {
+          let {Code}=res;
+          if (Code === 'OK') {
+              //处理返回参数
+              return true;
+          }}, function (err) {
+            return false;
+        })
+    }
+
     async verfifyMobile(body){
       const SMSClient = require('@alicloud/sms-sdk');
       // ACCESS_KEY_ID/ACCESS_KEY_SECRET 根据实际申请的账号信息进行替换
@@ -111,14 +134,14 @@ module.exports = app => {
       const secretAccessKey = '7Py5FG9GaLvvXy2EImX3hMqn0MYlo1';
       const phoneNumbers = app.mysql.get('newsuser', { id: body.id }).mobile;
       //初始化sms_client
-      let smsClient = new SMSClient({accessKeyId, secretAccessKey})
+      let smsClient = new SMSClient({accessKeyId, secretAccessKey});
       smsClient.sendSMS({
-        PhoneNumbers: '18693939177',
+        PhoneNumbers: phoneNumbers,
         SignName: '代码操场',
         TemplateCode: 'SMS_110895009',
         TemplateParam: '{"code":' + body.code + '}',
       }).then(function (res) {
-          let {Code}=res
+          let {Code}=res;
           if (Code === 'OK') {
               //处理返回参数
               return true;
@@ -128,14 +151,17 @@ module.exports = app => {
     }
 
     async verfifyEmail(body){
-      const email = app.mysql.get('newsuser', { id: body.id }).email;
+      const user = app.mysql.get('newsuser', { id: body.id });
+      const email = user.email;
+      const password = user.password;
       var nodemailer  = require('nodemailer');
       var mailTransport = nodemailer.createTransport({
         host : 'smtp.qq.com',
-        secureConnection: true, // 使用SSL方式（安全方式，防止被窃取信息）
+        port : 465,
+        secure: true, // 使用SSL方式（安全方式，防止被窃取信息）
         auth : {
             user : '845285227@qq.com',
-            pass : '19961127mymxhdd'
+            pass : 'inesfawzexisbcaj'
         },
       });
       var options = {
@@ -143,7 +169,7 @@ module.exports = app => {
         to             : 'maoym15@mails.tsinghua.edu.cn',
         subject        : '一封来自Node Mailer的邮件',
         text           : '一封来自Node Mailer的邮件',
-        html           : '<h1>你好，这是一封来自NodeMailer的邮件！</h1><p><img src="cid:00000001"/></p>',
+        html           : `<h1>你好，您的账户密码为${password}</h1><p><img src="cid:00000001"/></p>`,
       };
 
       mailTransport.sendMail(options, function(err, msg){
@@ -155,17 +181,18 @@ module.exports = app => {
           console.log(msg);
           return true;
         }
-    });
+      });
     }
 
     async changeVip(body){
       try {
+        const flag = body.vip === true? '1' : '0';
         const is_insert = await app.mysql.get('newsuser', { id: body.id });
         if (is_insert === null) {
           return false;
         }
         else{
-          const result = await app.mysql.update('newsuser', { id: body.id, vip: body.vip });
+          const result = await app.mysql.update('newsuser', { id: body.id, vip: flag });
           const insertSuccess = result.affectedRows === 1;
           return insertSuccess;
         }

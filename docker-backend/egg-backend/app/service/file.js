@@ -28,7 +28,7 @@ module.exports = app => {
       const filepath = path.join(dir, stream.filename);
       try {
         await saveStream(stream, filepath);
-        await app.mysql.update('newsuser', {id: body.id, img: `/public/assets/${category}/${id}/${stream.filename}`});
+        await app.mysql.update('newsuser', {id: body.id, image: `/public/media/${category}/${id}/${stream.filename}`});
       } catch (err) {
         // await sendToWormhole(stream)
         throw err;
@@ -36,7 +36,7 @@ module.exports = app => {
 
       // const addr = await getIP()
       // return `http://${addr}:${process.env.PORT}${app.config.static.prefix}assets/${category}/${id}/${stream.filename}`
-      return `/public/assets/${category}/${id}/${stream.filename}`;
+      return `/public/meida/${category}/${id}/${stream.filename}`;
     }
   }
   return FileService;
