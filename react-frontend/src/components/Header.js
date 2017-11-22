@@ -76,7 +76,7 @@ class Header extends Component {
             <Link to='/signup' type="button" className="btn btn-default header-btn">注册</Link>
           </div>
         }
-        {this.state.didAutoLogin === true && this.state.isAutoLogin === false && this.props.pathname !== '/login' && this.props.pathname !== '/signup'
+        {this.state.didAutoLogin === true && this.state.isAutoLogin === false && this.props.pathname !== '/login' && this.props.pathname !== '/signup' && false
           ? <Redirect push to="/login"/>
           : <div></div>}
         {(this.state.isAutoLogin === true || this.props.isLogin === true) && (this.props.pathname === '/login' || this.props.pathname === '/signup')
