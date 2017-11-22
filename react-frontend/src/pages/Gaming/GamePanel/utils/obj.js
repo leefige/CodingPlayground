@@ -24,6 +24,9 @@ export default class Obj {
     this.obj.texture = res[`${10 + dir * 10 + updatePhase(this.phase / FPS)}.png`];
   }
   moveTo(px, py, FPS, dir, res, state) {
+    if (this.prevPos === undefined) {
+      return true;
+    }
     if (px !== this.obj.x || py !== this.obj.y) {
       if (px !== this.obj.x) {
         this.obj.x = (px - this.prevPos.x) / 60 * state + this.prevPos.x;
