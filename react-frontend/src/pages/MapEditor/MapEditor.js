@@ -19,7 +19,7 @@ export default class MapEditor extends Component {
   * and hook up the PixiJS renderer
   **/
   componentDidMount(props) {
-    canvasSetup.call(this);
+    canvasSetup.call(this, this.props.match.params.mapID === undefined);
     new PixiComponent(
       this.stage,
       this.width,
