@@ -25,23 +25,10 @@ class Board extends Basic {
   }
 
   setTorch(pos) {
-    // console.log(this._mainControl._state)
-    // console.log(this._state)
-    // console.log(this._nextState)
-    // console.log("set torch")
-    // console.log(pos)
-
     if (this.canSetTorch(pos)) {
       this._nextState.torchPos.x = pos.x;
       this._nextState.torchPos.y = pos.y;
       this._nextState.map[pos.x][pos.y] = elements.empty;
-      // console.log(pos)
-      // console.log(this._nextState)
-      // console.log(this._nextState.torchPos)
-      // console.log(this._nextState.torchPos.x)
-      // console.log(this._nextState.torchPos.y)
-
-      // console.log("set torch success")
       return gameStatus.running;
     }
     else

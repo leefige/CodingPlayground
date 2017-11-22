@@ -15,9 +15,7 @@ class MainControl{
   }
 
   load(state) {
-    //console.log("maincontrol")
     this._state = JSON.parse(JSON.stringify(state));
-    //console.log(this._state)
     this._board = new Board(this._state.board, this);
     this._enemy = [];
     for (let i = 0; i < this._state.enemy.length; i++)
