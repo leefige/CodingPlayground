@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-
 import {
   canvasSetup
 } from './utils/misc';
-
 import PixiComponent from './utils/pixi';
-
-
-
-export default class MapEditor extends Component {
-
+import { Route, Redirect } from 'react-router-dom';
+import { instanceOf } from 'prop-types';
+import { withCookies, Cookies } from 'react-cookie';
+class MapEditor extends Component {
+  static propTypes = {
+    cookies: instanceOf(Cookies).isRequired
+  };
   // componentWillUnmount() {
   //   window.removeEventListener('resize');
   // }
@@ -19,6 +19,8 @@ export default class MapEditor extends Component {
   * and hook up the PixiJS renderer
   **/
   componentDidMount(props) {
+    const { cookies } = this.props;
+    const id = cookies.get('id');
     canvasSetup.call(this, this.props.match.params.mapID === undefined);
     new PixiComponent(
       this.stage,
@@ -27,7 +29,8 @@ export default class MapEditor extends Component {
       this.innerWidth,
       this.innerHeight,
       this.renderer,
-      this.props.match.params.mapID
+      this.props.match.params.mapID,
+      id
     );
   }
 
@@ -35,6 +38,9 @@ export default class MapEditor extends Component {
   * Render our container that will store our PixiJS game canvas. Store the ref
   **/
   render() {
+    const { cookies } = this.props;
+    console.log(cookies)
+    if (cookies.get('isLogin') === "true") {
     return (
       <div
         className="game-canvas-container"
@@ -42,5 +48,11 @@ export default class MapEditor extends Component {
       >
       </div>
     );
+    }
+    else {
+      return <Redirect push to='/login'/>
+    }
   }
 }
+
+export default withCookies(MapEditor);

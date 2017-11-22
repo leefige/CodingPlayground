@@ -52,7 +52,6 @@ class CodeGameApp extends Component {
     });
     this.updateTopLevel();
     this.updateVIP();
-    global.id = id;
   }
 
   async updateTopLevel() {
@@ -92,6 +91,7 @@ class CodeGameApp extends Component {
       id: '',
       isLogin: false,
     });
+    global.isLogin = false;
     alert("您已登出！");
   }
 
@@ -137,7 +137,7 @@ class CodeGameApp extends Component {
               <CodeGameContent {...props} userType="share" getIsLogin={this.state.isLogin} getLoginUserId={this.state.id} />)
             } />
           {/* <Route path="/mapEditor" component={props => <MapEditor {...props} userId={this.state.id}/>} /> */}
-          <Route path="/mapEditor/:mapID?" component={props => this.requireLogin(props, isLogin, <MapEditor />)} onChange={this.requireLogin.bind(this)} />
+          <Route path="/mapEditor/:mapID?" component={MapEditor}/>
           <Route path="/mapHall" component={props => this.requireLogin(props, isLogin, <MapHall />)} />
           <Route path="/login" component={props => this.requireLogout(props, isLogin, <Login {...props} onLogin={this.handleLogin.bind(this)} />)} />
           <Route path="/signup" component={props => this.requireLogout(props, isLogin, <Signup />)} />
