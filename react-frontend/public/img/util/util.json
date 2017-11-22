@@ -1,16 +1,24 @@
 {"frames": {
 
-"inventory.png":
+"gameover.png":
 {
-	"frame": {"x":0,"y":0,"w":285,"h":100},
+	"frame": {"x":0,"y":0,"w":283,"h":201},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":285,"h":100},
-	"sourceSize": {"w":285,"h":100}
+	"spriteSourceSize": {"x":0,"y":0,"w":283,"h":201},
+	"sourceSize": {"w":283,"h":201}
+},
+"gamewin.png":
+{
+	"frame": {"x":283,"y":0,"w":283,"h":213},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":283,"h":213},
+	"sourceSize": {"w":283,"h":213}
 },
 "ok.png":
 {
-	"frame": {"x":285,"y":0,"w":1600,"h":1600},
+	"frame": {"x":0,"y":213,"w":1600,"h":1600},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":1600,"h":1600},
@@ -21,8 +29,8 @@
 	"version": "1.0",
 	"image": "util.png",
 	"format": "RGBA8888",
-	"size": {"w":1885,"h":1600},
+	"size": {"w":1600,"h":1813},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:4e996fb37f4a78e921b77e9f92e5b7fe:d9edd9cadc2d5f83a4405f52c93b37d1:ea51476c211b15ae76e4107c2ec467a4$"
+	"smartupdate": "$TexturePacker:SmartUpdate:4b3c8ac6d6a5e03be4852637525144ef:77f44351aeee7d2453a122d237a7b2a6:ea51476c211b15ae76e4107c2ec467a4$"
 }
 }
