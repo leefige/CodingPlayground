@@ -22,6 +22,9 @@ export function canvasSetup() {
   this.stage = new PIXI.Container();
 
   window.addEventListener('resize', () => {
+    if (this.self === null) {
+      return;
+    }
     const zoomLevel = this.self.parentNode.clientWidth / this.width;
     this.stage.scale.x = zoomLevel;
     this.stage.scale.y = zoomLevel;

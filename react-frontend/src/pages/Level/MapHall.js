@@ -40,7 +40,7 @@ class MapHall extends Component {
 		})
     .then((responseJson) => {
       this.setState({
-        mapList: responseJson.mapList
+        mapList: responseJson.mapList || []
       });
     })
     .catch((error) => {

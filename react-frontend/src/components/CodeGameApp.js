@@ -57,12 +57,11 @@ class CodeGameApp extends Component {
 
   async updateTopLevel() {
     post('/api/v1/user/getLevel', {
-      id: this.props.userId,
+      id: this.state.id,
 		})
     .then((responseJson) => {
-      // console.log("level res: ", responseJson);
       this.setState({
-        topLevel: responseJson.level + 1,
+        topLevel: responseJson.level,
       });
     })
     .catch((error) => {
@@ -72,17 +71,16 @@ class CodeGameApp extends Component {
 
   async updateVIP() {
     post('/api/v1/user/getVip', {
-      id: this.props.userId,
+      id: this.state.id,
 		})
     .then((responseJson) => {
-      // console.log("vip res: ", responseJson);
       this.setState({
         vip: responseJson.vip,
       });
     })
     .catch((error) => {
       console.error(error);
-    });;///
+    });
   }
 
   handleLogout() {
@@ -137,7 +135,7 @@ class CodeGameApp extends Component {
               <CodeGameContent {...props} userType="share" getIsLogin={this.state.isLogin} getLoginUserId={this.state.id} />)
             } />
           {/* <Route path="/mapEditor" component={props => <MapEditor {...props} userId={this.state.id}/>} /> */}
-          <Route path="/mapEditor/:mapID?" component={props => this.requireLogin(props, isLogin, <MapEditor />)} onChange={this.requireLogin.bind(this)} />
+          <Route path="/mapEditor/:mapID?" component={props => this.requireLogin(props, isLogin, <MapEditor  />)} />
           <Route path="/mapHall" component={props => this.requireLogin(props, isLogin, <MapHall />)} />
           <Route path="/login" component={props => this.requireLogout(props, isLogin, <Login {...props} onLogin={this.handleLogin.bind(this)} />)} />
           <Route path="/signup" component={props => this.requireLogout(props, isLogin, <Signup />)} />
