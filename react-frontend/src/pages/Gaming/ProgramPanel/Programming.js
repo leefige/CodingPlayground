@@ -176,7 +176,7 @@ class Programming extends Component {
       if (err === this.props.INFINITE_LOOP_ERROR) {
         this.handleInfiniteLoop();
       } else {
-        console.error(err);
+        // console.error(err);
       }
     } finally {
       this.myInterpreter = null;
@@ -205,7 +205,7 @@ class Programming extends Component {
       try {
         hasMoreCode = this.myInterpreter.step();
       } catch (err) {
-        console.error(err);
+        // console.error(err);
       } finally {
         if (!hasMoreCode) {
           this.setState({

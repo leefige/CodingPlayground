@@ -84,7 +84,7 @@ class CodeGameContent extends Component {
       });
     })
     .catch((error) => {
-      console.error(error);
+      // console.error(error);
     });
   }
 
@@ -143,7 +143,7 @@ class CodeGameContent extends Component {
       curLevel: curLevel,
     }).then((responseJson) => {
     }).catch((error) => {
-      console.error(error);
+      // console.error(error);
     });
   }
 
@@ -185,7 +185,7 @@ class CodeGameContent extends Component {
       }
       if (isSystemMap) {
         const curLevel = this.state.curMapID - 300;
-        if (curLevel > this.props.topLevel || (!this.props.vip && curLevel > 5)) {
+        if (curLevel > this.props.topLevel || (this.props.vip === false && curLevel > 5)) {
           return (
             <Redirect push to={"/index"}/>
           );

@@ -18,13 +18,13 @@ class Header extends Component {
     .then((responseJson) => {
       if (responseJson.logout_success) {
         this.props.onLogout();
-        console.log("logout success")
+        // console.log("logout success")
       }
       else
         alert("登录失败！");
     })
     .catch((error) => {
-      console.error(error);
+      // console.error(error);
     });
   }
 

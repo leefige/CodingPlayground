@@ -8,7 +8,6 @@ class Result extends Component {
   }
 
   render() {
-    // alert(parseInt(this.props.mapID, 10))
     return (
       <div className="modal" id="resultModal" tabIndex="-1" role="dialog" aria-labelledby="resultModalLabel">
         <div className="modal-dialog">
