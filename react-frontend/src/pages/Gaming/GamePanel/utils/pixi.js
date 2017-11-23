@@ -11,7 +11,7 @@ import { mainControl } from '../../../../logic/MainControl';
 export default class PixiComponent {
 
   constructor(stage, mapResource, FPS, width, height, renderer) {
-    PIXI.loader.reset();
+    // PIXI.loader.reset();
 
     this.Container = PIXI.Container;
     this.Sprite = PIXI.Sprite;
@@ -39,16 +39,29 @@ export default class PixiComponent {
 
     this.renderer = renderer;
 
+    try {
+      //Use Pixi's built-in `loader` object to load an image
+      PIXI.loader
+        .add(this.gpJson)
+        .add(this.chaJson)
+        .add(this.enmJson)
+        .add(this.utilJson)
+        .add(this.objJson)
+        .add(this.effectJson)
+        .load(this.setup);
+    }
+    catch (e) {
 
-    //Use Pixi's built-in `loader` object to load an image
-    PIXI.loader
-      .add(this.gpJson)
-      .add(this.chaJson)
-      .add(this.enmJson)
-      .add(this.utilJson)
-      .add(this.objJson)
-      .add(this.effectJson)
-      .load(this.setup);
+      PIXI.loader.reset();
+      PIXI.loader
+        .add(this.gpJson)
+        .add(this.chaJson)
+        .add(this.enmJson)
+        .add(this.utilJson)
+        .add(this.objJson)
+        .add(this.effectJson)
+        .load(this.setup);
+    }
   }
 
   setup = () => {
