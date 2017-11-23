@@ -24,6 +24,5 @@
   "devDependencies": {
     "webpack": "^3.6.0"
   },
-  "proxy": "http://saoest.saepa.org",
-  "homepage": "http://localhost:3000/index"
+  "proxy": "http://saoest.saepa.org"
 }
