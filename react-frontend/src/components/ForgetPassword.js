@@ -30,7 +30,7 @@ class ForgetPassword extends Component {
         }
       })
       .catch((error) => {
-        console.error(error);
+        // console.error(error);
       });
     event.preventDefault();
   }

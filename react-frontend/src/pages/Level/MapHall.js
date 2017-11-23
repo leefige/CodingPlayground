@@ -44,7 +44,7 @@ class MapHall extends Component {
       });
     })
     .catch((error) => {
-      console.error(error);
+      // console.error(error);
     });
   }
 

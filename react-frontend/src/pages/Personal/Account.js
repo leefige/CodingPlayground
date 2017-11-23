@@ -44,7 +44,7 @@ class Account extends Component {
       });
     })
     .catch((error) => {
-      console.error(error);
+      // console.error(error);
     });
   }
 
@@ -53,7 +53,6 @@ class Account extends Component {
       id: this.props.userId,
 		})
     .then((responseJson) => {
-      console.log("up res", responseJson)
       this.setState({
         avatar: responseJson.img,
         oldEmail: responseJson.email,
@@ -61,7 +60,7 @@ class Account extends Component {
       });
     })
     .catch((error) => {
-      console.error(error);
+      // console.error(error);
     });
     this.resetInput();
   }
@@ -79,7 +78,7 @@ class Account extends Component {
           alert("修改失败！");
         }
     }).catch((error) => {
-      console.error(error);
+      // console.error(error);
     });
     event.preventDefault();
   }
@@ -97,7 +96,7 @@ class Account extends Component {
           alert("修改失败！");
         }
     }).catch((error) => {
-      console.error(error);
+      // console.error(error);
     });
     event.preventDefault();
   }
@@ -121,7 +120,7 @@ class Account extends Component {
             alert("修改失败！");
           }
       }).catch((error) => {
-        console.error(error);
+        // console.error(error);
       });
     }
     event.preventDefault();
@@ -176,7 +175,6 @@ class Account extends Component {
     formData.append('avatar', files[0]);
     const res = await uploadFile('/api/v1/user/uploadAvatar', formData);
     const data = await res.json();
-    console.log("upload res: ", data);
     if (data.info === '上传头像成功') {
     alert("修改成功！");
     this.setState({
@@ -204,7 +202,7 @@ class Account extends Component {
           alert("支付失败！");
         }
     }).catch((error) => {
-      console.error(error);
+      // console.error(error);
     });
     event.preventDefault();
   }

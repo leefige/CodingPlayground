@@ -32,7 +32,7 @@ class Login extends Component {
           alert("登录失败！");
         }
       }).catch((error) => {
-        console.error(error);
+        // console.error(error);
       });
     event.preventDefault();
   }
@@ -108,14 +108,14 @@ class Login extends Component {
         }
       }
     }, 1000)
-    console.log("mobile login");
-    console.log(this.state.phone)
-    console.log(answer)
+    // console.log("mobile login");
+    // console.log(this.state.phone)
+    // console.log(answer)
     post("/api/v1/user/mobileLogin", {
       mobile: this.state.phone,
       code: answer,
     }).then((responseJson) => {
-      console.log(responseJson)
+      // console.log(responseJson)
       alert("验证码成功发送至您的手机");
       if (responseJson.mobileLogin_success) {
         this.setState({
@@ -132,7 +132,7 @@ class Login extends Component {
         })
       }
     }).catch((error) => {
-      console.error(error);
+      // console.error(error);
     });
   }
 
@@ -199,7 +199,7 @@ class Login extends Component {
                 id="valid_btn">
                   {this.state.didValidCodeGet ? "获取验证码(" + this.state.timerCount + ")" : "获取验证码"}
                 </span>
-                <span type="button" className="btn btn-default login-margin" onClick={this.handleEmailPage.bind(this)}>账号登陆</span>
+                <span type="button" className="btn btn-default login-margin" onClick={this.handleEmailPage.bind(this)}>账号登录</span>
                 </div>
             </div>
           </div>
@@ -256,7 +256,7 @@ class Login extends Component {
               <div className="form-group">
                 <div className="row">
                   <Link to="/forgetPassword" type="button" className="login-margin col-md-6 btn btn-default">忘记密码？</Link>
-                  <span type="button" className="login-margin col-md-6 btn btn-default" onClick={this.handleMobilePage.bind(this)}>手机登陆</span>
+                  <span type="button" className="login-margin col-md-6 btn btn-default" onClick={this.handleMobilePage.bind(this)}>手机登录</span>
                 </div>
               </div>
             </div>
