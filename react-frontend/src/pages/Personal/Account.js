@@ -265,7 +265,7 @@ class Account extends Component {
                     <label className="label-light" htmlFor="user_email">修改绑定邮箱</label>
                     <input className="personal-control personal-margin"  required="required"
                       type="email" value={this.state.email} onChange={this.handleEmailChange.bind(this)}
-                      placeholder="sample@xyz.com" name="user[email]" id="user_email" />
+                      placeholder="请输入邮箱" name="user[email]" id="user_email" />
                   </div>
                   <div className="prepend-top-default append-bottom-default">
                     <input type="submit" name="commit" value="确认提交"  className="btn btn-success" />
@@ -290,7 +290,7 @@ class Account extends Component {
                     <label className="label-light" htmlFor="user_mobile">修改手机号码</label>
                     <input className="personal-control personal-margin" required="required"
                       type="text" value={this.state.mobile} onChange={this.handleMobileChange.bind(this)}
-                      placeholder="11122223333" name="user[mobile]" id="user_mobile" />
+                      placeholder="请输入手机号码" name="user[mobile]" id="user_mobile" />
                   </div>
                   <div className="prepend-top-default append-bottom-default">
                     <input type="submit" name="commit" value="确认提交"  className="btn btn-success" />
@@ -343,9 +343,9 @@ class Account extends Component {
                   <span className="personal-control" >
                     {this.state.vip ? "您已经是VIP用户了!" : "充值VIP，畅玩更多关卡！"}
                   </span>
-                  <span className="prepend-top-default append-bottom-default">
-                    <input type="submit" name="commit" value="确认付款" className="btn btn-success" />
-                  </span>
+                  <div className="prepend-top-default append-bottom-default">
+                    <input type="submit" disabled={this.state.vip === true} name="commit" value="确认付款" className="btn btn-success" />
+                  </div>
                 </div>
 
               </div>
