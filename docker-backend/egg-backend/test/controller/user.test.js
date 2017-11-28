@@ -91,7 +91,7 @@ describe('test/controller/user.test.js', () => {
         .send({
           id: '2341',
           password: '213',
-          rememberMe: true,
+          rememberMe: false,
         })
         .expect(200) // 期望返回 status 200
         .expect({
@@ -165,8 +165,6 @@ describe('test/controller/user.test.js', () => {
           login_success: false,
       });
     });
-
-
   });
 
   describe('autoLogin test', () => {
@@ -206,27 +204,14 @@ describe('test/controller/user.test.js', () => {
         .post('/api/v1/user/changePassword')
         .type('json')
         .send({
-          id: 'byn',
-          old_password: '23',
-          password: '233',
+          id: '2341',
+          old_password: '213',
+          password: '213',
         })
         .expect(200) // 期望返回 status 200
         .expect({
           changePassword_success: false,
         });
-    });
-
-    it('should get error when data struction not correct', () => {
-      return app.httpRequest()
-      .post('/api/v1/user/changePassword')
-      .type('json')
-      .send({
-        autoLogin: 'error',
-      })
-      .expect(200)
-      .expect({
-        changePassword_success: false,
-      });
     });
   });
 
@@ -237,26 +222,13 @@ describe('test/controller/user.test.js', () => {
         .post('/api/v1/user/changeEmail')
         .type('json')
         .send({
-          id: 'byn',
-          email: '2333333@163.com',
+          id: 'g',
+          email: 'maoym15@mails.tsinghua.edu.cn',
         })
         .expect(200) // 期望返回 status 200
         .expect({
           changeEmail_success: false,
         });
-    });
-
-    it('should get error when data struction not correct', () => {
-      return app.httpRequest()
-      .post('/api/v1/user/changeEmail')
-      .type('json')
-      .send({
-        id: true,
-      })
-      .expect(200)
-      .expect({
-        changeEmail_success: false,
-      });
     });
   });
 
@@ -267,26 +239,112 @@ describe('test/controller/user.test.js', () => {
         .post('/api/v1/user/changeMobile')
         .type('json')
         .send({
-          id: 'byn',
-          mobile: '23',
+          id: 'g',
+          mobile: '18693939177',
         })
         .expect(200) // 期望返回 status 200
         .expect({
-          changeMobile_success: false,
+          changeMobile_success: true,
         });
     });
+  });
 
-    it('should get error when data struction not correct', () => {
+  describe('verfifyEmail test', () => {
+    it('should verfifyEmail', () => {
+      // 对 app 发起 `POST /` 请求
       return app.httpRequest()
-      .post('/api/v1/user/changeMobile')
+        .post('/api/v1/user/verfifyEmail')
+        .type('json')
+        .send({
+          id: 'g',
+        })
+        .expect(200) // 期望返回 status 200
+        .expect({
+          sendEmail_success: true,
+        });
+    });
+  });
+
+  describe('mobileLogin test', () => {
+    it('should mobileLogin', () => {
+      return app.httpRequest()
+      .post('/api/v1/user/mobileLogin')
       .type('json')
       .send({
-        id: true,
+        mobile: '18693939177',
       })
-      .expect(200)
+      .expect(200) // 期望返回 status 200
       .expect({
-        changeMobile_success: false,
+        mobileLogin_sucess: true,
+        userId: 'g',
       });
+    });
+  });
+
+  describe('changeVip test', () => {
+    it('should changeVip', () => {
+      return app.httpRequest()
+      .post('/api/v1/user/changeVip')
+      .type('json')
+      .send({
+        id: 'g',
+        vip: true,
+      })
+      .expect(200) // 期望返回 status 200
+      .expect({
+        changeVip_sucess: true,
+      });
+    });
+  });
+
+  describe('getVip test', () => {
+    it('should getVip', () => {
+      return app.httpRequest()
+      .post('/api/v1/user/getVip')
+      .type('json')
+      .send({
+        id: 'byn',
+      })
+      .expect(200) // 期望返回 status 200
+      .expect({
+        vip: true,
+      });
+    });
+  });
+
+  describe('getLevel test', () => {
+    it('should getLevel', () => {
+      return app.httpRequest()
+      .post('/api/v1/user/getLevel')
+      .type('json')
+      .send({
+        id: 'byn',
+      })
+      .expect(200) // 期望返回 status 200
+      .expect({
+        level: 6,
+      });
+    });
+  });
+
+  describe('uploadAvatar test', () => {
+    it('should upload image', () => {
+      const path = require('path');
+      return app.httpRequest()
+      .post('/api/v1/user/uploadAvatar')
+      .field('id', '123')
+      .attach('file', 'test/controller/ren.png')
+      .expect(302)
+    });
+  });
+
+  describe('getPersonalAccount test', () => {
+    it('should getPersonalAccount', () => {
+      return app.httpRequest()
+      .post('/api/v1/user/getPersonalAccount')
+      .field('id', true)
+      .attach('file', 'test/controller/ren.png')
+      .expect(302)
     });
   });
 

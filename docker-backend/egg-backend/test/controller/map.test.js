@@ -25,23 +25,6 @@ describe('test/controller/map.test.js', () => {
         .expect(204)
         .expect({});
     });
-
-    it('should get 400 when body is wrong', () => {
-      return app.httpRequest()
-      .post('/api/v1/map/getId')
-      .type('json')
-      .send('error')
-      .expect(400);
-    })
-  });
-
-  describe('insertId test', () => {
-    it('should status 200 and get the body', () => {
-      return app.httpRequest()
-      .get('/api/v1/map/insertId')
-      .expect(200);
-
-    });
   });
 
   describe('updateblockly test', () => {
@@ -50,9 +33,10 @@ describe('test/controller/map.test.js', () => {
       .post('/api/v1/map/updateBlockly')
       .type('json')
       .send({
-        userid: 123411,
-        mapid: 303,
-        savedSolution: {},
+        userid: '123411',
+        mapid: '303',
+        blockly: {},
+        curLevel: 4,
       })
       .expect(200);
     });

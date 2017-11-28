@@ -3,18 +3,6 @@
 module.exports = app => {
   class UserController extends app.Controller {
     async signup() {
-      try {
-        await this.ctx.validate({
-          id: { type: 'string' },
-          password: { type: 'string' },
-        });
-      } catch (err) {
-        console.error(err);
-        this.ctx.body = {
-          signup_success: false,
-        };
-        return;
-      }
       const body = this.ctx.request.body;
       const result = await this.ctx.service.user.signup(body);
       this.ctx.body = {
@@ -24,20 +12,6 @@ module.exports = app => {
 
     async login() {
       const body = this.ctx.request.body;
-      try {
-        await this.ctx.validate({
-          id: { type: 'string' },
-          password: { type: 'string' },
-          rememberMe: {type: 'boolean'},
-        });
-      } catch (err) {
-        console.error(err);
-        this.ctx.body = {
-          login_success: false,
-        };
-        return;
-      }
-
       const result = await this.ctx.service.user.login(body);
       this.ctx.body = {
         login_success: result,
@@ -52,17 +26,6 @@ module.exports = app => {
     }
 
     async autoLogin() {
-      try {
-        await this.ctx.validate({
-          autoLogin: {type: 'boolean'},
-        });
-      } catch (err) {
-        console.error(err);
-        this.ctx.body = {
-          autoLogin_success: false,
-        };
-        return;
-      }
       const body = {
         id: this.ctx.session.userId,
         password: this.ctx.session.userPassword,
@@ -84,20 +47,6 @@ module.exports = app => {
 
     async changePassword(){
       const body = this.ctx.request.body;
-      try {
-        await this.ctx.validate({
-          id: { type: 'string' },
-          old_password: { type: 'string'},
-          password: { type: 'string' },
-        });
-      } catch (err) {
-        console.error(err);
-        this.ctx.body = {
-          changePassword_success: false,
-        };
-        return;
-      }
-
       const result = await this.ctx.service.user.changePassword(body);
       this.ctx.body = {
         changePassword_success: result,
@@ -106,19 +55,6 @@ module.exports = app => {
 
     async changeEmail(){
       const body = this.ctx.request.body;
-      try {
-        await this.ctx.validate({
-          id: { type: 'string' },
-          email: { type: 'string' },
-        });
-      } catch (err) {
-        console.error(err);
-        this.ctx.body = {
-          changeEmail_success: false,
-        };
-        return;
-      }
-
       const result = await this.ctx.service.user.changeEmail(body);
       this.ctx.body = {
         changeEmail_success: result,
@@ -127,19 +63,6 @@ module.exports = app => {
 
     async changeMobile(){
       const body = this.ctx.request.body;
-      try {
-        await this.ctx.validate({
-          id: { type: 'string' },
-          mobile: { type: 'string' },
-        });
-      } catch (err) {
-        console.error(err);
-        this.ctx.body = {
-          changeMobile_success: false,
-        };
-        return;
-      }
-
       const result = await this.ctx.service.user.changeMobile(body);
       this.ctx.body = {
         changeMobile_success: result,
@@ -193,9 +116,7 @@ module.exports = app => {
       const body = stream.fields;
       const id = '0'; // ctx.params.id
       const fileUrl = await this.ctx.service.file.upload('users', id, stream, body);
-      this.ctx.status = 200;
       this.ctx.body = {
-        info: '上传头像成功',
         img: fileUrl,
       };
     }

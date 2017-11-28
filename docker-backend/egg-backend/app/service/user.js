@@ -17,9 +17,8 @@ module.exports = app => {
       try {
         const is_insert = await app.mysql.get('newsuser', { id: _body.id });
         if (is_insert === null) {
-          const result = await app.mysql.insert('newsuser', { id: _body.id, password: _body.password, level: 1, vip: '0' });
-          const insertSuccess = result.affectedRows === 1;
-          return insertSuccess;
+          await app.mysql.insert('newsuser', { id: _body.id, password: _body.password, level: 1, vip: '0' });
+          return true;
         }
         return false;
       } catch (err) {
@@ -40,47 +39,29 @@ module.exports = app => {
       "primary key (id)" +
       ");";
     await app.mysql.query(sql);
-      try {
-        const result = await app.mysql.get('newsuser', { id: _body.id, password: _body.password });
-        if (result === null) {
-          return false;
-        }
-        return true;
-      } catch (err) {
-        console.error(err);
+      const result = await app.mysql.get('newsuser', { id: _body.id, password: _body.password });
+      if (result === null) {
         return false;
       }
+      return true;
     }
 
 
     async changePassword(_body){
-      try {
         const is_insert = await app.mysql.get('newsuser', { id: _body.id, password: _body.old_password });
         if (is_insert === null) {
           return false;
         }
         else{
           const result = await app.mysql.update('newsuser', { id: _body.id, password: _body.password });
-          const insertSuccess = result.affectedRows === 1;
-          return insertSuccess;
+          return true;
         }
-      } catch (err) {
-        console.error(err);
-        return false;
-      }
     }
 
     async changeEmail(_body){
       try {
-        const is_insert = await app.mysql.get('newsuser', { id: _body.id });
-        if (is_insert === null) {
-          return false;
-        }
-        else{
-          const result = await app.mysql.update('newsuser', { id: _body.id, email: _body.email });
-          const insertSuccess = result.affectedRows === 1;
-          return insertSuccess;
-        }
+        await app.mysql.update('newsuser', { id: _body.id, email: _body.email });
+        return true;
       } catch (err) {
         console.error(err);
         return false;
@@ -89,15 +70,8 @@ module.exports = app => {
 
     async changeMobile(_body){
       try {
-        const is_insert = await app.mysql.get('newsuser', { id: _body.id });
-        if (is_insert === null) {
-          return false;
-        }
-        else{
-          const result = await app.mysql.update('newsuser', { id: _body.id, mobile: _body.mobile });
-          const insertSuccess = result.affectedRows === 1;
-          return insertSuccess;
-        }
+        await app.mysql.update('newsuser', { id: _body.id, mobile: _body.mobile });
+        return true;
       } catch (err) {
         console.error(err);
         return false;
@@ -110,7 +84,11 @@ module.exports = app => {
       const accessKeyId = 'LTAINBI7GDcyzx8X';
       const secretAccessKey = '7Py5FG9GaLvvXy2EImX3hMqn0MYlo1';
       const phoneNumbers = body.mobile;
-      const userId = await app.mysql.get('newsuser', {mobile: phoneNumbers}).id;
+      var userId = await app.mysql.get('newsuser', {mobile: phoneNumbers}).id;
+      if(userId === null){
+        userId = "user" + body.mobile;
+        await app.mysql.insert('newsuser', {id: userId, mobile: phoneNumbers});
+      }
       //初始化sms_client
       let smsClient = new SMSClient({accessKeyId, secretAccessKey});
       smsClient.sendSMS({
@@ -119,19 +97,11 @@ module.exports = app => {
         TemplateCode: 'SMS_110895009',
         TemplateParam: '{"code":' + body.code + '}',
       }).then(function (res) {
-          let {Code}=res;
-          if (Code === 'OK') {
-              //处理返回参数
-              return {
-                flag: true,
-                userId: userId,
-              };
-          }}, function (err) {
-            return {
-              flag: false,
-              userId: userId,
-            };
-        })
+        return {
+          flag: true,
+          userId: userId,
+        };
+      });
     }
 
 
@@ -156,31 +126,24 @@ module.exports = app => {
         text           : '一封来自Node Mailer的邮件',
         html           : `<h1>你好，您的账户密码为${password}</h1><p><img src="cid:00000001"/></p>`,
       };
-
-      mailTransport.sendMail(options, function(err, msg){
-        if(err){
-          console.log(err);
-          return false;
-        }
-        else {
-          console.log(msg);
+      try{
+        mailTransport.sendMail(options, function(err, msg){
+          if(err){
+            console.error(err);
+            return false;
+          }
           return true;
-        }
-      });
+        });
+    }catch(err){
+      console.error(err);
+    }
     }
 
     async changeVip(body){
       try {
         const flag = body.vip === true? '1' : '0';
-        const is_insert = await app.mysql.get('newsuser', { id: body.id });
-        if (is_insert === null) {
-          return false;
-        }
-        else{
-          const result = await app.mysql.update('newsuser', { id: body.id, vip: flag });
-          const insertSuccess = result.affectedRows === 1;
-          return insertSuccess;
-        }
+        await app.mysql.update('newsuser', { id: body.id, vip: flag });
+        return true;
       } catch (err) {
         console.error(err);
         return false;
@@ -190,9 +153,6 @@ module.exports = app => {
     async getVip(body){
       try {
         const result = await app.mysql.get('newsuser', { id: body.id });
-        if (result === null) {
-          return false;
-        }
         if(result.vip === '1'){
           return true;
         }
@@ -206,9 +166,6 @@ module.exports = app => {
     async getLevel(body){
       try {
         const result = await app.mysql.get('newsuser', { id: body.id });
-        if (result === null) {
-          return 0;
-        }
         return result.level;
       } catch (err) {
         console.error(err);

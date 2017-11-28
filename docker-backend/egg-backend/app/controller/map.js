@@ -9,20 +9,6 @@ module.exports = app => {
     }
 
     async updateBlockly(){
-      try {
-        await this.ctx.validate({
-          userid: { type: 'string' },
-          mapid: { type: 'string' },
-          blockly: {type: 'string'},
-          curLevel: {type: 'int'},
-        });
-      } catch (err) {
-        console.error(err);
-        this.ctx.body = {
-          updateBlockly_sucess: false,
-        };
-        return;
-      }
       const result = await this.ctx.service.map.updateBlockly(this.ctx.request.body);
       this.ctx.body = {
         updateBlockly_sucess: result,
