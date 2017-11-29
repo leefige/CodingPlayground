@@ -30,20 +30,8 @@ module.exports = app => {
         "data TEXT," +
         "primary key (id)" +
         ");";
-        const co = require('co');
-        app.mysql.query = co.wrap(app.mysql.query);
-        const query = co.wrap(app.mysql.query).bind(app.mysql);
-
-        await query(sql);
-
-        app.mysql.insert = co.wrap(app.mysql.insert);
-        const insert = co.wrap(app.mysql.insert).bind(app.mysql);
-
-        app.mysql.update = co.wrap(app.mysql.update);
-        const update = co.wrap(app.mysql.update).bind(app.mysql);
-
+        await app.mysql.query(sql);
         const blockly = fs.readFileSync('app/public/test.xml').toString();
-
         for(var i=1; i<=10; i++){
           const result = fs.readFileSync('app/public/map' + i.toString() + '.json');
           var _data = JSON.parse(result);
@@ -52,14 +40,12 @@ module.exports = app => {
           const readid = 300 + i;
           const is_insert1 = await app.mysql.get('newsmap', { id: readid});
           if(is_insert1 === null)
-            await insert('newsmap', { id: readid, data: data });
+            await app.mysql.insert('newsmap', { id: readid, data: data });
           else
-            await update('newsmap', { id: readid, data: data });
+            await app.mysql.update('newsmap', { id: readid, data: data });
         }
-        return true;
       } catch (err) {
         console.error(err);
-        return false;
       }
     }
 
@@ -87,7 +73,7 @@ module.exports = app => {
         var map = JSON.parse(result.data);
         map.savedSolution = body.blockly;
         const user = await app.mysql.get('newsuser', { id: body.userid });
-        if(user.level === body.curLevel){
+        if(parseInt(user.level, 10) === body.curLevel){
           await app.mysql.update('newsuser', {id: body.userid, level: body.curLevel+1});
         }
         const data = JSON.stringify(map);

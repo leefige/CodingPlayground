@@ -9,10 +9,10 @@ describe('test/service/user.test.js', () => {
       const ctx = app.mockContext();
       // 通过 ctx 访问到 service.user
       const user = await ctx.service.user.signup({
-          id: 'azxsd',
-          password: 'cxv',
+          id: 'azxnbsd',
+          password: 'cxnbv',
       });
-      assert(user === false);
+      assert(user === true);
     });
     it('should get false when user exists', async function () {
       const ctx = app.mockContext();
@@ -49,7 +49,6 @@ describe('test/service/user.test.js', () => {
       const ctx = app.mockContext();
       // 通过 ctx 访问到 service.user
       const user = await ctx.service.user.login({
-          id: 'azxsd',
           password: 'cxv',
           rememberMe: true,
       });
@@ -75,21 +74,26 @@ describe('test/service/user.test.js', () => {
     it('should changePassword', async function() {
       const ctx = app.mockContext();
       const flag = await ctx.service.user.changePassword({
-          id: '233',
-          old_password: '223',
-          password: '233',
+          id: 'byn',
+          old_password: '213',
+          password: '213',
         });
         assert(flag === true);
     });
 
-    it('should get error when id not correct', async function() {
+    it('should get false', async function() {
       const ctx = app.mockContext();
       const flag = await ctx.service.user.changePassword({
-          id: false,
-          old_password: '23',
-          password: '233',
+          id: 'byn',
+          old_password: '213',
         });
         assert(flag === false);
+    });
+
+    it('should get error when id not correct', async function() {
+      const ctx = app.mockContext();
+      const flag = await ctx.service.user.changePassword('error');
+      assert(flag === false);
     });
   });
 
@@ -132,5 +136,111 @@ describe('test/service/user.test.js', () => {
   });
 
 
+  describe('mobileLogin test', () => {
+    it('should sendmessage', async function() {
+      const ctx = app.mockContext();
+      const flag = await ctx.service.user.mobileLogin({
+          mobile: '18993939177',
+        });
+        assert(flag === true);
+    });
+
+    it('should get error when data struction not correct', async function() {
+      const ctx = app.mockContext();
+      const flag = await ctx.service.user.mobileLogin('error');
+        assert(flag === false);
+    });
+  });
+
+  describe('verfifyEmail test', () => {
+    it('should sendmessage', async function() {
+      const ctx = app.mockContext();
+      const flag = await ctx.service.user.verfifyEmail({
+          id: 'byn',
+        });
+        assert(flag === true);
+    });
+
+    it('should get error when data struction not correct', async function() {
+      const ctx = app.mockContext();
+      const flag = await ctx.service.user.verfifyEmail({
+          mobile: true,
+        });
+        assert(flag === false);
+    });
+  });
+
+  describe('changeVip test', () => {
+    it('should get true', async function() {
+      const ctx = app.mockContext();
+      const flag = await ctx.service.user.changeVip({
+          id: 'g',
+          vip: true,
+        });
+        assert(flag === true);
+    });
+
+    it('should get error when data struction not correct', async function() {
+      const ctx = app.mockContext();
+      const flag = await ctx.service.user.changeVip({
+        id: true,
+      });
+      assert(flag === false);
+    });
+  });
+
+  describe('getVip test', () => {
+    it('should get vip', async function() {
+      const ctx = app.mockContext();
+      const flag = await ctx.service.user.getVip({
+          id: 'g',
+        });
+        assert(flag === true);
+    });
+
+    it('should get error when data struction not correct', async function() {
+      const ctx = app.mockContext();
+      const flag = await ctx.service.user.getVip({
+          mobile: true,
+        });
+        assert(flag === false);
+    });
+  });
+
+  describe('getLevel test', () => {
+    it('should get level', async function() {
+      const ctx = app.mockContext();
+      const flag = await ctx.service.user.getLevel({
+          id: 'g',
+        });
+        assert(flag === true);
+    });
+
+    it('should get error when data struction not correct', async function() {
+      const ctx = app.mockContext();
+      const flag = await ctx.service.user.getLevel({
+          mobile: true,
+        });
+        assert(flag === false);
+    });
+  });
+
+  describe('getPersonalAccount test', () => {
+    it('should get personal Account', async function() {
+      const ctx = app.mockContext();
+      const flag = await ctx.service.user.getPersonalAccount({
+          id: 'g',
+        });
+        assert(flag === true);
+    });
+
+    it('should get error when data struction not correct', async function() {
+      const ctx = app.mockContext();
+      const flag = await ctx.service.user.getPersonalAccount({
+          mobile: true,
+        });
+        assert(flag === false);
+    });
+  });
 
 });
