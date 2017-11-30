@@ -9,7 +9,7 @@ import Login from './Login';
 import Account from '../pages/Personal/Account';
 import Level from '../pages/Level/Level';
 import MapHall from '../pages/Level/MapHall';
-import { Route, Redirect } from 'react-router-dom';
+import { Route, Redirect, Switch } from 'react-router-dom';
 import { post } from "../utils/Request";
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
@@ -57,29 +57,29 @@ class CodeGameApp extends Component {
   async updateTopLevel() {
     post('/api/v1/user/getLevel', {
       id: this.state.id,
-		})
-    .then((responseJson) => {
-      this.setState({
-        topLevel: responseJson.level,
-      });
     })
-    .catch((error) => {
-      // console.error(error);
-    });
+      .then((responseJson) => {
+        this.setState({
+          topLevel: responseJson.level,
+        });
+      })
+      .catch((error) => {
+        // console.error(error);
+      });
   }
 
   async updateVIP() {
     post('/api/v1/user/getVip', {
       id: this.state.id,
-		})
-    .then((responseJson) => {
-      this.setState({
-        vip: responseJson.vip,
-      });
     })
-    .catch((error) => {
-      // console.error(error);
-    });
+      .then((responseJson) => {
+        this.setState({
+          vip: responseJson.vip,
+        });
+      })
+      .catch((error) => {
+        // console.error(error);
+      });
   }
 
   handleLogout() {
@@ -95,7 +95,7 @@ class CodeGameApp extends Component {
 
   requireLogin = (props, isLogin, shouldRender) => {
     if (!isLogin) {
-      return <Redirect push to="/login"/>;
+      return <Redirect push to="/login" />;
     }
     else
       return shouldRender;
@@ -103,7 +103,7 @@ class CodeGameApp extends Component {
 
   requireLogout = (props, isLogin, shouldRender) => {
     if (isLogin) {
-      return <Redirect push to="/index"/>;
+      return <Redirect push to="/index" />;
     }
     else
       return shouldRender;
@@ -125,28 +125,31 @@ class CodeGameApp extends Component {
                 onLogout={this.handleLogout.bind(this)} />
             </div>
           </div>
-          <Route path="/map/:mapID"
-            component={props => this.requireLogin(props, isLogin,
-              <CodeGameContent {...props}
-                topLevel={this.state.topLevel} vip={this.state.vip} userType="game" getIsLogin={this.state.isLogin} getLoginUserId={this.state.id}  />)
-            } />
-          <Route path="/share/:mapID/:shareUserID"
-            component={props => this.requireLogin(props, isLogin,
-              <CodeGameContent {...props} userType="share" getIsLogin={this.state.isLogin} getLoginUserId={this.state.id} />)
-            } />
-          {/* <Route path="/mapEditor" component={props => <MapEditor {...props} userId={this.state.id}/>} /> */}
-          <Route path="/mapEditor/:mapID?" component={MapEditor}/>
-          <Route path="/mapHall" component={props => this.requireLogin(props, isLogin, <MapHall />)} />
-          <Route path="/login" component={props => this.requireLogout(props, isLogin, <Login {...props} onLogin={this.handleLogin.bind(this)} />)} />
-          <Route path="/signup" component={props => this.requireLogout(props, isLogin, <Signup />)} />
-          <Route path="/forgetPassword" component={props => this.requireLogout(props, isLogin, <ForgetPassword />)} />
-          <Route path="/personal/account" component={
+          <Switch>
+            <Route path="/map/:mapID"
+              component={props => this.requireLogin(props, isLogin,
+                <CodeGameContent {...props}
+                  topLevel={this.state.topLevel} vip={this.state.vip} userType="game" getIsLogin={this.state.isLogin} getLoginUserId={this.state.id} />)
+              } />
+            <Route path="/share/:mapID/:shareUserID"
+              component={props => this.requireLogin(props, isLogin,
+                <CodeGameContent {...props} userType="share" getIsLogin={this.state.isLogin} getLoginUserId={this.state.id} />)
+              } />
+            {/* <Route path="/mapEditor" component={props => <MapEditor {...props} userId={this.state.id}/>} /> */}
+            <Route path="/mapEditor/:mapID?" component={MapEditor} />
+            <Route path="/mapHall" component={props => this.requireLogin(props, isLogin, <MapHall />)} />
+            <Route path="/login" component={props => this.requireLogout(props, isLogin, <Login {...props} onLogin={this.handleLogin.bind(this)} />)} />
+            <Route path="/signup" component={props => this.requireLogout(props, isLogin, <Signup />)} />
+            <Route path="/forgetPassword" component={props => this.requireLogout(props, isLogin, <ForgetPassword />)} />
+            <Route path="/personal/account" component={
               props => this.requireLogin(props, isLogin,
-                <Account {...props} userId={this.state.id} updateVIP={this.updateVIP.bind(this)}/>)} />
-          <Route path="/index"
-            component={
-              props => this.requireLogin(props, isLogin,
-                <Level {...props} userId={this.state.id} topLevel={this.state.topLevel} vip={this.state.vip}/>)}/>
+                <Account {...props} userId={this.state.id} updateVIP={this.updateVIP.bind(this)} />)} />
+            <Route path="/index"
+              component={
+                props => this.requireLogin(props, isLogin,
+                  <Level {...props} userId={this.state.id} topLevel={this.state.topLevel} vip={this.state.vip} />)} />
+            <Route path="*" component={props => <Redirect to="/index" />} />
+          </Switch>
           <Footer className='footer-style' />
         </div>
       </div>
