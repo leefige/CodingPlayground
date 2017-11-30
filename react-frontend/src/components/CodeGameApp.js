@@ -132,8 +132,7 @@ class CodeGameApp extends Component {
                   topLevel={this.state.topLevel} vip={this.state.vip} userType="game" getIsLogin={this.state.isLogin} getLoginUserId={this.state.id} />)
               } />
             <Route path="/share/:mapID/:shareUserID"
-              component={props => this.requireLogin(props, isLogin,
-                <CodeGameContent {...props} userType="share" getIsLogin={this.state.isLogin} getLoginUserId={this.state.id} />)
+              component={props => <CodeGameContent {...props} userType="share" getIsLogin={this.state.isLogin} getLoginUserId={this.state.id} />
               } />
             {/* <Route path="/mapEditor" component={props => <MapEditor {...props} userId={this.state.id}/>} /> */}
             <Route path="/mapEditor/:mapID?" component={MapEditor} />
