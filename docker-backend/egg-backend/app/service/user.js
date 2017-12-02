@@ -129,8 +129,8 @@ module.exports = app => {
       var options = {
         from           : 'mymxhdd@163.com',
         to             : email,
-        subject        : '一封来自Node Mailer的邮件',
-        text           : '一封来自Node Mailer的邮件',
+        subject        : '代码操场',
+        text           : '代码操场',
         html           : `<h1>你好，您的账户密码为${password}</h1><p><img src="cid:00000001"/></p>`,
       };
       try{
