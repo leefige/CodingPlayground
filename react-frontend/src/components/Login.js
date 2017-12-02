@@ -86,7 +86,6 @@ class Login extends Component {
   async handleGetValidCode() {
     const answer = this.prefixInteger(parseInt(Math.random() * 999999), 6);
     document.getElementById("valid_btn").disabled = true;
-    console.log(document.getElementById("valid_btn"))
     this.setState({
       didValidCodeGet: true,
       timerCount: 60,
