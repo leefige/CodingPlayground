@@ -109,14 +109,10 @@ class Login extends Component {
         }
       }
     }, 1000)
-    // console.log("mobile login");
-    // console.log(this.state.phone)
-    // console.log(answer)
     post("/api/v1/user/mobileLogin", {
       mobile: this.state.phone,
       code: answer,
     }).then((responseJson) => {
-      console.log(responseJson)
       alert("验证码成功发送至您的手机");
       this.setState({
           userId: responseJson.userId,
@@ -132,6 +128,9 @@ class Login extends Component {
         validCodeCorrect: true,
       })
       this.props.onLogin(this.state.userId);
+    }
+    else {
+      alert("验证码错误，请检查您的验证码是否输入正确。");
     }
     event.preventDefault();
   }
