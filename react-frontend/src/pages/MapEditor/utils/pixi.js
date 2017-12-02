@@ -48,16 +48,18 @@ export default class PixiComponent {
     if (this.mapId === undefined) {
       const id = this.resources[this.mapJson].textures;
       let i = 0;
-      for (let key in id) {
-        const map = new Button(
-          id[key],
-          width / 10, width / 10,
-          i * 0.13 * width + 0.25 * width,
-          10
-        );
-        map.obj.on('click', () => {this.loadmap(key.split('.')[0])});
-        map.addTo(this.stage);
-        i++;
+      for (const key in id) {
+        if (id.hasOwnProperty(key)) {
+          const map = new Button(
+            id[key],
+            width / 10, width / 10,
+            i * 0.13 * width + 0.25 * width,
+            10
+          );
+          map.obj.on('click', () => {this.loadmap(key.split('.')[0])});
+          map.addTo(this.stage);
+          i++;
+        }
       }
     }
     else {

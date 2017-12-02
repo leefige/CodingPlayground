@@ -32,7 +32,7 @@ export class Dragable extends Obj {
   constructor(responseJson, type, width, height, posx, posy, wWidth, wHeight, innerWidth, innerHeight, row, col, bg) {
     const objJson = `${process.env.PUBLIC_URL}/img/obj/obj.json`;
     const id = PIXI.loader.resources[objJson].textures;
-    super(id[`${type}.png`], width, height, posx, posy);
+    super(id[`${type}.png`], width, height, posx, posy, null, true);
     this.type = type;
     this.obj.interactive = true;
     this.obj.buttonMode = true;
@@ -132,13 +132,10 @@ export class Dragable extends Obj {
       else if (this.type === "chest") {
         this.bg[j * row + i].obj.visible = false;
         this.responseJson.mapInitState.board.map[j][i] = 90;
-        // this.mapRecord.chestPos = i * row + j;
       }
       else {
         this.bg[j * row + i].obj.visible = false;
         this.responseJson.mapResource.id_t[j * row + i] = convertId(this.type);
-        // this.mapRecord.id_t[i * row + j] = convertId(this.type);
-        // this.mapRecord.id_tools[i * row + j] = parseInt(this.type, 10);
       }
     }
 

@@ -252,6 +252,7 @@ export default class PixiComponent {
         const baseEnmDir = player.enemy[i].dir;
         this.mEnemy[i].obj.visible = true;
         this.mEnemy[i].update(px, py, 1*FPS, FPS, baseEnmDir, enmId);
+        this.mEnemy[i].prevPos = {'x': px, 'y': py};
       }
 
       for (let i = 0; i < row * col; i++) {
@@ -261,13 +262,16 @@ export default class PixiComponent {
       const px = convertX(player.character.pos['y'], width, row),
         py = convertY(player.character.pos['x'], height, col);
       this.mCharacter.update(px, py, 1*FPS, FPS, baseDir, chaId);
+      this.mCharacter.prevPos = {'x': px, 'y': py};
+
       this.setInvisible();
       this.timeStatus = 0;
+
       this.updatePrevPos();
       player.nextStep();
     }
     else if (status === 1) {
-      const baseDir = player.character.dir;
+
       this.timeStatus++;
       if (this.timeStatus === 60) {
         this.timeStatus = 0;
@@ -285,6 +289,7 @@ export default class PixiComponent {
         this.mEnemy[i].obj.visible = mainControl.player.enemy[i].status === "alive";
       }
 
+      const baseDir = player.character.dir;
       const px = convertX(player.character.pos['y'], width, row),
         py = convertY(player.character.pos['x'], height, col);
       this.mCharacter.moveTo(px, py, FPS, baseDir, chaId, this.timeStatus);
@@ -348,6 +353,7 @@ export default class PixiComponent {
     else if (status >= 2) {
       this.timeStatus = 0;
       this.setInvisible();
+      this.updatePrevPos();
       this.state = this.end;
     }
   }
