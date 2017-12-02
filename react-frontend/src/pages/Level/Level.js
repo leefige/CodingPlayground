@@ -31,7 +31,7 @@ class Level extends Component {
   render() {
     if (this.state.dest === 0) {
       return (
-        <div className='col-md-8 col-md-offset-2'>
+        <div className='col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1'>
           <div className='row'>
             <MapCard levelNumber="1" lock={this.isLocked.bind(this)} onSelectLevel={this.handleLevelClick.bind(this)}/>
             <MapCard levelNumber="2" lock={this.isLocked.bind(this)} onSelectLevel={this.handleLevelClick.bind(this)}/>
