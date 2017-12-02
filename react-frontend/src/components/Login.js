@@ -5,7 +5,7 @@ class Login extends Component {
   constructor() {
     super();
     this.state = {
-      email: '',
+      userId: '',
       phone: '',
       password: '',
       validCode: '',
@@ -20,13 +20,13 @@ class Login extends Component {
 
   async handleLogin(event) {
     post('/api/v1/user/login', {
-      id: this.state.email,
+      id: this.state.userId,
       password: this.state.password,
       rememberMe: this.state.rememberMe,
     })
       .then((responseJson) => {
         if (responseJson.login_success) {
-          this.props.onLogin(this.state.email);
+          this.props.onLogin(this.state.userId);
         }
         else {
           alert("登录失败！");
@@ -37,9 +37,9 @@ class Login extends Component {
     event.preventDefault();
   }
 
-  handleEmailChange(event) {
+  handleUserIdChange(event) {
     this.setState({
-      email: event.target.value
+      userId: event.target.value
     });
   }
 
@@ -73,7 +73,7 @@ class Login extends Component {
     });
   }
 
-  handleEmailPage() {
+  handleUserIdPage() {
     this.setState({
       isMobileLogin: false,
     });
@@ -108,29 +108,14 @@ class Login extends Component {
         }
       }
     }, 1000)
-    // console.log("mobile login");
-    // console.log(this.state.phone)
-    // console.log(answer)
     post("/api/v1/user/mobileLogin", {
       mobile: this.state.phone,
       code: answer,
     }).then((responseJson) => {
-      // console.log(responseJson)
       alert("验证码成功发送至您的手机");
-      if (responseJson.mobileLogin_success) {
-        this.setState({
-          email: responseJson.userId,
+      this.setState({
+          userId: responseJson.userId,
         })
-      }
-      else {
-        //alert("获取验证码失败,请检查您的用户名是否正确后重试");
-        document.getElementById("valid_btn").disabled = false;
-        this.setState({
-          didValidCodeGet: false,
-          timerCount: 60,
-          answer: undefined,
-        })
-      }
     }).catch((error) => {
       // console.error(error);
     });
@@ -141,7 +126,10 @@ class Login extends Component {
       this.setState({
         validCodeCorrect: true,
       })
-      this.props.onLogin(this.state.email);
+      this.props.onLogin(this.state.userId);
+    }
+    else {
+      alert("验证码错误，请检查您的验证码是否输入正确。");
     }
     event.preventDefault();
   }
@@ -157,12 +145,12 @@ class Login extends Component {
             </div>
           </div>
           <div className="form-bottom">
-            <form role="form" className="login-form" enctype="multipart/form-data" onSubmit={this.handleEmailPage.bind(this)} accept-charset="UTF-8" method="post">
+            <form role="form" className="login-form" enctype="multipart/form-data" onSubmit={this.handleMobileLogin.bind(this)} accept-charset="UTF-8" method="post">
               <div className="form-group">
                 <label className="sr-only" htmlFor="form-phone">Phone Number</label>
                 <input
                   type="text"
-                  name="form-email"
+                  name="form-phone"
                   placeholder="手机号"
                   className="form-phone form-control"
                   id="form-phone"
@@ -195,11 +183,11 @@ class Login extends Component {
             </form>
             <div className="form-group">
                 <div className="row">
-                <span type="button" className="btn btn-default login-margin" onClick={this.handleGetValidCode.bind(this)}
+                <button type="button" className="btn btn-default login-margin" onClick={this.handleGetValidCode.bind(this)}
                 id="valid_btn">
                   {this.state.didValidCodeGet ? "获取验证码(" + this.state.timerCount + ")" : "获取验证码"}
-                </span>
-                <span type="button" className="btn btn-default login-margin" onClick={this.handleEmailPage.bind(this)}>账号登录</span>
+                </button>
+                <span type="button" className="btn btn-default login-margin" onClick={this.handleUserIdPage.bind(this)}>账号登录</span>
                 </div>
             </div>
           </div>
@@ -220,17 +208,17 @@ class Login extends Component {
             <div className="form-bottom">
               <form role="form" className="login-form" enctype="multipart/form-data" onSubmit={this.handleLogin.bind(this)} accept-charset="UTF-8" method="post">
                 <div className="form-group">
-                  <label className="sr-only" htmlFor="form-email">ID</label>
+                  <label className="sr-only" htmlFor="form-userId">ID</label>
                   <input
                     type="text"
-                    name="form-email"
+                    name="form-userId"
                     placeholder="账号"
-                    className="form-email form-control"
-                    id="form-email"
+                    className="form-userId form-control"
+                    id="form-userId"
                     required
                     autoFocus
-                    value={this.state.email}
-                    onChange={this.handleEmailChange.bind(this)}
+                    value={this.state.userId}
+                    onChange={this.handleUserIdChange.bind(this)}
                   />
                 </div>
                 <div className="form-group">
