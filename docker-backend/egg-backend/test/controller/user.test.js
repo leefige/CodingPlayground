@@ -329,7 +329,6 @@ describe('test/controller/user.test.js', () => {
 
   describe('uploadAvatar test', () => {
     it('should upload image', () => {
-      const path = require('path');
       return app.httpRequest()
       .post('/api/v1/user/uploadAvatar')
       .field('id', '123')

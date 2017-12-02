@@ -53,7 +53,7 @@ module.exports = app => {
           return false;
         }
         else{
-          const result = await app.mysql.update('newsuser', { id: _body.id, password: _body.password });
+          await app.mysql.update('newsuser', { id: _body.id, password: _body.password });
           return true;
         }
     }
