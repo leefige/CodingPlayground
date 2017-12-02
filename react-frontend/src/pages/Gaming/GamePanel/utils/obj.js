@@ -25,7 +25,7 @@ export default class Obj {
   }
   moveTo(px, py, FPS, dir, res, state) {
     if (this.prevPos === undefined) {
-      return true;
+      return false;
     }
     if (px !== this.obj.x || py !== this.obj.y) {
       if (px !== this.obj.x) {
