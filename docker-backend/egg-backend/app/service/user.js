@@ -84,24 +84,31 @@ module.exports = app => {
       const accessKeyId = 'LTAINBI7GDcyzx8X';
       const secretAccessKey = '7Py5FG9GaLvvXy2EImX3hMqn0MYlo1';
       const phoneNumbers = body.mobile;
-      var userId = await app.mysql.get('newsuser', {mobile: phoneNumbers}).id;
-      if(userId === null){
+      const user = await app.mysql.get('newsuser', {mobile: phoneNumbers});
+      var userId;
+      if(user === null){
         userId = "user" + body.mobile;
         await app.mysql.insert('newsuser', {id: userId, mobile: phoneNumbers});
       }
+      else{
+        userId = user.id;
+      }
       //初始化sms_client
-      let smsClient = new SMSClient({accessKeyId, secretAccessKey});
-      smsClient.sendSMS({
-        PhoneNumbers: phoneNumbers,
-        SignName: '代码操场',
-        TemplateCode: 'SMS_110895009',
-        TemplateParam: '{"code":' + body.code + '}',
-      }).then(function (res) {
-        return {
-          flag: true,
-          userId: userId,
-        };
-      });
+      try{
+        let smsClient = new SMSClient({accessKeyId, secretAccessKey});
+        smsClient.sendSMS({
+          PhoneNumbers: phoneNumbers,
+          SignName: '代码操场',
+          TemplateCode: 'SMS_110895009',
+          TemplateParam: '{"code":' + body.code + '}',
+        });
+      }catch(err){
+        console.error(err);
+      }
+      return {
+        flag: true,
+        userId: userId,
+      };
     }
 
 
@@ -111,16 +118,16 @@ module.exports = app => {
       const password = user.password;
       var nodemailer  = require('nodemailer');
       var mailTransport = nodemailer.createTransport({
-        host : 'smtp.qq.com',
+        host : 'smtp.163.com',
         port : 465,
         secure: true, // 使用SSL方式（安全方式，防止被窃取信息）
         auth : {
-            user : '845285227@qq.com',
-            pass : 'inesfawzexisbcaj'
+            user : 'mymxhdd@163.com',
+            pass : '19961127mym'
         },
       });
       var options = {
-        from           : '845285227@qq.com',
+        from           : 'mymxhdd@163.com',
         to             : email,
         subject        : '一封来自Node Mailer的邮件',
         text           : '一封来自Node Mailer的邮件',
@@ -136,8 +143,9 @@ module.exports = app => {
         });
     }catch(err){
       console.error(err);
+      return false;
     }
-    }
+  }
 
     async changeVip(body){
       try {
