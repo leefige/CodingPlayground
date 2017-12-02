@@ -194,13 +194,13 @@ class CodeGameContent extends Component {
     }
     return (
       <div className='row'>
-          <div className='col-xs-12 col-md-5 col-md-offset-1'>
+          <div className='col-xs-12 col-md-5 col-md-offset-1 col-sm-6'>
             {this.state.didFetchMap?
               <Scene mapResource={this.state.mapResource}/>
               :<div></div>
             }
           </div>
-          <div className='col-xs-12 col-md-5'>
+          <div className='col-xs-12 col-md-5 col-sm-6'>
             {this.state.didFetchMap?
               <Programming ref="program_area" id="programming"
                 userType={this.props.userType}

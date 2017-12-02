@@ -49,7 +49,7 @@ class Signup extends Component {
   render() {
     if (!this.state.success) {
       return (
-        <div className='col-md-4 col-md-offset-4'>
+        <div className='col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3'>
           <div className="form-box">
             <div className="form-top">
               <div className="form-top-left">

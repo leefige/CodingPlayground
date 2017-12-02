@@ -80,7 +80,7 @@ class Login extends Component {
   }
 
   prefixInteger(num, n) {
-    return (Array(n).join(0) + num).slice(-n);
+    return (Array(n).join("0") + num).slice(-n);
   }
 
   async handleGetValidCode() {
@@ -183,11 +183,11 @@ class Login extends Component {
             </form>
             <div className="form-group">
                 <div className="row">
-                <button type="button" className="btn btn-default login-margin" onClick={this.handleGetValidCode.bind(this)}
+                <span type="button" className="btn btn-default login-margin col-md-6" onClick={this.handleGetValidCode.bind(this)}
                 id="valid_btn">
                   {this.state.didValidCodeGet ? "获取验证码(" + this.state.timerCount + ")" : "获取验证码"}
-                </button>
-                <span type="button" className="btn btn-default login-margin" onClick={this.handleUserIdPage.bind(this)}>账号登录</span>
+                </span>
+                <span type="button" className="btn btn-default login-margin col-md-6" onClick={this.handleUserIdPage.bind(this)}>账号登录</span>
                 </div>
             </div>
           </div>
