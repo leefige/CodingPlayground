@@ -5,6 +5,7 @@ describe('test/service/file.test.js', () => {
   describe('upload()', () => {
     it('should get map id', async function () {
       const ctx = app.mockContext();
+      const fs = require('fs');
       const fileStream = fs.createReadStream('app/public/test.xml');
       const map = await ctx.service.file.upload('users', '0', fileStream, {
           id: '301',
