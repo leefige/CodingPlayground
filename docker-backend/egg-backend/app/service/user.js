@@ -131,7 +131,7 @@ module.exports = app => {
         to             : email,
         subject        : '代码操场',
         text           : '代码操场',
-        html           : `<h1>你好，您的账户密码为${password}</h1><p><img src="cid:00000001"/></p>`,
+        html           : `<h1>你好，您的账户密码为${password}</h1>`,
       };
       try{
         mailTransport.sendMail(options, function(err, msg){
