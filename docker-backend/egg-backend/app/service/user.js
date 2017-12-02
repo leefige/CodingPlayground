@@ -122,12 +122,12 @@ module.exports = app => {
         port : 465,
         secure: true, // 使用SSL方式（安全方式，防止被窃取信息）
         auth : {
-            user : 'mymxhdd@163.com',
+            user : 'mymxhd@163.com',
             pass : '19961127mym'
         },
       });
       var options = {
-        from           : 'mymxhdd@163.com',
+        from           : 'mymxhd@163.com',
         to             : email,
         subject        : '代码操场',
         text           : '代码操场',
