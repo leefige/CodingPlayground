@@ -88,7 +88,7 @@ module.exports = app => {
       var userId;
       if(user === null){
         userId = "user" + body.mobile;
-        await app.mysql.insert('newsuser', {id: userId, mobile: phoneNumbers});
+        await app.mysql.insert('newsuser', {id: userId, mobile: phoneNumbers, level: 1, vip: '0'});
       }
       else{
         userId = user.id;
